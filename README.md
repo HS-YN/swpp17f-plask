@@ -2,10 +2,10 @@
 ### Location-based live Q&A platform “Plask”
 
 #### Team 6
-* Choi Jae hyeok (2012-12666, Dept. of Physics Education)
-* Park Jiyeon (2014-18200, College of Liberal Studies)
-* Seo Seong Hoon (2015-19410, College of Liberal Studies)
-* Yun Heeseung (2015-16890, College of Liberal Studies)
+* Choi Jae hyeok
+* Park Jiyeon
+* Seo Seong Hoon
+* Yun Heeseung
 
 #### Document Revision History
 `Rev 1.0 2017-10-23 - Initial Version`
