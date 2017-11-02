@@ -7,6 +7,13 @@ class UserInfo(models.Model):
 		Location,
 		related_name = '+',
 	)
+    services = models.ManyToManyField(
+        Service,
+        related_name = 'users',
+    )
+
+class Service(models.Model):
+    name = models.CharField()
 
 class Location(models.Model):
 	loc_code1 = models.IntegerField() # for LocationL1
