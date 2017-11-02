@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.forms.models import model_to_dict
 from .models import UserInfo
+from location.models import LocationL1, LocationL2, LocationL3
 import json
 
 @ensure_csrf_cookie
@@ -19,13 +20,16 @@ def signup(request):
 		req_data = json.loads(request.body.decode())
 		username = req_data['username']
 		password = req_data['password']
-		location1 = req_data['location1']
-		location2 = req_data['location2']
-		location3 = req_data['location3']
-
+		locations = req_data['locations']
+		services = req_data['services']
+		# TODO unique check
 		# have the same id index between user and userinfo 
-		User.objects.create_user(username = username, password = password)
+		try:
+			User.objects.create_user(username = username, password = password)
+		except User.IntegrityError:
+			return HttpResponse(status = 412)
 		new_userinfo = UserInfo(is_active = True, location1 = location1, location2 = location2, location3 = location3)
+		new_userinfo.setService(services)
 		new_userinfo.save ()
 		return HttpResponse(status = 201)
 
