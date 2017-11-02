@@ -11,6 +11,11 @@ class UserInfo(models.Model):
         Service,
         related_name = 'users',
     )
+    def setService(self, service_list):
+        for service in service_list:
+            obj,_ = Service.get_or_create(name = service)
+            self.services.add(obj) 
+
 
 class Service(models.Model):
     name = models.CharField()

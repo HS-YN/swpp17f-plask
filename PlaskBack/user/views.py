@@ -22,10 +22,13 @@ def signup(request):
 		location1 = req_data['location1']
 		location2 = req_data['location2']
 		location3 = req_data['location3']
+        services = req_data['services']
 
 		# have the same id index between user and userinfo 
 		User.objects.create_user(username = username, password = password)
 		new_userinfo = UserInfo(is_active = True, location1 = location1, location2 = location2, location3 = location3)
+        new_userinfo.setService(new_userinfo, services)
+
 		new_userinfo.save ()
 		return HttpResponse(status = 201)
 
