@@ -2,7 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-class UserPlus(models.Model):
-	loc_code1 = models.IntegerField()
-	loc_code2 = models.IntegerField()
-	loc_code3 = models.IntegerField()
+class UserInfo(models.Model):
+	is_active = models.BooleanField()				# Sync with User
+	location1 = models.CharField(max_length = 100)	# Country
+	location2 = models.CharField(max_length = 100)	# State
+	location3 = models.CharField(max_length = 100)	# City
