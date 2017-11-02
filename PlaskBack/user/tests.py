@@ -24,3 +24,6 @@ class UserTestCase(TestCase):
 	def test_signin_ok(self):
 		response = self.client.post('/api/user/signin', json.dumps({'username': 'PlaskTest1', 'password': '123123'}), content_type = 'application.json')
 		self.assertEqual(response.status_code, 204)
+
+	def test_signin_failed(self):
+		response = self.client.post('/api/user/signin', json.dumps({'username': 'PlaskTest1', 'password': '123123'}), content_type = 'application.json')
