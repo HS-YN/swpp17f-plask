@@ -18,20 +18,34 @@ def token(request):
 def signup(request):
 	if request.method == 'POST':
 		req_data = json.loads(request.body.decode())
-		username = req_data['username']
+		username = req_data['email']
+		nickname = req_data['username']
 		password = req_data['password']
 		locations = req_data['locations']
 		services = req_data['services']
-		# TODO unique check
-		# have the same id index between user and userinfo 
+
 		try:
-			User.objects.create_user(username = username, password = password)
-		except User.IntegrityError:
+			# Check Username Uniqueness
+			User.objects.get(username = username)
 			return HttpResponse(status = 412)
-		new_userinfo = UserInfo(is_active = True, location1 = location1, location2 = location2, location3 = location3)
-		new_userinfo.setService(services)
-		new_userinfo.save ()
-		return HttpResponse(status = 201)
+		except User.DoesNotExist:
+			try:
+				# Optimization: creating User with AnonymousUser(Reuse DB)
+				new_user = User.objects.get(is_acitve = False)
+				new_user.username = username
+				new_user.is_active = True
+				new_user.set_password(password)
+				new_user.save()
+				new_userinfo = UserInfo.get(id = new_user.id)
+				new_userinfo.nickname = nickname
+				new_userinfo.is_active = True
+			except User.DoesNotExist:
+				new_user = User.objects.create_user(username = username, password = password)
+				new_userinfo = UserInfo(nickname = nickname, is_active = True)
+			new_userinfo.setService(services)
+			new_userinfo.setLocations(locations)
+			new_userinfo.save ()
+			return HttpResponse(status = 201)
 
 	elif request.method == 'DELETE':
 		# remove user - assume logged in
@@ -39,6 +53,8 @@ def signup(request):
 			del_userinfo = UserInfo.objects.get(id = request.user.id)
 			del_userinfo.is_active = False
 			request.user.is_active = False
+			del_userinfo.locations.clear()
+			del_userinfo.services.clear()
 			del_userinfo.save()
 			request.user.save()
 			return HttpResponse(status = 204)
@@ -69,7 +85,7 @@ def signout(request):
 		return HttpResponse(status = 204)
 	else:
 		return HttpResponseNotAllowed(['GET'])
-
+'''
 def userinfo(request):
 	if request.method == 'GET':
 		# get userinfo - assume logged in
@@ -98,3 +114,4 @@ def userinfo(request):
 
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT'])
+'''
