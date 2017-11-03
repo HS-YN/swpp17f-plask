@@ -6,6 +6,6 @@ urlpatterns = [
 	url('^signup$',		views.signup,	name = 'signup'),
 	url('^signin$',		views.signin,	name = 'signout'),
 	url('^signout$',	views.signout,	name = 'signout'),
-	url('^userinfo$',	views.userinfo,	name = 'userinfo'),
+#	url('^userinfo$',	views.userinfo,	name = 'userinfo'),
 ]
 

@@ -1,5 +1,6 @@
 from django.test import TestCase, Client
 from .models import UserInfo
+from .views import multi_dump
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import json
@@ -13,11 +14,13 @@ class UserTestCase(TestCase):
 		csrftoken = response.cookies['csrftoken'].value
 		self.client.post(
 			'/api/user/signup',
-			json.dumps({'username': 'PlaskTest1',
+			json.dumps({
+				'email': 'PlaskTest1@snu.ac.kr',
+				'username': 'PlaskTest1',
 				'password': '123123',
-				'location1': 'South Korea',
-				'location2': 'Seoul',
-				'location3': 'Kwanak-gu'}),
+				'locations': multi_dump([['Korea', 'Seoul', 'KwanAk'], ['Korea', 'Seoul', 'KangNam']]),
+				'services': ['coffee', 'pizza']
+				}),
 			content_type = 'application/json',
 			HTTP_X_CSRFTOKEN = csrftoken)
 		

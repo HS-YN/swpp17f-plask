@@ -1,12 +1,29 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseNotFound, JsonResponse
+from django.forms.models import model_to_dict
+
+import json, pickle
+from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
-from django.views.decorators.csrf import ensure_csrf_cookie
-from django.forms.models import model_to_dict
+
 from .models import UserInfo
-from location.models import LocationL1, LocationL2, LocationL3
+from location.models import LocationL1, LocationL2, LocationL3, setLocation
 import json
+
+def multi_dump(objlist):
+	dumplist = []
+	for obj in objlist:
+		dumplist.append (json.dumps(obj))
+	return json.dumps(dumplist)
+#	return dumplist
+
+def multi_load(dumplist):
+	dumplist = json.loads(dumplist)
+	objlist = []
+	for dump in dumplist:
+		objlist.append (json.loads(dump))
+	return objlist
 
 @ensure_csrf_cookie
 def token(request):
@@ -21,10 +38,19 @@ def signup(request):
 		username = req_data['email']
 		nickname = req_data['username']
 		password = req_data['password']
-		locations = req_data['locations']
+		locations = multi_load(req_data['locations'])
 		services = req_data['services']
 
+		User.objects.create_user(username = username, password = password)
+		new_userinfo = UserInfo(nickname = nickname, is_active = True)
+		new_userinfo.setService(services)
 		try:
+			setLocation(new_userinfo, locations)
+		except UserInfo.DoesNotExist:
+			return HttpResponse(status = 404)
+		new_userinfo.save ()
+		return HttpResponse(status = 201)
+		'''try:
 			# Check Username Uniqueness
 			User.objects.get(username = username)
 			return HttpResponse(status = 412)
@@ -43,10 +69,12 @@ def signup(request):
 				new_user = User.objects.create_user(username = username, password = password)
 				new_userinfo = UserInfo(nickname = nickname, is_active = True)
 			new_userinfo.setService(services)
-			new_userinfo.setLocations(locations)
+			try:
+				setLocation(new_userinfo, locations)
+			except UserInfo.DoesNotExist:
+				return HttpResponse(status = 404)
 			new_userinfo.save ()
-			return HttpResponse(status = 201)
-
+			return HttpResponse(status = 201)	'''
 	elif request.method == 'DELETE':
 		# remove user - assume logged in
 		if request.user is not None:
