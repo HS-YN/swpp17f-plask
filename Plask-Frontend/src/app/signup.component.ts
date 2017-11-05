@@ -75,6 +75,11 @@ export class SignUpComponent implements OnInit {
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
 
+        if(this.user.locations.indexOf(newLocation) != -1) {
+            alert("You've already selected " + newLocation + " !")
+            return;
+        }
+
         this.user.locations = this.user.locations + newLocation + ';';
         this.selectedCountry = "";
         this.selectedProvince = "";
