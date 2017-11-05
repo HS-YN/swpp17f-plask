@@ -12,14 +12,16 @@ import { UserService } from './user.service';
     //styleUrls: [ './settings.component.css']
 })
 export class SettingsComponent implements OnInit{
-    
+
     constructor(
         private router: Router,
         private userService: UserService,
     ){ }
 
     ngOnInit(): void{
-
+        this.userService.getUser().then(user => {
+            if(user == null)    this.router.navigate(['/signin']);
+        })
     }
 
 

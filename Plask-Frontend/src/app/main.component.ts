@@ -20,11 +20,17 @@ export class MainComponent implements OnInit{
     ){ }
 
     ngOnInit(): void{
-
+        this.userService.getUser().then(user => {
+            if(user == null)    this.router.navigate(['/signin']);
+        })
     }
 
     goToSettings(): void{
          this.router.navigate(['/settings']);
     }
-    
+
+    goSignOut(): void{
+        this.userService.signOut().then(() => this.router.navigate(['/signin']));
+    }
+
 }

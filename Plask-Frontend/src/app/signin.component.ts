@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from './user';
@@ -11,7 +11,7 @@ import { UserService } from './user.service';
     templateUrl: './signin.component.html',
     //styleUrls: [ './signin.component.css']
 })
-export class SignInComponent {
+export class SignInComponent implements OnInit {
 
     constructor(
         private router: Router,
@@ -22,19 +22,25 @@ export class SignInComponent {
     title: string = "Plask!";
     subtitle: string = "Location-based live Q&A platform"
 
+    ngOnInit(){
+        this.userService.getUser().then(user => {
+            if(user != null)    this.router.navigate(['/main']);
+        })
+    }
 
     SignIn(){
-       //Test Code to See if Sign In button funcitons correctly
-       if ((this.user.email == 'swpp@snu.ac.kr') && (this.user.password == 'iluvswpp')){
-           this.goToMain();
-       }
-       else{
-           alert("Wrong Email or Passowrd!");
-       }
-
-      //Actual Code with Http Request (Commented for Now)
-      // this.userService.signIn(this.user)
-      //    .then(Status => {if(Status == 204){this.goToMain()} else{alert("Wrong Email or Password!")} });
+        /* Test Code to See if Sign In button funcitons correctly
+        if ((this.user.email == 'swpp@snu.ac.kr') && (this.user.password == 'iluvswpp')){
+            this.goToMain();
+        }
+        else{
+            alert("Wrong Email or Passowrd!");
+        }
+        */
+        this.userService.signIn(this.user).then(Status => {
+            if(Status == 204) { this.goToMain() }
+            else{ alert("Wrong Email or Password!") }
+        });
     }
 
     goToMain(){

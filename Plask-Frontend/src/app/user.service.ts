@@ -12,7 +12,8 @@ export class UserService{
     //List of Urls for API
     private signInUrl = '/api/user/signin/'; //URL to signin
     private signUpUrl = '/api/user/signup/'; //URL to signup
-    private userInfoUrl = '/api/user/userinfo'
+    private signOutUrl = '/api/user/signout/';
+    private userInfoUrl = '/api/user/userinfo';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
@@ -21,7 +22,7 @@ export class UserService{
         return this.http
             .post(this.signInUrl, JSON.stringify(user), {headers: this.headers})
             .toPromise()
-            .then(res => res.json())
+            .then(res => res.json() as number)
             .catch(this.handleError);
     }
 
@@ -29,13 +30,18 @@ export class UserService{
         return this.http
             .post(this.signUpUrl, JSON.stringify(user), {headers: this.headers})
             .toPromise()
-            .then(res => res.json())
+            .then(res => res.json() as number)
             .catch(this.handleError);
+    }
+
+    signOut(): Promise<number>{
+        return this.http.get(this.signOutUrl).toPromise().then(response =>
+            response.json() as number).catch(this.handleError);
     }
 
     getUser(): Promise<User> {
         return this.http.get(this.userInfoUrl).toPromise().then(response =>
-             response.json().data as User).catch(this.handleError);
+             response.json() as User).catch(this.handleError);
     }
 
     update(user: User): Promise<number>{

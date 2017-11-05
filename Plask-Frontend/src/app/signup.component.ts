@@ -36,7 +36,7 @@ export class SignUpComponent implements OnInit {
     serviceList: string[]; //List of service tags from Backend
     userServiceList: string[]; //List for visualizing current user service tags
     newService: string = ''; //User-input string
-    
+
 
     ngOnInit(): void{
         this.countryRefresh();
@@ -109,7 +109,12 @@ export class SignUpComponent implements OnInit {
     }
 
     countryRefresh(): void {
-        this.countryList = countryListData;
+        //this.countryList = countryListData;
+        this.locationService.getCountryList().then(country => {
+            if(country.length <= 0) this.countryList = null;
+            else    this.countryList = country.substr(0, country.length-1)
+                .split(';');
+        })
     }
 
     countrySelect(country: string): void {
@@ -121,7 +126,13 @@ export class SignUpComponent implements OnInit {
     }
 
     provinceRefresh(country: string): void {
-        this.provinceList = provinceListData;
+        //this.provinceList = provinceListData;
+        this.locationService.getLocationList(this.selectedCountry)
+            .then(province => {
+                if(province.length <= 0) this.provinceList = null;
+                else    this.provinceList = province
+                    .substr(0,province.length-1).split(';');
+            })
     }
 
     provinceSelect(province: string): void {
@@ -131,7 +142,13 @@ export class SignUpComponent implements OnInit {
     }
 
     cityRefresh(province: string): void {
-        this.cityList = cityListData;
+        //this.cityList = cityListData;
+        var address: string = this.selectedCountry + '/' + this.selectedProvince;
+        this.locationService.getLocationList(address)
+            .then(city => {
+                if(city.length <= 0) this.cityList = null;
+                else    this.cityList = city.substr(0,city.length-1).split(';');
+            })
     }
 
     citySelect(city: string): void {
@@ -152,6 +169,7 @@ export class SignUpComponent implements OnInit {
     }
 
     serviceRefresh(): void {
+        //TODO: replace serviceListData with serviceService
         this.serviceList = serviceListData;
     }
 
@@ -179,12 +197,12 @@ export class SignUpComponent implements OnInit {
         else if (this.newService.indexOf(";") != -1){
             alert("You cannot use SemiColon!");
         }
-        else if (this.serviceList.indexOf(this.newService) != -1){ 
+        else if (this.serviceList.indexOf(this.newService) != -1){
             alert("Tag already Exists!");
         }
         else{
             this.userServiceSelect(this.newService);
-            this.newService = "";            
+            this.newService = "";
         }
     }
 
@@ -198,6 +216,7 @@ export class SignUpComponent implements OnInit {
 
 }
 
+/*
 // Mock data for checking location tag functionality
 const countryListData = [
     'South Korea',
@@ -217,6 +236,7 @@ const cityListData = [
     'Gangseo',
     'Gangnam'
 ]
+*/
 // Mock Data for checking service tag functionality
 const serviceListData = [
     'Travel',

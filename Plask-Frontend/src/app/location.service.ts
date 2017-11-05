@@ -13,17 +13,15 @@ export class LocationService{
 
     constructor(private http: Http) { }
 
-    getCountryList(): Promise<string[]> {
+    getCountryList(): Promise<string> {
         return this.http.get(this.countryUrl).toPromise().then(
-            response => response.json().data.substr(0, response.json().data.length-1)
-            .split(';') as string[]).catch(this.handleError);
+            response => response.json() as string).catch(this.handleError);
     }
 
-    getLocationList(location: string): Promise<string[]>{
+    getLocationList(location: string): Promise<string>{
         const url = `${this.locationUrl}/${location}`;
         return this.http.get(url).toPromise().then(response =>
-            response.json().data.substr(0, response.json().data.length-1)
-            .split(';') as string[]).catch(this.handleError);
+            response.json()).catch(this.handleError);
     }
 
     private handleError(error: any): Promise<any>{

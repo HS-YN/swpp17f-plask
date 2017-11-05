@@ -1,6 +1,6 @@
 <div class="panel panel-primary">
   <div class="panel-heading">
-    <span class="glyphicon glyphicon-pushpin"></span> 
+    <span class="glyphicon glyphicon-pushpin"></span>
     Plask!
   </div>
 
@@ -8,6 +8,11 @@
     <button class="btn pull-right" (click)="goToSettings()">
         <span class="glyphicon glyphicon-cog"></span>
         Settings
+    </button>
+
+    <button class="btn pull-right" (click)="goSignOut()">
+        <span class="glyphicon glyphicon-log-out"></span>
+        Sign Out
     </button>
 
     <ul class="nav nav-tabs">
@@ -24,7 +29,7 @@
 
     <div class="tab-content">
       <div class="tab-pane active" id="1">
-        <h3>Questions received by the user</h3> 
+        <h3>Questions received by the user</h3>
         <h3>Recommended questions (If inbox is empty)</h3>
       </div>
       <div class="tab-pane" id="2">
