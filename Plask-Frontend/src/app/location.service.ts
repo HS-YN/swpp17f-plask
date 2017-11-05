@@ -7,13 +7,14 @@ import 'rxjs/add/operator/toPromise';
 export class LocationService{
 
     //List of Urls for API
+    private countryUrl = '/api/location/countries'
     private locationUrl = '/api/location';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
 
     getCountryList(): Promise<string[]> {
-        return this.http.get(this.locationUrl).toPromise().then(
+        return this.http.get(this.countryUrl).toPromise().then(
             response => response.json().data.substr(0, response.json().data.length-1)
             .split(';') as string[]).catch(this.handleError);
     }
