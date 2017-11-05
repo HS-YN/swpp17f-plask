@@ -60,3 +60,17 @@ class UserTestCase(TestCase):
 		self.assertEqual (len(serv), 5)
 		self.assertEqual (len(loc), 1)
 
+	def test_get_loc_list(self):
+		response = self.client.get('/api/location/countries', content_type = 'application.json')
+		data = json.loads(response.content.decode())
+		self.assertEqual(response.status_code, 200)
+#		print(data)
+		response = self.client.get('/api/location/South Korea', content_type = 'application.json')
+		data = json.loads(response.content.decode())
+		self.assertEqual(response.status_code, 200)
+#		print(data)
+		response = self.client.get('/api/location/South Korea/Seoul', content_type = 'application.json')
+		data = json.loads(response.content.decode())
+		self.assertEqual(response.status_code, 200)
+#		print(data)
+
