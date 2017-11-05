@@ -10,9 +10,9 @@ import { User } from './user';
 export class UserService{
 
     //List of Urls for API
-    private signInUrl = '/api/user/signin/'; //URL to signin
-    private signUpUrl = '/api/user/signup/'; //URL to signup
-    private signOutUrl = '/api/user/signout/';
+    private signInUrl = '/api/user/signin'; //URL to signin
+    private signUpUrl = '/api/user/signup'; //URL to signup
+    private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
     private headers = new Headers({'Content-Type': 'application/json'});
 
@@ -30,7 +30,7 @@ export class UserService{
         return this.http
             .post(this.signUpUrl, JSON.stringify(user), {headers: this.headers})
             .toPromise()
-            .then(res => res.json() as number)
+            .then(res => { console.log(res.json());res.json() as number})
             .catch(this.handleError);
     }
 
