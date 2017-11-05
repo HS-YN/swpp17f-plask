@@ -35,7 +35,7 @@ export class SignUpComponent implements OnInit {
 
     serviceList: string[]; //List of service tags from Backend
     userServiceList: string[]; //List for visualizing current user service tags
-    newService: string = ""; //User-input string
+    newService: string = ''; //User-input string
     
 
     ngOnInit(): void{
@@ -66,6 +66,8 @@ export class SignUpComponent implements OnInit {
             return false;
         }
     }
+
+    //Methods for Location Tags
 
     //Update location tag visualization
     userLocationRefresh(): void {
@@ -137,15 +139,54 @@ export class SignUpComponent implements OnInit {
     }
 
 
+    //Methods for Service Tags
+
+    //Update service tag visualization
+    userServiceRefresh(): void {
+        if(this.user.services == '') {
+            this.userServiceList = null;
+            return;
+        }
+        this.userServiceList = this.user.services
+            .substr(0, this.user.services.length-1).split(';');
+    }
+
     serviceRefresh(): void {
         this.serviceList = serviceListData;
     }
 
     //Select a Tag from the exisitng list of service tags
-    userServiceSelect(string): void {
-
+    userServiceSelect(service: string): void {
+        var validity_check: string = service + ';';
+        if (this.user.services.indexOf(validity_check) != -1){
+            alert("Tag Already Added!");
+            return;
+        }
+        this.user.services = this.user.services + service + ';';
+        this.userServiceRefresh();
     }
 
+    userServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.services = this.user.services.replace(deleteService, '');
+        this.userServiceRefresh();
+    }
+
+    userServiceAdd(): void {
+        if(this.newService == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this.newService.indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+        }
+        else if (this.serviceList.indexOf(this.newService) != -1){ 
+            alert("Tag already Exists!");
+        }
+        else{
+            this.userServiceSelect(this.newService);
+            this.newService = "";            
+        }
+    }
 
     goToMain(){
         this.router.navigate(['/main']);

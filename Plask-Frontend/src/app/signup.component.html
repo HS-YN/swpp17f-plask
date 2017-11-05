@@ -64,6 +64,23 @@
       <div class="form-group">
         <label> Services: </label>
 
+        <span *ngFor="let userService of userServiceList">
+          <span class="label label-success">{{userService}}</span>
+          <button class="badge" (click)="userServiceDelete(userService); $event.stopPropagation()">
+          x</button> &nbsp;
+        </span>
+        <br>
+
+        <label> Popular Services: </label>
+        <span *ngFor= "let service of serviceList"
+          (click)="userServiceSelect(service)">
+          <button class="badge"> {{service}} </button> &nbsp;
+        </span>
+
+        <label> ...or add your own tag! </label>
+        <input type="text" [(ngModel)]="newService" class="form-control" placeholder="new tag"/>
+        <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
+
       </div>
       
       <div class="form-group">
