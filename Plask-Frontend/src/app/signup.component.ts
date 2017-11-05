@@ -25,14 +25,18 @@ export class SignUpComponent implements OnInit {
     countryList: string[];
     provinceList: string[];
     cityList: string[];
-    serviceList: string[];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
 
+
+    serviceList: string[];
+    selectedService: string = "";
+
     ngOnInit(): void{
         this.countryRefresh();
+        this.serviceRefresh();
     }
 
     //Create a new User Account
@@ -122,6 +126,13 @@ export class SignUpComponent implements OnInit {
         this.selectedCity = city;
     }
 
+
+    serviceRefresh(): void {
+        this.serviceList = serviceListData;
+    }
+
+
+
     goToMain(){
         this.router.navigate(['/main']);
     }
@@ -151,9 +162,10 @@ const cityListData = [
     'Gangseo',
     'Gangnam'
 ]
-
+// Mock Data for checking service tag functionality
 const serviceListData = [
     'Travel',
     'Cafe',
-    'SNU'
+    'SNU',
+    'Pub',
 ]
