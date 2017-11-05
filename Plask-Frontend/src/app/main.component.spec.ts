@@ -24,10 +24,20 @@ describe('MainComponent', () => {
         expect(comp).toBeTruthy();
     });
 
-    it('can navigate to settings'), async(() => {
-        expect(comp.goToSettings).not.toThrow();
+    it('can be initiated', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        comp.ngOnInit();
+        expect(navigateSpy).not.toHaveBeenCalledWith(['/signin']);
+    }))
+
+    it('can navigate to settings', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.goToSettings();
         expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
-    })
+    }))
+
+    it('can navigate to signout', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        expect(comp.goSignOut).toThrow();
+    }))
 });

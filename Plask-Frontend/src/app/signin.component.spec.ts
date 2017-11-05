@@ -28,6 +28,13 @@ describe('SignInComponent', () => {
         expect(comp).toBeTruthy();
     });
 
+    it('can be initialized', () => {
+        expect(comp.ngOnInit).toThrow();
+        expect(comp.SignIn).toThrow();
+        expect(comp.goToMain).toThrow();
+        expect(comp.goToSignUp).toThrow();
+    })
+
     it('should have as title Plask!', ()=> {
         expect(comp.title).toEqual('Plask!');
     });
@@ -45,6 +52,5 @@ describe('SignInComponent', () => {
         let label = fixture.debugElement.queryAll(By.css('label')).map(de => de.nativeElement);
         expect(label[0]).not.toBeNull();
     }))
-
 
 });
