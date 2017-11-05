@@ -6,6 +6,7 @@ export class User{
     //Tags saved in Parsed Format
     locations: string = "";
     services: string = "";
+    blockedServices: string = "";
 
     notiFrequency: number = 1;
 }

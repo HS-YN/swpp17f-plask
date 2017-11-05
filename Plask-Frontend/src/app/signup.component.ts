@@ -62,7 +62,10 @@ export class SignUpComponent implements OnInit {
     }
 
     userLocationRefresh(): void {
-        if(this.user.locations == "")    return;
+        if(this.user.locations == "") {
+            this.userLocationList = null;
+            return;
+        }
         this.userLocationList = this.user.locations
             .substr(0, this.user.locations.length-1).split(';');
     }
@@ -104,6 +107,8 @@ export class SignUpComponent implements OnInit {
         this.selectedCountry = country;
         this.provinceRefresh(this.selectedCountry);
         this.cityList = null;
+        this.selectedProvince = "";
+        this.selectedCity = "";
     }
 
     provinceRefresh(country: string): void {
@@ -113,6 +118,7 @@ export class SignUpComponent implements OnInit {
     provinceSelect(province: string): void {
         this.selectedProvince = province;
         this.cityRefresh(this.selectedProvince);
+        this.selectedCity = "";
     }
 
     cityRefresh(province: string): void {
