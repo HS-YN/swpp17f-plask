@@ -21,9 +21,9 @@ export class SignUpComponent implements OnInit {
     ){ }
 
     user = new User();
-    passwordConfirmation = '';
+    passwordConfirmation = ''; //string for password Matching
 
-    userLocationList: string[];
+    userLocationList: string[]; //List for visualizing current user location tags
     countryList: string[];
     provinceList: string[];
     cityList: string[];
@@ -33,8 +33,10 @@ export class SignUpComponent implements OnInit {
     selectedCity: string = "";
 
 
-    serviceList: string[];
-    selectedService: string = "";
+    serviceList: string[]; //List of service tags from Backend
+    userServiceList: string[]; //List for visualizing current user service tags
+    newService: string = ""; //User-input string
+    
 
     ngOnInit(): void{
         this.countryRefresh();
@@ -65,6 +67,7 @@ export class SignUpComponent implements OnInit {
         }
     }
 
+    //Update location tag visualization
     userLocationRefresh(): void {
         if(this.user.locations == "")    return;
         this.userLocationList = this.user.locations
@@ -132,6 +135,10 @@ export class SignUpComponent implements OnInit {
         this.serviceList = serviceListData;
     }
 
+    //Select a Tag from the exisitng list of service tags
+    userServiceSelect(string): void {
+
+    }
 
 
     goToMain(){
