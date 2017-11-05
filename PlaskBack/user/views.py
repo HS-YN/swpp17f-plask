@@ -7,9 +7,15 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .models import UserInfo
+from .models import UserInfo, Service
 from location.models import LocationL1, LocationL2, LocationL3, setLocation
 import json
+
+
+def setService(userinfo, services):
+	for service in services:
+		new_service, _ = Service.objects.get_or_create(name = service)
+		userinfo.services.add(new_service)
 
 def multi_dump(objlist):
 	dumplist = []
@@ -40,10 +46,13 @@ def signup(request):
 		password = req_data['password']
 		locations = multi_load(req_data['locations'])
 		services = req_data['services']
-
+	
+		if User.objects.filter(username = username).exists():
+			return HttpResponse(status = 401)
 		User.objects.create_user(username = username, password = password)
 		new_userinfo = UserInfo(nickname = nickname, is_active = True)
-		new_userinfo.setService(services)
+		new_userinfo.save()
+		setService(new_userinfo, services)
 		try:
 			setLocation(new_userinfo, locations)
 		except UserInfo.DoesNotExist:

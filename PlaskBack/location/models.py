@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import UserInfo
+from user.models import UserInfo, Location
 import csv
 
 class LocationL1(models.Model):
@@ -40,12 +40,14 @@ def getLocationFromCSVFile(path):
 	with open(path) as f:
 		reader = csv.reader(f)
 		for row in reader:
-			level1, _ = LocationL1.objects.get_or_create(loc_code = reader[0], name = reader[1])
-			level2, created = LocationL2.objects.get_or_create(loc_code = reader[0], name = reader[1])
-			level3, _ = LocationL3.objects.get_or_create(loc_code = reader[0], name = reader[1])
+			level1, _ = LocationL1.objects.get_or_create(loc_code = int(row[0]), name = str(row[1]))
+			level2, created = LocationL2.objects.get_or_create(loc_code = int(row[2]), name = str(row[3]))
+			level3, _ = LocationL3.objects.get_or_create(loc_code = int(row[4]), name = str(row[5]))
 			if (created):
 				level2.parent = level1
+				level2.save()
 			level3.parent = level2
+			level3.save()
 
 def setLocation(userinfo, location_list):
 	# assumption: location_list = [[l1, l2, l3], ... ]
@@ -62,10 +64,10 @@ def setLocation(userinfo, location_list):
 			l3 = l2.child.get(name = location[2])
 		except LocationL3.DoesNotExist:
 			raise UserInfo.DoesNotExist
-		l1.persons.add(self)
-		l2.persons.add(self)
-		l3.persons.add(self)
-		new_location, _ = Location.get_or_create(
+		l1.persons.add(userinfo)
+		l2.persons.add(userinfo)
+		l3.persons.add(userinfo)
+		new_location, _ = Location.objects.get_or_create(
 			loc_code1 = l1.loc_code,
 			loc_code2 = l2.loc_code,
 			loc_code3 = l3.loc_code
