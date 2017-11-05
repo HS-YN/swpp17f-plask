@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { User } from './user';
 
 import { UserService } from './user.service';
+import { LocationService } from './location.service';
 
 @Component({
     selector: 'signup',
@@ -16,6 +17,7 @@ export class SignUpComponent implements OnInit {
     constructor(
         private router: Router,
         private userService: UserService,
+        private locationService: LocationService,
     ){ }
 
     user = new User();
@@ -69,7 +71,6 @@ export class SignUpComponent implements OnInit {
             .substr(0, this.user.locations.length-1).split(';');
     }
 
-    //TODO : Save only unique location tag by removing redundant data
     userLocationAdd(): void {
         if(this.selectedCountry == "") {
             alert("Please select country!");
@@ -79,7 +80,7 @@ export class SignUpComponent implements OnInit {
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
 
-        if(this.user.locations.indexOf(newLocation) != -1) {
+        if(this.user.locations.indexOf(newLocation+";") != -1) {
             alert("You've already selected " + newLocation + " !")
             return;
         }

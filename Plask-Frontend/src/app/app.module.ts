@@ -12,7 +12,8 @@ import { MainComponent } from './main.component';
 import { SettingsComponent } from './settings.component';
 
 //Import Service
-import { UserService } from './user.service'
+import { UserService } from './user.service';
+import { LocationService } from './location.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -34,6 +35,7 @@ import { APP_BASE_HREF } from '@angular/common';
     ],
     providers: [
         UserService,
+        LocationService,
         { provide: APP_BASE_HREF, useValue: '/' }
     ],
     bootstrap: [AppComponent]
