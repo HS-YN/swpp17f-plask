@@ -19,6 +19,8 @@ export class SignInComponent {
     ){ }
 
     user = new User;
+    title: string = "Plask!";
+    subtitle: string = "Location-based live Q&A platform"
 
 
     SignIn(){

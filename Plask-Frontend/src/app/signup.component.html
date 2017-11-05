@@ -27,16 +27,48 @@
       <h4> Tags </h4>
       <div class="form-group">
         <label>Locations: </label>
+        <span *ngFor="let userLocation of userLocationList">
+          <span class="label label-success">{{userLocation}}</span>
+          <button class="badge"
+            (click)="userLocationDelete(userLocation); $event.stopPropagation()">
+            x</button> &nbsp;
+          </span>
+        <br>
+        <label> o My country is... </label>
+        <span *ngFor="let country of countryList"
+          [class.selected]="country === selectedCountry"
+          (click)="countrySelect(country)">
+          <button class="badge">{{country}} </button> &nbsp;
+        </span>
+        <br>
+        <label> o My province is... </label>
+        <span *ngFor="let province of provinceList"
+          [class.selected]="province === selectedProvince"
+          (click)="provinceSelect(province)">
+          <button class="badge">{{province}} </button> &nbsp;
+        </span>
+        <br>
+        <label> o My city is... </label>
+        <span *ngFor="let city of cityList"
+          [class.selected]="city === selectedCity"
+          (click)="citySelect(city)">
+          <button class="badge">{{city}} </button> &nbsp;
+        </span>
+        <br>
+        <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
+        <span *ngIf="selectedProvince!=''" class="label label-primary">{{selectedProvince}}</span>
+        <span *ngIf="selectedCity!=''" class="label label-primary">{{selectedCity}}</span>
+        <button (click)="userLocationAdd()">Add!</button><br>
       </div>
       <div class="form-group">
         <label>Services: </label>
       </div>
 
       <div class="form-group">
-        <button class="btn btn-block" (click)="SignUp()"> 
+        <button class="btn btn-block" (click)="SignUp()">
           <span class="glyphicon glyphicon-log-in"></span> Let's Start!</button>
       </div>
-      
+
       <hr>
       <div class="col-md-4 text-center">
         <button class="btn btn-link" (click)="goBack()">Go Back to SignIn</button>

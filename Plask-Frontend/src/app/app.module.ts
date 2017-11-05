@@ -16,21 +16,26 @@ import { UserService } from './user.service'
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { APP_BASE_HREF } from '@angular/common';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    SignInComponent,
-    SignUpComponent,
-    MainComponent,
-    SettingsComponent,
-  ],
-  imports: [
-    BrowserModule,
-    FormsModule,
-    HttpModule,
-    AppRoutingModule,
-  ],
-  providers: [UserService],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        SignInComponent,
+        SignUpComponent,
+        MainComponent,
+        SettingsComponent,
+    ],
+    imports: [
+        BrowserModule,
+        FormsModule,
+        HttpModule,
+        AppRoutingModule,
+    ],
+    providers: [
+        UserService,
+        { provide: APP_BASE_HREF, useValue: '/' }
+    ],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
