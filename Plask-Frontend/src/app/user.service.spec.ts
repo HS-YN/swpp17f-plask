@@ -45,13 +45,13 @@ describe('UserService (mockBackend)', () => {
     describe('when modifying user', () => {
         let backend: MockBackend;
         let service: UserService;
-        let fakeData: User[];
+        let fakeData: User;
         let response: Response;
 
         beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
             backend = be;
             service = new UserService(http);
-            fakeData = userListData;
+            fakeData = userData;
             response = new Response(new ResponseOptions({status: 200, body: {data: fakeData}}));
         }));
 
