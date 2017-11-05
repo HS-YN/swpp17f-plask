@@ -25,4 +25,4 @@ export class SettingsComponent implements OnInit{
     }
 
 
-}
+} /* istanbul ignore next */

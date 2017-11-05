@@ -52,43 +52,46 @@ describe('UserService (mockBackend)', () => {
             backend = be;
             service = new UserService(http);
             fakeData = userData;
-            response = new Response(new ResponseOptions({status: 200, body: {data: fakeData}}));
+            response = new Response(new ResponseOptions({status: 200}));
         }));
 
-        it('should update existing user', async(() => {
+        it('should check existing user', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.getUser().then(user => {
-                user.username = 'Modified';
-                return service.update(user).then(status => {
-                    expect(status).toBe(200);
-                })
-            }).then(() => {
-                return service.getUser();
-            }).then(user => {
-                expect(user.username).toBe('Modified');
+                expect(user).toBeNull();
             });
         }));
+
+        it('can sign in', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.signIn(userData).then(status => {
+                expect(status).toBeNull();
+            });
+        }));
+
+        it('can sign up', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.signUp(fakeData).then(status => {
+                expect(status).toBeUndefined();
+            });
+        }));
+
+        it('can update data', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.update(fakeData).then(status => {
+                expect(status).not.toBeNull();
+            });
+        }));
+
+        it('can sign out', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.signOut().then(status => {
+                expect(status).toBeNull();
+            });
+        }));
+
+        it('can handle error', async(() => {
+            expect(service.handleError).toThrow();
+        }))
     });
-
-    describe('when getUser', () => {
-        let backend: MockBackend;
-        let service: UserService;
-        let fakeData: User;
-        let response: Response;
-
-        beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
-              backend = be;
-              service = new UserService(http);
-              fakeData = userData;
-              let options = new ResponseOptions({status: 200, body: {data: fakeData}});
-              response = new Response(options);
-        }));
-
-        it('should have expected user, ', async(inject([], () => {
-              backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-              service.getUser().then(user => {
-                  expect(user.email).toBe(fakeData.email, 'and should have the email');
-            });
-        })));
-      });
 })

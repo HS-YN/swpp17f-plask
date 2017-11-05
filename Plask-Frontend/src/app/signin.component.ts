@@ -51,4 +51,4 @@ export class SignInComponent implements OnInit {
         this.router.navigate(['/signup']);
     }
 
- }
+ } /* istanbul ignore next */

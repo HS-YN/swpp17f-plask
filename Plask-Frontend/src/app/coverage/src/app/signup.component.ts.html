@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/app/signup.component.ts</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/app</a> signup.component.ts
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">22.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>28/123</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">0% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>0/32</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">4% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>1/25</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">24.11% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>27/112</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line low'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">//Import Basic Modules
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+&nbsp;
+import { User } from './user';
+&nbsp;
+import { UserService } from './user.service';
+import { LocationService } from './location.service';
+&nbsp;
+@Component({
+    selector: 'signup',
+    templateUrl: './signup.component.html',
+    styleUrls: [ './signup.component.css']
+})
+export class SignUpComponent implements OnInit {
+&nbsp;
+<span class="fstat-no" title="function not covered" >    constructor(</span>
+        private <span class="cstat-no" title="statement not covered" >router: Router,</span>
+        private <span class="cstat-no" title="statement not covered" >userService: UserService,</span>
+        private <span class="cstat-no" title="statement not covered" >locationService: LocationService,</span>
+    ){ }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    user = new User();</span>
+<span class="cstat-no" title="statement not covered" >    passwordConfirmation = ''; </span>//string for password Matching
+&nbsp;
+    userLocationList: string[]; //List for visualizing current user location tags
+    countryList: string[];
+    provinceList: string[];
+    cityList: string[];
+&nbsp;
+<span class="cstat-no" title="statement not covered" >    selectedCountry: string = "";</span>
+<span class="cstat-no" title="statement not covered" >    selectedProvince: string = "";</span>
+<span class="cstat-no" title="statement not covered" >    selectedCity: string = "";</span>
+&nbsp;
+&nbsp;
+    serviceList: string[]; //List of service tags from Backend
+    userServiceList: string[]; //List for visualizing current user service tags
+<span class="cstat-no" title="statement not covered" >    newService: string = ''; </span>//User-input string
+&nbsp;
+&nbsp;
+<span class="fstat-no" title="function not covered" >    ngOnInit(): void{</span>
+<span class="cstat-no" title="statement not covered" >        this.countryRefresh();</span>
+<span class="cstat-no" title="statement not covered" >        this.serviceRefresh();</span>
+    }
+&nbsp;
+    //Create a new User Account
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    SignUp(): void {</span></span>
+<span class="cstat-no" title="statement not covered" >        if(this.ValidatePassword()){</span>
+<span class="cstat-no" title="statement not covered" >            this.userService.signUp(this.user)</span>
+                .then(<span class="fstat-no" title="function not covered" >Status =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                    if(Status == 201) { <span class="cstat-no" title="statement not covered" >this.goToMain() </span>}</span>
+                    else { <span class="cstat-no" title="statement not covered" >alert("You cannot signup with this information.") </span>}
+                });
+        }
+        else{
+<span class="cstat-no" title="statement not covered" >            alert ("Password is Different!")</span>
+        }
+    }
+&nbsp;
+    //Validate Password Match
+<span class="fstat-no" title="function not covered" >    ValidatePassword(): boolean {</span>
+<span class="cstat-no" title="statement not covered" >        if (this.user.password == this.passwordConfirmation){</span>
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+        else{
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+    }
+&nbsp;
+    //Methods for Location Tags
+&nbsp;
+    //Update location tag visualization
+<span class="fstat-no" title="function not covered" >    userLocationRefresh(): void {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.user.locations == "") {</span>
+<span class="cstat-no" title="statement not covered" >            this.userLocationList = null;</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.userLocationList = this.user.locations</span>
+            .substr(0, this.user.locations.length-1).split(';');
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    userLocationAdd(): void {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.selectedCountry == "") {</span>
+<span class="cstat-no" title="statement not covered" >            alert("Please select country!");</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+        var newLocation: string = <span class="cstat-no" title="statement not covered" >this.selectedCountry;</span>
+<span class="cstat-no" title="statement not covered" >        if(this.selectedProvince != "")    <span class="cstat-no" title="statement not covered" >newLocation = newLocation + '/' + this.selectedProvince;</span></span>
+<span class="cstat-no" title="statement not covered" >        if(this.selectedCity != "")    <span class="cstat-no" title="statement not covered" >newLocation = newLocation + '/' + this.selectedCity;</span></span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        if(this.user.locations.indexOf(newLocation+";") != -1) {</span>
+<span class="cstat-no" title="statement not covered" >            alert("You've already selected " + newLocation + " !")</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+&nbsp;
+<span class="cstat-no" title="statement not covered" >        this.user.locations = this.user.locations + newLocation + ';';</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedCountry = "";</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedProvince = "";</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedCity = "";</span>
+<span class="cstat-no" title="statement not covered" >        this.userLocationRefresh();</span>
+<span class="cstat-no" title="statement not covered" >        this.provinceList = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.cityList = null;</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    userLocationDelete(</span>deleteLocation: string): void {
+<span class="cstat-no" title="statement not covered" >        deleteLocation = deleteLocation + ';';</span>
+<span class="cstat-no" title="statement not covered" >        this.user.locations = this.user.locations.replace(deleteLocation, '');</span>
+<span class="cstat-no" title="statement not covered" >        this.userLocationRefresh();</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    countryRefresh(): void {</span></span>
+        //this.countryList = countryListData;
+<span class="cstat-no" title="statement not covered" >        this.locationService.getCountryList().then(<span class="fstat-no" title="function not covered" >country =&gt; {</span></span>
+<span class="cstat-no" title="statement not covered" >            if(country.length &lt;= 0) <span class="cstat-no" title="statement not covered" >this.countryList = null;</span></span>
+            else    <span class="cstat-no" title="statement not covered" >this.countryList = country.substr(0, country.length-1)</span>
+                .split(';');
+        })
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    countrySelect(</span>country: string): void {
+<span class="cstat-no" title="statement not covered" >        this.selectedCountry = country;</span>
+<span class="cstat-no" title="statement not covered" >        this.provinceRefresh(this.selectedCountry);</span>
+<span class="cstat-no" title="statement not covered" >        this.cityList = null;</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedProvince = "";</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedCity = "";</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    provinceRefresh(</span>country: string): void {</span>
+        //this.provinceList = provinceListData;
+<span class="cstat-no" title="statement not covered" >        this.locationService.getLocationList(this.selectedCountry)</span>
+            .then(<span class="fstat-no" title="function not covered" >province =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                if(province.length &lt;= 0) <span class="cstat-no" title="statement not covered" >this.provinceList = null;</span></span>
+                else    <span class="cstat-no" title="statement not covered" >this.provinceList = province</span>
+                    .substr(0,province.length-1).split(';');
+            })
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    provinceSelect(</span>province: string): void {
+<span class="cstat-no" title="statement not covered" >        this.selectedProvince = province;</span>
+<span class="cstat-no" title="statement not covered" >        this.cityRefresh(this.selectedProvince);</span>
+<span class="cstat-no" title="statement not covered" >        this.selectedCity = "";</span>
+    }
+&nbsp;
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >    cityRefresh(</span>province: string): void {</span>
+        //this.cityList = cityListData;
+        var address: string = <span class="cstat-no" title="statement not covered" >this.selectedCountry + '/' + this.selectedProvince;</span>
+<span class="cstat-no" title="statement not covered" >        this.locationService.getLocationList(address)</span>
+            .then(<span class="fstat-no" title="function not covered" >city =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >                if(city.length &lt;= 0) <span class="cstat-no" title="statement not covered" >this.cityList = null;</span></span>
+                else    <span class="cstat-no" title="statement not covered" >this.cityList = city.substr(0,city.length-1).split(';');</span>
+            })
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    citySelect(</span>city: string): void {
+<span class="cstat-no" title="statement not covered" >        this.selectedCity = city;</span>
+    }
+&nbsp;
+&nbsp;
+    //Methods for Service Tags
+&nbsp;
+    //Update service tag visualization
+<span class="fstat-no" title="function not covered" >    userServiceRefresh(): void {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.user.services == '') {</span>
+<span class="cstat-no" title="statement not covered" >            this.userServiceList = null;</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.userServiceList = this.user.services</span>
+            .substr(0, this.user.services.length-1).split(';');
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    serviceRefresh(): void {</span>
+        //TODO: replace serviceListData with serviceService
+<span class="cstat-no" title="statement not covered" >        this.serviceList = serviceListData;</span>
+    }
+&nbsp;
+    //Select a Tag from the exisitng list of service tags
+<span class="fstat-no" title="function not covered" >    userServiceSelect(</span>service: string): void {
+        var validity_check: string = <span class="cstat-no" title="statement not covered" >service + ';';</span>
+<span class="cstat-no" title="statement not covered" >        if (this.user.services.indexOf(validity_check) != -1){</span>
+<span class="cstat-no" title="statement not covered" >            alert("Tag Already Added!");</span>
+<span class="cstat-no" title="statement not covered" >            return;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        this.user.services = this.user.services + service + ';';</span>
+<span class="cstat-no" title="statement not covered" >        this.userServiceRefresh();</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    userServiceDelete(</span>deleteService: string): void {
+<span class="cstat-no" title="statement not covered" >        deleteService = deleteService + ';';</span>
+<span class="cstat-no" title="statement not covered" >        this.user.services = this.user.services.replace(deleteService, '');</span>
+<span class="cstat-no" title="statement not covered" >        this.userServiceRefresh();</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    userServiceAdd(): void {</span>
+<span class="cstat-no" title="statement not covered" >        if(this.newService == ""){</span>
+<span class="cstat-no" title="statement not covered" >            alert("Tag is Empty!");</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (this.newService.indexOf(";") != -1){</span>
+<span class="cstat-no" title="statement not covered" >            alert("You cannot use SemiColon!");</span>
+        }
+        else <span class="cstat-no" title="statement not covered" >if (this.serviceList.indexOf(this.newService) != -1){</span>
+<span class="cstat-no" title="statement not covered" >            alert("Tag already Exists!");</span>
+        }
+        else{
+<span class="cstat-no" title="statement not covered" >            this.userServiceSelect(this.newService);</span>
+<span class="cstat-no" title="statement not covered" >            this.newService = "";</span>
+        }
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    goToMain(){</span>
+<span class="cstat-no" title="statement not covered" >        this.router.navigate(['/main']);</span>
+    }
+&nbsp;
+<span class="fstat-no" title="function not covered" >    goBack(){</span>
+<span class="cstat-no" title="statement not covered" >        this.router.navigate(['/signin']);</span>
+    }
+&nbsp;
+} /* istanbul ignore next */
+&nbsp;
+/*
+// Mock data for checking location tag functionality
+const countryListData = [
+    'South Korea',
+    'Japan',
+    'France',
+    'Russia'
+]
+&nbsp;
+const provinceListData = [
+    'Seoul',
+    'Busan',
+    'Gyeonggi-do'
+]
+&nbsp;
+const cityListData = [
+    'Gwanak',
+    'Gangseo',
+    'Gangnam'
+]
+*/
+// Mock Data for checking service tag functionality
+const serviceListData = [
+    'Travel',
+    'Cafe',
+    'SNU',
+    'Pub',
+]
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sun Nov 05 2017 18:28:09 GMT+0900 (KST)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>

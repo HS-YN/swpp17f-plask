@@ -33,4 +33,4 @@ export class MainComponent implements OnInit{
         this.userService.signOut().then(() => this.router.navigate(['/signin']));
     }
 
-}
+}/* istanbul ignore next */
