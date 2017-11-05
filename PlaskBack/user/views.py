@@ -14,23 +14,31 @@ import json
 
 
 def setService(userinfo, services):
+	userinfo.services.clear()
 	for service in services:
 		new_service, _ = Service.objects.get_or_create(name = service)
 		userinfo.services.add(new_service)
+		userinfo.save()
 
-def multi_dump(objlist):
-	dumplist = []
-	for obj in objlist:
-		dumplist.append (json.dumps(obj))
-	return json.dumps(dumplist)
-#	return dumplist
+def getLocationStr(userinfo):
+	result = ''
+	for location in list(userinfo.locations.all()):
+		loc_code1 = location.loc_code1
+		loc_code2 = location.loc_code2
+		loc_code3 = location.loc_code3
+		
+		loc_name1 = LocationL1.objects.get(loc_code = loc_code1).name
+		loc_name2 = LocationL2.objects.get(loc_code = loc_code2).name
+		loc_name3 = LocationL3.objects.get(loc_code = loc_code3).name
+		
+		result = result + loc_name1 + '/' + loc_name2 + '/' + loc_name3 + ';'
+	return result
 
-def multi_load(dumplist):
-	dumplist = json.loads(dumplist)
-	objlist = []
-	for dump in dumplist:
-		objlist.append (json.loads(dump))
-	return objlist
+def getServiceStr(userinfo):
+	result = ''
+	for service in list(userinfo.services.all()):
+		result = result + service.name + ';'
+	return result
 
 @ensure_csrf_cookie
 def token(request):
@@ -85,7 +93,7 @@ def signup(request):
 def signin(request):
 	if request.method == 'POST':
 		req_data = json.loads(request.body.decode())
-		username = req_data['username']
+		username = req_data['email']
 		password = req_data['password']
 		user = authenticate(request, username = username, password = password)
 		if user is not None:
@@ -103,33 +111,45 @@ def signout(request):
 		return HttpResponse(status = 204)
 	else:
 		return HttpResponseNotAllowed(['GET'])
-'''
+
 def userinfo(request):
 	if request.method == 'GET':
 		# get userinfo - assume logged in
 		if request.user is not None:
 			userinfo = UserInfo.objects.get(id = request.user.id)
-			return JsonResponse (model_to_dict (userinfo))
+			result = {}
+			result['username'] = userinfo.nickname
+			result['locations'] = getLocationStr(userinfo)
+			result['services'] = getServiceStr(userinfo)
+			return JsonResponse (result)
 		else:
-			return HttpResponse(status = 403)
+			return HttpResponse(status = 401)
 
 	elif request.method == 'PUT':
 		# put userinfo - assume logged in
-		if request.user is not None:
-			req_data = json.loads(request.body.decode())
-			location1 = req_data['location1']
-			location2 = req_data['location2']
-			location3 = req_data['location3']
-			
-			userinfo = UserInfo.objects.get(id = request.user.id)
-			userinfo.location1 = location1
-			userinfo.location2 = location2
-			userinfo.location3 = location3
-			userinfo.save()
-			return HttpResponse(status = 204)
-		else:
-			return HttpResponse(status = 403)
+		if request.user is None:
+			return HttpResponse(status = 401)
+		user = request.user
+
+		# TODO make it put
+		req_data = json.loads(request.body.decode())
+		password = req_data['password']
+		locations = req_data['locations']
+		services = req_data['services']
+	
+		user.set_password(password)
+		userinfo = UserInfo.objects.get(id = user.id)
+		services = servParse(services)
+		setService(userinfo, services)
+		locations = locParse(locations)
+		try:
+			setLocation(userinfo, locations)
+		except UserInfo.DoesNotExist:
+			return HttpResponse(status = 404)
+		userinfo.save ()
+		user.save()
+		return HttpResponse(status = 204)
 
 	else:
 		return HttpResponseNotAllowed(['GET', 'PUT'])
-'''
+

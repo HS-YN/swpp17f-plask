@@ -51,8 +51,8 @@ def getLocationFromCSVFile(path):
 
 def setLocation(userinfo, location_list):
 	# assumption: location_list = [[l1, l2, l3], ... ]
+	userinfo.locations.clear()
 	for location in location_list:
-		print (location)
 		try:
 			l1 = LocationL1.objects.get(name = location[0])
 		except LocationL1.DoesNotExist:
@@ -66,14 +66,22 @@ def setLocation(userinfo, location_list):
 		except LocationL3.DoesNotExist:
 			raise UserInfo.DoesNotExist
 		l1.persons.add(userinfo)
+		l1.save()
 		l2.persons.add(userinfo)
+		l2.save()
 		l3.persons.add(userinfo)
+		l3.save()
+#		print (l1.loc_code)
+#		print (l2.loc_code)
+#		print (l3.loc_code)
 		new_location, _ = Location.objects.get_or_create(
 			loc_code1 = l1.loc_code,
 			loc_code2 = l2.loc_code,
 			loc_code3 = l3.loc_code
 		)
 		userinfo.locations.add(new_location)
+#		print (userinfo.locations.all())
+		userinfo.save()
 
 def locParse(instr) :
 	loclist = servParse(instr)
@@ -84,8 +92,9 @@ def locParse(instr) :
 		loc = loc.replace('/', ' ')
 		tokens = loc.split()
 		for tok in tokens :
-			tok = str(tok).replace('<!?>', ' ')
-			semiResult.append(tok)
+			if tok is not None:
+				tok = str(tok).replace('<!?>', ' ')
+				semiResult.append(tok)
 		result.append(semiResult)
 	return result
 
@@ -95,7 +104,8 @@ def servParse(instr) :
 	tokens = instr.split()
 	result = []
 	for tok in tokens :
-		tok = str(tok).replace('<!?>', ' ')
-		result.append(tok)
+		if tok is not None:
+			tok = str(tok).replace('<!?>', ' ')
+			result.append(tok)
 	return result
 
