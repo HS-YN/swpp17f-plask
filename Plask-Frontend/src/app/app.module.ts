@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+//import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 //Import Components
 import { AppComponent } from './app.component';
@@ -36,8 +37,14 @@ import { APP_BASE_HREF } from '@angular/common';
     providers: [
         UserService,
         LocationService,
-        { provide: APP_BASE_HREF, useValue: '/' }
+        { provide: APP_BASE_HREF, useValue: '/' },
+    //    { provide: XSRFStrategy, useFactory: cookieStrategy},
+
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+//export function cookieStrategy(){
+//    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
+//}

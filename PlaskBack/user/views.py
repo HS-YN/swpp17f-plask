@@ -70,7 +70,7 @@ def signup(request):
 			setLocation(new_userinfo, locations)
 		except UserInfo.DoesNotExist:
 			return HttpResponse(status = 404)
-		new_userinfo.save ()
+		new_userinfo.save()
 		return HttpResponse(status = 201)
 	
 	elif request.method == 'DELETE':
