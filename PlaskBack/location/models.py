@@ -48,3 +48,23 @@ def getLocationFromCSVFile(path):
 				level2.parent = level1
 			level3.parent = level2
 
+def locParse(instr) :
+    loclist = servParse(instr)
+    result = []
+    for loc in loclist :
+        semiResult = []
+        loc = loc.replace('/', ' ')
+        tokens = loc.split()
+        for tok in tokens :
+            semiResult.append(tok)
+        result.append(semiResult)
+    return result
+
+def servParse(instr) : 
+    instr = instr.replace(';', ' ')
+    tokens = instr.split()
+    result = []
+    for tok in tokens :
+        result.append(tok)
+    return result
+
