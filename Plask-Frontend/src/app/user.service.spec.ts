@@ -42,6 +42,16 @@ describe('UserService (mockBackend)', () => {
           expect(backend).not.toBeNull('backend should be provided');
       }));
 
+    describe('when instantiating user', () => {
+        it('shoule have default values', () => {
+            let user: User = new User;
+            expect(user.locations).toBe('');
+            expect(user.blockedServices).toBe('');
+            expect(user.services).toBe('');
+            expect(user.notiFrequency).toBe(1);
+        })
+    })
+
     describe('when modifying user', () => {
         let backend: MockBackend;
         let service: UserService;

@@ -19,10 +19,7 @@ describe('AppComponent', () => {
     }));
 
     it('can be instantiated', () => {
-      expect(comp).not.toBeNull();
-    });
-
-    it('should create the app', async(() => {
+        expect(comp).not.toBeNull();
         expect(comp).toBeTruthy();
-    }));
+    });
 });
