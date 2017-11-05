@@ -214,7 +214,7 @@ export class SignUpComponent implements OnInit {
         this.router.navigate(['/signin']);
     }
 
-}
+} /* istanbul ignore next */
 
 /*
 // Mock data for checking location tag functionality

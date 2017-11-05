@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, XSRFStrategy } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -14,6 +14,7 @@ export class UserService{
     private signUpUrl = '/api/user/signup'; //URL to signup
     private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
+    private tokenUrl = '/api/user/token';
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
@@ -30,7 +31,7 @@ export class UserService{
         return this.http
             .post(this.signUpUrl, JSON.stringify(user), {headers: this.headers})
             .toPromise()
-            .then(res => { console.log(res.json());res.json() as number})
+            .then(res => { res.json() as number})
             .catch(this.handleError);
     }
 
@@ -50,9 +51,9 @@ export class UserService{
             .catch(this.handleError);
     }
 
-    private handleError(error: any): Promise<any>{
+    handleError(error: any): Promise<any>{
         console.error('An error occured', error);
-        return Promise.reject(error.message || error);
+        return Promise.reject(error.message);
     }
 
 }/* istanbul ignore next */
