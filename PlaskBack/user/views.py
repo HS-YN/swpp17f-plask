@@ -8,7 +8,8 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
 from .models import UserInfo, Service
-from location.models import LocationL1, LocationL2, LocationL3, setLocation
+from location.models import LocationL1, LocationL2, LocationL3
+from location.models import locParse, servParse, setLocation
 import json
 
 
@@ -44,46 +45,26 @@ def signup(request):
 		username = req_data['email']
 		nickname = req_data['username']
 		password = req_data['password']
-		locations = multi_load(req_data['locations'])
+		locations = req_data['locations']
 		services = req_data['services']
 	
 		if User.objects.filter(username = username).exists():
 			return HttpResponse(status = 401)
+		# TODO reuse anonymous user db for signup => next sprint
 		User.objects.create_user(username = username, password = password)
 		new_userinfo = UserInfo(nickname = nickname, is_active = True)
 		new_userinfo.save()
+
+		services = servParse(services)
 		setService(new_userinfo, services)
+		locations = locParse(locations)
 		try:
 			setLocation(new_userinfo, locations)
 		except UserInfo.DoesNotExist:
 			return HttpResponse(status = 404)
 		new_userinfo.save ()
 		return HttpResponse(status = 201)
-		'''try:
-			# Check Username Uniqueness
-			User.objects.get(username = username)
-			return HttpResponse(status = 412)
-		except User.DoesNotExist:
-			try:
-				# Optimization: creating User with AnonymousUser(Reuse DB)
-				new_user = User.objects.get(is_acitve = False)
-				new_user.username = username
-				new_user.is_active = True
-				new_user.set_password(password)
-				new_user.save()
-				new_userinfo = UserInfo.get(id = new_user.id)
-				new_userinfo.nickname = nickname
-				new_userinfo.is_active = True
-			except User.DoesNotExist:
-				new_user = User.objects.create_user(username = username, password = password)
-				new_userinfo = UserInfo(nickname = nickname, is_active = True)
-			new_userinfo.setService(services)
-			try:
-				setLocation(new_userinfo, locations)
-			except UserInfo.DoesNotExist:
-				return HttpResponse(status = 404)
-			new_userinfo.save ()
-			return HttpResponse(status = 201)	'''
+	
 	elif request.method == 'DELETE':
 		# remove user - assume logged in
 		if request.user is not None:

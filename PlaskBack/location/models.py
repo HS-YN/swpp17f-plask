@@ -52,6 +52,7 @@ def getLocationFromCSVFile(path):
 def setLocation(userinfo, location_list):
 	# assumption: location_list = [[l1, l2, l3], ... ]
 	for location in location_list:
+		print (location)
 		try:
 			l1 = LocationL1.objects.get(name = location[0])
 		except LocationL1.DoesNotExist:
@@ -73,3 +74,28 @@ def setLocation(userinfo, location_list):
 			loc_code3 = l3.loc_code
 		)
 		userinfo.locations.add(new_location)
+
+def locParse(instr) :
+	loclist = servParse(instr)
+	result = []
+	for loc in loclist :
+		semiResult = []
+		loc = loc.replace(' ', '<!?>')
+		loc = loc.replace('/', ' ')
+		tokens = loc.split()
+		for tok in tokens :
+			tok = str(tok).replace('<!?>', ' ')
+			semiResult.append(tok)
+		result.append(semiResult)
+	return result
+
+def servParse(instr) :
+	instr = instr.replace(' ', '<!?>')
+	instr = instr.replace(';', ' ')
+	tokens = instr.split()
+	result = []
+	for tok in tokens :
+		tok = str(tok).replace('<!?>', ' ')
+		result.append(tok)
+	return result
+

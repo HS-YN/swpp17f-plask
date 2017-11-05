@@ -20,12 +20,12 @@ class UserTestCase(TestCase):
 				'email': 'PlaskTest1@snu.ac.kr',
 				'username': 'PlaskTest1',
 				'password': '123123',
-				'locations': multi_dump([['South Korea', 'Busan', 'Buk'], ['South Korea', 'Busan', 'Busanjin']]),
-				'services': ['coffee', 'pizza']
+				'locations': 'South Korea/Busan/Buk;South Korea/Busan/Busanjin',
+				'services': 'coffee;pizza;'
 				}),
 			content_type = 'application/json',
 			HTTP_X_CSRFTOKEN = csrftoken)
-		
+	
 	def test_signin_ok(self):
 		response = self.client.post('/api/user/signin', json.dumps({'username': 'PlaskTest1@snu.ac.kr', 'password': '123123'}), content_type = 'application.json')
 		self.assertEqual(response.status_code, 204)

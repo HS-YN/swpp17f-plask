@@ -20,7 +20,3 @@ class UserInfo(models.Model):
 		related_name = 'users'
 	)
 
-def setServce(userinfo, service_list):
-	for service in service_list:
-		new_service, _ = Service.get_or_create(name = service)
-		userinfo.services.add(new_service)
