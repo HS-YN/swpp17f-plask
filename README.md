@@ -10,6 +10,6 @@
 ### Frontend: (run the following commands in Plask-Frontend folder)
             ng test --code-coverage
             http-server -c-1 -o -p 9876 ./coverage
-### Backend: (Type in the following commands in PlaskBack folder)
-            coverage run --branch --source='./user' manage.py test user
+### Backend: (Type in the following commands in PlaskBack folder / Test for each app)
+            coverage run --branch --source='./(app_name)' manage.py test (app_name)
             coverage report
