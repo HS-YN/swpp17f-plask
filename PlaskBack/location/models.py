@@ -50,37 +50,47 @@ def getLocationFromCSVFile(path):
 			level3.save()
 
 def setLocation(userinfo, location_list):
-	# assumption: location_list = [[l1, l2, l3], ... ]
 	userinfo.locations.clear()
 	for location in location_list:
+		loc_length = len (location)
 		try:
 			l1 = LocationL1.objects.get(name = location[0])
 		except LocationL1.DoesNotExist:
 			raise UserInfo.DoesNotExist
-		try:
-			l2 = l1.child.get(name = location[1])
-		except LocationL2.DoesNotExist:
-			raise UserInfo.DoesNotExist
-		try:
-			l3 = l2.child.get(name = location[2])
-		except LocationL3.DoesNotExist:
-			raise UserInfo.DoesNotExist
 		l1.persons.add(userinfo)
 		l1.save()
-		l2.persons.add(userinfo)
-		l2.save()
-		l3.persons.add(userinfo)
-		l3.save()
-#		print (l1.loc_code)
-#		print (l2.loc_code)
-#		print (l3.loc_code)
+		loc_code_l1 = l1.loc_code
+		
+		loc_length = loc_length - 1
+		if loc_length > 0:
+			try:
+				l2 = l1.child.get(name = location[1])
+			except LocationL2.DoesNotExist:
+				raise UserInfo.DoesNotExist
+			l2.persons.add(userinfo)
+			l2.save()
+			loc_code_l2 = l2.loc_code
+		else:
+			loc_code_l2 = -1
+
+		loc_length = loc_length - 1
+		if loc_length > 0:
+			try:
+				l3 = l2.child.get(name = location[2])
+			except LocationL3.DoesNotExist:
+				raise UserInfo.DoesNotExist
+			l3.persons.add(userinfo)
+			l3.save()
+			loc_code_l3 = l3.loc_code
+		else:
+			loc_code_l3 = -1
+
 		new_location, _ = Location.objects.get_or_create(
-			loc_code1 = l1.loc_code,
-			loc_code2 = l2.loc_code,
-			loc_code3 = l3.loc_code
+			loc_code1 = loc_code_l1,
+			loc_code2 = loc_code_l2,
+			loc_code3 = loc_code_l3
 		)
 		userinfo.locations.add(new_location)
-#		print (userinfo.locations.all())
 		userinfo.save()
 
 def locParse(instr) :
