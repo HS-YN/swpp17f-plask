@@ -46,7 +46,7 @@ class UserTestCase(TestCase):
                 '/api/user/userinfo',
                 json.dumps({
                     'password': '456456',
-                    'locations': 'South Korea/Busan/Buk',
+                    'locations': 'South Korea/Busan/Buk;South Korea;South Korea/Seoul;',
                     'services': 'coffee;pizza;microsoft;hell;swpp'
                     }),
                 content_type = 'application/json'
@@ -58,7 +58,10 @@ class UserTestCase(TestCase):
         loc = list(userinfo.locations.all())
 
         self.assertEqual (len(serv), 5)
-        self.assertEqual (len(loc), 1)
+        self.assertEqual (len(loc), 3)
+        print (str(loc[0].loc_code1) + "/" + str(loc[0].loc_code2) + "/" + str(loc[0].loc_code3))
+        print (str(loc[1].loc_code1) + "/" + str(loc[1].loc_code2) + "/" + str(loc[1].loc_code3))
+        print (str(loc[2].loc_code1) + "/" + str(loc[2].loc_code2) + "/" + str(loc[2].loc_code3))
 
     def test_get_loc_list(self):
         response = self.client.get('/api/location/countries', content_type = 'application.json')
