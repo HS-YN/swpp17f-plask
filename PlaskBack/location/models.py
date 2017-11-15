@@ -98,24 +98,18 @@ def locParse(instr) :
 	result = []
 	for loc in loclist :
 		semiResult = []
-		loc = loc.replace(' ', '<!?>')
-		loc = loc.replace('/', ' ')
-		tokens = loc.split()
+		tokens = loc.split('/')
 		for tok in tokens :
 			if tok is not None:
-				tok = str(tok).replace('<!?>', ' ')
 				semiResult.append(tok)
 		result.append(semiResult)
 	return result
 
 def servParse(instr) :
-	instr = instr.replace(' ', '<!?>')
-	instr = instr.replace(';', ' ')
-	tokens = instr.split()
+	tokens = instr.split(';')
 	result = []
 	for tok in tokens :
 		if tok is not None:
-			tok = str(tok).replace('<!?>', ' ')
 			result.append(tok)
 	return result
 
