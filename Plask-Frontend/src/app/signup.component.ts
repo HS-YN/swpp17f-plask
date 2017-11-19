@@ -208,7 +208,7 @@ export class SignUpComponent implements OnInit {
     }
     
 
-//Methods For Blocked Service Tags
+    //Methods For Blocked Service Tags
     userBlockedServiceDelete(deleteService: string): void {
         deleteService = deleteService + ';';
         this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');

@@ -7,6 +7,7 @@ import { SignInComponent } from './signin.component';
 import { MainComponent } from './main.component';
 import { SignUpComponent } from './signup.component';
 import { SettingsComponent } from './settings.component';
+import { MainTabComponent } from './maintab.component';
 
 //Routes between Components
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
     { path: 'signup', component: SignUpComponent },
     { path: 'main', component: MainComponent},
     { path: 'settings', component: SettingsComponent },
+    { path: 'main/maintab', component: MainTabComponent},
 
 
 ];
@@ -29,5 +31,4 @@ const routes: Routes = [
     ]
 
 })
-
 export class AppRoutingModule {}
