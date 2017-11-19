@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 
 from user.models import UserInfo, Location, Service
+from user.views import servParse, locParse
 from .models import Question, Answer
 
 from datetime import datetime
@@ -26,14 +27,15 @@ def login_required(function=None, redirect_field_name=None):
 @login_required
 def question(request):
     if request.method == 'GET':
-        author = User.objects.get(username=request.user.username)
+        author = UserInfo.objects.get(id=request.user.id)
         return JsonResponse(
-            list(Question.objects.filter(author=author).values()), safe=False)
+            list(author.questions.all().values()), safe=False)
     elif request.method == 'POST':
-        author = User.objects.get(username=request.user.username)
+        author = UserInfo.objects.get(id=request.user.id)
         content = json.loads(request.body.decode())['content']
-        locations = json.loads(request.body.decode())['locations']
-        services = json.loads(request.body.decode())['services']
+        locations = locParse(json.loads(request.body.decode())['locations'])
+        services = servParse(json.loads(request.body.decode())['services'])
+        # TODO: fix getting locations and services(match from string to id)
         new_question = Question(
             author=author, content=content, time=datetime.now(),
             locations=locations, services=services)
@@ -41,7 +43,28 @@ def question(request):
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
-# TODO: after integration, need to check validity of locations and services.
 
 
-def question_pushed():
+@login_required
+def question_recent(request):
+    pass
+
+
+@login_required
+def question_related(request):
+    pass
+
+
+@login_required
+def question_search(request):
+    pass
+
+
+@login_required
+def question_answer(request):
+    pass
+
+
+@login_required
+def answer(request, question_id):
+    pass
