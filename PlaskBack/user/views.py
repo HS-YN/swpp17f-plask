@@ -9,9 +9,27 @@ from django.contrib.auth.models import User
 
 from .models import UserInfo, Service
 from location.models import LocationL1, LocationL2, LocationL3
-from location.models import locParse, servParse, setLocation
+from location.models import setLocation
 import json
 
+def tokenWith(string, tokstr):
+	tokens = string.split(tokstr)
+	result = []
+	for tok in tokens:
+		if tok is not None and tok != '':
+			result.append (tok)
+	return result
+
+def servParse(servstr):
+	return tokenWith(servstr, ';')
+
+def locParse(locstr):
+	loclist = tokenWith(locstr, ';')
+	result = []
+	for loc in loclist:
+		subResult = tokenWith(loc, '/')
+		result.append (subResult)
+	return result
 
 def setService(userinfo, services):
 	userinfo.services.clear()

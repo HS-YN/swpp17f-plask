@@ -93,23 +93,3 @@ def setLocation(userinfo, location_list):
 		userinfo.locations.add(new_location)
 		userinfo.save()
 
-def locParse(instr) :
-	loclist = servParse(instr)
-	result = []
-	for loc in loclist :
-		semiResult = []
-		tokens = loc.split('/')
-		for tok in tokens :
-			if tok is not None:
-				semiResult.append(tok)
-		result.append(semiResult)
-	return result
-
-def servParse(instr) :
-	tokens = instr.split(';')
-	result = []
-	for tok in tokens :
-		if tok is not None:
-			result.append(tok)
-	return result
-
