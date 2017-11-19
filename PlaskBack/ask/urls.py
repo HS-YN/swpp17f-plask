@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from blog import views
+from ask import views
 
 urlpatterns = [
     url('^ask/question$', views.question, name='question'),
@@ -10,6 +10,6 @@ urlpatterns = [
     url('^ask/question/search$', views.question_search,
         name='question_search'),
     url('^ask/question/answer$', views.question_answer,
-        qname='question_answer'),
+        name='question_answer'),
     url('^ask/answer/(?P<question_id>[0-9]+)$', views.answer, name='answer')
 ]

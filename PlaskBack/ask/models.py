@@ -6,7 +6,7 @@ class Question(models.Model):
     content = models.TextField()
     time = models.TimeField()
     author = models.ForeignKey(
-        'UserInfo',
+        UserInfo,
         related_name='questions',
         null=True
     )
@@ -25,11 +25,11 @@ class Answer(models.Model):
     time = models.TimeField()
     question = models.ForeignKey(
         'Question',
-        releate_name='answers',
+        related_name='answers',
         null=True
     )
     author = models.ForeignKey(
-        'UserInfo',
+        UserInfo,
         related_name='answers',
         null=True
     )

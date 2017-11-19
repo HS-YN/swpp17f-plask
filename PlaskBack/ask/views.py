@@ -8,7 +8,7 @@ from user.models import UserInfo, Location, Service
 from user.views import servParse, locParse
 from .models import Question, Answer
 
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import json
 
@@ -47,7 +47,13 @@ def question(request):
 
 @login_required
 def question_recent(request):
-    pass
+    if request.method == 'GET':
+        yesterday = datetime.now() - timedelta(1)
+        return JsonResponse(
+            list(Question.objects.filter(time >= yesterday).values()),
+            safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 
 @login_required
