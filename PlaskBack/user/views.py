@@ -6,10 +6,54 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 
-from .models import UserInfo, Service
+from .models import UserInfo, Service, Location
 from location.models import LocationL1, LocationL2, LocationL3
-from location.models import setLocation
+# from location.models import setLocation
 import json
+
+def setLocation(userinfo, location_list):
+	userinfo.locations.clear()
+	for location in location_list:
+		loc_length = len (location)
+		try:
+			l1 = LocationL1.objects.get(name = location[0])
+		except LocationL1.DoesNotExist:
+			raise UserInfo.DoesNotExist
+		l1.persons.add(userinfo)
+		l1.save()
+		loc_code_l1 = l1.loc_code
+
+		loc_length = loc_length - 1
+		if loc_length > 0:
+			try:
+				l2 = l1.child.get(name = location[1])
+			except LocationL2.DoesNotExist:
+				raise UserInfo.DoesNotExist
+			l2.persons.add(userinfo)
+			l2.save()
+			loc_code_l2 = l2.loc_code
+		else:
+			loc_code_l2 = -1
+
+		loc_length = loc_length - 1
+		if loc_length > 0:
+			try:
+				l3 = l2.child.get(name = location[2])
+			except LocationL3.DoesNotExist:
+				raise UserInfo.DoesNotExist
+			l3.persons.add(userinfo)
+			l3.save()
+			loc_code_l3 = l3.loc_code
+		else:
+			loc_code_l3 = -1
+
+		new_location, _ = Location.objects.get_or_create(
+			loc_code1 = loc_code_l1,
+			loc_code2 = loc_code_l2,
+			loc_code3 = loc_code_l3
+		)
+		userinfo.locations.add(new_location)
+		userinfo.save()
 
 def tokenWith(string, tokstr):
 	tokens = string.split(tokstr)
