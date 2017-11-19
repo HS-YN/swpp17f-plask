@@ -11,6 +11,7 @@ class Service(models.Model):
 class UserInfo(models.Model):
 	nickname = models.CharField(max_length = 100, default = '')
 	is_active = models.BooleanField(default = True) # Sync with User
+	notify_freq = models.IntegerField(default = 5)
 	locations = models.ManyToManyField(
 		Location,
 		related_name = '+',
@@ -18,5 +19,9 @@ class UserInfo(models.Model):
 	services = models.ManyToManyField(
 		Service,
 		related_name = 'users'
+	)
+	services = models.ManyToManyField(
+		Service,
+		related_name = '+'
 	)
 
