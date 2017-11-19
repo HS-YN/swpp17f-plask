@@ -5,7 +5,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import render
 
 from user.models import UserInfo, Location, Service
-from user.views import servParse, locParse
+from user.views import servParse, locParse, setService
+from location.views import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
 
 from datetime import datetime, timedelta
@@ -23,6 +24,43 @@ def login_required(function=None, redirect_field_name=None):
         return _wrapped_view
     return _decorator(function)
 
+def setLocation(question, location_list):
+    question.locations.clear()
+    for location in location_list:
+        loc_length = len (location)
+        try:
+            l1 = LocationL1.objects.get(name = location[0])
+        except LocationL1.DoesNotExist:
+            raise Question.DoesNotExist
+        loc_codel1 = l1.loc_code
+
+        loc_length = loc_length - 1
+        if loc_length > 0:
+            try:
+                l2 = l1.child.get(name = location[1])
+            except LocationL2.DoesNotExist:
+                raise Question.DoesNotExist
+            loc_codel2 = l2.loc_code
+        else:
+            loc_codel2 = -1
+
+        loc_length = loc_length - 1
+        if loc_length > 0:
+            try:
+                l3 = l2.child.get(name = location[2])
+            except LocationL3.DoesNotExist:
+                raise Question.DoesNotExist
+            loc_codel3 = l3.loc_code
+        else:
+            loc_codel3 = -1
+
+        new_location, _ = Location.objects.get_or_create (
+            loc_code1 = loc_codel1,
+            loc_code2 = loc_codel2,
+            loc_code3 = loc_codel3
+        )
+        question.locations.add (new_location)
+        question.save ()
 
 @login_required
 def question(request):
@@ -32,14 +70,15 @@ def question(request):
             list(author.questions.all().values()), safe=False)
     elif request.method == 'POST':
         author = UserInfo.objects.get(id=request.user.id)
-        content = json.loads(request.body.decode())['content']
-        locations = locParse(json.loads(request.body.decode())['locations'])
-        services = servParse(json.loads(request.body.decode())['services'])
-        # TODO: fix getting locations and services(match from string to id)
+        req_body = json.loads(request.body.decode())
+        content = req_body['content']
+        locations = locParse(req_body['locations'])
+        services = servParse(req_body['services'])
         new_question = Question(
-            author=author, content=content, time=datetime.now(),
-            locations=locations, services=services)
+            author=author, content=content, time=datetime.now())
         new_question.save()
+        setService (new_question, services)
+        setLocation (new_question, locations)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])

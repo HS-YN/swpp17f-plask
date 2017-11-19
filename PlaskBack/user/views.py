@@ -8,8 +8,35 @@ from django.contrib.auth.models import User
 
 from .models import UserInfo, Service, Location
 from location.models import LocationL1, LocationL2, LocationL3
-# from location.models import setLocation
 import json
+
+# TOKENIZE FUNCTIONS
+def tokenWith(string, tokstr):
+	tokens = string.split(tokstr)
+	result = []
+	for tok in tokens:
+		if tok is not None and tok != '':
+			result.append (tok)
+	return result
+
+def servParse(servstr):
+	return tokenWith(servstr, ';')
+
+def locParse(locstr):
+	loclist = tokenWith(locstr, ';')
+	result = []
+	for loc in loclist:
+		subResult = tokenWith(loc, '/')
+		result.append (subResult)
+	return result
+
+# SET SERVICES AND LOCATIONS
+def setService(has_serv, services):
+	has_serv.services.clear()
+	for service in services:
+		new_service, _ = Service.objects.get_or_create(name = service)
+		has_serv.services.add(new_service)
+		has_serv.save()
 
 def setLocation(userinfo, location_list):
 	userinfo.locations.clear()
@@ -55,32 +82,7 @@ def setLocation(userinfo, location_list):
 		userinfo.locations.add(new_location)
 		userinfo.save()
 
-def tokenWith(string, tokstr):
-	tokens = string.split(tokstr)
-	result = []
-	for tok in tokens:
-		if tok is not None and tok != '':
-			result.append (tok)
-	return result
-
-def servParse(servstr):
-	return tokenWith(servstr, ';')
-
-def locParse(locstr):
-	loclist = tokenWith(locstr, ';')
-	result = []
-	for loc in loclist:
-		subResult = tokenWith(loc, '/')
-		result.append (subResult)
-	return result
-
-def setService(userinfo, services):
-	userinfo.services.clear()
-	for service in services:
-		new_service, _ = Service.objects.get_or_create(name = service)
-		userinfo.services.add(new_service)
-		userinfo.save()
-
+# PARSE LOCATION FOR JSON RESPONSE
 def getLocationStr(userinfo):
 	result = ''
 	for location in list(userinfo.locations.all()):
@@ -101,6 +103,7 @@ def getServiceStr(userinfo):
 		result = result + service.name + ';'
 	return result
 
+# API
 @ensure_csrf_cookie
 def token(request):
 	if request.method == 'GET':
