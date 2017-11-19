@@ -15,6 +15,7 @@ export class UserService{
     private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
     private tokenUrl = '/api/user/token';
+
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }

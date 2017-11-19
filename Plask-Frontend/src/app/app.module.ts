@@ -16,6 +16,7 @@ import { MainTabComponent } from './maintab.component';
 //Import Service
 import { UserService } from './user.service';
 import { LocationService } from './location.service';
+import { QuestionService } from './question.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -43,6 +44,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
     providers: [
         UserService,
         LocationService,
+        QuestionService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
 

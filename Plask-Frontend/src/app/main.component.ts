@@ -7,6 +7,7 @@ import { Question } from './question';
 
 import { UserService } from './user.service';
 import { LocationService } from './location.service'; 
+import { QuestionService } from './question.service';
 
 @Component({
     selector: 'main',
@@ -19,6 +20,7 @@ export class MainComponent implements OnInit{
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private questionService: QuestionService,
     ){ }
 
     question = new Question;
@@ -78,7 +80,9 @@ export class MainComponent implements OnInit{
             this.question.locations = newLocation + ';';
 
             // Send Question to Backend
-
+            this.questionService.postQuestion(this.question)
+            .then(Status => { 
+                if(Status != 201) {alert("Question could not be sent, please try again");}});
 
             alert("Question successfully plasked!");
 
@@ -94,9 +98,7 @@ export class MainComponent implements OnInit{
             this.selectedCity= "";
             this.provinceList= null;
             this.cityList= null;
-
-
-
+            
         }
     }
 
