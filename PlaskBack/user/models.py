@@ -20,7 +20,7 @@ class UserInfo(models.Model):
 		Service,
 		related_name = 'users'
 	)
-	services = models.ManyToManyField(
+	blocked = models.ManyToManyField(
 		Service,
 		related_name = '+'
 	)

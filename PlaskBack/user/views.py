@@ -2,7 +2,6 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseNotFound, JsonResponse
 from django.forms.models import model_to_dict
 
-import json, pickle
 from django.views.decorators.csrf import ensure_csrf_cookie
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
