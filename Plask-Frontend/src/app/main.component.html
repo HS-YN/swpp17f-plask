@@ -17,7 +17,8 @@
 
     <nav>
       <li class="active">
-        <a [routerLink]="['/main/maintab']">Main Page</a>
+          <button class="btn btn-block" 
+              [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
       </li>
       <li>
           <a href="#2" data-toggle="tab" >My Questions</a>
@@ -26,7 +27,7 @@
         <a href="#3" data-toggle="tab">My Answers</a>
       </li>
     </nav>
-    <router-outlet></router-outlet>
+    <router-outlet name="tab"></router-outlet>
 
     <div class="tab-content">
       <div class="tab-pane active" id="1">

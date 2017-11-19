@@ -57,7 +57,8 @@ export class MainComponent implements OnInit{
 
     //Route between tabs
     gotoMainTab(): void{
-        this.router.navigate(['/main/maintab']);
+        this.router.navigateByUrl("/main(tab:maintab;open=true)");
+        //(['/main/maintab']);
     }
 
 
