@@ -92,10 +92,14 @@
         </span>
         <br>
         <label> type tag to block </label>
-        <input type="text" [(ngModel)]="newService" class="form-control" placeholder="new tag"/>
+        <input type="text" [(ngModel)]="newBlockService" class="form-control" placeholder="type here"/>
         <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
       </div>
-
+      
+      <label> Select notification frequency</label>
+      <select [(ngModel)]="selectedFreq" (ngModelChange)="onChange($event)" >
+          <option *ngFor="let freq of notiFrequencyList" [ngValue]="freq"> {{freq}} min </option>
+      </select>
       
       <div class="form-group">
         <button class="btn btn-block" (click)="SignUp()">
