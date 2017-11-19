@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-//import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
+import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 //Import Components
 import { AppComponent } from './app.component';
@@ -20,6 +20,9 @@ import { AppRoutingModule } from './app-routing.module';
 
 import { APP_BASE_HREF } from '@angular/common';
 
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
+
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -33,18 +36,20 @@ import { APP_BASE_HREF } from '@angular/common';
         FormsModule,
         HttpModule,
         AppRoutingModule,
+        Ng2AutoCompleteModule,
     ],
     providers: [
         UserService,
         LocationService,
         { provide: APP_BASE_HREF, useValue: '/' },
-    //    { provide: XSRFStrategy, useFactory: cookieStrategy},
+        { provide: XSRFStrategy, useFactory: cookieStrategy},
 
     ],
     bootstrap: [AppComponent]
 })
 export class AppModule { }
 
-//export function cookieStrategy(){
-//    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
-//}
+export function cookieStrategy(){
+    return new CookieXSRFStrategy('csrftoken', 'X-CSRFToken');
+    //return new CookieXSRFStrategy('_csrf', 'XSRF-TOKEN');
+}

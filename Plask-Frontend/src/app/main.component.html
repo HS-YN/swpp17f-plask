@@ -39,9 +39,45 @@
         <h3>Questions that the user has answered</h3>
       </div>
     </div>
-
   </div>
 
 </div>
 
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Plask your Question!
+  </div>
+  <div class="panel-body">
 
+    <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
+
+
+      <label> Location: </label>
+      <select>
+        <option> Nation </option>
+        <option *ngFor="let country of countryList" (click)="countrySelect(country)"> {{country}} </option> 
+      </select>
+
+      <select>
+        <option> Province </option>
+        <option *ngFor= "let province of provinceList" (click)="provinceSelect(province)"> {{province}} </option>
+      </select>
+
+      <input auto-complete [(ngModel)]="selectedCity" [source]="cityList" placeholder="City"/>
+
+      <label> Services: </label>
+      <span *ngFor="let questionService of questionServiceList">
+          <span class="label label-success">{{questionService}}</span>
+          <button class="badge"
+            (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+            x</button> &nbsp;
+      </span>
+      <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+      <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+
+    <div class="form-group">
+      <button class="btn btn-block" (click)="sendQuestion()">
+        <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+    </div>
+  </div>
+</div>

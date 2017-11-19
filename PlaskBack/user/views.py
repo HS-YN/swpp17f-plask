@@ -118,6 +118,7 @@ def userinfo(request):
 		if request.user is not None:
 			userinfo = UserInfo.objects.get(id = request.user.id)
 			result = {}
+			result['email'] = request.user.username
 			result['username'] = userinfo.nickname
 			result['locations'] = getLocationStr(userinfo)
 			result['services'] = getServiceStr(userinfo)
@@ -133,11 +134,12 @@ def userinfo(request):
 
 		# TODO make it put
 		req_data = json.loads(request.body.decode())
-		password = req_data['password']
+		#TODO: Deal with Password Issue
+		#password = req_data['password']
 		locations = req_data['locations']
 		services = req_data['services']
 	
-		user.set_password(password)
+		#user.set_password(password)
 		userinfo = UserInfo.objects.get(id = user.id)
 		services = servParse(services)
 		setService(userinfo, services)
