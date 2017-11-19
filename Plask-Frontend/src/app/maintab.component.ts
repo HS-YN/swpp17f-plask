@@ -32,13 +32,13 @@ export class MainTabComponent implements OnInit{
 
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
-        //this.getQuestionList();
-        var q1:Question = {id:0, content:"when does the CU in 301 closes?", author:"kongdaesaeng",
+        this.getQuestionList();
+/*        var q1:Question = {id:0, content:"when does the CU in 301 closes?", author:"kongdaesaeng",
             locations:"Korea/Seoul/Gwanak", services:"convenient store"}; 
         var q2: Question = {id:1, content:"when does the CU in 302 opens?", author:"kongdaesaeng",
             locations:"Korea/Seoul/Gwanak", services:"convenient store"}; 
         var a1: Answer = {author:"resident", content:"there is no convenient store in 302"};
-        this.questionList = [[q1,true,[]], [q2,true,[a1]]];
+        this.questionList = [[q1,true,[]], [q2,true,[a1]]];*/
     }
 
     getQuestionList():void {
