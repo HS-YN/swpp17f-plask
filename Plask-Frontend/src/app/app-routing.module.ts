@@ -14,9 +14,11 @@ const routes: Routes = [
     { path: '', redirectTo: '/signin', pathMatch: 'full'},
     { path: 'signin', component: SignInComponent },
     { path: 'signup', component: SignUpComponent },
-    { path: 'main', component: MainComponent},
+    { path: 'main', component: MainComponent, children: [
+            { path: 'maintab', component: MainTabComponent, outlet:'tab'},
+        ]
+    },
     { path: 'settings', component: SettingsComponent },
-    { path: 'main/maintab', component: MainTabComponent},
 
 
 ];
