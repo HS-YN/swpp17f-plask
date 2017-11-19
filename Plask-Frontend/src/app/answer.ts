@@ -2,7 +2,7 @@ import { User } from './user';
 
 export class Answer{
 
-    author: User;
+    author: string;
     content: string;
     
 }

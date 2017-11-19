@@ -14,6 +14,7 @@ export class QuestionService{
     private questionUrl = '/api/ask/question'; // receive user's question and POST question
     private recentQuestionUrl = '/api/ask/question/recent'; // receive recent question
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
+    private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
     private tokenUrl = '/api/user/token';
    
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -50,6 +51,13 @@ export class QuestionService{
 
     getRelatedQuestion(): Promise<Question[]>{
         return this.http.get(this.relatedQuestionUrl)
+            .toPromise()
+            .then(Response => Response.json() as Question[])
+            .catch(this.handleError);
+    }
+
+    getAnsweredQuestion(): Promise<Question[]>{
+        return this.http.get(this.answeredQuestionUrl)
             .toPromise()
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);

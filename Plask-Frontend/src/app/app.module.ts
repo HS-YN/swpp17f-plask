@@ -19,6 +19,7 @@ import { MyAnswersComponent } from './myanswers.component';
 import { UserService } from './user.service';
 import { LocationService } from './location.service';
 import { QuestionService } from './question.service';
+import { AnswerService } from './answer.service';
 
 import { AppRoutingModule } from './app-routing.module';
 
@@ -49,6 +50,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         UserService,
         LocationService,
         QuestionService,
+        AnswerService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
 

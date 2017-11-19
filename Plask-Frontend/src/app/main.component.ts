@@ -23,7 +23,7 @@ export class MainComponent implements OnInit{
         private questionService: QuestionService,
     ){ }
 
-    question:Question = {content:"", author:"", locations:"", services:""};
+    question:Question = {id:0, content:"", author:"", locations:"", services:""};
 
     countryList: string[];
     provinceList: string[];

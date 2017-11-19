@@ -2,6 +2,7 @@ import { User } from "./user";
 
 export class Question{
 
+    id: number;
     content: string ='';
     author: string ='';
     //Tags saved in Parsed Format
