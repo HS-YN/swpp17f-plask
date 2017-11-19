@@ -82,6 +82,20 @@
         <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
 
       </div>
+
+      <div class="form-group">
+        <label> Blocked Services: </label>
+        <span *ngFor="let userBlockedService of userBlockedServiceList">
+            <span class="label label-success">{{userBlockedService}}</span>
+            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            x</button> &nbsp;
+        </span>
+        <br>
+        <label> type tag to block </label>
+        <input type="text" [(ngModel)]="newService" class="form-control" placeholder="new tag"/>
+        <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
+      </div>
+
       
       <div class="form-group">
         <button class="btn btn-block" (click)="SignUp()">

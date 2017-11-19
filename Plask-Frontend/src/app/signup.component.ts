@@ -36,6 +36,7 @@ export class SignUpComponent implements OnInit {
     serviceList: string[]; //List of service tags from Backend
     userServiceList: string[]; //List for visualizing current user service tags
     newService: string = ''; //User-input string
+    userBlockedServiceList: string[]; //List for visualizing current user blocked service tags
 
 
     ngOnInit(): void{
@@ -205,6 +206,50 @@ export class SignUpComponent implements OnInit {
             this.newService = "";
         }
     }
+    
+
+//Methods For Blocked Service Tags
+    userBlockedServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
+        this.userBlockedServiceRefresh();
+    }
+
+    userBlockedServiceSelect(service: string): void {
+        var validity_check: string = service + ';';
+        if (this.user.blockedServices.indexOf(validity_check) != -1){
+            alert("Tag Already Added!");
+            return;
+
+        }
+        this.user.blockedServices = this.user.blockedServices + service + ';';
+        this.userBlockedServiceRefresh();
+    }
+
+    userBlockedServiceAdd(): void {
+        if(this.newService == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this.newService.indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+
+        }
+        else{
+            this.userBlockedServiceSelect(this.newService);
+            this.newService = "";
+
+        }
+    }
+    userBlockedServiceRefresh(): void {
+        if(this.user.blockedServices == '') {
+            this.userBlockedServiceList = null;
+            return;
+        }
+        this.userBlockedServiceList = this.user.blockedServices
+        .substr(0, this.user.blockedServices.length-1).split(';');
+    }
+
+
 
     goToMain(){
         this.router.navigate(['/main']);
