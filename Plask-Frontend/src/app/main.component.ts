@@ -52,6 +52,14 @@ export class MainComponent implements OnInit{
         this.userService.signOut().then(() => this.router.navigate(['/signin']));
     }
 
+
+    //Route between tabs
+    gotoMainTab(): void{
+        this.router.navigate(['/main/maintab']);
+    }
+
+
+
     sendQuestion(): void{
         if(this.question.content == ""){
             alert("Question is Empty!");

@@ -11,6 +11,7 @@ import { SignInComponent } from './signin.component';
 import { SignUpComponent } from './signup.component';
 import { MainComponent } from './main.component';
 import { SettingsComponent } from './settings.component';
+import { MainTabComponent } from './maintab.component';
 
 //Import Service
 import { UserService } from './user.service';
@@ -30,6 +31,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         SignUpComponent,
         MainComponent,
         SettingsComponent,
+        MainTabComponent,
     ],
     imports: [
         BrowserModule,
