@@ -61,9 +61,24 @@ def question_related(request):
     pass
 
 
+def tag_check():
+    pass
+
+
 @login_required
 def question_search(request):
-    pass
+    if request.method == 'GET':
+        location = json.loads(request.body.decode())['location']
+        searchTarget = json.loads(request.body.decode())['search'].split(' ')
+        stringSearch = []
+        tagSearch = []
+        for curr in searchTarget:
+            if curr.find('#') != -1:
+                tagSearch.append(curr[1:])
+            else:
+                stringSearch.append(curr)
+    else:
+        return HttpResponseNotAllowed(['GET'])
 
 
 @login_required
