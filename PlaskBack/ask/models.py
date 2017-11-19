@@ -1,10 +1,11 @@
 from django.db import models
 from user.models import Location, UserInfo, Service
+from datetime import datetime
 
 
 class Question(models.Model):
+    time = models.DateTimeField(default=datetime.now())
     content = models.TextField()
-    time = models.TimeField()
     author = models.ForeignKey(
         UserInfo,
         related_name='questions',

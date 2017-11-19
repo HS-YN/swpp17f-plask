@@ -8,7 +8,7 @@
     
     
     <meta http-equiv="X-UA-Compatible" content="IE=emulateIE7" />
-    <title>Coverage for ask/urls.py: 100%</title>
+    <title>Coverage for ask\urls.py: 100%</title>
     <link rel="stylesheet" href="style.css" type="text/css">
     
     <script type="text/javascript" src="jquery.min.js"></script>
@@ -23,7 +23,7 @@
 
 <div id="header">
     <div class="content">
-        <h1>Coverage for <b>ask/urls.py</b> :
+        <h1>Coverage for <b>ask\urls.py</b> :
             <span class="pc_cov">100%</span>
         </h1>
 
@@ -80,10 +80,6 @@
 <p id="n9" class="pln"><a href="#n9">9</a></p>
 <p id="n10" class="pln"><a href="#n10">10</a></p>
 <p id="n11" class="pln"><a href="#n11">11</a></p>
-<p id="n12" class="pln"><a href="#n12">12</a></p>
-<p id="n13" class="pln"><a href="#n13">13</a></p>
-<p id="n14" class="pln"><a href="#n14">14</a></p>
-<p id="n15" class="pln"><a href="#n15">15</a></p>
 
             </td>
             <td class="text">
@@ -91,17 +87,13 @@
 <p id="t2" class="stm run hide_run"><span class="key">from</span> <span class="nam">ask</span> <span class="key">import</span> <span class="nam">views</span><span class="strut">&nbsp;</span></p>
 <p id="t3" class="pln"><span class="strut">&nbsp;</span></p>
 <p id="t4" class="stm run hide_run"><span class="nam">urlpatterns</span> <span class="op">=</span> <span class="op">[</span><span class="strut">&nbsp;</span></p>
-<p id="t5" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/question$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t6" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/question/recent$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_recent</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t7" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'question_recent'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t8" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/question/related$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_related</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t9" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'question_related'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t10" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/question/search$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_search</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t11" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'question_search'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t12" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/question/answer$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_answer</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t13" class="pln">        <span class="nam">name</span><span class="op">=</span><span class="str">'question_answer'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
-<p id="t14" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^ask/answer/(?P&lt;question_id>[0-9]+)$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">answer</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'answer'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
-<p id="t15" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
+<p id="t5" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^question$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t6" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^question/recent$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_recent</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question_recent'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t7" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^question/related$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_related</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question_related'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t8" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^question/search$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_search</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question_search'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t9" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^question/answer$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">question_answer</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'question_answer'</span><span class="op">)</span><span class="op">,</span><span class="strut">&nbsp;</span></p>
+<p id="t10" class="pln">    <span class="nam">url</span><span class="op">(</span><span class="str">'^answer/(?P&lt;question_id>[0-9]+)$'</span><span class="op">,</span> <span class="nam">views</span><span class="op">.</span><span class="nam">answer</span><span class="op">,</span> <span class="nam">name</span><span class="op">=</span><span class="str">'answer'</span><span class="op">)</span><span class="strut">&nbsp;</span></p>
+<p id="t11" class="pln"><span class="op">]</span><span class="strut">&nbsp;</span></p>
 
             </td>
         </tr>
@@ -111,8 +103,8 @@
 <div id="footer">
     <div class="content">
         <p>
-            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.4.1</a>,
-            created at 2017-11-19 17:36
+            <a class="nav" href="index.html">&#xab; index</a> &nbsp; &nbsp; <a class="nav" href="https://coverage.readthedocs.io">coverage.py v4.4.2</a>,
+            created at 2017-11-20 01:17
         </p>
     </div>
 </div>

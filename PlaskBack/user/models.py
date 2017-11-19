@@ -1,4 +1,5 @@
 from django.db import models
+import json
 
 
 class Location(models.Model):
@@ -27,3 +28,6 @@ class UserInfo(models.Model):
         Service,
         related_name='+'
     )
+
+    #def toJSON(self):
+    #    return json.dumps(self, default=lambda x: x.__dict__, sort_keys=True, indent=4)
