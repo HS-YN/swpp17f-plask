@@ -8,6 +8,8 @@ import { MainComponent } from './main.component';
 import { SignUpComponent } from './signup.component';
 import { SettingsComponent } from './settings.component';
 import { MainTabComponent } from './maintab.component';
+import { MyQuestionsComponent } from './myquestions.component';
+import { MyAnswersComponent } from './myanswers.component';
 
 //Routes between Components
 const routes: Routes = [
@@ -16,6 +18,8 @@ const routes: Routes = [
     { path: 'signup', component: SignUpComponent },
     { path: 'main', component: MainComponent, children: [
             { path: 'maintab', component: MainTabComponent, outlet:'tab'},
+            { path: 'myquestions', component: MyQuestionsComponent, outlet:'tab'},
+            { path: 'myanswers', component: MyAnswersComponent, outlet:'tab'},
         ]
     },
     { path: 'settings', component: SettingsComponent },

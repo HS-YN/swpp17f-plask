@@ -3,7 +3,7 @@ import { User } from "./user";
 export class Question{
 
     content: string ='';
-    author: User;
+    author: string ='';
     //Tags saved in Parsed Format
     locations: string ='';
     services: string ='';

@@ -15,33 +15,26 @@
         Sign Out
     </button>
 
-    <nav>
-      <li class="active">
-          <button class="btn btn-block" 
-              [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
-      </li>
-      <li>
-          <a href="#2" data-toggle="tab" >My Questions</a>
-      </li>
-      <li>
-        <a href="#3" data-toggle="tab">My Answers</a>
-      </li>
-    </nav>
-    <router-outlet name="tab"></router-outlet>
-
-    <div class="tab-content">
-      <div class="tab-pane active" id="1">
-        <h3>Questions received by the user</h3>
-        <h3>Recommended questions (If inbox is empty)</h3>
-      </div>
-      <div class="tab-pane" id="2">
-        <h3>Questions that the user has asked</h3>
-      </div>
-      <div class="tab-pane" id="3">
-        <h3>Questions that the user has answered</h3>
-      </div>
+    <div>
+        <nav id="topMenu">
+            <ul>
+                <li class="menuLink">
+                    <button class="btn btn-block" 
+                        [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
+                </li>
+                <li class="menuLink">
+                    <button class="btn btn-block" 
+                        [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</button>
+                </li>
+                <li class="menuLink">
+                    <button class="btn btn-block" 
+                        [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</button>
+                </li>
+            </ul>
+        </nav>
     </div>
-  </div>
+    <br>
+    <router-outlet name="tab"></router-outlet>
 
 </div>
 

@@ -1,3 +1,9 @@
-<div> 
-  <h1> This is the main tab!! </h1>
+<div class="grid grid-pad">
+    <a *ngFor="let question of questionList" class="col-1-4">
+        <ul>
+            <li (click)="expand(question)">{{question[0].content}} </li>
+            <li [hidden]="question[1]">{{question[0].locations}} | 
+                {{question[0].services}} | {{question[0].author}} | {{question[1]}}</li>
+        </ul>
+    </a>
 </div>

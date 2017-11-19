@@ -23,7 +23,7 @@ export class MainComponent implements OnInit{
         private questionService: QuestionService,
     ){ }
 
-    question = new Question;
+    question:Question = {content:"", author:"", locations:"", services:""};
 
     countryList: string[];
     provinceList: string[];
@@ -41,7 +41,7 @@ export class MainComponent implements OnInit{
     ngOnInit(): void{
         
         this.userService.getUser().then(user => {
-            if(user != null){ this.question.author = user; this.countryRefresh(); this.serviceRefresh();}
+            if(user != null){ this.question.author = user.username; this.countryRefresh(); this.serviceRefresh();}
             else{ this.router.navigate(['/signin']); }
         })
     }
