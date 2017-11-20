@@ -54,7 +54,7 @@ def question_recent(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
-
+'''
 @login_required
 def question_related(request):
     if request.method == 'GET':
@@ -77,8 +77,9 @@ def question_related(request):
         return selected_questions
     else:
         return HttpResponseNotAllowed(['GET'])
+'''
 
-
+'''
 # TODO: There is a same problem with question_related.
 @login_required
 def question_search(request):
@@ -110,7 +111,7 @@ def question_search(request):
         return selected_questions
     else:
         return HttpResponseNotAllowed(['GET'])
-
+'''
 
 @login_required
 def question_answer(request):
@@ -143,7 +144,7 @@ def answer(request, question_id):
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
-
+'''
 def service2index(service_list):
     if len(service_list) <= 0:
         return []
@@ -163,7 +164,7 @@ def location2index(location_list):
     if len(location_list) >= 3 & len(location_list[2] > 0):
         index_list[1] = LocationL2.objects.get(name=location_list[2].replace("%20", " ")).id
     return index_list;
-
+'''
 
 def setLocation(question, location_list):
     question.locations.clear()

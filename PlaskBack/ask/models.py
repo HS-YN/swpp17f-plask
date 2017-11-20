@@ -4,7 +4,7 @@ from datetime import datetime
 
 
 class Question(models.Model):
-    time = models.DateTimeField(default=datetime.now())
+    time = models.DateTimeField()
     content = models.TextField()
     author = models.ForeignKey(
         UserInfo,
