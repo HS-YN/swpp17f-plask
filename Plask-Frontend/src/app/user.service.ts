@@ -15,45 +15,62 @@ export class UserService{
     private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
     private tokenUrl = '/api/user/token';
+
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
 
     signIn(user: User): Promise<number>{
+        var headers = new Headers({'Content-Type': 'application/json'});
         return this.http
-            .post(this.signInUrl, JSON.stringify(user), {headers: this.headers})
-            .toPromise()
-            .then(res => res.json() as number)
-            .catch(this.handleError);
+            .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
+            .then(() =>  this.http.post(this.signInUrl, JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.status));
+            //.catch(this.handleError));
     }
 
     signUp(user: User): Promise<number>{
+        var headers = new Headers({'Content-Type': 'application/json'}); 
         return this.http
-            .post(this.signUpUrl, JSON.stringify(user), {headers: this.headers})
+            .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
+            .then(() => this.http.post(this.signUpUrl, JSON.stringify(user), {headers: headers})
             .toPromise()
-            .then(res => { res.json() as number})
-            .catch(this.handleError);
+            .then(res => res.status))
+            //.catch(this.handleError));
     }
 
     signOut(): Promise<number>{
         return this.http.get(this.signOutUrl).toPromise().then(response =>
-            response.json() as number).catch(this.handleError);
+            response.status);
+        //.catch(this.handleError);
     }
 
     getUser(): Promise<User> {
-        return this.http.get(this.userInfoUrl).toPromise().then(response =>
-             response.json() as User).catch(this.handleError);
+        return this.http.get(this.userInfoUrl).toPromise().then(response => 
+            response.json() as User);
+        //.catch(this.handleError);
     }
 
-    update(user: User): Promise<number>{
-        return this.http.put(this.userInfoUrl, JSON.stringify(user),
-            {headers: this.headers}).toPromise().then(() => user)
-            .catch(this.handleError);
+    update(user: User): Promise<User>{
+        var headers = new Headers({'Content-Type': 'application/json'});
+        return this.http
+            .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
+            .then(() => this.http.put(this.userInfoUrl, JSON.stringify(user),
+            {headers: headers}).toPromise().then(() => user));
+            //.catch(this.handleError);
     }
 
     handleError(error: any): Promise<any>{
         console.error('An error occured', error);
         return Promise.reject(error.message);
+    }
+
+    getCookie(name) {
+        let value = ";" + document.cookie;
+        let parts = value.split(";" + name + "=");
+        if (parts.length ==2){
+            return parts.pop().split(";").shift();
+        }
     }
 
 }/* istanbul ignore next */

@@ -36,11 +36,17 @@ export class SignUpComponent implements OnInit {
     serviceList: string[]; //List of service tags from Backend
     userServiceList: string[]; //List for visualizing current user service tags
     newService: string = ''; //User-input string
+    userBlockedServiceList: string[]; //List for visualizing current user blocked service tags
+    newBlockService: string = '';
+    notiFrequencyList: number[]; //List of frequency selection
+    selectedFreq:number;
 
 
     ngOnInit(): void{
         this.countryRefresh();
         this.serviceRefresh();
+        this.notiFrequencyList = [10, 20, 30, 60, 120]
+        this.selectedFreq = this.notiFrequencyList[0];
     }
 
     //Create a new User Account
@@ -205,6 +211,55 @@ export class SignUpComponent implements OnInit {
             this.newService = "";
         }
     }
+    
+
+    //Methods For Blocked Service Tags
+    userBlockedServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
+        this.userBlockedServiceRefresh();
+    }
+
+    userBlockedServiceSelect(service: string): void {
+        var validity_check: string = service + ';';
+        if (this.user.blockedServices.indexOf(validity_check) != -1){
+            alert("Tag Already Added!");
+            return;
+
+        }
+        this.user.blockedServices = this.user.blockedServices + service + ';';
+        this.userBlockedServiceRefresh();
+    }
+
+    userBlockedServiceAdd(): void {
+        if(this.newBlockService == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this.newBlockService.indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+
+        }
+        else{
+            this.userBlockedServiceSelect(this.newBlockService);
+            this.newBlockService = "";
+
+        }
+    }
+    userBlockedServiceRefresh(): void {
+        if(this.user.blockedServices == '') {
+            this.userBlockedServiceList = null;
+            return;
+        }
+        this.userBlockedServiceList = this.user.blockedServices
+        .substr(0, this.user.blockedServices.length-1).split(';');
+    }
+
+    //Method for setting notification frequency
+    userNotiFrequencySelect(freq: number): void {
+        this.user.notiFrequency = freq;
+        this.userBlockedServiceRefresh();
+    }
+
 
     goToMain(){
         this.router.navigate(['/main']);
@@ -214,6 +269,23 @@ export class SignUpComponent implements OnInit {
         this.router.navigate(['/signin']);
     }
 
+
+    onChange(freq) {
+        this.user.notiFrequency = freq;
+    }
+/*
+    angular.module('ngrepeatSelect', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+        $scope.data = {
+            model: null,
+            availableOptions: [
+                {id: '1', name: 'Option A'},
+                {id: '2', name: 'Option B'},
+                {id: '3', name: 'Option C'}
+            ]
+        };
+    }]);
+*/
 } /* istanbul ignore next */
 
 /*

@@ -187,6 +187,51 @@ def signout(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+<<<<<<< HEAD
+=======
+def userinfo(request):
+	if request.method == 'GET':
+		# get userinfo - assume logged in
+		if request.user is not None:
+			userinfo = UserInfo.objects.get(id = request.user.id)
+			result = {}
+			result['email'] = request.user.username
+			result['username'] = userinfo.nickname
+			result['locations'] = getLocationStr(userinfo)
+			result['services'] = getServiceStr(userinfo)
+			return JsonResponse (result)
+		else:
+			return HttpResponse(status = 401)
+
+	elif request.method == 'PUT':
+		# put userinfo - assume logged in
+		if request.user is None:
+			return HttpResponse(status = 401)
+		user = request.user
+
+		# TODO make it put
+		req_data = json.loads(request.body.decode())
+		#TODO: Deal with Password Issue
+		#password = req_data['password']
+		locations = req_data['locations']
+		services = req_data['services']
+	
+		#user.set_password(password)
+		userinfo = UserInfo.objects.get(id = user.id)
+		services = servParse(services)
+		setService(userinfo, services)
+		locations = locParse(locations)
+		try:
+			setLocation(userinfo, locations)
+		except UserInfo.DoesNotExist:
+			return HttpResponse(status = 404)
+		userinfo.save ()
+		user.save()
+		return HttpResponse(status = 204)
+
+	else:
+		return HttpResponseNotAllowed(['GET', 'PUT'])
+>>>>>>> ca22e590e706ebd95a36a7ae55f30f2a6b5dc8e7
 
 def userinfo(request):
     if request.method == 'GET':
