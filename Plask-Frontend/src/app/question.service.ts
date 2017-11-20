@@ -16,7 +16,7 @@ export class QuestionService{
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
     private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
     private tokenUrl = '/api/user/token';
-   
+
     private headers = new Headers({'Content-Type': 'application/json'});
 
 
@@ -25,7 +25,7 @@ export class QuestionService{
     // GET the question list of a user (list of questions asked by the user)
     getQuestion(): Promise<Question[]>{
         return this.http.get(this.questionUrl)
-            .toPromise()   
+            .toPromise()
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);
 
@@ -36,10 +36,9 @@ export class QuestionService{
         return this.http
             .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
             .then(() => this.http.post(this.questionUrl, JSON.stringify(question), {headers: headers}).toPromise())
-            .then(res => res.status)  // receive status code 201 if success, 
+            .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }
-
 
     getRecentQuestion(): Promise<Question[]>{
         return this.http.get(this.recentQuestionUrl)
