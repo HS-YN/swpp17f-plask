@@ -5,7 +5,7 @@ import { By } from '@angular/platform-browser';
 
 
 import { SignInComponent } from './signin.component';
-import { AppModule } from './app.module';
+import { AppModule } from '../app.module';
 
 let comp: SignInComponent;
 let fixture: ComponentFixture<SignInComponent>;

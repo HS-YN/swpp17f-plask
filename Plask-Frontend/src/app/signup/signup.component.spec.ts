@@ -3,10 +3,10 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
-import { UserService } from './user.service'
-import { LocationService } from './location.service'
+import { UserService } from '../user/user.service'
+import { LocationService } from '../location/location.service'
 import { SignUpComponent } from './signup.component';
-import { AppModule } from './app.module';
+import { AppModule } from '../app.module';
 
 let comp: SignUpComponent;
 let fixture: ComponentFixture<SignUpComponent>;

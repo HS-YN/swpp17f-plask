@@ -4,7 +4,7 @@ import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { MainComponent } from './main.component';
-import { AppModule } from './app.module';
+import { AppModule } from '../app.module';
 
 let comp: MainComponent;
 let fixture: ComponentFixture<MainComponent>;

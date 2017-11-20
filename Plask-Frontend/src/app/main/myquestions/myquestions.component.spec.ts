@@ -2,7 +2,7 @@ import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core
 import { RouterTestingModule } from '@angular/router/testing';
 
 import { MyQuestionsComponent } from './myquestions.component';
-import { AppModule } from './app.module';
+import { AppModule } from '../../app.module';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 

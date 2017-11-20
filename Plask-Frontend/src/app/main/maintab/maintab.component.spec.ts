@@ -5,12 +5,12 @@ import { By } from '@angular/platform-browser';
 
 
 import { MainTabComponent } from './maintab.component';
-import { AppModule } from './app.module';
-import { User } from './user';
-import { Answer } from './answer';
-import { AnswerService } from './answer.service';
-import { Question } from './question';
-import { QuestionService } from './question.service';
+import { AppModule } from '../../app.module';
+import { User } from '../../user/user';
+import { Answer } from '../../answer/answer';
+import { AnswerService } from '../../answer/answer.service';
+import { Question } from '../../question/question';
+import { QuestionService } from '../../question/question.service';
 
 
 
