@@ -57,13 +57,21 @@ export class SettingsComponent implements OnInit{
     //TODO: Deal with Password Change
 
     SaveChanges(): void {
-     //   if(this.ValidatePassword()){
+        if(this.newpassword != this.passwordConfirmation) {
+            alert("Password is different.")
+            return
+        }
+        else if(this.newpassword != "") {
+            this.user.password = this.newpassword;
+            alert("Successfully changed password. Please sign in again.")
             this.userService.update(this.user)
-                .then(() => this.goToMain());
-      //  }
-       // else{
-       //     alert ("Password is Different!")
-       // }
+                .then(() => this.goToSignin());
+        }
+        else {
+            alert("Successfully modified!")
+            this.userService.update(this.user)
+            .then(() => this.goToMain());
+        }
     }
 
 
@@ -230,7 +238,9 @@ export class SettingsComponent implements OnInit{
         this.router.navigate(['/main']);
     }
 
-
+    goToSignin(){
+        this.router.navigate(['/signin']);
+    }
 
 
 

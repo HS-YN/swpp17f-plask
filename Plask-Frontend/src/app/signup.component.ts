@@ -54,9 +54,8 @@ export class SignUpComponent implements OnInit {
         if(this.ValidatePassword()){
             this.userService.signUp(this.user)
                 .then(Status => {
-                    if(Status == 201) { this.goToMain() }
-                    else { alert("You cannot signup with this information.") }
-                });
+                    if(Status == 201) { this.goBack() }
+                }).catch((err) => {alert("You cannot signup with this information.");});
         }
         else{
             alert ("Password is Different!")
@@ -211,7 +210,7 @@ export class SignUpComponent implements OnInit {
             this.newService = "";
         }
     }
-    
+
 
     //Methods For Blocked Service Tags
     userBlockedServiceDelete(deleteService: string): void {

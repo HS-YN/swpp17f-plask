@@ -217,6 +217,7 @@ def userinfo(request):
         # TODO make it put
         req_data = json.loads(request.body.decode())
         #TODO: Deal with Password Issue
+
         if 'password' in req_data:
             password = req_data['password']
             user.set_password(password)
@@ -231,7 +232,7 @@ def userinfo(request):
             setLocation(userinfo, locations)
         except UserInfo.DoesNotExist:
             return HttpResponse(status = 404)
-        userinfo.save ()
+        userinfo.save()
         user.save()
         return HttpResponse(status = 204)
 

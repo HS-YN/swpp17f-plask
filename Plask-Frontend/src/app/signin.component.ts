@@ -22,8 +22,6 @@ export class SignInComponent implements OnInit {
     title: string = "Plask!";
     subtitle: string = "Location-based live Q&A platform"
 
-    test: number = 0;
-
     ngOnInit(){
         this.userService.getUser().then(user => {
             if(user != null)    this.router.navigate(['/main']);
@@ -31,20 +29,9 @@ export class SignInComponent implements OnInit {
     }
 
     SignIn(){
-        /* Test Code to See if Sign In button funcitons correctly
-        if ((this.user.email == 'swpp@snu.ac.kr') && (this.user.password == 'iluvswpp')){
-            this.goToMain();
-        }
-        else{
-            alert("Wrong Email or Passowrd!");
-        }
-        */
         this.userService.signIn(this.user).then(Status => {
-            this.test = 1;
-            console.log ("STATUS CODE:", Status);
-            if (Status != 204) { alert ("Wrong Email or Password!") }
-            else{ this.goToMain() }
-        });
+            if (Status == 204) { this.goToMain() }
+        }).catch((err) => { alert("Signin failed. Please try again!")});
     }
 
     goToMain(){

@@ -19,15 +19,15 @@
         <nav id="topMenu">
             <ul>
                 <li class="menuLink">
-                    <button class="btn btn-block" 
+                    <button class="btn btn-block"
                         [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
                 </li>
                 <li class="menuLink">
-                    <button class="btn btn-block" 
+                    <button class="btn btn-block"
                         [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</button>
                 </li>
                 <li class="menuLink">
-                    <button class="btn btn-block" 
+                    <button class="btn btn-block"
                         [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</button>
                 </li>
             </ul>
@@ -48,14 +48,14 @@
 
 
       <label> Location: </label>
-      <select>
+      <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
         <option> Nation </option>
-        <option *ngFor="let country of countryList" (click)="countrySelect(country)"> {{country}} </option> 
+        <option *ngFor="let country of countryList"> {{country}} </option>
       </select>
 
-      <select>
+      <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
         <option> Province </option>
-        <option *ngFor= "let province of provinceList" (click)="provinceSelect(province)"> {{province}} </option>
+        <option *ngFor= "let province of provinceList"> {{province}} </option>
       </select>
 
       <input auto-complete [(ngModel)]="selectedCity" [source]="cityList" placeholder="City"/>
