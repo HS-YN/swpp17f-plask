@@ -96,11 +96,17 @@ def getLocationStr(userinfo):
         loc_code2 = location.loc_code2
         loc_code3 = location.loc_code3
 
-        loc_name1 = LocationL1.objects.get(loc_code=loc_code1).name
-        loc_name2 = LocationL2.objects.get(loc_code=loc_code2).name
-        loc_name3 = LocationL3.objects.get(loc_code=loc_code3).name
+        loc_name1 = LocationL1.objects.get(loc_code=loc_code1).name + '/'
+        if(loc_code2 > 0):
+            loc_name2 = LocationL2.objects.get(loc_code=loc_code2).name + '/'
+        else:
+            loc_name2 = ""
+        if(loc_code3 > 0):
+            loc_name3 = LocationL3.objects.get(loc_code=loc_code3).name
+        else:
+            loc_name3 = ""
 
-        result = result + loc_name1 + '/' + loc_name2 + '/' + loc_name3 + ';'
+        result = result + loc_name1 + loc_name2 + loc_name3 + ';'
     return result
 
 
