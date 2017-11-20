@@ -14,7 +14,7 @@ let fixture: ComponentFixture<SignUpComponent>;
 describe('SignUpComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [ AppModule, RouterTestingModule ],
+            imports: [ AppModule, RouterTestingModule.withRoutes([]) ],
         }).overrideModule(AppModule, { remove: { providers: [ LocationService ] },
                   add: { providers: [ { provide: LocationService, useClass: FakeLocationService } ] }
             }).compileComponents().then(() => {
@@ -76,6 +76,7 @@ describe('SignUpComponent', () => {
         comp.goBack();
         expect(navigateSpy).toHaveBeenCalledWith(['/signin']);
     }))
+
 });
 
 export const fakeLocationList: string[] = [ 'Seoul', 'Tokyo' ];

@@ -1,10 +1,11 @@
 import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
+
 
 import { SignInComponent } from './signin.component';
 import { AppModule } from './app.module';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
 let comp: SignInComponent;
 let fixture: ComponentFixture<SignInComponent>;
@@ -12,7 +13,7 @@ let fixture: ComponentFixture<SignInComponent>;
 describe('SignInComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            imports: [AppModule, RouterTestingModule]
+            imports: [AppModule, RouterTestingModule.withRoutes([]) ]
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SignInComponent);
             comp = fixture.componentInstance;
@@ -51,6 +52,22 @@ describe('SignInComponent', () => {
     it('should have Email: as the first label', async(() => {
         let label = fixture.debugElement.queryAll(By.css('label')).map(de => de.nativeElement);
         expect(label[0]).not.toBeNull();
+    }))
+
+    // Added in Sprint 3
+    it ('should have display correct labels for input', async(() => {
+        const labels = fixture.debugElement.queryAll(By.css('label'));
+        const emailLabel = labels[0].nativeElement;
+        const passwordLabel = labels[1].nativeElement;
+
+        expect(emailLabel.classList.contains("Email:")).toBeTruthy();
+        expect(passwordLabel.classList.contains("Password:")).toBeTruthy();
+    }))
+
+    it ('can navigate to signup', async(() =>{
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        comp.goToSignUp();
+        expect(navigateSpy).toHaveBeenCalledWith(['/signup']);
     }))
 
 });
