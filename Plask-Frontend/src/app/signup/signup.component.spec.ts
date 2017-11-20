@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -75,7 +75,64 @@ describe('SignUpComponent', () => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.goBack();
         expect(navigateSpy).toHaveBeenCalledWith(['/signin']);
+    }));
+
+
+    it('should update selectedCountry when it is selected', fakeAsync(() => {
+        comp.countrySelect("Korea");
+        tick();
+        fixture.detectChanges();
+        expect(comp.selectedCountry).toEqual("Korea");
     }))
+
+    it('should update selectedProvince when it is selected', fakeAsync(() => {
+        comp.provinceSelect("Seoul");
+        tick();
+        fixture.detectChanges();
+        expect(comp.selectedProvince).toEqual("Seoul");
+    }))
+
+    it('should update selectedCity when it is selected', fakeAsync(() => {
+        comp.citySelect("Gwanak");
+        tick();
+        fixture.detectChanges();
+        expect(comp.selectedProvince).toEqual("Gwanak");
+    }))
+
+
+    it('should refresh service list when refresh is called', fakeAsync(() => {
+        comp.serviceRefresh();
+        tick();
+        fixture.detectChanges();
+        expect(comp.serviceList).not.toBeNull();
+    }))
+
+    it('should call refreash when add is called', fakeAsync(()=> {
+        let spy = spyOn(comp, "userLocationRefresh");
+
+        comp.userLocationAdd();
+        tick();
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+    }));
+
+    it('should call refreash when delete is called', fakeAsync(()=> {
+        let spy = spyOn(comp, "userLocationRefresh");
+
+        comp.userLocationDelete("string");
+        tick();
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+    }));
+
+
+    it('should change notiFrequency', fakeAsync(() => {
+        comp.onChange(3);
+        tick();
+        fixture.detectChanges();
+        expect(comp.user.notiFrequency).toEqual(3);
+    }))
+
 
 });
 

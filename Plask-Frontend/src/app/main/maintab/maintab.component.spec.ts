@@ -42,6 +42,9 @@ describe('MainTabComponent', () => {
         tick();
         fixture.detectChanges();
         expect(comp.getQuestionList()).toHaveBeenCalled();
+
+        expect(comp.expand).toThrow();
+        expect(comp.answerClick).toThrow();
     }))
 
     it('should not trigger expand() as there is no question', fakeAsync(() =>{
@@ -63,7 +66,7 @@ describe('MainTabComponent', () => {
 
         expect(btn.classList.contains("Answer")).toBeTruthy();
     }))
-    
+
 })
 
 
@@ -99,7 +102,7 @@ describe('MainTabComponent', () => {
 
   }));
 
- 
+
 });
 
 export const fakeUser: User = {email: "swpp@snu.ac.kr", password: "iluvswpp", username: "swpplover",

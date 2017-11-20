@@ -1,86 +1,256 @@
-import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+//Import Basic Modules
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
-import { SettingsComponent } from './settings.component';
-import { AppModule } from '../../app.module';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
+import { User } from '../../user/user';
 
-let comp: SettingsComponent;
-let fixture: ComponentFixture<SettingsComponent>;
+import { UserService } from '../../user/user.service';
+import { LocationService } from '../../location/location.service';
 
-describe('SettingsComponent', () => {
-    beforeEach(async(() => {
-        TestBed.configureTestingModule({
-            imports: [AppModule, RouterTestingModule.withRoutes([])]
-        }).compileComponents().then(() => {
-            fixture = TestBed.createComponent(SettingsComponent);
-            comp = fixture.componentInstance;
-            fixture.detectChanges();
-            fixture.whenStable().then(() => {
-                fixture.detectChanges();
-            })
+@Component({
+    selector: 'settings',
+    templateUrl: './settings.component.html',
+    styleUrls: [ './settings.component.css']
+})
+export class SettingsComponent implements OnInit{
+
+    constructor(
+        private router: Router,
+        private userService: UserService,
+        private locationService: LocationService,
+    ){ }
+
+    user: User = new User();
+    newpassword= ""; //string for new password
+    passwordConfirmation = ""; //string for password Matching
+
+    userLocationList: string[]; //List for visualizing current user location tags
+    countryList: string[];
+    provinceList: string[];
+    cityList: string[];
+
+    selectedCountry: string = "";
+    selectedProvince: string = "";
+    selectedCity: string = "";
+
+
+    serviceList: string[]; //List of service tags from Backend
+    userServiceList: string[]; //List for visualizing current user service tags
+    newService: string = ''; //User-input string
+
+
+
+
+    ngOnInit(): void{
+        this.userService.getUser().then(User => {
+            this.user = User;
+            this.countryRefresh();
+            this.serviceRefresh();
+            this.userLocationRefresh();
+            this.userServiceRefresh();
+           // if(user == null)    this.router.navigate(['/signin']);
         });
-    }));
-
-    it('can be instantiated', () => {
-        expect(comp).not.toBeNull();
-        expect(comp).toBeTruthy();
-    });
-
-    it('can be initialized', () => {
-        expect(comp.ngOnInit).toThrow();
-    })
-
-    // Added in Sprint 3
-    it('should have its variable well defined', () => {
-        expect(comp.newpassword).toBe('');
-        expect(comp.passwordConfirmation).toBe('');
-        expect(comp.selectedCountry).toBe('');
-        expect(comp.selectedCity).toBe('');
-        expect(comp.selectedProvince).toBe('');
-        expect(comp.newService).toBe('');
-    })
-
-    it ('should display correct labels for input', async(() => {
-        const labels = fixture.debugElement.queryAll(By.css('label'));
-        const emailLabel = labels[0].nativeElement;
-        const passwordLabel = labels[1].nativeElement;
-        const passwordConfirmationLabel = labels[2].nativeElement;
-        const usernameLabel = labels[3].nativeElement;
-        const locationLabel = labels[4].nativeElement;
-        const serviceLabel = labels[8].nativeElement;
-
-        expect(emailLabel.classList.contains("Location:")).toBeTruthy();
-        expect(passwordLabel.classList.contains("Services:")).toBeTruthy();
-        expect(passwordLabel.classList.contains("Password:")).toBeTruthy();
-        expect(passwordConfirmationLabel.classList.contains("Password Confirmation:")).toBeTruthy();
-        expect(usernameLabel.classList.contains("Username:")).toBeTruthy();
-        expect(locationLabel.classList.contains("Locations:")).toBeTruthy();
-        expect(serviceLabel.classList.contains("Services:")).toBeTruthy();
-    }))
-
-    it ('should display "User Information" in the header', async(() => {
-        const h3Headers = fixture.debugElement.queryAll(By.css('h3'));
-        const header = h3Headers[0].nativeElement;
-
-        expect(header.classList.contains("User Information")).toBeTruthy();
-    }))
-
-    it ('should display "Tags" in the subheader', async(() => {
-        const h4Headers = fixture.debugElement.queryAll(By.css('h4'));
-        const header = h4Headers[0].nativeElement;
-
-        expect(header.classList.contains("Tags")).toBeTruthy();
-    }))
 
 
-    it('should be able to go back to Main Page', async(() => {
-        let navigateSpy = spyOn((<any>comp).router, 'navigate');
-        comp.goToMain();
-        expect(navigateSpy).toHaveBeenCalledWith(['/main']);
-    }))
+    }
+
+    //TODO: Deal with Password Change
+
+    SaveChanges(): void {
+        if(this.newpassword != this.passwordConfirmation) {
+            alert("Password is different.")
+            return
+        }
+        else if(this.newpassword != "") {
+            this.user.password = this.newpassword;
+            alert("Successfully changed password. Please sign in again.")
+            this.userService.update(this.user)
+                .then(() => this.goToSignin());
+        }
+        else {
+            alert("Successfully modified!")
+            this.userService.update(this.user)
+            .then(() => this.goToMain());
+        }
+    }
 
 
 
-});
+    //Validate Password Match
+/*    ValidatePassword(): boolean {
+        //change to new password
+        if (this.newpassword !=""){
+            if (this.newpassword == this.passwordConfirmation){
+                this.user.password = this.newpassword;
+                return true
+            }
+            else{
+                return false;
+            }
+        }
+        //No change in password
+        else{
+            return true;
+        }
+    }*/
+
+
+    //Methods for Location Tags
+
+    //Update location tag visualization
+    userLocationRefresh(): void {
+        if(this.user.locations == "") {
+            this.userLocationList = null;
+            return;
+        }
+        this.userLocationList = this.user.locations
+            .substr(0, this.user.locations.length-1).split(';');
+    }
+
+    userLocationAdd(): void {
+        if(this.selectedCountry == "") {
+            alert("Please select country!");
+            return;
+        }
+        var newLocation: string = this.selectedCountry;
+        if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
+        if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
+
+        if(this.user.locations.indexOf(newLocation+";") != -1) {
+            alert("You've already selected " + newLocation + " !")
+            return;
+        }
+
+        this.user.locations = this.user.locations + newLocation + ';';
+        this.selectedCountry = "";
+        this.selectedProvince = "";
+        this.selectedCity = "";
+        this.userLocationRefresh();
+        this.provinceList = null;
+        this.cityList = null;
+    }
+
+    userLocationDelete(deleteLocation: string): void {
+        deleteLocation = deleteLocation + ';';
+        this.user.locations = this.user.locations.replace(deleteLocation, '');
+        this.userLocationRefresh();
+    }
+
+    countryRefresh(): void {
+        //this.countryList = countryListData;
+        this.locationService.getCountryList().then(country => {
+            if(country.length <= 0) this.countryList = null;
+            else    this.countryList = country.substr(0, country.length-1)
+                .split(';');
+        })
+    }
+
+    countrySelect(country: string): void {
+        this.selectedCountry = country;
+        this.provinceRefresh(this.selectedCountry);
+        this.cityList = null;
+        this.selectedProvince = "";
+        this.selectedCity = "";
+    }
+
+    provinceRefresh(country: string): void {
+        //this.provinceList = provinceListData;
+        this.locationService.getLocationList(this.selectedCountry)
+            .then(province => {
+                if(province.length <= 0) this.provinceList = null;
+                else    this.provinceList = province
+                    .substr(0,province.length-1).split(';');
+            })
+    }
+
+    provinceSelect(province: string): void {
+        this.selectedProvince = province;
+        this.cityRefresh(this.selectedProvince);
+        this.selectedCity = "";
+    }
+
+    cityRefresh(province: string): void {
+        //this.cityList = cityListData;
+        var address: string = this.selectedCountry + '/' + this.selectedProvince;
+        this.locationService.getLocationList(address)
+            .then(city => {
+                if(city.length <= 0) this.cityList = null;
+                else    this.cityList = city.substr(0,city.length-1).split(';');
+            })
+    }
+
+    citySelect(city: string): void {
+        this.selectedCity = city;
+    }
+
+
+    //Methods for Service Tags
+
+    //Update service tag visualization
+    userServiceRefresh(): void {
+        if(this.user.services == '') {
+            this.userServiceList = null;
+            return;
+        }
+        this.userServiceList = this.user.services
+            .substr(0, this.user.services.length-1).split(';');
+    }
+
+    serviceRefresh(): void {
+        //TODO: replace serviceListData with serviceService
+        this.serviceList = serviceListData;
+    }
+
+    //Select a Tag from the exisitng list of service tags
+    userServiceSelect(service: string): void {
+        var validity_check: string = service + ';';
+        if (this.user.services.indexOf(validity_check) != -1){
+            alert("Tag Already Added!");
+            return;
+        }
+        this.user.services = this.user.services + service + ';';
+        this.userServiceRefresh();
+    }
+
+    userServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.services = this.user.services.replace(deleteService, '');
+        this.userServiceRefresh();
+    }
+
+    userServiceAdd(): void {
+        if(this.newService == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this.newService.indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+        }
+        else if (this.serviceList.indexOf(this.newService) != -1){
+            alert("Tag already Exists!");
+        }
+        else{
+            this.userServiceSelect(this.newService);
+            this.newService = "";
+        }
+    }
+
+    goToMain(){
+        this.router.navigate(['/main']);
+    }
+
+    goToSignin(){
+        this.router.navigate(['/signin']);
+    }
+
+
+
+
+} /* istanbul ignore next */
+
+// Mock Data for checking service tag functionality
+const serviceListData = [
+    'Travel',
+    'Cafe',
+    'SNU',
+    'Pub',
+]

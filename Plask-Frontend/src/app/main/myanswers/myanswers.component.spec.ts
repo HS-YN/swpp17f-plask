@@ -23,6 +23,9 @@ describe('MyAnswersComponent', () => {
     it('can be instantiated', () => {
         expect(comp).not.toBeNull();
         expect(comp).toBeTruthy();
+
+        expect(comp.expand).toThrow();
+        expect(comp.answerClick).toThrow();
     });
 
     it ('should trigger getQuestionList() when initiated', fakeAsync(() => {

@@ -24,6 +24,22 @@ describe('MainComponent', () => {
         expect(comp).toBeTruthy();
     });
 
+    it('can get function', () => {
+        expect(comp.gotoMainTab).toThrow();
+        expect(comp.sendQuestion).toThrow();
+        expect(comp.countryRefresh).toThrow();
+        expect(comp.countrySelect).toThrow();
+        expect(comp.provinceRefresh).toThrow();
+        expect(comp.provinceSelect).toThrow();
+        expect(comp.cityRefresh).toThrow();
+        expect(comp.serviceRefresh).toThrow();
+        expect(comp.questionServiceRefresh).toThrow();
+        expect(comp.questionServiceSelect).toThrow();
+        expect(comp.questionServiceDelete).toThrow();
+        expect(comp.questionServiceAdd).toThrow();
+
+    })
+
     it('can be initiated', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.ngOnInit();
@@ -100,13 +116,74 @@ describe('MainComponent', () => {
     it('can navigate to MyAnswersTab when the tab is clicked', fakeAsync(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         let btns = fixture.debugElement.queryAll(By.css('button'));
-        let myAnswersTabButton = btns[4].nativeElement;        
+        let myAnswersTabButton = btns[4].nativeElement;
 
         myAnswersTabButton.triggerEventHandler('click', null);
         tick();
         fixture.detectChanges();
         expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myanswers']}}]);
-    }))   
+    }))
+
+    it ('should receive alert message when question is empty', fakeAsync(() => {
+        let windowSpy = spyOn(window, "alert");
+
+        comp.question.content = "";
+        comp.sendQuestion();
+        tick();
+        fixture.detectChanges();
+        expect(windowSpy).toHaveBeenCalledWith("Question is Empty!");
+    }));
+
+    it('should alert message if selectedCountry is empty', fakeAsync(() => {
+        let windowSpy = spyOn(window, "alert");
+
+        comp.question.content = "test";
+        comp.selectedCountry = "";
+        comp.sendQuestion();
+        tick();
+        fixture.detectChanges();
+        expect(windowSpy).toHaveBeenCalledWith("Please select country!");
+    }))
+
+    it('should update selectedCountry when it is selected', fakeAsync(() => {
+        comp.countrySelect("Korea");
+        tick();
+        fixture.detectChanges();
+        expect(comp.selectedCountry).toEqual("Korea");
+    }))
+
+    it('should update selectedProvince when it is selected', fakeAsync(() => {
+        comp.provinceSelect("Seoul");
+        tick();
+        fixture.detectChanges();
+        expect(comp.selectedProvince).toEqual("Seoul");
+    }))
+
+    it('should refresh service list when refresh is called', fakeAsync(() => {
+        comp.serviceRefresh();
+        tick();
+        fixture.detectChanges();
+        expect(comp.serviceList).not.toBeNull();
+    }))
+
+    it('should call questionService Refresh when Delete is called', fakeAsync(() => {
+        let spy = spyOn(comp, "questionServiceRefresh");
+
+        comp.questionServiceDelete("string")
+        tick();
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+    }))
+
+    it('should call questionServiceSelect() when Add is called', fakeAsync(() => {
+        let spy = spyOn(comp, "questionServiceSelect");
+
+        comp.questionServiceAdd();
+        tick();
+        fixture.detectChanges();
+        expect(spy).toHaveBeenCalled();
+    }))
+
 
 
 });
