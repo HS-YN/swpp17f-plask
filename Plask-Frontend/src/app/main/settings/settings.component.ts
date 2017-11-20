@@ -2,10 +2,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from './user';
+import { User } from '../../user/user';
 
-import { UserService } from './user.service';
-import { LocationService } from './location.service';
+import { UserService } from '../../user/user.service';
+import { LocationService } from '../../location/location.service';
 
 @Component({
     selector: 'settings',

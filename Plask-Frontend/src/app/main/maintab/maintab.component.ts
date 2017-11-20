@@ -2,14 +2,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from './user';
-import { Question } from './question';
-import { Answer } from './answer';
+import { User } from '../../user/user';
+import { Question } from '../../question/question';
+import { Answer } from '../../answer/answer';
 
-import { UserService } from './user.service';
-import { LocationService } from './location.service'; 
-import { QuestionService } from './question.service'; 
-import { AnswerService } from './answer.service';
+import { UserService } from '../../user/user.service';
+import { LocationService } from '../../location/location.service'; 
+import { QuestionService } from '../../question/question.service'; 
+import { AnswerService } from '../../answer/answer.service';
 
 @Component({
     selector: 'maintab',
@@ -43,11 +43,12 @@ export class MainTabComponent implements OnInit{
 
     getQuestionList():void {
         this.questionService.getRecentQuestion().then(questions =>{
-            this.questionList = null;
+            this.questionList = [];
             var a:Answer[];
             for(let q of questions){
                 this.answerService.getAnswer(q.id).then(answers =>{
-                    a = answers;
+                    if(answers != null)
+                        a = answers;
                 })
                 this.questionList.push([q, true, a]);
             }

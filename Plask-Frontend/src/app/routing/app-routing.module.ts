@@ -3,13 +3,13 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 //Import Components
-import { SignInComponent } from './signin.component';
-import { MainComponent } from './main.component';
-import { SignUpComponent } from './signup.component';
-import { SettingsComponent } from './settings.component';
-import { MainTabComponent } from './maintab.component';
-import { MyQuestionsComponent } from './myquestions.component';
-import { MyAnswersComponent } from './myanswers.component';
+import { SignInComponent } from '../signin/signin.component';
+import { MainComponent } from '../main/main.component';
+import { SignUpComponent } from '../signup/signup.component';
+import { SettingsComponent } from '../main/settings/settings.component';
+import { MainTabComponent } from '../main/maintab/maintab.component';
+import { MyQuestionsComponent } from '../main/myquestions/myquestions.component';
+import { MyAnswersComponent } from '../main/myanswers/myanswers.component';
 
 //Routes between Components
 const routes: Routes = [

@@ -7,21 +7,21 @@ import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
 
 //Import Components
 import { AppComponent } from './app.component';
-import { SignInComponent } from './signin.component';
-import { SignUpComponent } from './signup.component';
-import { MainComponent } from './main.component';
-import { SettingsComponent } from './settings.component';
-import { MainTabComponent } from './maintab.component';
-import { MyQuestionsComponent } from './myquestions.component';
-import { MyAnswersComponent } from './myanswers.component';
+import { SignInComponent } from './signin/signin.component';
+import { SignUpComponent } from './signup/signup.component';
+import { MainComponent } from './main/main.component';
+import { SettingsComponent } from './main/settings/settings.component';
+import { MainTabComponent } from './main/maintab/maintab.component';
+import { MyQuestionsComponent } from './main/myquestions/myquestions.component';
+import { MyAnswersComponent } from './main/myanswers/myanswers.component';
 
 //Import Service
-import { UserService } from './user.service';
-import { LocationService } from './location.service';
-import { QuestionService } from './question.service';
-import { AnswerService } from './answer.service';
+import { UserService } from './user/user.service';
+import { LocationService } from './location/location.service';
+import { QuestionService } from './question/question.service';
+import { AnswerService } from './answer/answer.service';
 
-import { AppRoutingModule } from './app-routing.module';
+import { AppRoutingModule } from './routing/app-routing.module';
 
 import { APP_BASE_HREF } from '@angular/common';
 

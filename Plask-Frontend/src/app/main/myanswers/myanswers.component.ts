@@ -2,21 +2,22 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { User } from './user';
-import { Question } from './question';
-import { Answer  } from './answer';
+import { User } from '../../user/user';
+import { Question } from '../../question/question';
+import { Answer } from '../../answer/answer';
 
-import { UserService } from './user.service';
-import { LocationService } from './location.service'; 
-import { QuestionService } from './question.service'; 
-import { AnswerService  } from './answer.service';
+import { UserService } from '../../user/user.service';
+import { LocationService } from '../../location/location.service'; 
+import { QuestionService } from '../../question/question.service'; 
+import { AnswerService } from '../../answer/answer.service';
+
 
 @Component({
-    selector: 'myquestions',
-    templateUrl: './myquestions.component.html',
-    styleUrls: [ './maintab.component.css'],
+    selector: 'myanswers',
+    templateUrl: './myanswers.component.html',
+    styleUrls: [ '../maintab/maintab.component.css']
 })
-export class MyQuestionsComponent implements OnInit{
+export class MyAnswersComponent implements OnInit{
 
     constructor(
         private router: Router,
@@ -35,12 +36,13 @@ export class MyQuestionsComponent implements OnInit{
         this.getQuestionList();
     }
     getQuestionList():void {
-        this.questionService.getQuestion().then(questions =>{
-            this.questionList = null;
+        this.questionService.getAnsweredQuestion().then(questions =>{
+            this.questionList = [];
             var a:Answer[];
             for(let q of questions){
                 this.answerService.getAnswer(q.id).then(answers =>{
-                    a = answers;
+                    if(answers!=null)
+                        a = answers;
                 })
                 this.questionList.push([q, true, a]);
             }
@@ -64,6 +66,8 @@ export class MyQuestionsComponent implements OnInit{
             alert("Answer successfully posted!");
             this.answer = "";
             this.getQuestionList();
+
         }
+
     }
 }
