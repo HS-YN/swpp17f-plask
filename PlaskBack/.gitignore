@@ -1,5 +1,5 @@
 *.swp
-#*.coverage
+*.coverage
 *.sublime-workspace
 htmlcov/
 __pycache__/
