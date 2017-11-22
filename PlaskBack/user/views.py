@@ -89,20 +89,23 @@ def setLocation(userinfo, location_list):
 
 
 # PARSE LOCATION FOR JSON RESPONSE
-def getLocationStr(userinfo):
+def getLocationStr(has_loc):
     result = ''
-    for location in list(userinfo.locations.all()):
+    for location in list(has_loc.locations.all()):
         loc_code1 = location.loc_code1
         loc_code2 = location.loc_code2
         loc_code3 = location.loc_code3
 
-        loc_name1 = LocationL1.objects.get(loc_code=loc_code1).name + '/'
+        loc1 = LocationL1.objects.get(loc_code=loc_code1)
+
+        loc_name1 = loc1.name + '/'
         if(loc_code2 > 0):
-            loc_name2 = LocationL2.objects.get(loc_code=loc_code2).name + '/'
+            loc2 = loc1.child.get(loc_code=loc_code2)
+            loc_name2 = loc2.name + '/'
         else:
             loc_name2 = ""
         if(loc_code3 > 0):
-            loc_name3 = LocationL3.objects.get(loc_code=loc_code3).name
+            loc_name3 = loc2.child.get(loc_code=loc_code3).name
         else:
             loc_name3 = ""
 
@@ -110,9 +113,9 @@ def getLocationStr(userinfo):
     return result
 
 
-def getServiceStr(userinfo):
+def getServiceStr(has_serv):
     result = ''
-    for service in list(userinfo.services.all()):
+    for service in list(has_serv.services.all()):
         result = result + service.name + ';'
     return result
 

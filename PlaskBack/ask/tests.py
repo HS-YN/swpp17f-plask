@@ -18,7 +18,7 @@ class AskTestCase(TestCase):
         response = self.client.get('/api/ask/question')
         self.assertEqual(response.status_code, 401)
 
-        client = Client(enforce_csrf_checks = True)
+        client = Client(enforce_csrf_checks=True)
         response = client.get('/api/user/token')
         csrftoken = response.cookies['csrftoken'].value
         response = self.client.post(
@@ -90,7 +90,7 @@ class AskTestCase(TestCase):
 
         response = self.client.get('/api/ask/question/answer')
         data = json.loads(response.content.decode())
-        self.assertEqual(data[0]['content'], 'that')
+        self.assertEqual(data[0]['content'], 'this')
 '''
         response = self.client.get('/api/ask/question/related')
         data = json.loads(response.content.decode())

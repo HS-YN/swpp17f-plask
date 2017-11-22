@@ -33,9 +33,7 @@ export class QuestionService{
 
     postQuestion(question: Question): Promise<number>{
         var headers = new Headers({'Content-Type': 'application/json'});
-        return this.http
-            .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
-            .then(() => this.http.post(this.questionUrl, JSON.stringify(question), {headers: headers}).toPromise())
+        return this.http.post(this.questionUrl, JSON.stringify(question), {headers: headers}).toPromise()
             .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }

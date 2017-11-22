@@ -13,7 +13,7 @@ export class AnswerService{
     // list of Urls for API
     private answerUrl= '/api/ask/answer/';
     private tokenUrl = '/api/user/token';
-   
+
     private headers = new Headers({'Content-Type': 'application/json'});
 
 
@@ -22,7 +22,7 @@ export class AnswerService{
     getAnswer(id: number): Promise<Answer[]>{
         const url = `${this.answerUrl}${id}`;
         return this.http.get(url)
-            .toPromise()   
+            .toPromise()
             .then(Response => Response.json() as Answer[])
             .catch(this.handleError);
     }
@@ -30,10 +30,8 @@ export class AnswerService{
     postAnswer(answer: string, id:number): Promise<number>{
         const url = `${this.answerUrl}${id}`;
         var headers = new Headers({'Content-Type': 'application/json'});
-        return this.http
-            .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
-            .then(() => this.http.post(url, JSON.stringify({content : answer}), {headers: headers}).toPromise())
-            .then(res => res.status)  // receive status code 201 if success, 
+        return this.http.post(url, JSON.stringify({content : answer}), {headers: headers}).toPromise()
+            .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }
 

@@ -1,8 +1,9 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import JsonResponse, HttpResponseNotFound
+from django.forms.models import model_to_dict
 
 from user.models import UserInfo, Location, Service
-from user.views import servParse, locParse, setService
+from user.views import servParse, locParse, setService, getLocationStr, getServiceStr
 from location.views import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
 
@@ -21,13 +22,35 @@ def login_required(function=None, redirect_field_name=None):
         return _wrapped_view
     return _decorator(function)
 
+def question_to_dict (question):
+    result = {}
+    result['id'] = question.id
+    result['content'] = question.content
+    result['time'] = str(question.time)
+    result['author'] = question.author.nickname
+    result['locations'] = getLocationStr (question)
+    result['services'] = getServiceStr (question)
+    print(result)
+    return result
+
+
+def answer_to_dict (answer):
+    result = {}
+    result['id'] = answer.id
+    result['content'] = answer.content
+    result['time'] = str(answer.time)
+    result['author'] = answer.author.nickname
+    return result
+
 
 @login_required
 def question(request):
     if request.method == 'GET':
         author = UserInfo.objects.get(id=request.user.id)
         return JsonResponse(
-            list(author.questions.all().values()), safe=False)
+            # TODO order_by
+            [question_to_dict (question) for question in author.questions.all()],
+            safe=False)
     elif request.method == 'POST':
         author = UserInfo.objects.get(id=request.user.id)
         req_body = json.loads(request.body.decode())
@@ -37,8 +60,8 @@ def question(request):
         new_question = Question(
             author=author, content=content, time=datetime.now())
         new_question.save()
-        setService (new_question, services)
-        setLocation (new_question, locations)
+        setService(new_question, services)
+        setLocation(new_question, locations)
         return HttpResponse(status=201)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
@@ -49,8 +72,9 @@ def question_recent(request):
     if request.method == 'GET':
         yesterday = datetime.now().date() - timedelta(1)
         start_time = datetime.combine(yesterday, time())
-        return JsonResponse(list(Question.objects.order_by('time').filter(
-            time__gte=start_time).values()), safe=False)
+        return JsonResponse(
+            [question_to_dict (question) for question in Question.objects.order_by('time').filter(time__gte=start_time)],
+            safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
@@ -117,8 +141,10 @@ def question_search(request):
 def question_answer(request):
     if request.method == 'GET':
         author = UserInfo.objects.get(id=request.user.id)
-        return JsonResponse(
-            list(author.answers.all().values()), safe=False)
+        questions = []
+        for answer in author.answers.all():
+            questions.append (answer.question)
+        return JsonResponse([question_to_dict (question) for question in questions], safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
@@ -130,15 +156,16 @@ def answer(request, question_id):
         curr_question = Question.objects.get(id=question_id)
     except Question.DoesNotExist:
         return HttpResponseNotFound()
+
     if request.method == 'GET':
         return JsonResponse(
-            list(Answer.objects.filter(question=curr_question).values()), safe=False)
+            [answer_to_dict (answer) for answer in curr_question.answers.all()], safe=False)
     elif request.method == 'POST':
         author = UserInfo.objects.get(id=request.user.id)
         req_body = json.loads(request.body.decode())
         content = req_body['content']
         new_answer = Answer(
-            author=author, content=content, time=datetime.now(), question=curr_question)
+            author=author, content=content, time=datetime.now(), question = curr_question)
         new_answer.save()
         return HttpResponse(status=201)
     else:
@@ -148,13 +175,10 @@ def answer(request, question_id):
 def service2index(service_list):
     if len(service_list) <= 0:
         return []
-
     index_list = []
     for services in service_list:
         index_list.append(Service.objects.get(name=services).id)
     return index_list
-
-
 def location2index(location_list):
     index_list = [-1, -1, -1]
     if len(location_list) >= 1 & len(location_list[0]) > 0:
@@ -174,6 +198,8 @@ def setLocation(question, location_list):
             l1 = LocationL1.objects.get(name=location[0].replace("%20", " "))
         except LocationL1.DoesNotExist:
             raise Question.DoesNotExist
+        l1.questions.add (question)
+        l1.save ()
         loc_codel1 = l1.loc_code
 
         loc_length = loc_length - 1
@@ -182,6 +208,8 @@ def setLocation(question, location_list):
                 l2 = l1.child.get(name=location[1].replace("%20", " "))
             except LocationL2.DoesNotExist:
                 raise Question.DoesNotExist
+            l2.questions.add (question)
+            l2.save ()
             loc_codel2 = l2.loc_code
         else:
             loc_codel2 = -1
@@ -192,6 +220,8 @@ def setLocation(question, location_list):
                 l3 = l2.child.get(name=location[2].replace("%20", " "))
             except LocationL3.DoesNotExist:
                 raise Question.DoesNotExist
+            l3.questions.add (question)
+            l3.save ()
             loc_codel3 = l3.loc_code
         else:
             loc_codel3 = -1
