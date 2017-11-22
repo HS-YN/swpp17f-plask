@@ -83,9 +83,10 @@ export class MainComponent implements OnInit{
             // Send Question to Backend
             this.questionService.postQuestion(this.question)
             .then(Status => { 
-                if(Status != 201) {alert("Question could not be sent, please try again");}});
+                if(Status != 201) {alert("Question could not be sent, please try again");}
+                else {alert("Question successfully plasked!");}
+            });
 
-            alert("Question successfully plasked!");
 
             // Reset the question bar
             this.question.content = "";

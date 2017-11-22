@@ -29,6 +29,7 @@ export class MainTabComponent implements OnInit{
     user: User = new User();
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
+    temp_questionList:Question[] = [];
 
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
@@ -43,17 +44,23 @@ export class MainTabComponent implements OnInit{
 
     getQuestionList():void {
         this.questionService.getRecentQuestion().then(questions =>{
-            this.questionList = [];
-            var a:Answer[];
-            for(let q of questions){
-                this.answerService.getAnswer(q.id).then(answers =>{
-                    if(answers != null)
-                        a = answers;
-                })
-                this.questionList.push([q, true, a]);
-            }
+            this.temp_questionList = questions;
+            this.getAnswerList();
         })
     }
+    getAnswerList():void{
+        console.log(this.temp_questionList);
+        this.questionList = [];
+        for(let q of this.temp_questionList){
+            var temp_answerList = [];
+            this.answerService.getAnswer(q.id).then(answers =>{
+                if(answers != null)
+                    temp_answerList = answers;
+                this.questionList.push([q, true, temp_answerList]);
+                console.log(temp_answerList);
+            })
+        }
+    };
     expand(question):void {
         if(question[1]==true)
             question[1] = false;

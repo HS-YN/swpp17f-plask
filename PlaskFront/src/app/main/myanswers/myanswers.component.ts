@@ -28,6 +28,7 @@ export class MyAnswersComponent implements OnInit{
     ){ }
 
     user: User = new User();
+    temp_questionList:Question[] = [];
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
 
@@ -37,16 +38,22 @@ export class MyAnswersComponent implements OnInit{
     }
     getQuestionList():void {
         this.questionService.getAnsweredQuestion().then(questions =>{
-            this.questionList = [];
-            var a:Answer[];
-            for(let q of questions){
-                this.answerService.getAnswer(q.id).then(answers =>{
-                    if(answers!=null)
-                        a = answers;
-                })
-                this.questionList.push([q, true, a]);
-            }
+            this.temp_questionList = questions;
+            this.getAnswerList();
         })
+    }
+    getAnswerList():void{
+        console.log(this.temp_questionList);
+        this.questionList = [];
+        for(let q of this.temp_questionList){
+            var temp_answerList = [];
+            this.answerService.getAnswer(q.id).then(answers =>{
+                if(answers != null)
+                    temp_answerList = answers;
+                this.questionList.push([q, true, temp_answerList]);
+                console.log(temp_answerList);
+            })
+        }
     };
     expand(question):void {
         if(question[1]==true)
@@ -61,9 +68,8 @@ export class MyAnswersComponent implements OnInit{
         else{
             this.answerService.postAnswer(this.answer, id).then(Status=>{
                 if(Status != 204) {alert("Answer could not be sent, please try again");}
-
+                else {alert("Answer successfully posted!");}
             });
-            alert("Answer successfully posted!");
             this.answer = "";
             this.getQuestionList();
 
