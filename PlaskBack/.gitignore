@@ -1,5 +1,6 @@
 *.swp
-*.coverage
+#*.coverage
 *.sublime-workspace
 htmlcov/
 __pycache__/
+.idea/
