@@ -22,19 +22,19 @@ def login_required(function=None, redirect_field_name=None):
         return _wrapped_view
     return _decorator(function)
 
-def question_to_dict (question):
+
+def question_to_dict(question):
     result = {}
     result['id'] = question.id
     result['content'] = question.content
     result['time'] = str(question.time)
     result['author'] = question.author.nickname
-    result['locations'] = getLocationStr (question)
-    result['services'] = getServiceStr (question)
-    print(result)
+    result['locations'] = getLocationStr(question)
+    result['services'] = getServiceStr(question)
     return result
 
 
-def answer_to_dict (answer):
+def answer_to_dict(answer):
     result = {}
     result['id'] = answer.id
     result['content'] = answer.content
@@ -73,7 +73,7 @@ def question_recent(request):
         yesterday = datetime.now().date() - timedelta(1)
         start_time = datetime.combine(yesterday, time())
         return JsonResponse(
-            [question_to_dict (question) for question in Question.objects.order_by('time').filter(time__gte=start_time)],
+            [question_to_dict(question) for question in Question.objects.order_by('time').filter(time__gte=start_time)],
             safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
@@ -143,8 +143,10 @@ def question_answer(request):
         author = UserInfo.objects.get(id=request.user.id)
         questions = []
         for answer in author.answers.all():
-            questions.append (answer.question)
-        return JsonResponse([question_to_dict (question) for question in questions], safe=False)
+            if answer.question not in questions:
+                questions.append(answer.question)
+        return JsonResponse(
+            [question_to_dict(question) for question in questions], safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 

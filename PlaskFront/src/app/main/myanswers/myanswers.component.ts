@@ -7,8 +7,8 @@ import { Question } from '../../question/question';
 import { Answer } from '../../answer/answer';
 
 import { UserService } from '../../user/user.service';
-import { LocationService } from '../../location/location.service'; 
-import { QuestionService } from '../../question/question.service'; 
+import { LocationService } from '../../location/location.service';
+import { QuestionService } from '../../question/question.service';
 import { AnswerService } from '../../answer/answer.service';
 
 
