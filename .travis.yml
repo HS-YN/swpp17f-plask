@@ -3,9 +3,11 @@ python:
  - "3.5"
  - "3.6"
 install:
- - pip install django coverage coveralls
+ - pip3 install django coverage coveralls
 before_script:
- - python manage.py migrate
+ - python3 manage.py migrate
 script:
- - coverage run --branch --source="./hero" manage.py test
+ - coverage run --branch --source="./ask" manage.py test ask
+ - coverage run --branch --source="./location" manage.py test location
+ - coverage run --branch --source="./user" manage.py test user
 after_success: coveralls 
