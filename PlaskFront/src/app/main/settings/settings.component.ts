@@ -24,24 +24,29 @@ export class SettingsComponent implements OnInit{
     newpassword= ""; //string for new password
     passwordConfirmation = ""; //string for password Matching
 
-    userLocationList: string[]; //List for visualizing current user location tags
-    countryList: string[];
-    provinceList: string[];
-    cityList: string[];
+    userLocationList: string[] = []; //List for visualizing current user location tags
+    countryList: string[] = [];
+    provinceList: string[] = [];
+    cityList: string[] = [];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
 
 
-    serviceList: string[]; //List of service tags from Backend
-    userServiceList: string[]; //List for visualizing current user service tags
+    serviceList: string[] = []; //List of service tags from Backend
+    userServiceList: string[] = []; //List for visualizing current user service tags
     newService: string = ''; //User-input string
+    userBlockedServiceList: string [] =[]; //List for visualizing current user blocked service tags
+    newBlockService: string = '';
+    notiFrequencyList: number[] = []; // List of frequency selection
+    selectedFreq;
 
 
 
 
     ngOnInit(): void{
+        this.notiFrequencyList = [10, 20, 30, 60, 120];
 
         this.userService.checkSignedIn().then(status => {
             if(status == 'False'){ this.router.navigate(['/signin']);}
@@ -50,7 +55,9 @@ export class SettingsComponent implements OnInit{
                this.countryRefresh();
                this.serviceRefresh();
                this.userLocationRefresh();
-               this.userServiceRefresh();});}
+               this.userBlockedServiceRefresh();
+               this.userServiceRefresh();
+               this.selectedFreqRefresh();});}
         })  
 
         /*this.userService.getUser().then(User => {
@@ -198,7 +205,7 @@ export class SettingsComponent implements OnInit{
     //Update service tag visualization
     userServiceRefresh(): void {
         if(this.user.services == '') {
-            this.userServiceList = null;
+            this.userServiceList = [];
             return;
         }
         this.userServiceList = this.user.services
@@ -243,8 +250,57 @@ export class SettingsComponent implements OnInit{
         }
     }
 
+    //Codes for Blocked Services
+    userBlockedServiceAdd(): void {
+        if(this.newBlockService == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this.newBlockService.indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+        }
+        else if (this.userServiceList.indexOf(this.newBlockService) != -1){
+            alert("You cannot set same tags on Services and Blocked Services");
+        }
+        else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
+            alert("Tag already Exists!");
+        }
+        else{
+            this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
+            this.userBlockedServiceRefresh();
+            this.newBlockService = "";
+        }
+    }
+    userBlockedServiceRefresh(): void {
+        if(this.user.blockedServices == '') {
+            this.userBlockedServiceList = [];
+            return;
+        }
+        this.userBlockedServiceList = this.user.blockedServices
+        .substr(0, this.user.blockedServices.length-1).split(';');
+    }
+    userBlockedServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
+        this.userBlockedServiceRefresh();
+    }
+
+    //Method for setting notification frequency
+    onChange(freq) {
+        this.user.notiFrequency = freq;
+    }
+    selectedFreqRefresh(){
+        var x:number = this.notiFrequencyList.indexOf(this.user.notiFrequency);
+        if(x == -1)
+            x = 0;
+        this.selectedFreq = this.notiFrequencyList[x];
+    }
+
     goToMain(){
         this.router.navigate(['/main']);
+    }
+
+    goBack(){
+        this.router.navigate(['/signin']);
     }
 
     goToSignin(){

@@ -82,6 +82,24 @@
         <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
 
       </div>
+
+      <div class="form-group">
+        <label> Blocked Services: </label>
+        <span *ngFor="let userBlockedService of userBlockedServiceList">
+            <span class="label label-success">{{userBlockedService}}</span>
+            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            x</button> &nbsp;
+        </span>
+        <br>
+        <label> type tag to block </label>
+        <input type="text" [(ngModel)]="newBlockService" class="form-control" placeholder="type here"/>
+        <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
+      </div>
+      
+      <label> Select notification frequency</label>
+      <select [(ngModel)]="selectedFreq" (ngModelChange)="onChange($event)">
+          <option *ngFor="let freq of notiFrequencyList" [ngValue]="freq"> {{freq}} min </option>
+      </select>
       
       <div class="form-group">
         <button class="btn btn-block" (click)="SaveChanges()">
