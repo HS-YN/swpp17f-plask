@@ -23,8 +23,8 @@ export class SignInComponent implements OnInit {
     subtitle: string = "Location-based live Q&A platform"
 
     ngOnInit(){
-        this.userService.getUser().then(user => {
-            if(user != null)    this.router.navigate(['/main']);
+        this.userService.checkSignedIn().then(status => {
+            if(status == 'True')    this.router.navigate(['/main']); // route to main if already signed in
         })
     }
 

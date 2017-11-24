@@ -196,11 +196,21 @@ def signout(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 
+def checksignedin(request):
+    if request.method == 'GET':
+        if request.user.is_authenticated:
+            return JsonResponse('True', safe=False)
+        else:
+            return JsonResponse('False', safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
+
 
 def userinfo(request):
     if request.method == 'GET':
         # get userinfo - assume logged in
-        if request.user is not None:
+        # NOTE: request.user returns instance of Anonymous User if a user is not logged in (instead of None)
+        if request.user.is_authenticated: 
             userinfo = UserInfo.objects.get(id = request.user.id)
             result = {}
             result['email'] = request.user.username

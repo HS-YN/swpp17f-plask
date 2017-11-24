@@ -43,8 +43,8 @@ export class SignUpComponent implements OnInit {
 
 
     ngOnInit(): void{
-        this.userService.getUser().then(user => {
-            if(user != null)    this.router.navigate(['/main']);
+        this.userService.checkSignedIn().then(status => {
+            if(status == 'True')    this.router.navigate(['/main']);
         })
         this.countryRefresh();
         this.serviceRefresh();

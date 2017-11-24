@@ -14,6 +14,7 @@ export class UserService{
     private signUpUrl = '/api/user/signup'; //URL to signup
     private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
+    private checkSignedInUrl  = '/api/user/checksignedin';
     private tokenUrl = '/api/user/token';
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -49,6 +50,12 @@ export class UserService{
         return this.http.get(this.userInfoUrl).toPromise().then(response => 
             response.json() as User);
         //.catch(this.handleError);
+    }
+
+    // 200 if success, 401 if failure // 'True' if success, 'False' if failure
+    checkSignedIn(): Promise<string>{
+        return this.http.get(this.checkSignedInUrl).toPromise().then(response => response.json() as string)
+        .catch(this.handleError);
     }
 
     update(user: User): Promise<User>{

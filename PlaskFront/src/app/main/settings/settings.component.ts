@@ -42,16 +42,25 @@ export class SettingsComponent implements OnInit{
 
 
     ngOnInit(): void{
-        this.userService.getUser().then(User => {
+
+        this.userService.checkSignedIn().then(status => {
+            if(status == 'False'){ this.router.navigate(['/signin']);}
+            else{ this.userService.getUser().then(User => {
+               this.user = User;
+               this.countryRefresh();
+               this.serviceRefresh();
+               this.userLocationRefresh();
+               this.userServiceRefresh();});}
+        })  
+
+        /*this.userService.getUser().then(User => {
             this.user = User;
             this.countryRefresh();
             this.serviceRefresh();
             this.userLocationRefresh();
             this.userServiceRefresh();
-           // if(user == null)    this.router.navigate(['/signin']);
-        });
-
-
+            if(user == null)    this.router.navigate(['/signin']);
+        });*/
     }
 
     //TODO: Deal with Password Change

@@ -39,11 +39,19 @@ export class MainComponent implements OnInit{
     serviceTag: string = ''; //User-input string
 
     ngOnInit(): void{
-        
-        this.userService.getUser().then(user => {
+
+        this.userService.checkSignedIn().then(status => {
+            if(status == 'False'){ this.router.navigate(['/signin']);}
+            else{ this.userService.getUser().then(user => {
+                this.question.author = user.username;
+                this.countryRefresh();
+                this.serviceRefresh();});}
+        })        
+
+        /*this.userService.getUser().then(user => {
             if(user != null){ this.question.author = user.username; this.countryRefresh(); this.serviceRefresh();}
             else{ this.router.navigate(['/signin']); }
-        })
+        })*/
     }
 
     goToSettings(): void{
