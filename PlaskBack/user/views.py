@@ -151,8 +151,8 @@ def signup(request):
         password = req_data['password']
         locations = req_data['locations']
         services = req_data['services']
-        blocked = req_data['blocked']
-        notify_freq = int(req_data['notify_freq'])
+        blocked = req_data['blockedServices']
+        notify_freq = int(req_data['notiFrequency'])
 
         if User.objects.filter(username=username).exists():
             return HttpResponse(status=401)
@@ -236,8 +236,8 @@ def userinfo(request):
         result['username'] = userinfo.nickname
         result['locations'] = getLocationStr(userinfo)
         result['services'] = getServiceStr(userinfo)
-        result['blocked'] = getBlockedStr(userinfo)
-        result['notify_freq'] = userinfo.notify_freq
+        result['blockedServices'] = getBlockedStr(userinfo)
+        result['notiFrequency'] = userinfo.notify_freq
         return JsonResponse (result)
 #        else:
 #            return HttpResponse(status = 401)
