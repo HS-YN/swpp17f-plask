@@ -7,7 +7,7 @@ install:
 before_script:
  - python3 ./PlaskBack/manage.py migrate
 script:
- - coverage run --branch --source="./PlaskBack/ask" manage.py test ask
- - coverage run --branch --source="./PlaskBack/location" manage.py test location
- - coverage run --branch --source="./PlaskBack/user" manage.py test user
+ - coverage run --branch --source="./PlaskBack/ask" ./PlaskBack/manage.py test ask
+ - coverage run --branch --source="./PlaskBack/location" ./PlaskBack/manage.py test location
+ - coverage run --branch --source="./PlaskBack/user" ./PlaskBack/manage.py test user
 after_success: coveralls 
