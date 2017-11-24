@@ -33,12 +33,12 @@ export class SignUpComponent implements OnInit {
     selectedCity: string = "";
 
 
-    serviceList: string[]; //List of service tags from Backend
-    userServiceList: string[]; //List for visualizing current user service tags
+    serviceList: string[] = []; //List of service tags from Backend
+    userServiceList: string[] = []; //List for visualizing current user service tags
     newService: string = ''; //User-input string
-    userBlockedServiceList: string[]; //List for visualizing current user blocked service tags
+    userBlockedServiceList: string[] = []; //List for visualizing current user blocked service tags
     newBlockService: string = '';
-    notiFrequencyList: number[]; //List of frequency selection
+    notiFrequencyList: number[] = []; //List of frequency selection
     selectedFreq:number;
 
 
@@ -188,6 +188,10 @@ export class SignUpComponent implements OnInit {
             alert("Tag Already Added!");
             return;
         }
+        else if (this.userBlockedServiceList.indexOf(service) != -1){
+            alert("You cannot set same tags on Services and Blocked Services");
+            return;
+        }
         this.user.services = this.user.services + service + ';';
         this.userServiceRefresh();
     }
@@ -222,29 +226,23 @@ export class SignUpComponent implements OnInit {
         this.userBlockedServiceRefresh();
     }
 
-    userBlockedServiceSelect(service: string): void {
-        var validity_check: string = service + ';';
-        if (this.user.blockedServices.indexOf(validity_check) != -1){
-            alert("Tag Already Added!");
-            return;
-
-        }
-        this.user.blockedServices = this.user.blockedServices + service + ';';
-        this.userBlockedServiceRefresh();
-    }
-
     userBlockedServiceAdd(): void {
         if(this.newBlockService == ""){
             alert("Tag is Empty!");
         }
         else if (this.newBlockService.indexOf(";") != -1){
             alert("You cannot use SemiColon!");
-
+        }
+        else if (this.userServiceList.indexOf(this.newBlockService) != -1){
+            alert("You cannot set same tags on Services and Blocked Services");
+        }
+        else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
+            alert("Tag already Exists!");
         }
         else{
-            this.userBlockedServiceSelect(this.newBlockService);
+            this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
+            this.userBlockedServiceRefresh();
             this.newBlockService = "";
-
         }
     }
     userBlockedServiceRefresh(): void {
