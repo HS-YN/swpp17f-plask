@@ -5,7 +5,7 @@ python:
 install:
  - pip3 install django coverage coveralls
 before_script:
- - cd backend
+ - cd PlaskBack
  - python3 manage.py migrate
 script:
  - coverage run --branch --source="./ask" manage.py test ask
