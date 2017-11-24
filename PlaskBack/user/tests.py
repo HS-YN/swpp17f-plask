@@ -21,8 +21,8 @@ class UserTestCase(TestCase):
                     'password': '123123',
                     'locations': 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;',
                     'services': 'coffee;pizza;',
-                    'blocked': 'asdf;qwer',
-                    'notify_freq': '10'
+                    'blockedServices': 'asdf;qwer',
+                    'notiFrequency': '10'
                     }),
                 content_type = 'application/json',
                 HTTP_X_CSRFTOKEN = csrftoken)
@@ -41,8 +41,8 @@ class UserTestCase(TestCase):
         self.assertEqual (data['locations'], 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;')
         self.assertEqual (data['username'], 'PlaskTest1')
         self.assertEqual (data['services'], 'coffee;pizza;')
-        self.assertEqual (data['blocked'], 'asdf;qwer;')
-        self.assertEqual (int(data['notify_freq']), 10)
+        self.assertEqual (data['blockedServices'], 'asdf;qwer;')
+        self.assertEqual (int(data['notiFrequency']), 10)
 
     def test_userinfo_put(self):
         response = self.client.put(
@@ -51,8 +51,8 @@ class UserTestCase(TestCase):
                     'password': '456456',
                     'locations': 'South Korea/Busan/Buk;South Korea;South Korea/Seoul;',
                     'services': 'coffee;pizza;microsoft;hell;swpp',
-                    'blocked': 'zxcv;qwer;bnmg;asdf',
-                    'notify_freq': '10'
+                    'blockedServices': 'zxcv;qwer;bnmg;asdf',
+                    'notiFrequency': '15'
                     }),
                 content_type = 'application/json'
                 )
@@ -65,7 +65,7 @@ class UserTestCase(TestCase):
         self.assertEqual (len(serv), 5)
         self.assertEqual (len(block), 4)
         self.assertEqual (len(loc), 3)
-        self.assertEqual (userinfo.notify_freq, 10)
+        self.assertEqual (userinfo.notify_freq, 15)
         self.assertEqual (str(loc[0].loc_code1) + '/' + str(loc[0].loc_code2) + '/' + str(loc[0].loc_code3), '213/1/1')
         self.assertEqual (str(loc[1].loc_code1) + '/' + str(loc[1].loc_code2) + '/' + str(loc[1].loc_code3), '213/-1/-1')
         self.assertEqual (str(loc[2].loc_code1) + '/' + str(loc[2].loc_code2) + '/' + str(loc[2].loc_code3), '213/16/-1')
@@ -102,8 +102,8 @@ class UserTestCase(TestCase):
                     'password': '123123',
                     'locations': 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;',
                     'services': 'coffee;pizza;',
-                    'blocked': 'asdf;qwer',
-                    'notify_freq': '10'
+                    'blockedServices': 'asdf;qwer',
+                    'notiFrequency': '10'
                     }),
                 content_type = 'application/json',
                 HTTP_X_CSRFTOKEN = csrftoken)

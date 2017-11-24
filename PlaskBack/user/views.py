@@ -253,8 +253,8 @@ def userinfo(request):
             request.user.set_password(password)
         locations = req_data['locations']
         services = req_data['services']
-        blocked = req_data['blocked']
-        notify_freq = int(req_data['notify_freq'])
+        blocked = req_data['blockedServices']
+        notify_freq = int(req_data['notiFrequency'])
 
         userinfo = request.user.userinfo
         services = servParse(services)
