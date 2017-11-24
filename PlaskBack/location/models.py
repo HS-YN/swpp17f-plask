@@ -1,7 +1,7 @@
 from django.db import models
 from user.models import UserInfo, Location
 from ask.models import Question
-
+import csv
 
 class LocationL1(models.Model):
     loc_code = models.PositiveIntegerField()

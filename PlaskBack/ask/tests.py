@@ -28,7 +28,9 @@ class AskTestCase(TestCase):
                     'username': 'PlaskTest1',
                     'password': '123123',
                     'locations': 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;',
-                    'services': 'coffee;pizza;'
+                    'services': 'coffee;pizza;',
+                    'blocked': 'asdf;qwer',
+                    'notify_freq': '10'
                     }),
                 content_type = 'application/json',
                 HTTP_X_CSRFTOKEN = csrftoken)

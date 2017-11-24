@@ -10,6 +10,17 @@ from .models import UserInfo, Service, Location
 from location.models import LocationL1, LocationL2, LocationL3
 import json
 
+# CHECK LOGIN
+def login_required(function=None, redirect_field_name=None):
+    def _decorator(func):
+        def _wrapped_view(request, *args, **kwargs):
+            if request.user.is_authenticated():
+                return func(request, *args, **kwargs)
+            else:
+                return HttpResponse(status=401)
+        return _wrapped_view
+    return _decorator(function)
+
 
 # TOKENIZE FUNCTIONS
 def tokenWith(string, tokstr):
@@ -19,12 +30,8 @@ def tokenWith(string, tokstr):
         if tok is not None and tok != '':
             result.append(tok)
     return result
-
-
 def servParse(servstr):
     return tokenWith(servstr, ';')
-
-
 def locParse(locstr):
     loclist = tokenWith(locstr, ';')
     result = []
@@ -41,8 +48,12 @@ def setService(has_serv, services):
         new_service, _ = Service.objects.get_or_create(name=service)
         has_serv.services.add(new_service)
         has_serv.save()
-
-
+def setBlocked(userinfo, blocked):
+    userinfo.blocked.clear()
+    for service in blocked:
+        new_service, _ = Service.objects.get_or_create(name=service)
+        userinfo.blocked.add(new_service)
+        userinfo.save()
 def setLocation(userinfo, location_list):
     userinfo.locations.clear()
     for location in location_list:
@@ -111,8 +122,11 @@ def getLocationStr(has_loc):
 
         result = result + loc_name1 + loc_name2 + loc_name3 + ';'
     return result
-
-
+def getBlockedStr(userinfo):
+    result = ''
+    for service in list(userinfo.blocked.all()):
+        result = result + service.name + ';'
+    return result
 def getServiceStr(has_serv):
     result = ''
     for service in list(has_serv.services.all()):
@@ -137,16 +151,21 @@ def signup(request):
         password = req_data['password']
         locations = req_data['locations']
         services = req_data['services']
+        blocked = req_data['blocked']
+        notify_freq = int(req_data['notify_freq'])
 
         if User.objects.filter(username=username).exists():
             return HttpResponse(status=401)
         # TODO reuse anonymous user db for signup => next sprint
         User.objects.create_user(username=username, password=password)
-        new_userinfo = UserInfo(nickname=nickname, is_active=True)
+        new_userinfo = UserInfo(nickname=nickname, is_active=True, notify_freq=notify_freq)
+        new_userinfo.user = User.objects.get(username=username)
         new_userinfo.save()
 
         services = servParse(services)
+        blocked = servParse(blocked)
         setService(new_userinfo, services)
+        setBlocked(new_userinfo, blocked)
         locations = locParse(locations)
         try:
             setLocation(new_userinfo, locations)
@@ -157,8 +176,8 @@ def signup(request):
 
     elif request.method == 'DELETE':
         # remove user - assume logged in
-        if request.user is not None:
-            del_userinfo = UserInfo.objects.get(id=request.user.id)
+        if request.user.is_authenticated():
+            del_userinfo = request.user.userinfo
             del_userinfo.is_active = False
             request.user.is_active = False
             del_userinfo.locations.clear()
@@ -198,57 +217,59 @@ def signout(request):
 
 def checksignedin(request):
     if request.method == 'GET':
-        if request.user.is_authenticated:
+        if request.user.is_authenticated():
             return JsonResponse('True', safe=False)
         else:
             return JsonResponse('False', safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
-
+@login_required
 def userinfo(request):
     if request.method == 'GET':
         # get userinfo - assume logged in
         # NOTE: request.user returns instance of Anonymous User if a user is not logged in (instead of None)
-        if request.user.is_authenticated: 
-            userinfo = UserInfo.objects.get(id = request.user.id)
-            result = {}
-            result['email'] = request.user.username
-            result['username'] = userinfo.nickname
-            result['locations'] = getLocationStr(userinfo)
-            result['services'] = getServiceStr(userinfo)
-            return JsonResponse (result)
-        else:
-            return HttpResponse(status = 401)
+#        if request.user.is_authenticated(): 
+        userinfo = request.user.userinfo
+        result = {}
+        result['email'] = request.user.username
+        result['username'] = userinfo.nickname
+        result['locations'] = getLocationStr(userinfo)
+        result['services'] = getServiceStr(userinfo)
+        result['blocked'] = getBlockedStr(userinfo)
+        result['notify_freq'] = userinfo.notify_freq
+        return JsonResponse (result)
+#        else:
+#            return HttpResponse(status = 401)
 
     elif request.method == 'PUT':
         # put userinfo - assume logged in
-        if request.user is None:
-            return HttpResponse(status = 401)
-        user = request.user
-
-        # TODO make it put
-        req_data = json.loads(request.body.decode())
+#        if not request.user.is_authenticated():
+#            return HttpResponse(status = 401)
         #TODO: Deal with Password Issue
-
+        req_data = json.loads(request.body.decode())
         if 'password' in req_data:
             password = req_data['password']
-            user.set_password(password)
+            request.user.set_password(password)
         locations = req_data['locations']
         services = req_data['services']
+        blocked = req_data['blocked']
+        notify_freq = int(req_data['notify_freq'])
 
-        userinfo = UserInfo.objects.get(id = user.id)
+        userinfo = request.user.userinfo
         services = servParse(services)
+        blocked = servParse(blocked)
         setService(userinfo, services)
+        setBlocked(userinfo, blocked)
         locations = locParse(locations)
         try:
             setLocation(userinfo, locations)
         except UserInfo.DoesNotExist:
             return HttpResponse(status = 404)
+        userinfo.notify_freq = notify_freq
         userinfo.save()
-        user.save()
+        request.user.save()
         return HttpResponse(status = 204)
-
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 

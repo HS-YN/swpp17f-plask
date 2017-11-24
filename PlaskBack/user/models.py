@@ -1,5 +1,5 @@
 from django.db import models
-import json
+from django.contrib.auth.models import User
 
 
 class Location(models.Model):
@@ -28,6 +28,9 @@ class UserInfo(models.Model):
         Service,
         related_name='+'
     )
-
-    #def toJSON(self):
-    #    return json.dumps(self, default=lambda x: x.__dict__, sort_keys=True, indent=4)
+    user = models.OneToOneField (
+        User,
+        default = None,
+        on_delete = models.CASCADE,
+        related_name = 'userinfo'
+    )

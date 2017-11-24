@@ -4,23 +4,13 @@ from django.forms.models import model_to_dict
 
 from user.models import UserInfo, Location, Service
 from user.views import servParse, locParse, setService, getLocationStr, getServiceStr
+from user.views import login_required
 from location.views import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
 
 from datetime import datetime, timedelta, time
 
 import json
-
-
-def login_required(function=None, redirect_field_name=None):
-    def _decorator(func):
-        def _wrapped_view(request, *args, **kwargs):
-            if request.user.is_authenticated():
-                return func(request, *args, **kwargs)
-            else:
-                return HttpResponse(status=401)
-        return _wrapped_view
-    return _decorator(function)
 
 
 def question_to_dict(question):
