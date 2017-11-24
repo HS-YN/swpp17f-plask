@@ -169,7 +169,7 @@ export class SignUpComponent implements OnInit {
     //Update service tag visualization
     userServiceRefresh(): void {
         if(this.user.services == '') {
-            this.userServiceList = null;
+            this.userServiceList = [];
             return;
         }
         this.userServiceList = this.user.services
@@ -247,7 +247,7 @@ export class SignUpComponent implements OnInit {
     }
     userBlockedServiceRefresh(): void {
         if(this.user.blockedServices == '') {
-            this.userBlockedServiceList = null;
+            this.userBlockedServiceList = [];
             return;
         }
         this.userBlockedServiceList = this.user.blockedServices
