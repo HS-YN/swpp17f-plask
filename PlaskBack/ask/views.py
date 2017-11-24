@@ -2,7 +2,7 @@ from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import JsonResponse, HttpResponseNotFound
 from django.forms.models import model_to_dict
 
-from user.models import UserInfo, Location, Service
+from user.models import Location, Service
 from user.views import servParse, locParse, setService, getLocationStr, getServiceStr
 from user.views import login_required
 from location.views import LocationL1, LocationL2, LocationL3
@@ -36,13 +36,13 @@ def answer_to_dict(answer):
 @login_required
 def question(request):
     if request.method == 'GET':
-        author = UserInfo.objects.get(id=request.user.id)
+        author = request.user.userinfo
         return JsonResponse(
             # TODO order_by
             [question_to_dict (question) for question in author.questions.all()],
             safe=False)
     elif request.method == 'POST':
-        author = UserInfo.objects.get(id=request.user.id)
+        author = request.user.userinfo
         req_body = json.loads(request.body.decode())
         content = req_body['content']
         locations = locParse(req_body['locations'])
@@ -72,7 +72,7 @@ def question_recent(request):
 @login_required
 def question_related(request):
     if request.method == 'GET':
-        curr_user = UserInfo.objects.get(id=request.user.id)
+        curr_user = request.user.userinfo
         location = curr_user.locations.all().values()[0]
         tag_search = curr_user.services.all().values()
         relevant_questions = list(Question.objects.filter(locations__loc_code1=location['loc_code1']).filter(
@@ -130,7 +130,7 @@ def question_search(request):
 @login_required
 def question_answer(request):
     if request.method == 'GET':
-        author = UserInfo.objects.get(id=request.user.id)
+        author = request.user.userinfo
         questions = []
         for answer in author.answers.all():
             if answer.question not in questions:
@@ -153,7 +153,7 @@ def answer(request, question_id):
         return JsonResponse(
             [answer_to_dict (answer) for answer in curr_question.answers.all()], safe=False)
     elif request.method == 'POST':
-        author = UserInfo.objects.get(id=request.user.id)
+        author = request.user.userinfo
         req_body = json.loads(request.body.decode())
         content = req_body['content']
         new_answer = Answer(
