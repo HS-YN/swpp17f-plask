@@ -5,9 +5,10 @@ python:
 install:
  - pip3 install django coverage coveralls
 before_script:
- - python3 ./PlaskBack/manage.py migrate
+ - cd backend
+ - python3 manage.py migrate
 script:
- - coverage run --branch --source="./PlaskBack/ask" ./PlaskBack/manage.py test ask
- - coverage run --branch --source="./PlaskBack/location" ./PlaskBack/manage.py test location
- - coverage run --branch --source="./PlaskBack/user" ./PlaskBack/manage.py test user
+ - coverage run --branch --source="./ask" manage.py test ask
+ - coverage run --branch --source="./location" manage.py test location
+ - coverage run --branch --source="./user" manage.py test user
 after_success: coveralls 
