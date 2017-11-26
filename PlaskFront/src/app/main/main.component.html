@@ -47,7 +47,7 @@
     <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
 
 
-      <label> Location: </label>
+      <label>Location:</label>
       <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
         <option> Nation </option>
         <option *ngFor="let country of countryList"> {{country}} </option>
@@ -60,7 +60,7 @@
 
       <input auto-complete [(ngModel)]="selectedCity" [source]="cityList" placeholder="City"/>
 
-      <label> Services: </label>
+      <label>Services:</label>
       <span *ngFor="let questionService of questionServiceList">
           <span class="label label-success">{{questionService}}</span>
           <button class="badge"

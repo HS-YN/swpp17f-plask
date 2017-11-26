@@ -57,133 +57,239 @@ describe('MainComponent', () => {
         expect(comp.goSignOut).toThrow();
     }))
 
-    // Added in Sprint 3
+    it('can navigate to maintab', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigateByUrl');
+        comp.gotoMainTab();
+        expect(navigateSpy).toHaveBeenCalledWith("/main(tab:maintab;open=true)");
+
+    }))
+
     it ('should display correct labels for input', async(() => {
         const labels = fixture.debugElement.queryAll(By.css('label'));
         const locationLabel = labels[0].nativeElement;
         const serviceLabel = labels[1].nativeElement;
 
-        expect(locationLabel.classList.contains("Location:")).toBeTruthy();
-        expect(serviceLabel.classList.contains("Services:")).toBeTruthy();
+        expect(locationLabel.textContent).toEqual("Location:");
+        expect(serviceLabel.textContent).toEqual("Services:");
     }))
 
-    it('should trigger goToSettings() when the button is clicked', fakeAsync(() =>{
-        fixture.detectChanges();
+    it('should trigger goToSettings() when the Settings button is clicked', async(() =>{
         spyOn(comp, 'goToSettings');
         let btns = fixture.debugElement.queryAll(By.css('button'));
         let settingsButton = btns[0].nativeElement;
 
-        settingsButton.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(comp.goToSettings()).toHaveBeenCalled();
-    }))
+        settingsButton.click();
+        fixture.whenStable().then(() => {
+            expect(comp.goToSettings).toHaveBeenCalled();
+        });
+    }));
 
-    it('should trigger gosignOut() when the button is clicked', fakeAsync( () => {
-        fixture.detectChanges();
+    it('should trigger gosignOut() when the SignOut button is clicked', async(() => {
         spyOn(comp, 'goSignOut'); //method attached to the click.
         let btns = fixture.debugElement.queryAll(By.css('button'));
         let signOutButton = btns[1].nativeElement;
 
-        signOutButton.triggerEventHandler('click', null);
-        tick(); // simulates the passage of time until all pending asynchronous activities finish
-        fixture.detectChanges();
-        expect(comp.goSignOut()).toHaveBeenCalled();
+        signOutButton.click();
+        fixture.whenStable().then(() => {
+            expect(comp.goSignOut).toHaveBeenCalled();            
+        });
     }));
 
-    it('should navigate to MainTab when the tab is clicked', fakeAsync(() => {
+    // TODO: Need to change the test to properly test routerLink, not router.navigate
+    it('should navigate to MainTab when the tab is clicked', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         let btns = fixture.debugElement.queryAll(By.css('button'));
         let mainTabButton = btns[2].nativeElement;
 
-        mainTabButton.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['maintab']}}]);
-    }))
+        mainTabButton.click();
+        fixture.whenStable().then(() => {
+            expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['maintab']}}]);
+        });
+    }));
 
-    it('should navigate to MyQuestionsTab when the tab is clicked', fakeAsync(() => {
+    it('should navigate to MyQuestionsTab when the tab is clicked', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         let btns = fixture.debugElement.queryAll(By.css('button'));
         let myQuestionsTabButton = btns[3].nativeElement;
 
-        myQuestionsTabButton.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myquestions']}}]);
-    }))
+        myQuestionsTabButton.click();
+        fixture.whenStable().then(()=> {
+            expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myquestions']}}]);    
+        });        
+    }));
 
-    it('can navigate to MyAnswersTab when the tab is clicked', fakeAsync(() => {
+    it('can navigate to MyAnswersTab when the tab is clicked', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         let btns = fixture.debugElement.queryAll(By.css('button'));
         let myAnswersTabButton = btns[4].nativeElement;
 
-        myAnswersTabButton.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myanswers']}}]);
-    }))
+        myAnswersTabButton.click();
+        fixture.whenStable().then(() => {
+            expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myanswers']}}]);    
+        });
+    }));
 
-    it ('should receive alert message when question is empty', fakeAsync(() => {
+    // Modified to aysnc from fakeAsync because fakeAsynce cannot handle XHRs
+    it ('should send alert message when trying send send empty quesiton', async(() => {
         let windowSpy = spyOn(window, "alert");
 
         comp.question.content = "";
         comp.sendQuestion();
-        tick();
-        fixture.detectChanges();
-        expect(windowSpy).toHaveBeenCalledWith("Question is Empty!");
+ 
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Question is Empty!");
+        });
     }));
 
-    it('should alert message if selectedCountry is empty', fakeAsync(() => {
+    it('should send alert message if Question does not have a selected country', async(() => {
         let windowSpy = spyOn(window, "alert");
 
         comp.question.content = "test";
         comp.selectedCountry = "";
         comp.sendQuestion();
-        tick();
-        fixture.detectChanges();
-        expect(windowSpy).toHaveBeenCalledWith("Please select country!");
-    }))
+        
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Please select country!");
+        });
+    }));
 
-    it('should update selectedCountry when it is selected', fakeAsync(() => {
+    it('should update selectedCountry when a country selected', async(() => {
         comp.countrySelect("Korea");
-        tick();
-        fixture.detectChanges();
-        expect(comp.selectedCountry).toEqual("Korea");
-    }))
+        
+        fixture.whenStable().then(() => {
+            expect(comp.selectedCountry).toEqual("Korea");
+        });
+    }));
 
-    it('should update selectedProvince when it is selected', fakeAsync(() => {
+    it('should call provinceRefesh when a countrySelect() is called', async(() => {
+        let spy = spyOn(comp, "provinceRefresh");
+        comp.countrySelect("Korea");
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should update selectedProvince when a province selected', async(() => {
         comp.provinceSelect("Seoul");
-        tick();
-        fixture.detectChanges();
-        expect(comp.selectedProvince).toEqual("Seoul");
-    }))
+        
+        fixture.whenStable().then(() => {
+            expect(comp.selectedProvince).toEqual("Seoul");    
+        });
+    }));
 
-    it('should refresh service list when refresh is called', fakeAsync(() => {
+    it('should call cityRefresh when a provinceSelect() is called', async(() => {
+        let spy = spyOn(comp, "cityRefresh");
+        comp.provinceSelect("Seoul");
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should refresh service list when serviceRefresh() is called', async(() => {
         comp.serviceRefresh();
-        tick();
-        fixture.detectChanges();
-        expect(comp.serviceList).not.toBeNull();
+        
+        fixture.whenStable().then(() => {
+            expect(comp.serviceList).not.toBeNull();
+        });
+    }));
+
+    it('should make questionServiceList null if question.services is ""', async(() => {
+        comp.question.services ="";
+        comp.questionServiceRefresh();
+        fixture.whenStable().then(() => {
+            expect(comp.questionServiceList).toBeNull();
+        })
     }))
 
-    it('should call questionService Refresh when Delete is called', fakeAsync(() => {
+    it('should create questionServiceList after questionServiceRefresh() is performed', async(() => {
+        comp.question.services ="cafe;music;";
+
+        comp.questionServiceRefresh();
+
+        fixture.whenStable().then(() => {
+            expect(comp.questionServiceList).toEqual(["cafe", "music"]);
+        });
+    }));
+
+    it('should send alert message when trying to add an exsiting service tag', async(() => {
+        let windowSpy = spyOn(window, "alert");
+
+        comp.question.services="cafe;";
+        comp.questionServiceSelect("cafe");
+
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Tag Already Added!");
+        })
+    }))
+
+    it('should create questionServiceList after questionServiceRefresh() is performed', async(() => {
+        comp.question.services ="cafe;music;";
+
+        comp.questionServiceRefresh();
+
+        fixture.whenStable().then(() => {
+            expect(comp.questionServiceList).toEqual(["cafe", "music"]);
+        });
+    }))
+
+    it('should call questionServiceRefresh() when questionServiceDelete() is called', async(() => {
         let spy = spyOn(comp, "questionServiceRefresh");
+        comp.questionServiceDelete("string");
+        
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
 
-        comp.questionServiceDelete("string")
-        tick();
-        fixture.detectChanges();
-        expect(spy).toHaveBeenCalled();
+    it('should delete a service tag when questionServiceDelete() is called', async(() => {
+        comp.question.services="cafe;music;";
+        comp.questionServiceDelete("cafe");
+
+        fixture.whenStable().then(() => {
+            expect(comp.question.services).toEqual("music;");
+        })
     }))
 
-    it('should call questionServiceSelect() when Add is called', fakeAsync(() => {
-        let spy = spyOn(comp, "questionServiceSelect");
-
+    it('should send alert message when trying to add an empty service tag', async(() => {
+        let windowSpy = spyOn(window, "alert");
+        comp.serviceTag ="";
         comp.questionServiceAdd();
-        tick();
-        fixture.detectChanges();
-        expect(spy).toHaveBeenCalled();
-    }))
 
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Tag is Empty!");
+        });
+    }));
 
+    it('should send alert message when trying to add a service tag with semicolon', async(() => {
+        let windowSpy = spyOn(window, "alert");
+        comp.serviceTag ="cafe;";
+        comp.questionServiceAdd();
+
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("You cannot use SemiColon!");
+        });
+    }));
+
+    it('should call questionServiceSelect() when Add is called', async(() => {
+        let spy = spyOn(comp, "questionServiceSelect");
+        comp.serviceTag = "cafe";
+        comp.questionServiceAdd();
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should add a service tag when questionServiceAdd() is called', async(() => {
+        comp.question.services ="music;";
+        comp.serviceTag = "cafe";
+        comp.questionServiceAdd();
+
+        fixture.whenStable().then(() => {
+            expect(comp.question.services).toEqual("music;cafe;");
+        });
+    }));
 
 });
