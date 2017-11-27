@@ -1,5 +1,8 @@
 # Plask!
 
+[![Coverage Status](https://coveralls.io/repos/github/swsnu/swpp17-team6/badge.svg)](https://coveralls.io/github/swsnu/swpp17-team6)
+[![Build Status](https://travis-ci.org/swsnu/swpp17-team6.svg?branch=master)](https://travis-ci.org/swsnu/swpp17-team6)
+
 ## How to run the service: run both the Frontend and the Backend at the same time.
 ### Frontend: (run the following command in Plask-Frontend folder)
             npm start
