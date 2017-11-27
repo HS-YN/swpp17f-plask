@@ -1,14 +1,49 @@
-language: python
-python:
- - "3.5"
- - "3.6"
-install:
- - pip3 install django coverage coveralls
-before_script:
- - cd PlaskBack
- - python3 manage.py migrate
-script:
- - coverage run --branch --source="./ask" manage.py test ask
- - coverage run --branch --source="./location" manage.py test location
- - coverage run --branch --source="./user" manage.py test user
-after_success: coveralls 
+sudo: required
+
+matrix:
+  include:
+    - language: python
+      python: "3.6"
+      cache:
+        pip: true
+      install:
+        - pip3 install django coverage coveralls
+      before_script:
+        - cd PlaskBack
+        - python3 manage.py migrate
+      script:
+        - coverage run --branch --source="./ask" manage.py test ask
+        - coverage run --branch --source="./location" manage.py test location
+        - coverage run --branch --source="./user" manage.py test user
+      after_success: coveralls
+    
+    - language: node_js
+      node_js: 8.8
+      addons:
+        apt:
+          sources:
+            - google-chrome
+          packages:
+            - google-chrome-stable
+      cache:
+        npm: true
+        directories:
+          - PlaskFront/node_modules
+      before_install:
+        - export CHROME_BIN=/usr/bin/google-chrome
+        - export DISPLAY=:99.0
+        - sh -e /etc/init.d/xvfb start
+        - cd PlaskFront
+      install:
+        - npm install
+        - npm install coveralls
+        - npm install -g @angular/cli
+      script:
+        - ng test --code-coverage --watch false
+        - ng e2e
+      after success:
+        - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
+      after_script:
+        - cd ..
+
+  
