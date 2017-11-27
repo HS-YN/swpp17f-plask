@@ -44,6 +44,10 @@ class UserTestCase(TestCase):
         self.assertEqual (data['blockedServices'], 'asdf;qwer;')
         self.assertEqual (int(data['notiFrequency']), 10)
 
+        response = self.client.get('/api/user/checksignedin')
+
+        response = self.client.delete('/api/user/checksignedin')
+
     def test_userinfo_put(self):
         response = self.client.put(
                 '/api/user/userinfo',
@@ -90,6 +94,8 @@ class UserTestCase(TestCase):
         response = self.client.get('/api/user/signout', content_type = 'application.json')
         self.assertEqual(response.status_code, 204)
 
+        response = self.client.get('/api/user/checksignedin')
+
     def test_signup_with_duplicate_email(self):
         self.client = Client()
         client = Client(enforce_csrf_checks = True)
@@ -108,4 +114,3 @@ class UserTestCase(TestCase):
                 content_type = 'application/json',
                 HTTP_X_CSRFTOKEN = csrftoken)
         self.assertEqual(response.status_code, 401)
-

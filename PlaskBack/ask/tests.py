@@ -67,7 +67,7 @@ class AskTestCase(TestCase):
                 'services': 'coffee;pizza;'
             }),
             content_type='application/json')
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 204)
 
         response = self.client.get('/api/ask/question')
         data = json.loads(response.content.decode())
@@ -81,7 +81,7 @@ class AskTestCase(TestCase):
         response = self.client.post('/api/ask/answer/1', json.dumps({
             'content': 'that'
         }), content_type='application/json')
-        self.assertEqual(response.status_code, 201)
+        self.assertEqual(response.status_code, 204)
 
         response = self.client.get('/api/ask/answer/1')
         data = json.loads(response.content.decode())

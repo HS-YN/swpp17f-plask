@@ -173,21 +173,6 @@ def signup(request):
             return HttpResponse(status=404)
         new_userinfo.save()
         return HttpResponse(status=201)
-
-    elif request.method == 'DELETE':
-        # remove user - assume logged in
-        if request.user.is_authenticated():
-            del_userinfo = request.user.userinfo
-            del_userinfo.is_active = False
-            request.user.is_active = False
-            del_userinfo.locations.clear()
-            del_userinfo.services.clear()
-            del_userinfo.save()
-            request.user.save()
-            return HttpResponse(status=204)
-        else:
-            return HttpResponse(status=403)
-
     else:
         return HttpResponseNotAllowed(['POST', 'DELETE'])
 
@@ -229,7 +214,7 @@ def userinfo(request):
     if request.method == 'GET':
         # get userinfo - assume logged in
         # NOTE: request.user returns instance of Anonymous User if a user is not logged in (instead of None)
-#        if request.user.is_authenticated(): 
+#        if request.user.is_authenticated():
         userinfo = request.user.userinfo
         result = {}
         result['email'] = request.user.username
