@@ -52,7 +52,7 @@ def question(request):
         new_question.save()
         setService(new_question, services)
         setLocation(new_question, locations)
-        return HttpResponse(status=201)
+        return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 
@@ -159,7 +159,7 @@ def answer(request, question_id):
         new_answer = Answer(
             author=author, content=content, time=datetime.now(), question = curr_question)
         new_answer.save()
-        return HttpResponse(status=201)
+        return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
 

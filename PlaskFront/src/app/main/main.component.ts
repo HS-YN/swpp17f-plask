@@ -1,12 +1,12 @@
 //Import Basic Modules
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
 import { Question } from '../question/question';
 
 import { UserService } from '../user/user.service';
-import { LocationService } from '../location/location.service'; 
+import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
 
 @Component({
@@ -18,6 +18,7 @@ export class MainComponent implements OnInit{
 
     constructor(
         private router: Router,
+        private route: ActivatedRoute,
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
@@ -46,7 +47,7 @@ export class MainComponent implements OnInit{
                 this.question.author = user.username;
                 this.countryRefresh();
                 this.serviceRefresh();});}
-        })        
+        })
 
         /*this.userService.getUser().then(user => {
             if(user != null){ this.question.author = user.username; this.countryRefresh(); this.serviceRefresh();}
@@ -89,11 +90,15 @@ export class MainComponent implements OnInit{
             this.question.locations = newLocation + ';';
 
             // Send Question to Backend
+            let path = this.route.snapshot.url.join('/')
+
             this.questionService.postQuestion(this.question)
-            .then(Status => { 
-                if(Status != 201) {alert("Question could not be sent, please try again");}
+            .then(Status => {
+                if(Status != 204) {alert("Question could not be sent, please try again");}
                 else {alert("Question successfully plasked!");}
-            });
+            }).then(() => this.router.navigateByUrl(
+                '/settings', {skipLocationChange: true})).then(
+            () => this.router.navigate([path]));
 
 
             // Reset the question bar
@@ -108,7 +113,7 @@ export class MainComponent implements OnInit{
             this.selectedCity= "";
             this.provinceList= null;
             this.cityList= null;
-            
+
         }
     }
 

@@ -36,12 +36,14 @@ export class MyAnswersComponent implements OnInit{
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
     }
+
     getQuestionList():void {
         this.questionService.getAnsweredQuestion().then(questions =>{
             this.temp_questionList = questions;
             this.getAnswerList();
         })
     }
+
     getAnswerList():void{
         console.log(this.temp_questionList);
         this.questionList = [];
@@ -55,25 +57,27 @@ export class MyAnswersComponent implements OnInit{
             })
         }
     };
+
     expand(question):void {
         if(question[1]==true)
             question[1] = false;
         else
             question[1] = true;
-
     }
+
     answerClick(id):void{
         if(this.answer=="")
             alert("Please type answer!");
         else{
             this.answerService.postAnswer(this.answer, id).then(Status=>{
                 if(Status != 204) {alert("Answer could not be sent, please try again");}
-                else {alert("Answer successfully posted!");}
+                else {
+                    alert("Answer successfully posted!");
+                    window.location.reload();
+                    this.answer = "";
+                    this.getQuestionList();
+                }
             });
-            this.answer = "";
-            this.getQuestionList();
-
         }
-
     }
 }

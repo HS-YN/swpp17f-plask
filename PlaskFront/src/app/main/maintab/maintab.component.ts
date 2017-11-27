@@ -7,8 +7,8 @@ import { Question } from '../../question/question';
 import { Answer } from '../../answer/answer';
 
 import { UserService } from '../../user/user.service';
-import { LocationService } from '../../location/location.service'; 
-import { QuestionService } from '../../question/question.service'; 
+import { LocationService } from '../../location/location.service';
+import { QuestionService } from '../../question/question.service';
 import { AnswerService } from '../../answer/answer.service';
 
 @Component({
@@ -34,12 +34,6 @@ export class MainTabComponent implements OnInit{
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
-/*        var q1:Question = {id:0, content:"when does the CU in 301 closes?", author:"kongdaesaeng",
-            locations:"Korea/Seoul/Gwanak", services:"convenient store"}; 
-        var q2: Question = {id:1, content:"when does the CU in 302 opens?", author:"kongdaesaeng",
-            locations:"Korea/Seoul/Gwanak", services:"convenient store"}; 
-        var a1: Answer = {author:"resident", content:"there is no convenient store in 302"};
-        this.questionList = [[q1,true,[]], [q2,true,[a1]]];*/
     }
 
     getQuestionList():void {
@@ -48,6 +42,7 @@ export class MainTabComponent implements OnInit{
             this.getAnswerList();
         })
     }
+
     getAnswerList():void{
         console.log(this.temp_questionList);
         this.questionList = [];
@@ -61,22 +56,29 @@ export class MainTabComponent implements OnInit{
             })
         }
     };
+
     expand(question):void {
         if(question[1]==true)
             question[1] = false;
         else
             question[1] = true;
     }
+
     answerClick(id):void{
         if(this.answer=="")
             alert("Please type answer!");
         else{
             this.answerService.postAnswer(this.answer, id).then(Status=>{
-                if(Status != 204) {alert("Question could not be sent, please try again");}
+                if(Status != 204) {
+                    alert("Question could not be sent, please try again");
+                }
+                else {
+                    alert("Answer successfully posted!");
+                    window.location.reload();
+                    this.answer = "";
+                    this.getQuestionList();
+                }
             });
-            alert("Answer successfully posted!");
-            this.answer = "";
-            this.getQuestionList();
         }
     }
 }
