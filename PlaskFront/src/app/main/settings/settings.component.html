@@ -1,0 +1,117 @@
+<div class="container">
+
+  <div class="panel panel-primary">
+    <div class="panel-heading">Settings Page</div>
+    <div class="panel-body">
+      <h3>User Information</h3>
+      <br/>
+      <div class="form-group">
+        <label>Email:</label>
+        <input type="email" [(ngModel)]="user.email" value="default value" class="form-control" disabled/>
+      </div>
+
+      <div class="form-group">
+        <label>Password:</label>
+        <input type="password" [(ngModel)]="newpassword" class="form-control" placeholder="password"/>
+      </div>
+      <div class="form-group">
+        <label>Password Confirmation:</label>
+        <input type="password" [(ngModel)]="passwordConfirmation" class="form-control" placeholder="retype Password"/>
+      </div>
+
+      <div class="form-group">
+        <label>Username:</label>
+        <input type="text" [(ngModel)]="user.username" value="default value" class="form-control" placeholder="username" disabled/>
+      </div>
+
+      <h4>Tags</h4>
+      <div class="form-group">
+        <label>Locations:</label>
+        <span *ngFor="let userLocation of userLocationList">
+          <span class="label label-success">{{userLocation}}</span>
+          <button class="badge"
+            (click)="userLocationDelete(userLocation); $event.stopPropagation()">
+            x</button> &nbsp;
+          </span>
+        <br>
+        <label> o My country is... </label>
+        <span *ngFor="let country of countryList"
+          [class.selected]="country === selectedCountry"
+          (click)="countrySelect(country)">
+          <button class="badge">{{country}} </button> &nbsp;
+        </span>
+        <br>
+        <label> o My province is... </label>
+        <span *ngFor="let province of provinceList"
+          [class.selected]="province === selectedProvince"
+          (click)="provinceSelect(province)">
+          <button class="badge">{{province}} </button> &nbsp;
+        </span>
+        <br>
+        <label> o My city is... </label>
+        <span *ngFor="let city of cityList"
+          [class.selected]="city === selectedCity"
+          (click)="citySelect(city)">
+          <button class="badge">{{city}} </button> &nbsp;
+        </span>
+        <br>
+        <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
+        <span *ngIf="selectedProvince!=''" class="label label-primary">{{selectedProvince}}</span>
+        <span *ngIf="selectedCity!=''" class="label label-primary">{{selectedCity}}</span>
+        <button (click)="userLocationAdd()">Add!</button><br>
+      </div>
+
+      <div class="form-group">
+        <label>Services:</label>
+
+        <span *ngFor="let userService of userServiceList">
+          <span class="label label-success">{{userService}}</span>
+          <button class="badge" (click)="userServiceDelete(userService); $event.stopPropagation()">
+          x</button> &nbsp;
+        </span>
+        <br>
+
+        <label>Popular Services:</label>
+        <span *ngFor= "let service of serviceList"
+          (click)="userServiceSelect(service)">
+          <button class="badge"> {{service}} </button> &nbsp;
+        </span>
+
+        <label> ...or add your own tag! </label>
+        <input type="text" [(ngModel)]="newService" class="form-control" placeholder="new tag"/>
+        <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
+
+      </div>
+
+      <div class="form-group">
+        <label> Blocked Services: </label>
+        <span *ngFor="let userBlockedService of userBlockedServiceList">
+            <span class="label label-success">{{userBlockedService}}</span>
+            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            x</button> &nbsp;
+        </span>
+        <br>
+        <label> type tag to block </label>
+        <input type="text" [(ngModel)]="newBlockService" class="form-control" placeholder="type here"/>
+        <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
+      </div>
+      
+      <label> Select notification frequency</label>
+      <select [(ngModel)]="selectedFreq" (ngModelChange)="onChange($event)">
+          <option *ngFor="let freq of notiFrequencyList" [ngValue]="freq"> {{freq}} min </option>
+      </select>
+      
+      <div class="form-group">
+        <button class="btn btn-block" (click)="SaveChanges()">
+          <span class="glyphicon glyphicon-log-in"></span> Save </button>
+      </div>
+
+      <hr>
+      <div class="col-md-4 text-center">
+        <button class="btn btn-link" (click)="goToMain()">Go Back to Main Page without Saving</button>
+      </div>
+
+    </div>
+  </div>
+
+</div>

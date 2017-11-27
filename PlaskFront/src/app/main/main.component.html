@@ -1,0 +1,78 @@
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    <span class="glyphicon glyphicon-pushpin"></span>
+    Plask!
+  </div>
+
+  <div class="panel-body">
+    <button class="btn pull-right" (click)="goToSettings()">
+        <span class="glyphicon glyphicon-cog"></span>
+        Settings
+    </button>
+
+    <button class="btn pull-right" (click)="goSignOut()">
+        <span class="glyphicon glyphicon-log-out"></span>
+        Sign Out
+    </button>
+
+    <div>
+        <nav id="topMenu">
+            <ul>
+                <li class="menuLink">
+                    <button class="btn btn-block"
+                        [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
+                </li>
+                <li class="menuLink">
+                    <button class="btn btn-block"
+                        [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</button>
+                </li>
+                <li class="menuLink">
+                    <button class="btn btn-block"
+                        [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</button>
+                </li>
+            </ul>
+        </nav>
+    </div>
+    <br>
+    <router-outlet name="tab"></router-outlet>
+
+</div>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Plask your Question!
+  </div>
+  <div class="panel-body">
+
+    <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
+
+
+      <label>Location:</label>
+      <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
+        <option> Nation </option>
+        <option *ngFor="let country of countryList"> {{country}} </option>
+      </select>
+
+      <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
+        <option> Province </option>
+        <option *ngFor= "let province of provinceList"> {{province}} </option>
+      </select>
+
+      <input auto-complete [(ngModel)]="selectedCity" [source]="cityList" placeholder="City"/>
+
+      <label>Services:</label>
+      <span *ngFor="let questionService of questionServiceList">
+          <span class="label label-success">{{questionService}}</span>
+          <button class="badge"
+            (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+            x</button> &nbsp;
+      </span>
+      <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+      <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+
+    <div class="form-group">
+      <button class="btn btn-block" (click)="sendQuestion()">
+        <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+    </div>
+  </div>
+</div>
