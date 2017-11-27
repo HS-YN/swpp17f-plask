@@ -20,6 +20,7 @@ const routes: Routes = [
             { path: 'maintab', component: MainTabComponent, outlet:'tab'},
             { path: 'myquestions', component: MyQuestionsComponent, outlet:'tab'},
             { path: 'myanswers', component: MyAnswersComponent, outlet:'tab'},
+            { path: '', redirectTo: '/main/(tab:maintab)', pathMatch: 'full'},
         ]
     },
     { path: 'settings', component: SettingsComponent },
