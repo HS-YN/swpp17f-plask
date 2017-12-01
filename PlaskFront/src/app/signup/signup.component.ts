@@ -118,55 +118,58 @@ export class SignUpComponent implements OnInit {
     }
 
     getLocationByName (locList: Location[], name: string): Location {
-        for (vai _i = 0; locList.length > _i; _i++) {
-            console.log (location.loc_code);
-            console.log (location.loc_name);
-            if (name.localeCompare (location.loc_name) === 0)
-                return location;
+        for (var i = 0; locList.length > i; i++) {
+            if (name.localeCompare (locList[i].loc_name) === 0)
+                return locList[i];
         }
         return null;
     }
 
     countryRefresh(): void {
         this.locationService.getCountryList().then(country => {
-                if(country.length <= 0)
+                if(0 >= country.length)
                     this.countryList = null;
                 else
-                    this.countryList = country
+                    this.countryList = country;
             })
+        console.log (this.countryList[0]);
     }
 
     countrySelect(country: string): void {
         this.selectedCountry = country;
-        this.provinceRefresh(this.selectedCountry);
+        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
     }
 
-    provinceRefresh(country: string): void {
+    provinceRefresh(country_code: number): void {
         //this.provinceList = provinceListData;
-        this.locationService.getLocationList(this.selectedCountry)
+        this.locationService.getLocationList(country_code.toString())
             .then(province => {
-                if(province.length <= 0) this.provinceList = null;
-                else    this.provinceList = province
-                    .substr(0,province.length-1).split(';');
+                if(province.length <= 0)
+                    this.provinceList = null;
+                else
+                    this.provinceList = province;
             })
     }
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.selectedProvince);
+        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
+            this.getLocationByName (this.provinceList, province).loc_code);
         this.selectedCity = "";
     }
 
-    cityRefresh(province: string): void {
+    cityRefresh(country_code: number, province_code: number): void {
         //this.cityList = cityListData;
-        var address: string = this.selectedCountry + '/' + this.selectedProvince;
+        var address: string = country_code.toString() + '/' + province_code.toString();
         this.locationService.getLocationList(address)
             .then(city => {
-                if(city.length <= 0) this.cityList = null;
-                else    this.cityList = city.substr(0,city.length-1).split(';');
+                if(city.length <= 0)
+                    this.cityList = null;
+                else
+                    this.cityList = city;
             })
     }
 

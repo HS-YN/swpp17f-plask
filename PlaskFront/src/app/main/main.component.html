@@ -50,15 +50,15 @@
       <label>Location:</label>
       <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
         <option> Nation </option>
-        <option *ngFor="let country of countryList"> {{country}} </option>
+        <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
       </select>
 
       <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
         <option> Province </option>
-        <option *ngFor= "let province of provinceList"> {{province}} </option>
+        <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
       </select>
 
-      <input auto-complete [(ngModel)]="selectedCity" [source]="cityList" placeholder="City"/>
+      <input auto-complete [(ngModel)]="selectedCity" [source]="cityNameList" placeholder="City"/>
 
       <label>Services:</label>
       <span *ngFor="let questionService of questionServiceList">

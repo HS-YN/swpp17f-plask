@@ -21,10 +21,11 @@ export class LocationService{
             .catch(this.handleError);
     }
 
-    getLocationList(location: string): Promise<string>{
+    getLocationList(location: string): Promise<Location[]> {
         const url = `${this.locationUrl}/${location}`;
-        return this.http.get(url).toPromise().then(response =>
-            response.json()).catch(this.handleError);
+        return this.http.get(url).toPromise()
+            .then(response => response.json() as Location[])
+            .catch(this.handleError);
     }
 
     handleError(error: any): Promise<any>{
