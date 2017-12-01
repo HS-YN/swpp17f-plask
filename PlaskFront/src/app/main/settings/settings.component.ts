@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
+import { Location } from '../../location/location';
 
 import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
@@ -25,9 +26,9 @@ export class SettingsComponent implements OnInit{
     passwordConfirmation = ""; //string for password Matching
 
     userLocationList: string[] = []; //List for visualizing current user location tags
-    countryList: string[] = [];
-    provinceList: string[] = [];
-    cityList: string[] = [];
+    countryList: Location[] = [];
+    provinceList: Location[] = [];
+    cityList: Location[] = [];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
@@ -152,46 +153,59 @@ export class SettingsComponent implements OnInit{
         this.userLocationRefresh();
     }
 
+    getLocationByName (locList: Location[], name: string): Location {
+        for (var i = 0; locList.length > i; i++) {
+            if (name.localeCompare (locList[i].loc_name) === 0)
+                return locList[i];
+        }
+        return null;
+    }
+
     countryRefresh(): void {
         //this.countryList = countryListData;
         this.locationService.getCountryList().then(country => {
-            if(country.length <= 0) this.countryList = null;
-            else    this.countryList = country.substr(0, country.length-1)
-                .split(';');
+            if(country.length <= 0)
+                this.countryList = null;
+            else
+                this.countryList = country;
         })
     }
 
     countrySelect(country: string): void {
         this.selectedCountry = country;
-        this.provinceRefresh(this.selectedCountry);
+        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
     }
 
-    provinceRefresh(country: string): void {
+    provinceRefresh(country_code: number): void {
         //this.provinceList = provinceListData;
-        this.locationService.getLocationList(this.selectedCountry)
+        this.locationService.getLocationList(country_code.toString())
             .then(province => {
-                if(province.length <= 0) this.provinceList = null;
-                else    this.provinceList = province
-                    .substr(0,province.length-1).split(';');
+                if(province.length <= 0)
+                    this.provinceList = null;
+                else
+                    this.provinceList = province;
             })
     }
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.selectedProvince);
+        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
+            this.getLocationByName (this.provinceList, province).loc_code);
         this.selectedCity = "";
     }
 
-    cityRefresh(province: string): void {
+    cityRefresh(country_code: number, province_code: number): void {
         //this.cityList = cityListData;
-        var address: string = this.selectedCountry + '/' + this.selectedProvince;
+        var address: string = country_code.toString() + '/' + province_code.toString();
         this.locationService.getLocationList(address)
             .then(city => {
-                if(city.length <= 0) this.cityList = null;
-                else    this.cityList = city.substr(0,city.length-1).split(';');
+                if(city.length <= 0)
+                    this.cityList = null;
+                else
+                    this.cityList = city;
             })
     }
 

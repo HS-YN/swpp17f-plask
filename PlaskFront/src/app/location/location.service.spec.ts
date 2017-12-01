@@ -2,10 +2,14 @@ import { async, inject, TestBed } from '@angular/core/testing';
 import { MockBackend, MockConnection } from '@angular/http/testing';
 import { HttpModule, Http, XHRBackend, Response, ResponseOptions } from '@angular/http';
 
+import { Location } from './location';
 import { LocationService } from './location.service';
 
-const locationData = "Seoul" as string;
-const locationList = [ "Korea", "Japan" ] as string[];
+const locationData = [
+  { loc_code: 213, loc_name: 'Korea' },
+  { loc_code: 1, loc_name: 'Busan' },
+  { loc_code: 1, loc_name: 'Buk' },
+] as Location[];
 
 describe('LocationService (mockBackend)', () => {
       beforeEach( async(() => {
@@ -35,27 +39,27 @@ describe('LocationService (mockBackend)', () => {
     describe('when getting location list', () => {
         let backend: MockBackend;
         let service: LocationService;
-        let fakeData: string[];
+        let fakeData: Location[];
         let response: Response;
 
         beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
             backend = be;
             service = new LocationService(http);
-            fakeData = locationList;
-            response = new Response(new ResponseOptions({body: locationList}));
+            fakeData = locationData;
+            response = new Response(new ResponseOptions({body: locationData}));
         }));
 
         it('should get list of countries', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.getCountryList().then(data => {
-                expect(data).toBe(locationList);
+                expect(data).toBe(locationData);
             });
         }));
 
         it('should get list of provinces or cities', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-            service.getLocationList(locationData).then(data => {
-                expect(data[0]).toBe('Korea');
+            service.getLocationList(locationData[0].loc_code.toString()).then(data => {
+                expect(data[0].loc_name).toBe('Busan');
             });
         }));
 
