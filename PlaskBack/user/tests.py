@@ -74,20 +74,6 @@ class UserTestCase(TestCase):
         self.assertEqual (str(loc[1].loc_code1) + '/' + str(loc[1].loc_code2) + '/' + str(loc[1].loc_code3), '213/-1/-1')
         self.assertEqual (str(loc[2].loc_code1) + '/' + str(loc[2].loc_code2) + '/' + str(loc[2].loc_code3), '213/16/-1')
 
-
-    def test_get_loc_list(self):
-        response = self.client.get('/api/location/countries', content_type = 'application.json')
-        data = json.loads(response.content.decode())
-        self.assertEqual(response.status_code, 200)
-#		print(data)
-        response = self.client.get('/api/location/South Korea', content_type = 'application.json')
-        data = json.loads(response.content.decode())
-        self.assertEqual(response.status_code, 200)
-#		print(data)
-        response = self.client.get('/api/location/South Korea/Seoul', content_type = 'application.json')
-        data = json.loads(response.content.decode())
-        self.assertEqual(response.status_code, 200)
-
     def test_logout(self):
         response = self.client.post('/api/user/signout', content_type = 'application.json')
         self.assertEqual(response.status_code, 405)
