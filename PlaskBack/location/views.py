@@ -9,8 +9,8 @@ import json
 
 def loc_to_dict (location):
     result = {}
-    result['name'] = location.name
-    result['code'] = location.loc_code
+    result['loc_name'] = location.name
+    result['loc_code'] = location.loc_code
     return result
 
 def getCountries(request):
