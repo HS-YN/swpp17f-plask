@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../user/user';
+import { Location } from '../location/location';
 
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
@@ -24,9 +25,9 @@ export class SignUpComponent implements OnInit {
     passwordConfirmation = ''; //string for password Matching
 
     userLocationList: string[]; //List for visualizing current user location tags
-    countryList: string[];
-    provinceList: string[];
-    cityList: string[];
+    countryList: Location[];
+    provinceList: Location[];
+    cityList: Location[];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
@@ -116,13 +117,23 @@ export class SignUpComponent implements OnInit {
         this.userLocationRefresh();
     }
 
+    getLocationByName (locList: Location[], name: string): Location {
+        for (vai _i = 0; locList.length > _i; _i++) {
+            console.log (location.loc_code);
+            console.log (location.loc_name);
+            if (name.localeCompare (location.loc_name) === 0)
+                return location;
+        }
+        return null;
+    }
+
     countryRefresh(): void {
-        //this.countryList = countryListData;
         this.locationService.getCountryList().then(country => {
-            if(country.length <= 0) this.countryList = null;
-            else    this.countryList = country.substr(0, country.length-1)
-                .split(';');
-        })
+                if(country.length <= 0)
+                    this.countryList = null;
+                else
+                    this.countryList = country
+            })
     }
 
     countrySelect(country: string): void {
