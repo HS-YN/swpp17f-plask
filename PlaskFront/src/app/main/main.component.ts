@@ -42,9 +42,12 @@ export class MainComponent implements OnInit{
 
     //variables for searching
     searchString: string = "";
+    searchCountry: string = "";
     searchNation: string = "";
     searchProvince: string = "";
     searchCity: string = "";
+    searchCityNameList: string[];
+    searchProvinceList: Location[];
 
     ngOnInit(): void{
         this.userService.getUser().then(user => {
@@ -218,6 +221,51 @@ export class MainComponent implements OnInit{
             this.questionServiceSelect(this.serviceTag);
             this.serviceTag = "";
         }
+    }
+    //Methods for searching, with tagging location
+    countrySearch(country: string): void {
+        this.searchCountry = country;
+        this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        this.searchCityNameList = [];
+        this.searchProvince= "";
+        this.searchCity = "";
+    }
+
+    searchProvinceRefresh(country_code: number): void {
+        this.locationService.getLocationList(country_code.toString())
+            .then(province => {
+                if(province.length <= 0)
+                    this.searchProvinceList = null;
+                else
+                    this.searchProvinceList = province;
+            })
+    }
+
+    provinceSearch(province: string): void {
+        this.searchProvince = province;
+        this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code, 
+            this.getLocationByName (this.searchProvinceList, province).loc_code);
+        this.searchCity = "";
+    }
+
+    searchCityRefresh(country_code: number, province_code: number): void {
+        //this.cityList = cityListData;
+        var address: string = country_code.toString() + '/' + province_code.toString();
+        this.locationService.getLocationList(address)
+            .then(city => {
+                let cityList;
+                if(city.length <= 0)
+                    cityList = null;
+                else
+                    cityList = city;
+                this.searchCityNameList = [];
+                for (var i = 0; i < cityList.length; i++)
+                    this.searchCityNameList.push(cityList[i].loc_name);
+            })
+    }
+    //method called by clicking search button
+    search():void {
+
     }
 
 
