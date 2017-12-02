@@ -20,6 +20,8 @@ import { UserService } from './user/user.service';
 import { LocationService } from './location/location.service';
 import { QuestionService } from './question/question.service';
 import { AnswerService } from './answer/answer.service';
+import { AuthService } from './authentication/auth.service';
+import { AuthGuardService } from './authentication/auth-guard.service';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -51,6 +53,8 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         LocationService,
         QuestionService,
         AnswerService,
+        AuthService,
+        AuthGuardService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
 

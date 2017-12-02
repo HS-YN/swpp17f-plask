@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
 import { Question } from '../question/question';
+import { Location } from '../location/location';
 
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
@@ -26,9 +27,10 @@ export class MainComponent implements OnInit{
 
     question:Question = {id:0, content:"", author:"", locations:"", services:""};
 
-    countryList: string[];
-    provinceList: string[];
-    cityList: string[];
+    countryList: Location[];
+    provinceList: Location[];
+    cityList: Location[];
+    cityNameList: string[];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
@@ -40,19 +42,10 @@ export class MainComponent implements OnInit{
     serviceTag: string = ''; //User-input string
 
     ngOnInit(): void{
-
-        this.userService.checkSignedIn().then(status => {
-            if(status == 'False'){ this.router.navigate(['/signin']);}
-            else{ this.userService.getUser().then(user => {
+        this.userService.getUser().then(user => {
                 this.question.author = user.username;
                 this.countryRefresh();
-                this.serviceRefresh();});}
-        })
-
-        /*this.userService.getUser().then(user => {
-            if(user != null){ this.question.author = user.username; this.countryRefresh(); this.serviceRefresh();}
-            else{ this.router.navigate(['/signin']); }
-        })*/
+                this.serviceRefresh();});
     }
 
     goToSettings(): void{
@@ -118,45 +111,61 @@ export class MainComponent implements OnInit{
     }
 
     // Methods Related to Location Tags of a Question
+    getLocationByName (locList: Location[], name: string): Location {
+        for (var i = 0; locList.length > i; i++) {
+            if (name.localeCompare (locList[i].loc_name) === 0)
+                return locList[i];
+        }
+        return null;
+    }
+
     countryRefresh(): void {
         this.locationService.getCountryList().then(country => {
-            if(country.length <= 0) this.countryList = null;
-            else    this.countryList = country.substr(0, country.length-1)
-                .split(';');
-        })
+                if(0 >= country.length)
+                    this.countryList = null;
+                else
+                    this.countryList = country;
+            })
     }
 
     countrySelect(country: string): void {
         this.selectedCountry = country;
-        this.provinceRefresh(this.selectedCountry);
+        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
     }
 
-    provinceRefresh(country: string): void {
+    provinceRefresh(country_code: number): void {
         //this.provinceList = provinceListData;
-        this.locationService.getLocationList(this.selectedCountry)
+        this.locationService.getLocationList(country_code.toString())
             .then(province => {
-                if(province.length <= 0) this.provinceList = null;
-                else    this.provinceList = province
-                    .substr(0,province.length-1).split(';');
+                if(province.length <= 0)
+                    this.provinceList = null;
+                else
+                    this.provinceList = province;
             })
     }
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.selectedProvince);
+        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
+            this.getLocationByName (this.provinceList, province).loc_code);
         this.selectedCity = "";
     }
 
-    cityRefresh(province: string): void {
+    cityRefresh(country_code: number, province_code: number): void {
         //this.cityList = cityListData;
-        var address: string = this.selectedCountry + '/' + this.selectedProvince;
+        var address: string = country_code.toString() + '/' + province_code.toString();
         this.locationService.getLocationList(address)
             .then(city => {
-                if(city.length <= 0) this.cityList = null;
-                else    this.cityList = city.substr(0,city.length-1).split(';');
+                if(city.length <= 0)
+                    this.cityList = null;
+                else
+                    this.cityList = city;
+                this.cityNameList = [];
+                for (var i = 0; i < this.cityList.length; i++)
+                    this.cityNameList.push(this.cityList[i].loc_name);
             })
     }
 

@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 import json
 
 
-class AskTestCase(TestCase):
+class LocationTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         getLocationFromCSVFile('./location/korea.CSV')
@@ -35,21 +35,31 @@ class AskTestCase(TestCase):
         self.assertEqual(response.status_code, 204)
 
     def test_invalid(self):
+        response = self.client.get ('/api/location/1')
+        self.assertEqual(response.status_code, 404)
+        response = self.client.get ('/api/location/1/1')
+        self.assertEqual(response.status_code, 404)
+        response = self.client.get ('/api/location/213/999')
+        self.assertEqual(response.status_code, 404)
         response = self.client.delete('/api/location/countries')
         self.assertEqual(response.status_code, 405)
-
         response = self.client.delete('/api/location/1')
         self.assertEqual(response.status_code, 405)
-
         response = self.client.delete('/api/location/1/1')
         self.assertEqual(response.status_code, 405)
 
-    def test_question_answer(self):
+    def test_location(self):
         response = self.client.get('/api/location/countries')
+#        data = json.loads(response.content.decode())
+#        print (data)
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get('/api/location/South%20Korea')
+        response = self.client.get('/api/location/213')
+#        data = json.loads(response.content.decode())
+#        print (data)
         self.assertEqual(response.status_code, 200)
 
-        response = self.client.get('/api/location/South%20Korea/Seoul')
+        response = self.client.get('/api/location/213/1')
+#        data = json.loads(response.content.decode())
+#        print (data)
         self.assertEqual(response.status_code, 200)

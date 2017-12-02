@@ -1,6 +1,6 @@
 //Import Basic Modules
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivate } from '@angular/router';
 
 //Import Components
 import { SignInComponent } from '../signin/signin.component';
@@ -11,19 +11,21 @@ import { MainTabComponent } from '../main/maintab/maintab.component';
 import { MyQuestionsComponent } from '../main/myquestions/myquestions.component';
 import { MyAnswersComponent } from '../main/myanswers/myanswers.component';
 
+import { AuthGuardService as AuthGuard } from '../authentication/auth-guard.service';
+
 //Routes between Components
 const routes: Routes = [
     { path: '', redirectTo: '/signin', pathMatch: 'full'},
     { path: 'signin', component: SignInComponent },
     { path: 'signup', component: SignUpComponent },
-    { path: 'main', component: MainComponent, children: [
+    { path: 'main', component: MainComponent, canActivate: [AuthGuard], children: [
             { path: 'maintab', component: MainTabComponent, outlet:'tab'},
             { path: 'myquestions', component: MyQuestionsComponent, outlet:'tab'},
             { path: 'myanswers', component: MyAnswersComponent, outlet:'tab'},
             { path: '', redirectTo: '/main/(tab:maintab)', pathMatch: 'full'},
         ]
     },
-    { path: 'settings', component: SettingsComponent },
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
 
 
 ];

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Headers, Http } from '@angular/http';
+import { Headers, Http, XSRFStrategy } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import { Location } from './location';
 
 @Injectable()
 export class LocationService{
@@ -12,16 +13,19 @@ export class LocationService{
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
-
-    getCountryList(): Promise<string> {
-        return this.http.get(this.countryUrl).toPromise().then(
-            response => response.json() as string).catch(this.handleError);
+    
+    getCountryList(): Promise<Location[]> {
+        return this.http.get(this.countryUrl)
+            .toPromise()
+            .then(response => response.json() as Location[])
+            .catch(this.handleError);
     }
 
-    getLocationList(location: string): Promise<string>{
+    getLocationList(location: string): Promise<Location[]> {
         const url = `${this.locationUrl}/${location}`;
-        return this.http.get(url).toPromise().then(response =>
-            response.json()).catch(this.handleError);
+        return this.http.get(url).toPromise()
+            .then(response => response.json() as Location[])
+            .catch(this.handleError);
     }
 
     handleError(error: any): Promise<any>{

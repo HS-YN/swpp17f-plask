@@ -36,23 +36,23 @@
         <br>
         <label> o My country is... </label>
         <span *ngFor="let country of countryList"
-          [class.selected]="country === selectedCountry"
-          (click)="countrySelect(country)">
-          <button class="badge">{{country}} </button> &nbsp;
+          [class.selected]="country.loc_name === selectedCountry"
+          (click)="countrySelect(country.loc_name)">
+          <button class="badge">{{country.loc_name}} </button> &nbsp;
         </span>
         <br>
         <label> o My province is... </label>
         <span *ngFor="let province of provinceList"
-          [class.selected]="province === selectedProvince"
-          (click)="provinceSelect(province)">
-          <button class="badge">{{province}} </button> &nbsp;
+          [class.selected]="province.loc_name === selectedProvince"
+          (click)="provinceSelect(province.loc_name)">
+          <button class="badge">{{province.loc_name}} </button> &nbsp;
         </span>
         <br>
         <label> o My city is... </label>
         <span *ngFor="let city of cityList"
-          [class.selected]="city === selectedCity"
-          (click)="citySelect(city)">
-          <button class="badge">{{city}} </button> &nbsp;
+          [class.selected]="city.loc_name === selectedCity"
+          (click)="citySelect(city.loc_name)">
+          <button class="badge">{{city.loc_name}} </button> &nbsp;
         </span>
         <br>
         <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
