@@ -52,7 +52,7 @@ export class UserService{
         //.catch(this.handleError);
     }
 
-    // 200 if success, 401 if failure // 'True' if success, 'False' if failure
+    // 'True' if success, 'False' if failure
     checkSignedIn(): Promise<string>{
         return this.http.get(this.checkSignedInUrl).toPromise().then(response => response.json() as string)
         .catch(this.handleError);

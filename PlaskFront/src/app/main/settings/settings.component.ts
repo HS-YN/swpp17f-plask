@@ -49,26 +49,15 @@ export class SettingsComponent implements OnInit{
     ngOnInit(): void{
         this.notiFrequencyList = [10, 20, 30, 60, 120];
 
-        this.userService.checkSignedIn().then(status => {
-            if(status == 'False'){ this.router.navigate(['/signin']);}
-            else{ this.userService.getUser().then(User => {
-               this.user = User;
-               this.countryRefresh();
-               this.serviceRefresh();
-               this.userLocationRefresh();
-               this.userBlockedServiceRefresh();
-               this.userServiceRefresh();
-               this.selectedFreqRefresh();});}
-        })  
+        this.userService.getUser().then(User => {
+           this.user = User;
+           this.countryRefresh();
+           this.serviceRefresh();
+           this.userLocationRefresh();
+           this.userBlockedServiceRefresh();
+           this.userServiceRefresh();
+           this.selectedFreqRefresh();});  
 
-        /*this.userService.getUser().then(User => {
-            this.user = User;
-            this.countryRefresh();
-            this.serviceRefresh();
-            this.userLocationRefresh();
-            this.userServiceRefresh();
-            if(user == null)    this.router.navigate(['/signin']);
-        });*/
     }
 
     //TODO: Deal with Password Change
