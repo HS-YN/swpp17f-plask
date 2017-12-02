@@ -59,10 +59,20 @@ export class MyAnswersComponent implements OnInit{
     };
 
     expand(question):void {
-        if(question[1]==true)
+        if(question[1]==true){
+            // hide all other questions that are expanded
+            for (let i =0; i< this.questionList.length; ++i){
+                if (this.questionList[i][1] == false){
+                    this.questionList[i][1] =true;
+                }
+            }
+            this.answer = ""; //clear answer tab
+            
             question[1] = false;
-        else
+        }
+        else{
             question[1] = true;
+        }
     }
 
     answerClick(id):void{
