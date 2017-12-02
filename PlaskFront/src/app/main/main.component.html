@@ -1,41 +1,70 @@
-<div class="panel panel-primary">
-  <div class="panel-heading">
-    <span class="glyphicon glyphicon-pushpin"></span>
-    Plask!
-  </div>
-
-  <div class="panel-body">
-    <button class="btn pull-right" (click)="goToSettings()">
-        <span class="glyphicon glyphicon-cog"></span>
-        Settings
-    </button>
-
-    <button class="btn pull-right" (click)="goSignOut()">
-        <span class="glyphicon glyphicon-log-out"></span>
-        Sign Out
-    </button>
-
-    <div>
-        <nav id="topMenu">
-            <ul>
-                <li class="menuLink">
-                    <button class="btn btn-block"
-                        [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</button>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">
+                <span class="glyphicon glyphicon-pushpin"></span>
+                Plask!
+            </a>
+        </div>
+            <ul class="nav navbar-nav">
+                <li class="activate">
+                    <a [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</a>
                 </li>
-                <li class="menuLink">
-                    <button class="btn btn-block"
-                        [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</button>
+                <li>
+                    <a [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</a>
                 </li>
-                <li class="menuLink">
-                    <button class="btn btn-block"
-                        [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</button>
+                <li>
+                    <a [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</a>
                 </li>
             </ul>
-        </nav>
-    </div>
-    <br>
-    <router-outlet name="tab"></router-outlet>
+        <ul class="nav navbar-nav navbar-right">
+            <button class="btn pull-right" (click)="goToSettings()">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>
 
+            <button class="btn pull-right" (click)="goSignOut()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </button>
+        </ul>
+    </div>
+    <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
+                    aria-expanded="false"><span class="caret"></span>
+                </button>
+                <button type="button" class="btn btn-default" (click)="search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a>Option</a></li>
+                    <li><a>Another Option</a></li>
+                    <li class="divider"></li>
+                    <li><a href="#">Separated link</a></li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <label>Location:</label>
+            <select [(ngModel)]="searchNation" name="sCountry" (ngModelChange)="countrySearch($event)">
+                <option> Nation </option>
+                <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
+            </select>
+
+            <select  [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
+                <option> Province </option>
+                <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
+            </select>
+            <input auto-complete [(ngModel)]="searchCity" [source]="cityNameList" name="sCity" placeholder="City"/>
+        </div>
+    </form>
+</nav>
+
+
+
+<div class="panel panel-primary">
+    <router-outlet name="tab"></router-outlet>
 </div>
 
 <div class="panel panel-info">
