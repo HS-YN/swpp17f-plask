@@ -29,7 +29,7 @@
     </div>
     <form class="navbar-form" role="search">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchString" name="sString">
             <div class="input-group-btn">
                 <button type="button" class="btn btn-default" (click)="search()">
                     <span class="glyphicon glyphicon-search"></span>

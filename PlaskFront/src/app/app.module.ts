@@ -57,6 +57,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         AuthGuardService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
+        MainTabComponent,
 
     ],
     bootstrap: [AppComponent]

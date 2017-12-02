@@ -15,6 +15,7 @@ export class QuestionService{
     private recentQuestionUrl = '/api/ask/question/recent'; // receive recent question
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
     private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
+    private searchedQuestionUrl = '/api/ask/question/search';
     private tokenUrl = '/api/user/token';
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -60,6 +61,21 @@ export class QuestionService{
             .catch(this.handleError);
     }
 
+    getSearchedQuestion(searchString: string, locCode: Number[]): Promise<Question[]>{
+        if(locCode[2]!=null) // country/province/city
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + 
+            "/" + locCode[1].toString() + "/" + locCode[2].toString() + "/" + searchString;
+        else if(locCode[1] != null) // country/province
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + 
+            "/" + locCode[1].toString() + "/" + searchString;
+        else //country
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + "/" + searchString;
+
+        return this.http.get(this.searchedQuestionUrl)
+            .toPromise()
+            .then(Response => Response.json() as Question[])
+            .catch(this.handleError);
+    }
 
     handleError(error: any): Promise<any>{
         console.error('An error occured', error);

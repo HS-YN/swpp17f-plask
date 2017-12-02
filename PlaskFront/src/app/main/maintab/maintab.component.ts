@@ -43,6 +43,14 @@ export class MainTabComponent implements OnInit{
         })
     }
 
+    getSearchQuestionList(searchString: string, locCode: Number[]):void {
+        this.questionService.getSearchedQuestion(searchString, locCode).then(questions => {
+            this.temp_questionList = questions;
+            alert("Search Complete!");
+            this.getAnswerList();
+        })
+    }
+
     getAnswerList():void{
         console.log(this.temp_questionList);
         this.questionList = [];
@@ -52,7 +60,6 @@ export class MainTabComponent implements OnInit{
                 if(answers != null)
                     temp_answerList = answers;
                 this.questionList.push([q, true, temp_answerList]);
-                console.log(temp_answerList);
             })
         }
     };
