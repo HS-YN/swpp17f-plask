@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.forms.models import model_to_dict
 
 from user.models import Location, Service
-from user.views import servParse, locParse, setService, getLocationStr, getServiceStr
+from user.views import tokenWith, servParse, locParse, setService, getLocationStr, getServiceStr
 from user.views import login_required
 from location.views import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
@@ -22,7 +22,6 @@ def question_to_dict(question):
     result['locations'] = getLocationStr(question)
     result['services'] = getServiceStr(question)
     return result
-
 def answer_to_dict(answer):
     result = {}
     result['id'] = answer.id
@@ -31,7 +30,11 @@ def answer_to_dict(answer):
     result['author'] = answer.author.nickname
     return result
 
+
 def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
+    loc_code1 = int(loc_code1)
+    loc_code2 = int(loc_code2)
+    loc_code3 = int(loc_code3)
     try:
         l1 = LocationL1.objects.get(loc_code = loc_code1)
     except LocationL1.DoesNotExist:
@@ -49,6 +52,40 @@ def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
     except LocationL3.DoesNotExist:
         raise Question.DoesNotExist
     return l3.questions
+def isCommonWord(word):
+    word = word.lower()
+    wordlist = ['a', 'an', 'is', 'isn\'t', 'are', 'aren\'t',
+        'was', 'wasn\'t', 'were', 'weren\'t', 'it', 'that', 'this',
+        'at', 'in', 'for', 'where', 'when', 'how', 'what', 'who', 'why', 'and', 'or',
+        'to', 'of', 'will', 'would', 'can', 'cannot', 'can\'t' 'could',
+        'may', 'might', 'here', 'there', 'not', 'there\'s',
+        'with', 'if', 'else', 'have', 'near', 'nearby', 'i', 'you', 'he', 'she', 'they',
+        'do', 'don\'t', 'has', 'haven\'t', 'hasn\'t', 'does', 'doesn\'t']
+    for forbidden in wordlist:
+        if word == forbidden:
+            return True
+    return False
+def strListContains(strlist, word):
+    word_lower = word.lower()
+    for string in strlist:
+        if string == word or string == word_lower:
+            return True
+    return False
+def getQuestionMatchPoint(question, search_words):
+    total_count = 0
+    match_count = 0
+    content = question.content
+    services = [service.name for service in question.services.all()]
+
+    if len (search_words) < 1:
+        return 0
+
+    for word in search_words:
+        if not isCommonWord(word):
+            total_count = total_count + 1
+            if word in content or strListContains(services, word):
+                match_count = match_count + 1
+    return match_count * 100 / total_count
 
 @login_required
 def question(request):
@@ -109,48 +146,42 @@ def question_related(request):
     else:
         return HttpResponseNotAllowed(['GET'])
 '''
-
 @login_required
-def question_search(request):
-    if request.method == 'GET':
-        req_body = json.loads(request.body.decode())
-        loc_code1 = req_body['country']
-        loc_code2 = req_body['province']
-        loc_code3 = req_body['city']
+def question_search1(request, loc_code1, search_string):
+    return question_search (request, loc_code1, -1, -1, search_string)
+@login_required
+def question_search2(request, loc_code1, loc_code2, search_string):
+    return question_search (request, loc_code1, loc_code2, -1, search_string)
+@login_required
+def question_search3(request, loc_code1, loc_code2, loc_code3, search_string):
+    return question_search (request, loc_code1, loc_code2, loc_code3, search_string)
 
+def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
+    if request.method == 'GET':
         try:
             questions = getQuestion_by_loc_code (loc_code1, loc_code2, loc_code3)
         except Question.DoesNotExist:
-            return HttpResponseNotFound()
+            return HttpResponse (status = 400) # invalid location code input
         if (len(questions.all()) <= 0):
-            return 
+            return HttpResponse (status = 404) # there is no question
 
+        MAX_SEARCH_COUNT = 50
+        search_words = tokenWith(search_string.replace('%20', ' '), ' ')
+        result = []
+        
+        for question in questions.all():
+            match_point = getQuestionMatchPoint(question, search_words)
+            if match_point >= 1:
+                result.append ((match_point, question))
 
-        location_raw = location2index(json.loads(request.body.decode())['location'].split('/'))
-        location = Location.objects.get(loc_code1=location_raw[0], loc_code2=location_raw[1], loc_code3=location_raw[2])
-        search_target = json.loads(request.body.decode())['search'].split(' ')
-        string_search = []
-        tag_search = []
-        for curr in search_target:
-            if curr.find('#') != -1:
-                tag_search.append(curr[1:])
-            else:
-                string_search.append(curr)
-        tag_search = service2index(tag_search)
-        relevant_questions = list(Question.objects.filter(locations=location).values())
-        selected_questions = []
-        threshold = len(search_target)*0.7
-        for question_given in relevant_questions:
-            weight = 0
-            for string_given in string_search:
-                if question_given.content.find(string_given) != -1:
-                    weight = weight+1
-            for tag_given in tag_search:
-                if question_given.services.find(tag_given) != -1:
-                    weight = weight+1
-            if weight >= threshold:
-                selected_questions.append(question_given)
-        return selected_questions
+        if len(result) == 0:
+            return HttpResponse (status = 404)
+
+        result = [point_question[1] for point_question in sorted(result, key = lambda point_question: point_question[0], reverse = True)]
+        # TODO insert time behavior
+        return JsonResponse(
+            [question_to_dict(question) for question in result],
+            safe=False)
     else:
         return HttpResponseNotAllowed(['GET'])
 
