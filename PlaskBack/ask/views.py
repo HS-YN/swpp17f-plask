@@ -23,7 +23,6 @@ def question_to_dict(question):
     result['services'] = getServiceStr(question)
     return result
 
-
 def answer_to_dict(answer):
     result = {}
     result['id'] = answer.id
@@ -32,6 +31,24 @@ def answer_to_dict(answer):
     result['author'] = answer.author.nickname
     return result
 
+def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
+    try:
+        l1 = LocationL1.objects.get(loc_code = loc_code1)
+    except LocationL1.DoesNotExist:
+        raise Question.DoesNotExist
+    if (loc_code2 < 0):
+        return l1.questions
+    try:
+        l2 = l1.child.get(loc_code = loc_code2)
+    except LocationL2.DoesNotExist:
+        raise Question.DoesNotExist
+    if (loc_code3 < 0):
+        return l2.questions
+    try:
+        l3 = l2.child.get(loc_code = loc_code3)
+    except LocationL3.DoesNotExist:
+        raise Question.DoesNotExist
+    return l3.questions
 
 @login_required
 def question(request):
@@ -93,11 +110,22 @@ def question_related(request):
         return HttpResponseNotAllowed(['GET'])
 '''
 
-'''
-# TODO: There is a same problem with question_related.
 @login_required
 def question_search(request):
     if request.method == 'GET':
+        req_body = json.loads(request.body.decode())
+        loc_code1 = req_body['country']
+        loc_code2 = req_body['province']
+        loc_code3 = req_body['city']
+
+        try:
+            questions = getQuestion_by_loc_code (loc_code1, loc_code2, loc_code3)
+        except Question.DoesNotExist:
+            return HttpResponseNotFound()
+        if (len(questions.all()) <= 0):
+            return 
+
+
         location_raw = location2index(json.loads(request.body.decode())['location'].split('/'))
         location = Location.objects.get(loc_code1=location_raw[0], loc_code2=location_raw[1], loc_code3=location_raw[2])
         search_target = json.loads(request.body.decode())['search'].split(' ')
@@ -125,7 +153,6 @@ def question_search(request):
         return selected_questions
     else:
         return HttpResponseNotAllowed(['GET'])
-'''
 
 @login_required
 def question_answer(request):
