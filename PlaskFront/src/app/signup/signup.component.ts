@@ -132,7 +132,6 @@ export class SignUpComponent implements OnInit {
                 else
                     this.countryList = country;
             })
-        console.log (this.countryList[0]);
     }
 
     countrySelect(country: string): void {

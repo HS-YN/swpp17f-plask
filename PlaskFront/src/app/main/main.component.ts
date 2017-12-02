@@ -36,10 +36,15 @@ export class MainComponent implements OnInit{
     selectedProvince: string = "";
     selectedCity: string = "";
 
-
     serviceList: string[]; //List of service tags from Backend
     questionServiceList: string[]; //List for visualizing current question service tags
-    serviceTag: string = ''; //User-input string
+    serviceTag: string = ""; //User-input string
+
+    //variables for searching
+    searchString: string = "";
+    searchNation: string = "";
+    searchProvince: string = "";
+    searchCity: string = "";
 
     ngOnInit(): void{
         this.userService.getUser().then(user => {
