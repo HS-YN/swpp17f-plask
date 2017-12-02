@@ -157,7 +157,13 @@ def question_search3(request, loc_code1, loc_code2, loc_code3, search_string):
     return question_search (request, loc_code1, loc_code2, loc_code3, search_string)
 
 def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
-    if request.method == 'GET':
+    if request.method == 'GET' or request.method == 'POST':
+        if request.method == 'POST':
+            req_body = json.loads(request.body.decode())
+            print (req_body['content'])
+            print (req_body['locations'])
+            print (req_body['services'])
+
         try:
             questions = getQuestion_by_loc_code (loc_code1, loc_code2, loc_code3)
         except Question.DoesNotExist:
@@ -178,12 +184,13 @@ def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
             return HttpResponse (status = 404)
 
         result = [point_question[1] for point_question in sorted(result, key = lambda point_question: point_question[0], reverse = True)]
-        # TODO insert time behavior
+        result = result[:MAX_SEARCH_COUNT]
+        # TODO insert time behavior... ??
         return JsonResponse(
             [question_to_dict(question) for question in result],
             safe=False)
     else:
-        return HttpResponseNotAllowed(['GET'])
+        return HttpResponseNotAllowed(['GET', 'POST'])
 
 @login_required
 def question_answer(request):

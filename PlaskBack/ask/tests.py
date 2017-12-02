@@ -110,7 +110,7 @@ class AskTestCase(TestCase):
         response = self.client.get('/api/ask/question/search/213/1/pizza is delicious')
         data = json.loads(response.content.decode())
         self.assertEqual(data[0]['content'], content)
-        response = self.client.get('/api/ask/question/search/21/1/pizza is delicious')
+        response = self.client.get('/api/ask/question/search/213/199/pizza is delicious')
         self.assertEqual(response.status_code, 400)
         response = self.client.get('/api/ask/question/search/213/1/is delicious')
         self.assertEqual(response.status_code, 404)
@@ -118,10 +118,19 @@ class AskTestCase(TestCase):
         response = self.client.get('/api/ask/question/search/213/1/1/what coffee do you like most?')
         data = json.loads(response.content.decode())
         self.assertEqual(data[0]['content'], content)
-        response = self.client.get('/api/ask/question/search/21/1/1/what coffee do you like most?')
+        response = self.client.get('/api/ask/question/search/213/1/199/what coffee do you like most?')
         self.assertEqual(response.status_code, 400)
         response = self.client.get('/api/ask/question/search/213/1/1/what do you like most?')
         self.assertEqual(response.status_code, 404)
+
+        response = self.client.post('/api/ask/question/search/213/1/1/what coffee do you like most?', json.dumps({
+                'content': content,
+                'locations': 'South%20Korea/Busan/Buk;',
+                'services': 'coffee;pizza;'
+            }),
+            content_type='application/json')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
 
 '''
         response = self.client.get('/api/ask/question/related')
