@@ -74,11 +74,15 @@ class AskTestCase(TestCase):
         response = self.client.delete('/api/ask/question')
         self.assertEqual(response.status_code, 405)
 
+        response = self.client.delete('/api/ask/question/search/213/asdf asdf')
+        self.assertEqual(response.status_code, 405)
+
         response = self.client.delete('/api/ask/question/related')
         self.assertEqual(response.status_code, 405)
 
     def test_question_answer(self):
-        askQuestion (self, 'q0', 'South%20Korea/Busan/Buk;', 'coffee;pizza;')
+        content = 'q0 content'
+        askQuestion (self, content, 'South%20Korea/Busan/Buk;', 'coffee;pizza;')
         askQuestion (self, 'q1', 'South%20Korea/Busan/Buk;', 'station;')         # filtered by service tag
         askQuestion (self, 'q2', 'South%20Korea/Busan/Dong;', 'coffee;pizza;')    # filtered by invalid location
         askQuestion (self, 'q3', 'South%20Korea/Busan/Busanjin;', 'coffee;')
@@ -122,6 +126,53 @@ class AskTestCase(TestCase):
         print ('DEBUG: /api/ask/question/answer')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+
+        response = self.client.get('/api/ask/question/search/213/content%20to delete asdf qwer zxcv')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/question/search/213/content%20to delete asdf qwer zxcv')
+        for question in data:
+            print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+        response = self.client.get('/api/ask/question/search/21/content to delete asdf qwer zxcv')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/to delete asdf qwer zxcv')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/question/search/213/to delete asdf qwer zxcv')
+        for question in data:
+            print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+
+        response = self.client.get('/api/ask/question/search/213/1/pizza is delicious')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/question/search/213/1/pizza is delicious')
+        for question in data:
+            print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+        response = self.client.get('/api/ask/question/search/213/199/pizza is delicious')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/1/is delicious')
+        data = json.loads(response.content.decode())
+        self.assertEqual(len(data), 0)
+
+        response = self.client.get('/api/ask/question/search/213/1/1/what coffee do you like most?')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/question/search/213/1/1/what coffee do you like most?')
+        for question in data:
+            print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+        response = self.client.get('/api/ask/question/search/213/1/199/what coffee do you like most?')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/1/1/what do you like most?')
+        data = json.loads(response.content.decode())
+        self.assertEqual(len(data), 0)
+        
+        # TODO will do when refactoring
+        '''
+        response = self.client.post('/api/ask/question/search/213/1/1/what coffee do you like most?', json.dumps({
+                'content': content,
+                'locations': 'South%20Korea/Busan/Buk;',
+                'services': 'coffee;pizza;'
+            }),
+            content_type='application/json')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
+        '''
 
         response = self.client.get('/api/ask/question/related')
         data = json.loads(response.content.decode())

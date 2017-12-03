@@ -29,20 +29,11 @@
     </div>
     <form class="navbar-form" role="search">
         <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchString" name="sString">
             <div class="input-group-btn">
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" 
-                    aria-expanded="false"><span class="caret"></span>
-                </button>
                 <button type="button" class="btn btn-default" (click)="search()">
                     <span class="glyphicon glyphicon-search"></span>
                 </button>
-                <ul class="dropdown-menu" role="menu">
-                    <li><a>Option</a></li>
-                    <li><a>Another Option</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Separated link</a></li>
-                </ul>
             </div>
         </div>
         <div>
@@ -54,9 +45,9 @@
 
             <select  [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
                 <option> Province </option>
-                <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
+                <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
             </select>
-            <input auto-complete [(ngModel)]="searchCity" [source]="cityNameList" name="sCity" placeholder="City"/>
+            <input auto-complete [(ngModel)]="searchCity" [source]="searchCityNameList" name="sCity" placeholder="City"/>
         </div>
     </form>
 </nav>
