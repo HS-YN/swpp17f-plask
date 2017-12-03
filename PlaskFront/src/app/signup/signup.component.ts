@@ -61,10 +61,18 @@ export class SignUpComponent implements OnInit {
 
     //Create a new User Account
     SignUp(): void {
+        var email_check = new RegExp('^[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff@]+@[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff\\.@]+\\.[a-z]{2,3}$')
+        if(this.user.email.length >= 100 || !email_check.test(this.user.email)) {
+            alert("Invalid email address!");
+            return;
+        }
         if(this.ValidatePassword()){
             this.userService.signUp(this.user)
                 .then(Status => {
-                    if(Status == 201) { this.goBack() }
+                    if(Status == 201) {
+                        alert("Successfully signed up! Please sign in.");
+                        this.goBack()
+                    }
                 }).catch((err) => {alert("You cannot signup with this information.");});
         }
         else{
@@ -250,6 +258,9 @@ export class SignUpComponent implements OnInit {
         else if (this.serviceList.indexOf(this.newService) != -1){
             alert("Tag already Exists!");
         }
+        else if (this.newService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.userServiceSelect(this.newService);
             this.newService = "";
@@ -278,6 +289,9 @@ export class SignUpComponent implements OnInit {
         }
         else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
             alert("Tag already Exists!");
+        }
+        else if (this.newBlockService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
         }
         else{
             this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';

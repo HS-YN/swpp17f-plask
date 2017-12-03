@@ -24,7 +24,7 @@ export class AutoCompleteComponent {
                 return el.toLowerCase().indexOf(this.query.toLowerCase()) > -1;
             }.bind(this));
             if(this.filteredList.length >= 10)
-                this.filteredList = this.filteredList.slice(0,9);
+                this.filteredList = this.filteredList.slice(0,10);
         }
         else {
             this.filteredList = [];
