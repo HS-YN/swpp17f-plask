@@ -1,5 +1,6 @@
 //Import Basic Modules
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -24,16 +25,22 @@ export class MainTabComponent implements OnInit{
         private locationService: LocationService,
         private questionService: QuestionService,
         private answerService: AnswerService,
-    ){ }
+    )
+    { }
 
     user: User = new User();
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
     temp_questionList:Question[] = [];
 
+    // Observable
+    timerSubscription: any;
+    inactive: boolean = true;
+
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
+        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
     }
 
     getQuestionList():void {
@@ -67,10 +74,14 @@ export class MainTabComponent implements OnInit{
             }
             this.answer = ""; //clear answer tab
             question[1] = false;
+            this.inactive = false;
         }
         // collapse if opened
         else{
             question[1] = true;
+            this.inactive = true;
+            this.timerSubscription.unsubscribe();
+            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
     }
 
@@ -84,11 +95,19 @@ export class MainTabComponent implements OnInit{
                 }
                 else {
                     alert("Answer successfully posted!");
-                    window.location.reload();
+                    //window.location.reload();
                     this.answer = "";
                     this.getQuestionList();
                 }
             });
         }
     }
+
+    // Unsubscribe all subscriptions in ngOnDestroy
+    /*public ngOnDestroy(): void {
+        if (this.timerSubscription){
+            this.timerSubscription.unsubcribe();
+        }
+    }*/  
+
 }
