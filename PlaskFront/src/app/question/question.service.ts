@@ -63,19 +63,15 @@ export class QuestionService{
 
     getSearchedQuestion(searchString: string, locCode: string[]): Promise<Question[]>{
         console.log(searchString);
-        this.searchedQuestionUrl = '/api/ask/question/search';
-        if(locCode[2]!="-1") // country/province/city
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] + 
-            "/" + locCode[1] + "/" + locCode[2] + "/" + searchString;
-        else if(locCode[1] != "-1") // country/province
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] +
-            "/" + locCode[1] + "/" + searchString;
-        else //country
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] + "/" + searchString;
 
-        return this.http.get(this.searchedQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
+        var headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post(this.searchedQuestionUrl, JSON.stringify({
+                loc_code1: locCode[0],
+                loc_code2: locCode[1],
+                loc_code3: locCode[2],
+                search_string: searchString
+            }), {headers: headers}).toPromise()
+            .then(Response => Response.json() as Question)  // receive status code 201 if success,
             .catch(this.handleError);
     }
 
