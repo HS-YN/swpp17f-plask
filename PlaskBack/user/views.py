@@ -68,7 +68,6 @@ def setLocation(has_loc, location_list, ModelClassType):
             l1 = LocationL1.objects.get(name=location[0].replace("%20", " "))
         except LocationL1.DoesNotExist:
             raise ModelClassType.DoesNotExist
-#        l1.persons.add(has_loc)
         addToLocation(has_loc, l1, ModelClassType)
         l1.save()
         loc_code_l1 = l1.loc_code
@@ -79,7 +78,6 @@ def setLocation(has_loc, location_list, ModelClassType):
                 l2 = l1.child.get(name=location[1].replace("%20", " "))
             except LocationL2.DoesNotExist:
                 raise ModelClassType.DoesNotExist
-#            l2.persons.add(has_loc)
             addToLocation(has_loc, l2, ModelClassType)
             l2.save()
             loc_code_l2 = l2.loc_code
@@ -92,8 +90,7 @@ def setLocation(has_loc, location_list, ModelClassType):
                 l3 = l2.child.get(name=location[2].replace("%20", " "))
             except LocationL3.DoesNotExist:
                 raise ModelClassType.DoesNotExist
-#            l3.persons.add(has_loc)
-            addToLocation(has_loc, l2, ModelClassType)
+            addToLocation(has_loc, l3, ModelClassType)
             l3.save()
             loc_code_l3 = l3.loc_code
         else:

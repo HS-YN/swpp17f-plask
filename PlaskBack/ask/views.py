@@ -42,7 +42,7 @@ def getQuestionByLocCode (loc_code_set):
             raise Question.DoesNotExist
     else:
         l2 = None
-    if loc_code_set.loc_code2 >= 0 and loc_code_set.loc_code3 >= 0:
+    if l2 is not None and loc_code_set.loc_code3 >= 0:
         try:
             l3 = l2.child.get(loc_code = loc_code_set.loc_code3)
         except LocationL3.DoesNotExist:
@@ -128,9 +128,6 @@ def getQuestionMatchPoint(question, search_words):
     content = question.content
     services = [service.name for service in question.services.all()]
 
-    if len (search_words) < 1:
-        return 0
-
     for word in search_words:
         if not isCommonWord(word):
             total_count = total_count + 1
@@ -207,22 +204,13 @@ def question_related(request):
         return HttpResponseNotAllowed(['GET'])
 
 @login_required
-def question_search1(request, loc_code1, search_string):
-    return question_search (request, loc_code1, -1, -1, search_string)
-@login_required
-def question_search2(request, loc_code1, loc_code2, search_string):
-    return question_search (request, loc_code1, loc_code2, -1, search_string)
-@login_required
-def question_search3(request, loc_code1, loc_code2, loc_code3, search_string):
-    return question_search (request, loc_code1, loc_code2, loc_code3, search_string)
-
-def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
-    if request.method == 'GET' or request.method == 'POST':
-        if request.method == 'POST':
-            req_body = json.loads(request.body.decode())
-            print (req_body['content'])
-            print (req_body['locations'])
-            print (req_body['services'])
+def question_search(request):
+    if request.method == 'POST':
+        req_body = json.loads(request.body.decode())
+        loc_code1 = int(req_body['loc_code1'])
+        loc_code2 = int(req_body['loc_code2'])
+        loc_code3 = int(req_body['loc_code3'])
+        search_string = req_body['search_string']
 
         try:
             questions = getQuestion_by_loc_code (loc_code1, loc_code2, loc_code3)
@@ -242,7 +230,7 @@ def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
             [question_to_dict(question) for question in result],
             safe=False)
     else:
-        return HttpResponseNotAllowed(['GET', 'POST'])
+        return HttpResponseNotAllowed(['POST'])
 
 @login_required
 def question_answer(request):
