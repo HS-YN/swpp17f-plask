@@ -1,4 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+//Import Basic Modules
+import { Component, OnInit, HostListener, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -322,7 +323,8 @@ export class MainComponent implements OnInit{
             return;
         }
         this.searchCity = this.searchCityAutoComplete.query;
-        if(this.searchCityAutoComplete.rawList.indexOf(this.selectedCity) == -1) {
+        if(this.searchCityAutoComplete.rawList.indexOf(this.searchCity) == -1) {
+            console.log(this.searchCity);
             alert("Invalid city name.");
             return;
         }
@@ -371,6 +373,19 @@ export class MainComponent implements OnInit{
             // either already "granted" or "denied"
         }
     }
+    //methods for Plask Question Dropdown button
+    //Open Dropdown when clicked
+    myFunction():void {
+            document.getElementById("myDropdown").classList.toggle("show");
+    }
+    //Close when click somewhere else
+    @HostListener('document:click', ['$event'])
+    onClick(event) {
+        var target = event.target;
+        if (!target.closest(".dropdown")) {
+            document.getElementById("myDropdown").classList.toggle("show", false);
+        }
+    }
 
     notifyWithPermission(title: string, body: string){
         // Check if the browser supports notification
@@ -390,7 +405,6 @@ export class MainComponent implements OnInit{
         else{
         }
     }     
-
 
 }/* istanbul ignore next */
 
