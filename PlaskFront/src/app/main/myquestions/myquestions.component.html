@@ -1,0 +1,23 @@
+<div class="question-container">
+    <a class="question-list" *ngFor="let question of questionList">
+        <div class="question-list-item" (click)="expand(question)">
+            <h4> {{question[0].content}}</h4>
+            <h5 id="author"> {{question[0].author}}</h5>
+        </div>
+        <div class="question-list-item" [hidden]="question[1]">
+            <div class="tag" (click)="expand(question)">
+                <span class="label label-info">Location</span> {{question[0].locations}} <br>
+                <span class="label label-info">Services</span> {{question[0].services}}
+            </div>
+            <div *ngFor="let answer of question[2]" (click)="expand(question)">
+                <div class=answer> [{{answer.author}}] : {{answer.content}}</div>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="answer" placeholder="Comment">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type ="button"(click)="answerClick(question[0].id)"> Comment </button>
+                </span>
+            </div>
+        </div>
+    </a>
+</div>

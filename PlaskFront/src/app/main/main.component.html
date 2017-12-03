@@ -1,0 +1,94 @@
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand">
+                <span class="glyphicon glyphicon-pushpin"></span>
+                Plask!
+            </a>
+        </div>
+            <ul class="nav navbar-nav">
+                <li class="activate">
+                    <a [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</a>
+                </li>
+                <li>
+                    <a [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</a>
+                </li>
+            </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <button class="btn pull-right" (click)="goToSettings()">
+                <span class="glyphicon glyphicon-cog"></span>
+            </button>
+
+            <button class="btn pull-right" (click)="goSignOut()">
+                <span class="glyphicon glyphicon-log-out"></span>
+            </button>
+        </ul>
+    </div>
+    <form class="navbar-form" role="search">
+        <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search" [(ngModel)]="searchString" name="sString">
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" (click)="search()">
+                    <span class="glyphicon glyphicon-search"></span>
+                </button>
+            </div>
+        </div>
+        <div>
+            <label>Location:</label>
+            <select [(ngModel)]="searchNation" name="sCountry" (ngModelChange)="countrySearch($event)">
+                <option> Nation </option>
+                <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
+            </select>
+
+            <select  [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
+                <option> Province </option>
+                <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
+            </select>
+            <input auto-complete [(ngModel)]="searchCity" [source]="searchCityNameList" name="sCity" placeholder="City"/>
+        </div>
+    </form>
+</nav>
+
+    <router-outlet name="tab"></router-outlet>
+
+<div class="panel panel-info">
+  <div class="panel-heading">
+    Plask your Question!
+  </div>
+  <div class="panel-body">
+
+    <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
+
+
+      <label>Location:</label>
+      <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
+        <option> Nation </option>
+        <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
+      </select>
+
+      <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
+        <option> Province </option>
+        <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
+      </select>
+
+      <input auto-complete [(ngModel)]="selectedCity" [source]="cityNameList" placeholder="City"/>
+
+      <label>Services:</label>
+      <span *ngFor="let questionService of questionServiceList">
+          <span class="label label-success">{{questionService}}</span>
+          <button class="badge"
+            (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+            x</button> &nbsp;
+      </span>
+      <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+      <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+
+    <div class="form-group">
+      <button class="btn btn-block" (click)="sendQuestion()">
+        <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+    </div>
+  </div>
+</div>
