@@ -45,7 +45,6 @@ export class MyAnswersComponent implements OnInit{
     }
 
     getAnswerList():void{
-        console.log(this.temp_questionList);
         this.questionList = [];
         for(let q of this.temp_questionList){
             var temp_answerList = [];
@@ -53,7 +52,7 @@ export class MyAnswersComponent implements OnInit{
                 if(answers != null)
                     temp_answerList = answers;
                 this.questionList.push([q, true, temp_answerList]);
-                console.log(temp_answerList);
+                console.log(this.questionList);
             })
         }
     };

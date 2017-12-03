@@ -9,7 +9,6 @@ import { Location } from '../location/location';
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
-import { MainTabComponent } from './maintab/maintab.component';
 
 @Component({
     selector: 'main',
@@ -24,7 +23,6 @@ export class MainComponent implements OnInit{
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
-        private mainTabComponent: MainTabComponent,
     ){ }
 
     question:Question = {id:0, content:"", author:"", locations:"", services:""};
@@ -267,9 +265,7 @@ export class MainComponent implements OnInit{
     }
     //method called by clicking search button
     search():void {
-        let countryIndex = null;
-        let provinceIndex = null;
-        let cityIndex = null;
+        let index:Number[] = [-1, -1, -1] // 0:country, 1:province, 2:city code num
         if((this.searchNation == "")){
             alert("Please select country tag!");
             return;
@@ -280,20 +276,23 @@ export class MainComponent implements OnInit{
         }
         for(let ctry of this.countryList){
            if(ctry.loc_name === this.searchNation) 
-               countryIndex = ctry.loc_code;
+               index[0] = ctry.loc_code;
         }
         if(this.searchProvince != "")
             for(let prvc of this.searchProvinceList){
                 if(prvc.loc_name === this.searchProvince)
-                    provinceIndex = prvc.loc_code;
+                    index[1] = prvc.loc_code;
             }
         if(this.searchCity != "")
             for(let cty of this.searchCityList){
                 if(cty.loc_name === this.searchCity)
-                    cityIndex = cty.loc_code;
+                    index[2] = cty.loc_code;
             }
 
-        this.mainTabComponent.getSearchQuestionList(this.searchString, [countryIndex, provinceIndex, cityIndex]);
+         this.router.navigateByUrl('/settings',{skipLocationChange: true}).then(
+             () => this.router.navigate(['/main', {outlets:{'tab':[
+             'search',index[0],index[1],index[2],this.searchString]}}
+         ])); 
     }
 
 
