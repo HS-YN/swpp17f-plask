@@ -15,6 +15,7 @@ export class UserService{
     private signOutUrl = '/api/user/signout';
     private userInfoUrl = '/api/user/userinfo';
     private checkSignedInUrl  = '/api/user/checksignedin';
+    private serviceUrl = '/api/user/service';
     private tokenUrl = '/api/user/token';
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -31,7 +32,7 @@ export class UserService{
     }
 
     signUp(user: User): Promise<number>{
-        var headers = new Headers({'Content-Type': 'application/json'}); 
+        var headers = new Headers({'Content-Type': 'application/json'});
         return this.http
             .get(this.tokenUrl).toPromise().then(()=> headers.append('X-CSRFToken', this.getCookie('csrftoken')))
             .then(() => this.http.post(this.signUpUrl, JSON.stringify(user), {headers: headers})
@@ -47,7 +48,7 @@ export class UserService{
     }
 
     getUser(): Promise<User> {
-        return this.http.get(this.userInfoUrl).toPromise().then(response => 
+        return this.http.get(this.userInfoUrl).toPromise().then(response =>
             response.json() as User);
         //.catch(this.handleError);
     }
@@ -70,6 +71,13 @@ export class UserService{
     handleError(error: any): Promise<any>{
         console.error('An error occured', error);
         return Promise.reject(error.message);
+    }
+
+    getService(): Promise<string[]>{
+        return this.http.get(this.serviceUrl)
+            .toPromise()
+            .then(response => response.json() as string[])
+            .catch(this.handleError);
     }
 
     getCookie(name) {

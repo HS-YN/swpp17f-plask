@@ -49,11 +49,24 @@
         </span>
         <br>
         <label> o My city is... </label>
+        <div class="container" *ngIf="cityAutoComplete">
+          <div class="input-field col s6">
+            <input id="cityAutoComplete.rawList" type="text" class="validate filter-input" name="City" placeholder="City" [(ngModel)]=cityAutoComplete.query (keyup)=cityAutoComplete.filter()>
+            <label for="cityAutoComplete.rawList"></label>
+          </div>
+          <div class="suggestions" *ngIf="cityAutoComplete.filteredList.length > 0">
+            <ul *ngFor="let item of cityAutoComplete.filteredList">
+              <li>
+                <a (click)="cityAutoComplete.select(item)">{{item}}</a>
+              </li>
+            </ul>
+          </div>
+        </div><br><!--
         <span *ngFor="let city of cityList"
           [class.selected]="city.loc_name === selectedCity"
           (click)="citySelect(city.loc_name)">
           <button class="badge">{{city.loc_name}} </button> &nbsp;
-        </span>
+        </span>-->
         <br>
         <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
         <span *ngIf="selectedProvince!=''" class="label label-primary">{{selectedProvince}}</span>
@@ -75,10 +88,22 @@
         <span *ngFor= "let service of serviceList"
           (click)="userServiceSelect(service)">
           <button class="badge"> {{service}} </button> &nbsp;
-        </span>
+        </span><br>
 
         <label> ...or add your own tag! </label>
-        <input type="text" [(ngModel)]="newService" class="form-control" placeholder="new tag"/>
+        <div class="container" *ngIf="serviceAutoComplete">
+          <div class="input-field col s6">
+            <input id="serviceAutoComplete.rawList" type="text" class="validate filter-input" name="Service" placeholder="Service" [(ngModel)]=serviceAutoComplete.query (keyup)=serviceAutoComplete.filter()>
+            <label for="serviceAutoComplete.rawList"></label>
+          </div>
+          <div class="suggestions" *ngIf="serviceAutoComplete.filteredList.length > 0">
+            <ul *ngFor="let item of serviceAutoComplete.filteredList">
+              <li>
+                <a (click)="serviceAutoComplete.select(item)">{{item}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
 
       </div>
@@ -92,15 +117,27 @@
         </span>
         <br>
         <label> type tag to block </label>
-        <input type="text" [(ngModel)]="newBlockService" class="form-control" placeholder="type here"/>
+        <div class="container" *ngIf="blockAutoComplete">
+          <div class="input-field col s6">
+            <input id="blockAutoComplete.rawList" type="text" class="validate filter-input" name="Service" placeholder="Service" [(ngModel)]=blockAutoComplete.query (keyup)=blockAutoComplete.filter()>
+            <label for="blockAutoComplete.rawList"></label>
+          </div>
+          <div class="suggestions" *ngIf="blockAutoComplete.filteredList.length > 0">
+            <ul *ngFor="let item of blockAutoComplete.filteredList">
+              <li>
+                <a (click)="blockAutoComplete.select(item)">{{item}}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
         <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
       </div>
-      
+
       <label> Select notification frequency</label>
       <select [(ngModel)]="selectedFreq" (ngModelChange)="onChange($event)" >
           <option *ngFor="let freq of notiFrequencyList" [ngValue]="freq"> {{freq}} min </option>
       </select>
-      
+
       <div class="form-group">
         <button class="btn btn-block" (click)="SignUp()">
           <span class="glyphicon glyphicon-log-in"></span> Let's Start!</button>
