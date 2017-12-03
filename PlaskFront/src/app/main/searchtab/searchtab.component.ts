@@ -50,17 +50,19 @@ export class SearchTabComponent implements OnInit{
     }
 
     getSearchQuestionList(searchString: string, locCode: string[]):void {
-        //this.ngZone.run(()=>{
             this.questionList = [];
             this.questionService.getSearchedQuestion(searchString, locCode).then(questions => {
                 this.temp_questionList = questions;
                 this.getAnswerList();
-                //alert("Search Complete!")
             });
-        //});
     }
 
     getAnswerList():void{
+        if(this.temp_questionList.length === 0){
+            alert("No question matched!");
+            return;
+        }
+        alert("Search Complete!");
         for(let q of this.temp_questionList){
             var temp_answerList = [];
             this.answerService.getAnswer(q.id).then(answers =>{
