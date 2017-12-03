@@ -10,10 +10,12 @@ import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
 
+declare var Notification: any;
+
 @Component({
     selector: 'main',
     templateUrl: './main.component.html',
-    styleUrls: [ './main.component.css']
+    styleUrls: [ './main.component.css'],
 })
 export class MainComponent implements OnInit{
 
@@ -52,9 +54,13 @@ export class MainComponent implements OnInit{
 
     ngOnInit(): void{
         this.userService.getUser().then(user => {
-                this.question.author = user.username;
-                this.countryRefresh();
-                this.serviceRefresh();});
+            this.question.author = user.username;
+            this.countryRefresh();
+            this.serviceRefresh();
+            // Notification Method
+            this.notify("Plask!", "Thank you! You can now receive notifications :)");            
+        });
+
     }
 
     goToSettings(): void{
@@ -101,7 +107,6 @@ export class MainComponent implements OnInit{
             }).then(() => this.router.navigateByUrl(
                 '/settings', {skipLocationChange: true})).then(
             () => this.router.navigate([path]));
-
 
             // Reset the question bar
             this.question.content = "";
@@ -295,6 +300,30 @@ export class MainComponent implements OnInit{
          ])); 
     }
 
+    // Notification
+    notify(title:string, body: string){
+        // Check if the browser supports notification
+        if (!("Notification" in window)){
+            alert("This browser does not support notification :(");
+        }
+        // if the user hasn't set the notification permission, ask for permission
+        else if (Notification.permission === "default"){
+            Notification.requestPermission().then(() => {
+                if (Notification.permission === "granted"){
+                    var options = {
+                        body: body,
+                    }
+                    var notification = new Notification(title, options);
+                    setTimeout(notification.close.bind(notification), 5000); 
+                }
+            })
+
+        }
+        // Do not request for permission if
+        else{
+            // either already "granted" or "denied"
+        }
+    }
 
 }/* istanbul ignore next */
 
