@@ -74,7 +74,7 @@ class AskTestCase(TestCase):
         response = self.client.delete('/api/ask/question')
         self.assertEqual(response.status_code, 405)
 
-        response = self.client.delete('/api/ask/question/search/213/asdf asdf')
+        response = self.client.delete('/api/ask/question/search')
         self.assertEqual(response.status_code, 405)
 
         response = self.client.delete('/api/ask/question/related')
@@ -127,52 +127,94 @@ class AskTestCase(TestCase):
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
 
-        response = self.client.get('/api/ask/question/search/213/content%20to delete asdf qwer zxcv')
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '-1',
+                'loc_code3': '-1',
+                'search_string': 'content%20to delete asdf qwer zxcv'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/question/search/213/content%20to delete asdf qwer zxcv')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
-        response = self.client.get('/api/ask/question/search/21/content to delete asdf qwer zxcv')
+        
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '21',
+                'loc_code2': '-1',
+                'loc_code3': '-1',
+                'search_string': 'content%20to delete asdf qwer zxcv'
+            }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
-        response = self.client.get('/api/ask/question/search/213/to delete asdf qwer zxcv')
+
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '-1',
+                'loc_code3': '-1',
+                'search_string': 'to delete asdf qwer zxcv'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/question/search/213/to delete asdf qwer zxcv')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
 
-        response = self.client.get('/api/ask/question/search/213/1/pizza is delicious')
+        
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '1',
+                'loc_code3': '-1',
+                'search_string': 'pizza is delicious'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/question/search/213/1/pizza is delicious')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
-        response = self.client.get('/api/ask/question/search/213/199/pizza is delicious')
+        
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '199',
+                'loc_code3': '-1',
+                'search_string': 'pizza is delicious'
+            }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
-        response = self.client.get('/api/ask/question/search/213/1/is delicious')
+        
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '1',
+                'loc_code3': '-1',
+                'search_string': 'is delicious'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         self.assertEqual(len(data), 0)
 
-        response = self.client.get('/api/ask/question/search/213/1/1/what coffee do you like most?')
+
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '1',
+                'loc_code3': '1',
+                'search_string': 'what coffee do you like most?'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/question/search/213/1/1/what coffee do you like most?')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
-        response = self.client.get('/api/ask/question/search/213/1/199/what coffee do you like most?')
+
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '1',
+                'loc_code3': '199',
+                'search_string': 'what coffee do you like most?'
+            }), content_type='application/json')
         self.assertEqual(response.status_code, 400)
-        response = self.client.get('/api/ask/question/search/213/1/1/what do you like most?')
+
+        response = self.client.post('/api/ask/question/search', json.dumps({
+                'loc_code1': '213',
+                'loc_code2': '1',
+                'loc_code3': '1',
+                'search_string': 'what do you like most?'
+            }), content_type='application/json')
         data = json.loads(response.content.decode())
         self.assertEqual(len(data), 0)
-        
-        # TODO will do when refactoring
-        '''
-        response = self.client.post('/api/ask/question/search/213/1/1/what coffee do you like most?', json.dumps({
-                'content': content,
-                'locations': 'South%20Korea/Busan/Buk;',
-                'services': 'coffee;pizza;'
-            }),
-            content_type='application/json')
-        data = json.loads(response.content.decode())
-        self.assertEqual(data[0]['content'], content)
-        '''
+
 
         response = self.client.get('/api/ask/question/related')
         data = json.loads(response.content.decode())

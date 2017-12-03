@@ -10,7 +10,10 @@ import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
 import { QuestionService } from '../../question/question.service';
 import { AnswerService } from '../../answer/answer.service';
+<<<<<<< HEAD
 import 'rxjs/add/operator/switchMap';
+=======
+>>>>>>> e4f15a30b74fcc995880965c866693a2426ee795
 
 @Component({
     selector: 'searchtab',
@@ -46,15 +49,6 @@ export class SearchTabComponent implements OnInit{
                 this.temp_questionList = questionList;
                 this.getAnswerList();
             })
-        /*
-        this.route.paramMap.switchMap((params: ParamMap) =>
-            this.questionService.getSearchedQuestion(
-                  params.get('str'), [params.get('id1'), params.get('id2'), params.get('id3')])
-                  .then(questionList => {this.temp_questionList = questionList; this.getAnswerList();
-                        console.log(this.temp_questionList);
-                  })
-        )
-        */
         console.log(this.temp_questionList);
         this.userService.getUser().then(User => {this.user = User});
     }

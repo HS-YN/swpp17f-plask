@@ -21,7 +21,7 @@ class UserTestCase(TestCase):
                     'password': '123123',
                     'locations': 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;',
                     'services': 'coffee;pizza;',
-                    'blockedServices': 'asdf;qwer',
+                    'blockedServices': 'asdf;qwer;wiers;weovlq;dsfxpxz;qwnkdq;dsfmoiz;sdkmwwo;sdkdk;qwerr;zxxx;bbrv;dwgr;sdfc;sefre;ssht',
                     'notiFrequency': '10'
                     }),
                 content_type = 'application/json',
@@ -41,7 +41,7 @@ class UserTestCase(TestCase):
         self.assertEqual (data['locations'], 'South Korea/Busan/Buk;South Korea/Busan/Busanjin;')
         self.assertEqual (data['username'], 'PlaskTest1')
         self.assertEqual (data['services'], 'coffee;pizza;')
-        self.assertEqual (data['blockedServices'], 'asdf;qwer;')
+        self.assertEqual (data['blockedServices'], 'asdf;qwer;wiers;weovlq;dsfxpxz;qwnkdq;dsfmoiz;sdkmwwo;sdkdk;qwerr;zxxx;bbrv;dwgr;sdfc;sefre;ssht;')
         self.assertEqual (int(data['notiFrequency']), 10)
 
         response = self.client.get('/api/user/checksignedin')
@@ -100,3 +100,13 @@ class UserTestCase(TestCase):
                 content_type = 'application/json',
                 HTTP_X_CSRFTOKEN = csrftoken)
         self.assertEqual(response.status_code, 401)
+
+    def test_get_service(self):
+        response = self.client.delete('/api/user/services')
+        self.assertEqual (response.status_code, 405)
+        response = self.client.get('/api/user/services')
+        self.assertEqual (response.status_code, 200)
+        data = json.loads(response.content.decode())
+        self.assertEqual (len(data), 10)
+        print (data)
+        

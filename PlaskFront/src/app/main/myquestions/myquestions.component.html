@@ -8,8 +8,8 @@
                 <div class=answer [hidden]="question[1]"> [{{answer.author}}] : {{answer.content}}</div>
             </div>
             <div>
-                <textarea [hidden]="question[1]" [(ngModel)]="answer" placeholder="answer"></textarea>
-                <button class=answerbutton [hidden]="question[1]" (click)="answerClick(question[0].id)"> Answer </button>
+                <textarea [hidden]="question[1]" [(ngModel)]="answer" placeholder="comment"></textarea>
+                <button class=answerbutton [hidden]="question[1]" (click)="answerClick(question[0].id)"> Comment </button>
             </div>
         </div>
     </div>
