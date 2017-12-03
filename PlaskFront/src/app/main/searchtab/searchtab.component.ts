@@ -10,7 +10,7 @@ import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
 import { QuestionService } from '../../question/question.service';
 import { AnswerService } from '../../answer/answer.service';
-import 'rxjs/add/operator/switchmap';
+import 'rxjs/add/operator/switchMap';
 
 @Component({
     selector: 'searchtab',
@@ -40,7 +40,7 @@ export class SearchTabComponent implements OnInit{
             this.searchString = params['str'];
             this.locCode = [params['id1'], params['id2'], params['id3']];
         });
-        
+
         this.questionService.getSearchedQuestion(this.searchString, this.locCode).then(
             questionList => {
                 this.temp_questionList = questionList;
