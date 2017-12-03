@@ -107,6 +107,6 @@ class UserTestCase(TestCase):
         response = self.client.get('/api/user/services')
         self.assertEqual (response.status_code, 200)
         data = json.loads(response.content.decode())
-        self.assertEqual (len(data), 10)
+        self.assertEqual (len(data), 18)
         print (data)
         

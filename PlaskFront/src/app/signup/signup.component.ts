@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -7,6 +7,8 @@ import { Location } from '../location/location';
 
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
+
+import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
 @Component({
     selector: 'signup',
@@ -19,6 +21,7 @@ export class SignUpComponent implements OnInit {
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private elementRef: ElementRef,
     ){ }
 
     user = new User();
@@ -28,6 +31,7 @@ export class SignUpComponent implements OnInit {
     countryList: Location[];
     provinceList: Location[];
     cityList: Location[];
+    cityAutoComplete: AutoCompleteComponent;
 
     selectedCountry: string = "";
     selectedProvince: string = "";
@@ -37,8 +41,10 @@ export class SignUpComponent implements OnInit {
     serviceList: string[] = []; //List of service tags from Backend
     userServiceList: string[] = []; //List for visualizing current user service tags
     newService: string = ''; //User-input string
+    serviceAutoComplete: AutoCompleteComponent;
     userBlockedServiceList: string[] = []; //List for visualizing current user blocked service tags
     newBlockService: string = '';
+    blockAutoComplete: AutoCompleteComponent;
     notiFrequencyList: number[] = []; //List of frequency selection
     selectedFreq:number;
 
@@ -55,10 +61,18 @@ export class SignUpComponent implements OnInit {
 
     //Create a new User Account
     SignUp(): void {
+        var email_check = new RegExp('^[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff@]+@[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff\\.@]+\\.[a-z]{2,3}$')
+        if(this.user.email.length >= 100 || !email_check.test(this.user.email)) {
+            alert("Invalid email address!");
+            return;
+        }
         if(this.ValidatePassword()){
             this.userService.signUp(this.user)
                 .then(Status => {
-                    if(Status == 201) { this.goBack() }
+                    if(Status == 201) {
+                        alert("Successfully signed up! Please sign in.");
+                        this.goBack()
+                    }
                 }).catch((err) => {alert("You cannot signup with this information.");});
         }
         else{
@@ -93,6 +107,7 @@ export class SignUpComponent implements OnInit {
             alert("Please select country!");
             return;
         }
+        this.selectedCity = this.cityAutoComplete.query;
         var newLocation: string = this.selectedCountry;
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -106,6 +121,7 @@ export class SignUpComponent implements OnInit {
         this.selectedCountry = "";
         this.selectedProvince = "";
         this.selectedCity = "";
+        delete this.cityAutoComplete;
         this.userLocationRefresh();
         this.provinceList = null;
         this.cityList = null;
@@ -140,6 +156,7 @@ export class SignUpComponent implements OnInit {
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
+        delete this.cityAutoComplete;
     }
 
     provinceRefresh(country_code: number): void {
@@ -155,7 +172,7 @@ export class SignUpComponent implements OnInit {
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
+        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
             this.getLocationByName (this.provinceList, province).loc_code);
         this.selectedCity = "";
     }
@@ -167,13 +184,18 @@ export class SignUpComponent implements OnInit {
             .then(city => {
                 if(city.length <= 0)
                     this.cityList = null;
-                else
+                else {
                     this.cityList = city;
+                    var cList = [];
+                    for (var i = 0; i < this.cityList.length; i++)
+                        cList.push(this.cityList[i].loc_name);
+                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cList);
+                }
             })
     }
 
-    citySelect(city: string): void {
-        this.selectedCity = city;
+    citySelect(): void {
+        this.selectedCity = this.cityAutoComplete.query;
     }
 
 
@@ -190,8 +212,18 @@ export class SignUpComponent implements OnInit {
     }
 
     serviceRefresh(): void {
-        //TODO: replace serviceListData with serviceService
-        this.serviceList = serviceListData;
+        this.userService.getService()
+            .then(service => {
+                if(service.length <= 0)
+                    this.serviceList = null;
+                else {
+                    this.serviceList = service;
+                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                    this.blockAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                    if(service.length >= 10)
+                        this.serviceList = service.slice(0,10);
+                }
+            })
     }
 
     //Select a Tag from the exisitng list of service tags
@@ -216,6 +248,7 @@ export class SignUpComponent implements OnInit {
     }
 
     userServiceAdd(): void {
+        this.newService = this.serviceAutoComplete.query;
         if(this.newService == ""){
             alert("Tag is Empty!");
         }
@@ -225,9 +258,13 @@ export class SignUpComponent implements OnInit {
         else if (this.serviceList.indexOf(this.newService) != -1){
             alert("Tag already Exists!");
         }
+        else if (this.newService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.userServiceSelect(this.newService);
             this.newService = "";
+            this.serviceAutoComplete.query = "";
         }
     }
 
@@ -240,6 +277,7 @@ export class SignUpComponent implements OnInit {
     }
 
     userBlockedServiceAdd(): void {
+        this.newBlockService = this.blockAutoComplete.query;
         if(this.newBlockService == ""){
             alert("Tag is Empty!");
         }
@@ -252,10 +290,14 @@ export class SignUpComponent implements OnInit {
         else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
             alert("Tag already Exists!");
         }
+        else if (this.newBlockService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
             this.userBlockedServiceRefresh();
             this.newBlockService = "";
+            this.blockAutoComplete.query = "";
         }
     }
     userBlockedServiceRefresh(): void {

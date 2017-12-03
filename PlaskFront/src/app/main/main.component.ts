@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component, OnInit, HostListener} from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -10,6 +10,7 @@ import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
 
+import { AutoCompleteComponent } from '../interface/autocomplete.component';
 declare var Notification: any;
 
 @Component({
@@ -18,13 +19,13 @@ declare var Notification: any;
     styleUrls: [ './main.component.css'],
 })
 export class MainComponent implements OnInit{
-
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
+        private elementRef: ElementRef,
     ){ }
 
     question:Question = {id:0, content:"", author:"", locations:"", services:""};
@@ -33,12 +34,14 @@ export class MainComponent implements OnInit{
     provinceList: Location[];
     cityList: Location[];
     cityNameList: string[];
+    cityAutoComplete: AutoCompleteComponent;
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
 
     serviceList: string[]; //List of service tags from Backend
+    serviceAutoComplete: AutoCompleteComponent;
     questionServiceList: string[]; //List for visualizing current question service tags
     serviceTag: string = ""; //User-input string
 
@@ -49,6 +52,7 @@ export class MainComponent implements OnInit{
     searchProvince: string = "";
     searchCity: string = "";
     searchCityNameList: string[];
+    searchCityAutoComplete: AutoCompleteComponent;
     searchProvinceList: Location[];
     searchCityList: Location[]; //use this to find location code
 
@@ -58,7 +62,7 @@ export class MainComponent implements OnInit{
             this.countryRefresh();
             this.serviceRefresh();
             // Notification Method
-            this.notify("Plask!", "Thank you! You can now receive notifications :)");            
+            this.notify("Plask!", "Thank you! You can now receive notifications :)");
         });
 
     }
@@ -90,6 +94,11 @@ export class MainComponent implements OnInit{
                 alert("Please select country!");
                 return;
             }
+            this.selectedCity = this.cityAutoComplete.query;
+            if(this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1) {
+                alert("Invalid city name.");
+                return;
+            }
             var newLocation: string = this.selectedCountry;
             if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
             if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -114,6 +123,7 @@ export class MainComponent implements OnInit{
             this.question.locations="";
             this.questionServiceRefresh();
             this.countryRefresh();
+            delete this.cityAutoComplete;
 
             this.selectedCountry="";
             this.selectedProvince="";
@@ -144,9 +154,14 @@ export class MainComponent implements OnInit{
 
     countrySelect(country: string): void {
         this.selectedCountry = country;
-        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
-        this.cityList = null;
-        this.selectedProvince = "";
+        if(country != 'Nation') {
+            this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        } else {
+            this.provinceList = null;
+        }
+        this.cityNameList = [];
+        delete this.cityAutoComplete;
+        this.selectedProvince= "";
         this.selectedCity = "";
     }
 
@@ -163,30 +178,42 @@ export class MainComponent implements OnInit{
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
-            this.getLocationByName (this.provinceList, province).loc_code);
+        if(province != 'Province') {
+            this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
+                this.getLocationByName (this.provinceList, province).loc_code);
+        }
         this.selectedCity = "";
+        delete this.cityAutoComplete;
+        this.cityNameList = [];
     }
 
     cityRefresh(country_code: number, province_code: number): void {
-        //this.cityList = cityListData;
         var address: string = country_code.toString() + '/' + province_code.toString();
         this.locationService.getLocationList(address)
             .then(city => {
                 if(city.length <= 0)
                     this.cityList = null;
-                else
+                else {
                     this.cityList = city;
-                this.cityNameList = [];
-                for (var i = 0; i < this.cityList.length; i++)
-                    this.cityNameList.push(this.cityList[i].loc_name);
+                    this.cityNameList = [];
+                    for (var i = 0; i < this.cityList.length; i++)
+                        this.cityNameList.push(this.cityList[i].loc_name);
+                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, this.cityNameList);
+                }
             })
     }
 
     //Update service tag visualization
     serviceRefresh(): void {
-        //TODO: replace serviceListData with serviceService
-        this.serviceList = serviceListData;
+        this.userService.getService()
+            .then(service => {
+                if(service.length <= 0)
+                    this.serviceList = null;
+                else {
+                    this.serviceList = service;
+                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                }
+            })
     }
 
 
@@ -217,22 +244,32 @@ export class MainComponent implements OnInit{
     }
 
     questionServiceAdd(): void {
+        this.serviceTag = this.serviceAutoComplete.query;
         if(this.serviceTag == ""){
             alert("Tag is Empty!");
         }
         else if (this.serviceTag.indexOf(";") != -1){
             alert("You cannot use SemiColon!");
         }
+        else if (this.serviceTag.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.questionServiceSelect(this.serviceTag);
             this.serviceTag = "";
+            this.serviceAutoComplete.query = "";
         }
     }
     //Methods for searching, with tagging location
     countrySearch(country: string): void {
         this.searchCountry = country;
-        this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        if(country != 'Nation') {
+            this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        } else {
+            this.searchProvinceList = null;
+        }
         this.searchCityNameList = [];
+        delete this.searchCityAutoComplete;
         this.searchProvince= "";
         this.searchCity = "";
     }
@@ -249,23 +286,28 @@ export class MainComponent implements OnInit{
 
     provinceSearch(province: string): void {
         this.searchProvince = province;
-        this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code, 
-            this.getLocationByName (this.searchProvinceList, province).loc_code);
+        if(province != 'Province') {
+            this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code,
+                this.getLocationByName (this.searchProvinceList, province).loc_code);
+        }
         this.searchCity = "";
+        delete this.searchCityAutoComplete;
+        this.searchCityNameList = [];
     }
 
     searchCityRefresh(country_code: number, province_code: number): void {
-        //this.cityList = cityListData;
         var address: string = country_code.toString() + '/' + province_code.toString();
         this.locationService.getLocationList(address)
             .then(city => {
                 if(city.length <= 0)
                     this.searchCityList = null;
-                else
+                else {
                     this.searchCityList = city;
-                this.searchCityNameList = [];
-                for (var i = 0; i < this.searchCityList.length; i++)
-                    this.searchCityNameList.push(this.searchCityList[i].loc_name);
+                    this.searchCityNameList = [];
+                    for (var i = 0; i < this.searchCityList.length; i++)
+                        this.searchCityNameList.push(this.searchCityList[i].loc_name);
+                    this.searchCityAutoComplete = new AutoCompleteComponent(this.elementRef, this.searchCityNameList);
+                }
             })
     }
     //method called by clicking search button
@@ -279,8 +321,14 @@ export class MainComponent implements OnInit{
             alert("Please fill content before searching!");
             return;
         }
+        this.searchCity = this.searchCityAutoComplete.query;
+        if(this.searchCityAutoComplete.rawList.indexOf(this.searchCity) == -1) {
+            console.log(this.searchCity);
+            alert("Invalid city name.");
+            return;
+        }
         for(let ctry of this.countryList){
-           if(ctry.loc_name === this.searchNation) 
+           if(ctry.loc_name === this.searchNation)
                index[0] = ctry.loc_code;
         }
         if(this.searchProvince != "")
@@ -297,7 +345,7 @@ export class MainComponent implements OnInit{
          this.router.navigateByUrl('/settings',{skipLocationChange: true}).then(
              () => this.router.navigate(['/main', {outlets:{'tab':[
              'search',index[0],index[1],index[2],this.searchString]}}
-         ])); 
+         ]));
     }
 
     // Notification
@@ -314,7 +362,7 @@ export class MainComponent implements OnInit{
                         body: body,
                     }
                     var notification = new Notification(title, options);
-                    setTimeout(notification.close.bind(notification), 5000); 
+                    setTimeout(notification.close.bind(notification), 5000);
                 }
             })
 

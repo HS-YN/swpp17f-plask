@@ -257,13 +257,11 @@ def userinfo(request):
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
-@login_required
+
 def service(request):
     if request.method == 'GET':
         services = list(Service.objects.all())
-        COUNT = 10
-        random.shuffle (services)
-        services = services[:COUNT]
+        random.shuffle(services)
         return JsonResponse(
             [service.name for service in services], safe=False)
     else:

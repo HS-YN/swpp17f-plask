@@ -47,7 +47,19 @@
                 <option> Province </option>
                 <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
             </select>
-            <input auto-complete [(ngModel)]="searchCity" [source]="searchCityNameList" name="sCity" placeholder="City"/>
+            <div class="container" *ngIf="searchCityAutoComplete">
+                <div class="input-field col s6">
+                    <input id="searchCityAutoComplete.rawList" type="text" class="validate filter-input" name="City" placeholder="City" [(ngModel)]=searchCityAutoComplete.query (keyup)=searchCityAutoComplete.filter()>
+                    <label for="searchCityAutoComplete.rawList"></label>
+                </div>
+                <div class="suggestions" *ngIf="searchCityAutoComplete.filteredList.length > 0">
+                    <ul *ngFor="let item of searchCityAutoComplete.filteredList">
+                        <li>
+                            <a (click)="searchCityAutoComplete.select(item)">{{item}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </form>
 </nav>
@@ -80,7 +92,19 @@
                     <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
                 </select>
 
-                <input auto-complete [(ngModel)]="selectedCity" [source]="cityNameList" placeholder="City"/>
+                <div class="container" *ngIf="cityAutoComplete">
+                    <div class="input-field col s6">
+                        <input id="cityAutoComplete.rawList" type="text" class="validate filter-input" name="City" placeholder="City" [(ngModel)]=cityAutoComplete.query (keyup)=cityAutoComplete.filter()>
+                        <label for="cityAutoComplete.rawList"></label>
+                    </div>
+                    <div class="suggestions" *ngIf="cityAutoComplete.filteredList.length > 0">
+                        <ul *ngFor="let item of cityAutoComplete.filteredList">
+                            <li>
+                                <a (click)="cityAutoComplete.select(item)">{{item}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div><br>
 
                 <label>Services:</label>
                 <span *ngFor="let questionService of questionServiceList">
@@ -89,9 +113,20 @@
                         (click)="questionServiceDelete(questionService); $event.stopPropagation()">
                         x</button> &nbsp;
                 </span>
-                <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+                <div class="container" *ngIf="serviceAutoComplete">
+                    <div class="input-field col s6">
+                        <input id="serviceAutoComplete.rawList" type="text" class="validate filter-input" name="Service" placeholder="Service" [(ngModel)]=serviceAutoComplete.query (keyup)=serviceAutoComplete.filter()>
+                        <label for="serviceAutoComplete.rawList"></label>
+                    </div>
+                    <div class="suggestions" *ngIf="serviceAutoComplete.filteredList.length > 0">
+                        <ul *ngFor="let item of serviceAutoComplete.filteredList">
+                            <li>
+                                <a (click)="serviceAutoComplete.select(item)">{{item}}</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
-
                 <div class="form-group">
                     <button class="btn btn-block" (click)="sendQuestion()">
                         <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
