@@ -118,9 +118,8 @@ def isCommonWord(word):
             return True
     return False
 def strListContains(strlist, word):
-    word_lower = word.lower()
     for string in strlist:
-        if string == word or string == word_lower:
+        if string.lower() == word.lower():
             return True
     return False
 def getQuestionMatchPoint(question, search_words):
@@ -135,9 +134,12 @@ def getQuestionMatchPoint(question, search_words):
     for word in search_words:
         if not isCommonWord(word):
             total_count = total_count + 1
-            if word in content or strListContains(services, word):
+            if word.lower() in content.lower() or strListContains(services, word):
                 match_count = match_count + 1
-    return match_count * 100 / total_count
+    if total_count == 0:
+        return 0
+    else:
+        return match_count * 100 / total_count
 
 @login_required
 def question(request):
