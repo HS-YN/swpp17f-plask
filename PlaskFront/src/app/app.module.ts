@@ -27,8 +27,8 @@ import { AppRoutingModule } from './routing/app-routing.module';
 
 import { APP_BASE_HREF } from '@angular/common';
 
+// AutoComplete Module
 import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
-
 
 @NgModule({
     declarations: [
@@ -46,7 +46,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         FormsModule,
         HttpModule,
         AppRoutingModule,
-        Ng2AutoCompleteModule,
+        Ng2AutoCompleteModule, // Added for AutoComplete
     ],
     providers: [
         UserService,

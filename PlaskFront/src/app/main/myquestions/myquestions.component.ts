@@ -40,7 +40,7 @@ export class MyQuestionsComponent implements OnInit{
         this.questionService.getQuestion().then(questions =>{
             this.temp_questionList = questions;
             this.getAnswerList();
-        })
+        });
     }
     getAnswerList():void{
         console.log(this.temp_questionList);

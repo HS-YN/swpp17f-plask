@@ -1,5 +1,6 @@
 //Import Basic Modules
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -24,12 +25,17 @@ export class MainTabComponent implements OnInit{
         private locationService: LocationService,
         private questionService: QuestionService,
         private answerService: AnswerService,
-    ){ }
+    )
+    { }
 
     user: User = new User();
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
     temp_questionList:Question[] = [];
+
+    // Observable
+    getSubscription: any;
+    timerSubscription: any;
 
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
@@ -40,7 +46,7 @@ export class MainTabComponent implements OnInit{
         this.questionService.getRecentQuestion().then(questions =>{
             this.temp_questionList = questions;
             this.getAnswerList();
-        })
+        });
     }
 
     getAnswerList():void{
@@ -93,4 +99,19 @@ export class MainTabComponent implements OnInit{
             });
         }
     }
+
+
+    // Methods for Pulling Data Periodically
+/*    var oldQuestionList = 
+    private refreshData(): void {
+
+        this.getSubscription = this.getQuestionList;
+            this.subscribeToData();
+        });
+    }
+
+    private subscribeToData(): void {
+        this.timerSubscription = Observable.timer(5000).first().subscribe(() => this.refreshData());
+    }*/
+
 }
