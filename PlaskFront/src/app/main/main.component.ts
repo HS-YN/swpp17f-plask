@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -324,8 +324,22 @@ export class MainComponent implements OnInit{
             // either already "granted" or "denied"
         }
     }
+    //methods for Plask Question Dropdown button
+    //Open Dropdown when clicked
+    myFunction():void {
+            document.getElementById("myDropdown").classList.toggle("show");
+    }
+    //Close when click somewhere else
+    @HostListener('document:click', ['$event'])
+    onClick(event) {
+        var target = event.target;
+        if (!target.closest(".dropdown")) {
+            document.getElementById("myDropdown").classList.toggle("show", false);
+        }
 
-}/* istanbul ignore next */
+    }
+}
+/* istanbul ignore next */
 
 
 // Mock Data for checking service tag functionality

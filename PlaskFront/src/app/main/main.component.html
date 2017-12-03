@@ -6,17 +6,17 @@
                 Plask!
             </a>
         </div>
-            <ul class="nav navbar-nav">
-                <li class="activate">
-                    <a [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</a>
-                </li>
-                <li>
-                    <a [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</a>
-                </li>
-            </ul>
+        <ul class="nav navbar-nav">
+            <li class="activate">
+                <a [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</a>
+            </li>
+            <li>
+                <a [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</a>
+            </li>
+            <li>
+                <a [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</a>
+            </li>
+        </ul>
         <ul class="nav navbar-nav navbar-right">
             <button class="btn pull-right" (click)="goToSettings()">
                 <span class="glyphicon glyphicon-cog"></span>
@@ -51,44 +51,52 @@
         </div>
     </form>
 </nav>
+<button (click)="function()" class="btn pull-right"> Refresh
+    <span class="glyphicon glyphicon-cog"></span>
+</button>
 
 <router-outlet name="tab"></router-outlet>
 
-<div class="panel panel-info">
-  <div class="panel-heading">
-    Plask your Question!
-  </div>
-  <div class="panel-body">
+<div class="dropdown">
+    <button (click)="myFunction()" class="dropbtn"> Plask? <span class="caret"></span></button>
+    <div id="myDropdown" class="dropdown-content" role="menu">
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                Plask your Question!
+            </div>
+            <div class="panel-body">
 
-    <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
+                <textarea [(ngModel)]="question.content" class="form-control" rows="4" placeholder="What do you want to ask?" required></textarea>
 
 
-      <label>Location:</label>
-      <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
-        <option> Nation </option>
-        <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
-      </select>
+                <label>Location:</label>
+                <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
+                    <option> Nation </option>
+                    <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
+                </select>
 
-      <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
-        <option> Province </option>
-        <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
-      </select>
+                <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
+                    <option> Province </option>
+                    <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
+                </select>
 
-      <input auto-complete [(ngModel)]="selectedCity" [source]="cityNameList" placeholder="City"/>
+                <input auto-complete [(ngModel)]="selectedCity" [source]="cityNameList" placeholder="City"/>
 
-      <label>Services:</label>
-      <span *ngFor="let questionService of questionServiceList">
-          <span class="label label-success">{{questionService}}</span>
-          <button class="badge"
-            (click)="questionServiceDelete(questionService); $event.stopPropagation()">
-            x</button> &nbsp;
-      </span>
-      <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
-      <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+                <label>Services:</label>
+                <span *ngFor="let questionService of questionServiceList">
+                    <span class="label label-success">{{questionService}}</span>
+                    <button class="badge"
+                        (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+                        x</button> &nbsp;
+                </span>
+                <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+                <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
 
-    <div class="form-group">
-      <button class="btn btn-block" (click)="sendQuestion()">
-        <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+                <div class="form-group">
+                    <button class="btn btn-block" (click)="sendQuestion()">
+                        <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
 </div>
