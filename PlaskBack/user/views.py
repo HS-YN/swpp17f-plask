@@ -8,7 +8,7 @@ from django.contrib.auth.models import User
 
 from .models import UserInfo, Service, Location
 from location.models import LocationL1, LocationL2, LocationL3
-import json
+import json, random
 
 # CHECK LOGIN
 def login_required(function=None, redirect_field_name=None):
@@ -54,6 +54,14 @@ def setBlocked(userinfo, blocked):
         new_service, _ = Service.objects.get_or_create(name=service)
         userinfo.blocked.add(new_service)
         userinfo.save()
+
+'''
+def addToLocation(has_loc, location, ModelClassType):
+    if ModelClassType == UserInfo:
+        location.persons.add(has_loc)
+    else
+        location.question
+'''
 def setLocation(userinfo, location_list):
     userinfo.locations.clear()
     for location in location_list:
@@ -61,7 +69,7 @@ def setLocation(userinfo, location_list):
         try:
             l1 = LocationL1.objects.get(name=location[0].replace("%20", " "))
         except LocationL1.DoesNotExist:
-            raise UserInfo.DoesNotExist
+            raise ModelClassType.DoesNotExist
         l1.persons.add(userinfo)
         l1.save()
         loc_code_l1 = l1.loc_code
@@ -71,7 +79,7 @@ def setLocation(userinfo, location_list):
             try:
                 l2 = l1.child.get(name=location[1].replace("%20", " "))
             except LocationL2.DoesNotExist:
-                raise UserInfo.DoesNotExist
+                raise ModelClassType.DoesNotExist
             l2.persons.add(userinfo)
             l2.save()
             loc_code_l2 = l2.loc_code
@@ -83,7 +91,7 @@ def setLocation(userinfo, location_list):
             try:
                 l3 = l2.child.get(name=location[2].replace("%20", " "))
             except LocationL3.DoesNotExist:
-                raise UserInfo.DoesNotExist
+                raise ModelClassType.DoesNotExist
             l3.persons.add(userinfo)
             l3.save()
             loc_code_l3 = l3.loc_code
@@ -214,7 +222,6 @@ def userinfo(request):
     if request.method == 'GET':
         # get userinfo - assume logged in
         # NOTE: request.user returns instance of Anonymous User if a user is not logged in (instead of None)
-#        if request.user.is_authenticated():
         userinfo = request.user.userinfo
         result = {}
         result['email'] = request.user.username
@@ -224,14 +231,8 @@ def userinfo(request):
         result['blockedServices'] = getBlockedStr(userinfo)
         result['notiFrequency'] = userinfo.notify_freq
         return JsonResponse (result)
-#        else:
-#            return HttpResponse(status = 401)
-
     elif request.method == 'PUT':
         # put userinfo - assume logged in
-#        if not request.user.is_authenticated():
-#            return HttpResponse(status = 401)
-        #TODO: Deal with Password Issue
         req_data = json.loads(request.body.decode())
         if 'password' in req_data:
             password = req_data['password']
@@ -258,3 +259,14 @@ def userinfo(request):
     else:
         return HttpResponseNotAllowed(['GET', 'PUT'])
 
+@login_required
+def service(request):
+    if request.method == 'GET':
+        services = list(Service.objects.all())
+        COUNT = 10
+        random.shuffle (services)
+        services = services[:COUNT]
+        return JsonResponse(
+            [service.name for service in services], safe=False)
+    else:
+        return HttpResponseNotAllowed(['GET'])
