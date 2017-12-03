@@ -93,6 +93,11 @@ export class MainComponent implements OnInit{
                 alert("Please select country!");
                 return;
             }
+            this.selectedCity = this.cityAutoComplete.query;
+            if(this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1) {
+                alert("Invalid city name.");
+                return;
+            }
             var newLocation: string = this.selectedCountry;
             if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
             if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -117,6 +122,7 @@ export class MainComponent implements OnInit{
             this.question.locations="";
             this.questionServiceRefresh();
             this.countryRefresh();
+            delete this.cityAutoComplete;
 
             this.selectedCountry="";
             this.selectedProvince="";
@@ -244,6 +250,9 @@ export class MainComponent implements OnInit{
         else if (this.serviceTag.indexOf(";") != -1){
             alert("You cannot use SemiColon!");
         }
+        else if (this.serviceTag.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.questionServiceSelect(this.serviceTag);
             this.serviceTag = "";
@@ -309,6 +318,11 @@ export class MainComponent implements OnInit{
         }
         if(this.searchString == ""){
             alert("Please fill content before searching!");
+            return;
+        }
+        this.searchCity = this.searchCityAutoComplete.query;
+        if(this.searchCityAutoComplete.rawList.indexOf(this.selectedCity) == -1) {
+            alert("Invalid city name.");
             return;
         }
         for(let ctry of this.countryList){

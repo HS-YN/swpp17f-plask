@@ -250,6 +250,9 @@ export class SignUpComponent implements OnInit {
         else if (this.serviceList.indexOf(this.newService) != -1){
             alert("Tag already Exists!");
         }
+        else if (this.newService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
         else{
             this.userServiceSelect(this.newService);
             this.newService = "";
@@ -278,6 +281,9 @@ export class SignUpComponent implements OnInit {
         }
         else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
             alert("Tag already Exists!");
+        }
+        else if (this.newBlockService.length >= 100) {
+            alert("Tag length should be less than 100 characters.")
         }
         else{
             this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
