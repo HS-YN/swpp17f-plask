@@ -1,6 +1,6 @@
 //Import Basic Modules
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
+//import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -34,13 +34,13 @@ export class MainTabComponent implements OnInit{
     temp_questionList:Question[] = [];
 
     // Observable
-    timerSubscription: any;
-    inactive: boolean = true;
+//    timerSubscription: any;
+//    inactive: boolean = true;
 
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
-        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
+//        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
     }
 
     getQuestionList():void {
@@ -74,14 +74,14 @@ export class MainTabComponent implements OnInit{
             }
             this.answer = ""; //clear answer tab
             question[1] = false;
-            this.inactive = false;
+//            this.inactive = false;
         }
         // collapse if opened
         else{
             question[1] = true;
-            this.inactive = true;
-            this.timerSubscription.unsubscribe();
-            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
+//            this.inactive = true;
+//            this.timerSubscription.unsubscribe();
+//            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
     }
 
