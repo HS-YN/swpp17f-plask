@@ -50,6 +50,10 @@ class AskTestCase(TestCase):
 
         response = self.client.delete('/api/ask/question')
         self.assertEqual(response.status_code, 405)
+
+        response = self.client.delete('/api/ask/question/search')
+        self.assertEqual(response.status_code, 404)
+
         '''
         response = self.client.delete('/api/ask/question/search')
         self.assertEqual(response.status_code, 405)
@@ -59,10 +63,11 @@ class AskTestCase(TestCase):
         '''
 
     def test_question_answer(self):
+        content = 'this is the content for string'
         response = self.client.post(
             '/api/ask/question',
             json.dumps({
-                'content': 'this',
+                'content': content,
                 'locations': 'South%20Korea/Busan/Buk;',
                 'services': 'coffee;pizza;'
             }),
@@ -72,7 +77,7 @@ class AskTestCase(TestCase):
         response = self.client.get('/api/ask/question')
         data = json.loads(response.content.decode())
         self.assertEqual(data[0]['id'], 1)
-        self.assertEqual(data[0]['content'], 'this')
+        self.assertEqual(data[0]['content'], content)
 
         response = self.client.get('/api/ask/question/recent')
         data = json.loads(response.content.decode())
@@ -92,7 +97,41 @@ class AskTestCase(TestCase):
 
         response = self.client.get('/api/ask/question/answer')
         data = json.loads(response.content.decode())
-        self.assertEqual(data[0]['content'], 'this')
+        self.assertEqual(data[0]['content'], content)
+
+        response = self.client.get('/api/ask/question/search/213/content%20to delete asdf qwer zxcv')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
+        response = self.client.get('/api/ask/question/search/21/content to delete asdf qwer zxcv')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/to delete asdf qwer zxcv')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get('/api/ask/question/search/213/1/pizza is delicious')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
+        response = self.client.get('/api/ask/question/search/213/199/pizza is delicious')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/1/is delicious')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.get('/api/ask/question/search/213/1/1/what coffee do you like most?')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
+        response = self.client.get('/api/ask/question/search/213/1/199/what coffee do you like most?')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get('/api/ask/question/search/213/1/1/what do you like most?')
+        self.assertEqual(response.status_code, 404)
+
+        response = self.client.post('/api/ask/question/search/213/1/1/what coffee do you like most?', json.dumps({
+                'content': content,
+                'locations': 'South%20Korea/Busan/Buk;',
+                'services': 'coffee;pizza;'
+            }),
+            content_type='application/json')
+        data = json.loads(response.content.decode())
+        self.assertEqual(data[0]['content'], content)
+
 '''
         response = self.client.get('/api/ask/question/related')
         data = json.loads(response.content.decode())
