@@ -15,7 +15,7 @@ import { AnswerService } from '../../answer/answer.service';
 @Component({
     selector: 'myquestions',
     templateUrl: './myquestions.component.html',
-    styleUrls: [ './myquestions.component.css'],
+    styleUrls: [ '../maintab/maintab.component.css'],
 })
 export class MyQuestionsComponent implements OnInit{
 
