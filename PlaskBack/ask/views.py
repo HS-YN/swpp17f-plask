@@ -3,7 +3,7 @@ from django.http import JsonResponse, HttpResponseNotFound
 from django.forms.models import model_to_dict
 
 from user.models import Location, Service
-from user.views import tokenWith, servParse, locParse, setService, getLocationStr, getServiceStr
+from user.views import tokenWith, servParse, locParse, setService, setLocation, getLocationStr, getServiceStr
 from user.views import login_required
 from location.views import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
@@ -161,7 +161,7 @@ def question(request):
         new_question.save()
         setService(new_question, services)
         try :
-            setLocation(new_question, locations)
+            setLocation(new_question, locations, Question)
         except Question.DoesNotExist:
             return HttpResponse(status=400)
         return HttpResponse(status=204)
@@ -238,7 +238,6 @@ def question_search(request, loc_code1, loc_code2, loc_code3, search_string):
                 result.append ((match_point, question))
         result = [point_question[1] for point_question in sorted(result, key = lambda point_question: point_question[0], reverse = True)]
         result = result[:MAX_SEARCH_COUNT]
-        # TODO insert time behavior... ??
         return JsonResponse(
             [question_to_dict(question) for question in result],
             safe=False)
@@ -284,47 +283,3 @@ def answer(request, question_id):
         return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
-
-def setLocation(question, location_list):
-    question.locations.clear()
-    for location in location_list:
-        loc_length = len(location)
-        try:
-            l1 = LocationL1.objects.get(name=location[0].replace("%20", " "))
-        except LocationL1.DoesNotExist:
-            raise Question.DoesNotExist
-        l1.questions.add (question)
-        l1.save ()
-        loc_codel1 = l1.loc_code
-
-        loc_length = loc_length - 1
-        if loc_length > 0:
-            try:
-                l2 = l1.child.get(name=location[1].replace("%20", " "))
-            except LocationL2.DoesNotExist:
-                raise Question.DoesNotExist
-            l2.questions.add (question)
-            l2.save ()
-            loc_codel2 = l2.loc_code
-        else:
-            loc_codel2 = -1
-
-        loc_length = loc_length - 1
-        if loc_length > 0:
-            try:
-                l3 = l2.child.get(name=location[2].replace("%20", " "))
-            except LocationL3.DoesNotExist:
-                raise Question.DoesNotExist
-            l3.questions.add (question)
-            l3.save ()
-            loc_codel3 = l3.loc_code
-        else:
-            loc_codel3 = -1
-
-        new_location, _ = Location.objects.get_or_create (
-            loc_code1=loc_codel1,
-            loc_code2=loc_codel2,
-            loc_code3=loc_codel3
-        )
-        question.locations.add(new_location)
-        question.save()

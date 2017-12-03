@@ -55,22 +55,21 @@ def setBlocked(userinfo, blocked):
         userinfo.blocked.add(new_service)
         userinfo.save()
 
-'''
 def addToLocation(has_loc, location, ModelClassType):
     if ModelClassType == UserInfo:
         location.persons.add(has_loc)
-    else
-        location.question
-'''
-def setLocation(userinfo, location_list):
-    userinfo.locations.clear()
+    else:
+        location.questions.add(has_loc)
+def setLocation(has_loc, location_list, ModelClassType):
+    has_loc.locations.clear()
     for location in location_list:
         loc_length = len(location)
         try:
             l1 = LocationL1.objects.get(name=location[0].replace("%20", " "))
         except LocationL1.DoesNotExist:
             raise ModelClassType.DoesNotExist
-        l1.persons.add(userinfo)
+#        l1.persons.add(has_loc)
+        addToLocation(has_loc, l1, ModelClassType)
         l1.save()
         loc_code_l1 = l1.loc_code
 
@@ -80,7 +79,8 @@ def setLocation(userinfo, location_list):
                 l2 = l1.child.get(name=location[1].replace("%20", " "))
             except LocationL2.DoesNotExist:
                 raise ModelClassType.DoesNotExist
-            l2.persons.add(userinfo)
+#            l2.persons.add(has_loc)
+            addToLocation(has_loc, l2, ModelClassType)
             l2.save()
             loc_code_l2 = l2.loc_code
         else:
@@ -92,7 +92,8 @@ def setLocation(userinfo, location_list):
                 l3 = l2.child.get(name=location[2].replace("%20", " "))
             except LocationL3.DoesNotExist:
                 raise ModelClassType.DoesNotExist
-            l3.persons.add(userinfo)
+#            l3.persons.add(has_loc)
+            addToLocation(has_loc, l2, ModelClassType)
             l3.save()
             loc_code_l3 = l3.loc_code
         else:
@@ -103,8 +104,8 @@ def setLocation(userinfo, location_list):
             loc_code2=loc_code_l2,
             loc_code3=loc_code_l3
         )
-        userinfo.locations.add(new_location)
-        userinfo.save()
+        has_loc.locations.add(new_location)
+        has_loc.save()
 
 
 # PARSE LOCATION FOR JSON RESPONSE
@@ -176,7 +177,7 @@ def signup(request):
         setBlocked(new_userinfo, blocked)
         locations = locParse(locations)
         try:
-            setLocation(new_userinfo, locations)
+            setLocation(new_userinfo, locations, UserInfo)
         except UserInfo.DoesNotExist:
             return HttpResponse(status=404)
         new_userinfo.save()
@@ -249,7 +250,7 @@ def userinfo(request):
         setBlocked(userinfo, blocked)
         locations = locParse(locations)
         try:
-            setLocation(userinfo, locations)
+            setLocation(userinfo, locations, UserInfo)
         except UserInfo.DoesNotExist:
             return HttpResponse(status = 404)
         userinfo.notify_freq = notify_freq
