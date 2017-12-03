@@ -62,6 +62,7 @@ export class MainComponent implements OnInit{
             this.serviceRefresh();
             // Notification Method
             this.notify("Plask!", "Thank you! You can now receive notifications :)");
+            this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
         });
 
     }
@@ -356,6 +357,26 @@ export class MainComponent implements OnInit{
             // either already "granted" or "denied"
         }
     }
+
+    notifyWithPermission(title: string, body: string){
+        // Check if the browser supports notification
+        if (!("Notification" in window)){
+            alert("This browser does not support notification :(");
+        }
+        // send notification only when permission is "granted"
+        else if (Notification.permission === "granted"){
+
+            var options = {
+                body: body,
+            }
+            var notification = new Notification(title, options);
+            setTimeout(notification.close.bind(notification), 5000); 
+        }
+        // Do not send notification if permission is not granted
+        else{
+        }
+    }     
+
 
 }/* istanbul ignore next */
 
