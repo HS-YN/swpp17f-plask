@@ -382,7 +382,7 @@ export class MainComponent implements OnInit{
     @HostListener('document:click', ['$event'])
     onClick(event) {
         var target = event.target;
-        if (!target.closest(".dropdown")) {
+        if (!target.closest(".dropdown") && !target.closest(".container") && !target.closest(".suggestions")) {
             document.getElementById("myDropdown").classList.toggle("show", false);
         }
     }
