@@ -61,15 +61,17 @@ export class QuestionService{
             .catch(this.handleError);
     }
 
-    getSearchedQuestion(searchString: string, locCode: Number[]): Promise<Question[]>{
-        if(locCode[2]!=null) // country/province/city
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + 
-            "/" + locCode[1].toString() + "/" + locCode[2].toString() + "/" + searchString;
-        else if(locCode[1] != null) // country/province
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + 
-            "/" + locCode[1].toString() + "/" + searchString;
+    getSearchedQuestion(searchString: string, locCode: string[]): Promise<Question[]>{
+        console.log(searchString);
+        this.searchedQuestionUrl = '/api/ask/question/search';
+        if(locCode[2]!="-1") // country/province/city
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] + 
+            "/" + locCode[1] + "/" + locCode[2] + "/" + searchString;
+        else if(locCode[1] != "-1") // country/province
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] +
+            "/" + locCode[1] + "/" + searchString;
         else //country
-            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0].toString() + "/" + searchString;
+            this.searchedQuestionUrl = this.searchedQuestionUrl + "/" + locCode[0] + "/" + searchString;
 
         return this.http.get(this.searchedQuestionUrl)
             .toPromise()

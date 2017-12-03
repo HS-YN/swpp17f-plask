@@ -1,6 +1,6 @@
 //Import Basic Modules
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { XSRFStrategy, CookieXSRFStrategy } from '@angular/http';
@@ -14,6 +14,7 @@ import { SettingsComponent } from './main/settings/settings.component';
 import { MainTabComponent } from './main/maintab/maintab.component';
 import { MyQuestionsComponent } from './main/myquestions/myquestions.component';
 import { MyAnswersComponent } from './main/myanswers/myanswers.component';
+import { SearchTabComponent } from './main/searchtab/searchtab.component';
 
 //Import Service
 import { UserService } from './user/user.service';
@@ -40,6 +41,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         MainTabComponent,
         MyQuestionsComponent,
         MyAnswersComponent,
+        SearchTabComponent,
     ],
     imports: [
         BrowserModule,
@@ -57,8 +59,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         AuthGuardService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
-        MainTabComponent,
-
+        SearchTabComponent,
     ],
     bootstrap: [AppComponent]
 })
