@@ -9,11 +9,8 @@ import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
 
-<<<<<<< HEAD
 import { AutoCompleteComponent } from '../interface/autocomplete.component';
-=======
 declare var Notification: any;
->>>>>>> e4f15a30b74fcc995880965c866693a2426ee795
 
 @Component({
     selector: 'main',
@@ -64,7 +61,7 @@ export class MainComponent implements OnInit{
             this.countryRefresh();
             this.serviceRefresh();
             // Notification Method
-            this.notify("Plask!", "Thank you! You can now receive notifications :)");            
+            this.notify("Plask!", "Thank you! You can now receive notifications :)");
         });
 
     }
@@ -201,8 +198,15 @@ export class MainComponent implements OnInit{
 
     //Update service tag visualization
     serviceRefresh(): void {
-        //TODO: replace serviceListData with serviceService
-        this.serviceList = serviceListData;
+        this.userService.getService()
+            .then(service => {
+                if(service.length <= 0)
+                    this.serviceList = null;
+                else {
+                    this.serviceList = service;
+                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                }
+            })
     }
 
 
@@ -233,6 +237,7 @@ export class MainComponent implements OnInit{
     }
 
     questionServiceAdd(): void {
+        this.serviceTag = this.serviceAutoComplete.query;
         if(this.serviceTag == ""){
             alert("Tag is Empty!");
         }
@@ -242,6 +247,7 @@ export class MainComponent implements OnInit{
         else{
             this.questionServiceSelect(this.serviceTag);
             this.serviceTag = "";
+            this.serviceAutoComplete.query = "";
         }
     }
     //Methods for searching, with tagging location
@@ -340,7 +346,7 @@ export class MainComponent implements OnInit{
                         body: body,
                     }
                     var notification = new Notification(title, options);
-                    setTimeout(notification.close.bind(notification), 5000); 
+                    setTimeout(notification.close.bind(notification), 5000);
                 }
             })
 

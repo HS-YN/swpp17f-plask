@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -7,6 +7,8 @@ import { Location } from '../../location/location';
 
 import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
+
+import { AutoCompleteComponent } from '../../interface/autocomplete.component';
 
 @Component({
     selector: 'settings',
@@ -19,6 +21,7 @@ export class SettingsComponent implements OnInit{
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private elementRef: ElementRef,
     ){ }
 
     user: User = new User();
@@ -29,6 +32,7 @@ export class SettingsComponent implements OnInit{
     countryList: Location[] = [];
     provinceList: Location[] = [];
     cityList: Location[] = [];
+    cityAutoComplete: AutoCompleteComponent;
 
     selectedCountry: string = "";
     selectedProvince: string = "";
@@ -38,8 +42,10 @@ export class SettingsComponent implements OnInit{
     serviceList: string[] = []; //List of service tags from Backend
     userServiceList: string[] = []; //List for visualizing current user service tags
     newService: string = ''; //User-input string
+    serviceAutoComplete: AutoCompleteComponent;
     userBlockedServiceList: string [] =[]; //List for visualizing current user blocked service tags
     newBlockService: string = '';
+    blockAutoComplete: AutoCompleteComponent;
     notiFrequencyList: number[] = []; // List of frequency selection
     selectedFreq;
 
@@ -56,7 +62,7 @@ export class SettingsComponent implements OnInit{
            this.userLocationRefresh();
            this.userBlockedServiceRefresh();
            this.userServiceRefresh();
-           this.selectedFreqRefresh();});  
+           this.selectedFreqRefresh();});
 
     }
 
@@ -118,6 +124,7 @@ export class SettingsComponent implements OnInit{
             alert("Please select country!");
             return;
         }
+        this.selectedCity = this.cityAutoComplete.query;
         var newLocation: string = this.selectedCountry;
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -131,6 +138,7 @@ export class SettingsComponent implements OnInit{
         this.selectedCountry = "";
         this.selectedProvince = "";
         this.selectedCity = "";
+        delete this.cityAutoComplete;
         this.userLocationRefresh();
         this.provinceList = null;
         this.cityList = null;
@@ -166,6 +174,7 @@ export class SettingsComponent implements OnInit{
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
+        delete this.cityAutoComplete;
     }
 
     provinceRefresh(country_code: number): void {
@@ -181,7 +190,7 @@ export class SettingsComponent implements OnInit{
 
     provinceSelect(province: string): void {
         this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code, 
+        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
             this.getLocationByName (this.provinceList, province).loc_code);
         this.selectedCity = "";
     }
@@ -193,13 +202,18 @@ export class SettingsComponent implements OnInit{
             .then(city => {
                 if(city.length <= 0)
                     this.cityList = null;
-                else
+                else {
                     this.cityList = city;
+                    var cList = [];
+                    for (var i = 0; i < this.cityList.length; i++)
+                        cList.push(this.cityList[i].loc_name);
+                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cList);
+                }
             })
     }
 
     citySelect(city: string): void {
-        this.selectedCity = city;
+        this.selectedCity = this.cityAutoComplete.query;
     }
 
 
@@ -216,8 +230,18 @@ export class SettingsComponent implements OnInit{
     }
 
     serviceRefresh(): void {
-        //TODO: replace serviceListData with serviceService
-        this.serviceList = serviceListData;
+        this.userService.getService()
+            .then(service => {
+                if(service.length <= 0)
+                    this.serviceList = null;
+                else {
+                    this.serviceList = service;
+                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                    this.blockAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
+                    if(service.length >= 10)
+                        this.serviceList = service.slice(0,10);
+                }
+            })
     }
 
     //Select a Tag from the exisitng list of service tags
@@ -238,6 +262,7 @@ export class SettingsComponent implements OnInit{
     }
 
     userServiceAdd(): void {
+        this.newService = this.serviceAutoComplete.query;
         if(this.newService == ""){
             alert("Tag is Empty!");
         }
@@ -250,11 +275,13 @@ export class SettingsComponent implements OnInit{
         else{
             this.userServiceSelect(this.newService);
             this.newService = "";
+            this.serviceAutoComplete.query = "";
         }
     }
 
     //Codes for Blocked Services
     userBlockedServiceAdd(): void {
+        this.newBlockService = this.blockAutoComplete.query;
         if(this.newBlockService == ""){
             alert("Tag is Empty!");
         }
@@ -271,6 +298,7 @@ export class SettingsComponent implements OnInit{
             this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
             this.userBlockedServiceRefresh();
             this.newBlockService = "";
+            this.blockAutoComplete.query = "";
         }
     }
     userBlockedServiceRefresh(): void {

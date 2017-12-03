@@ -110,8 +110,22 @@
           <button class="badge"
             (click)="questionServiceDelete(questionService); $event.stopPropagation()">
             x</button> &nbsp;
-      </span>
-      <input auto-complete [(ngModel)]= "serviceTag" [source]="serviceList" placeholder="Services"/>
+      </span><br>
+
+      <div class="container" *ngIf="serviceAutoComplete">
+        <div class="input-field col s6">
+          <input id="serviceAutoComplete.rawList" type="text" class="validate filter-input" name="Service" placeholder="Service" [(ngModel)]=serviceAutoComplete.query (keyup)=serviceAutoComplete.filter()>
+          <label for="serviceAutoComplete.rawList"></label>
+        </div>
+        <div class="suggestions" *ngIf="serviceAutoComplete.filteredList.length > 0">
+          <ul *ngFor="let item of serviceAutoComplete.filteredList">
+            <li>
+              <a (click)="serviceAutoComplete.select(item)">{{item}}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
       <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
 
     <div class="form-group">
