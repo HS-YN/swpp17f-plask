@@ -1,5 +1,6 @@
 //Import Basic Modules
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -32,20 +33,24 @@ export class MyAnswersComponent implements OnInit{
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
 
+    // Observable
+    timerSubscription: any;
+    inactive: boolean = true;
+
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
+        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
     }
 
     getQuestionList():void {
         this.questionService.getAnsweredQuestion().then(questions =>{
             this.temp_questionList = questions;
-            this.getAnswerList();
+            this.getAnswerList();  
         })
     }
 
     getAnswerList():void{
-        console.log(this.temp_questionList);
         this.questionList = [];
         for(let q of this.temp_questionList){
             var temp_answerList = [];
@@ -53,7 +58,7 @@ export class MyAnswersComponent implements OnInit{
                 if(answers != null)
                     temp_answerList = answers;
                 this.questionList.push([q, true, temp_answerList]);
-                console.log(temp_answerList);
+                console.log(this.questionList);
             })
         }
     };
@@ -66,12 +71,15 @@ export class MyAnswersComponent implements OnInit{
                     this.questionList[i][1] =true;
                 }
             }
-            this.answer = ""; //clear answer tab
-            
+            this.answer = ""; //clear answer tab            
             question[1] = false;
+            this.inactive = false;
         }
         else{
             question[1] = true;
+            this.inactive = true;
+            this.timerSubscription.unsubscribe();
+            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
     }
 
@@ -83,7 +91,7 @@ export class MyAnswersComponent implements OnInit{
                 if(Status != 204) {alert("Answer could not be sent, please try again");}
                 else {
                     alert("Answer successfully posted!");
-                    window.location.reload();
+                    //window.location.reload();
                     this.answer = "";
                     this.getQuestionList();
                 }

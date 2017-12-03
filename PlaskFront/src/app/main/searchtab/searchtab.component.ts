@@ -1,7 +1,6 @@
 //Import Basic Modules
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-import { Observable } from 'rxjs/Rx';
-import { Router } from '@angular/router';
+import { Component, OnInit, ChangeDetectorRef, Input } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { User } from '../../user/user';
 import { Question } from '../../question/question';
@@ -13,42 +12,52 @@ import { QuestionService } from '../../question/question.service';
 import { AnswerService } from '../../answer/answer.service';
 
 @Component({
-    selector: 'maintab',
-    templateUrl: './maintab.component.html',
-    styleUrls: [ './maintab.component.css']
+    selector: 'searchtab',
+    templateUrl: './searchtab.component.html',
+    styleUrls: [ '../maintab/maintab.component.css']
 })
-export class MainTabComponent implements OnInit{
+export class SearchTabComponent implements OnInit{
 
     constructor(
-        private router: Router,
+        private route: ActivatedRoute,
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
         private answerService: AnswerService,
-    )
-    { }
+    ){ }
 
     user: User = new User();
-    questionList: [Question, boolean,Answer[]][];
+    questionList: [Question, boolean,Answer[]][] = [];
     answer:string = "";
     temp_questionList:Question[] = [];
-
-    // Observable
-    timerSubscription: any;
-    inactive: boolean = true;
+    searchString:string = "";
+    locCode:string[] = [];
 
     ngOnInit(){
+        console.log("here");
+        this.route.params.subscribe(params=>{
+            this.searchString = params['str'];
+            this.locCode = [params['id1'], params['id2'], params['id3']];
+        });
+        
+        this.questionService.getSearchedQuestion(this.searchString, this.locCode).then(
+            questionList => {
+                this.temp_questionList = questionList;
+                this.getAnswerList();
+            })
+        console.log(this.temp_questionList);
         this.userService.getUser().then(User => {this.user = User});
-        this.getQuestionList();
-        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
     }
 
-    getQuestionList():void {
-        this.questionList = [];
-        this.questionService.getRecentQuestion().then(questions =>{
-            this.temp_questionList = questions;
-            this.getAnswerList();
-        });
+    getSearchQuestionList(searchString: string, locCode: string[]):void {
+        //this.ngZone.run(()=>{
+            this.questionList = [];
+            this.questionService.getSearchedQuestion(searchString, locCode).then(questions => {
+                this.temp_questionList = questions;
+                this.getAnswerList();
+                //alert("Search Complete!")
+            });
+        //});
     }
 
     getAnswerList():void{
@@ -74,14 +83,10 @@ export class MainTabComponent implements OnInit{
             }
             this.answer = ""; //clear answer tab
             question[1] = false;
-            this.inactive = false;
         }
         // collapse if opened
         else{
             question[1] = true;
-            this.inactive = true;
-            this.timerSubscription.unsubscribe();
-            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
     }
 
@@ -95,19 +100,11 @@ export class MainTabComponent implements OnInit{
                 }
                 else {
                     alert("Answer successfully posted!");
-                    //window.location.reload();
+                    window.location.reload();
                     this.answer = "";
-                    this.getQuestionList();
+                    //this.getSearchQuestionList();
                 }
             });
         }
     }
-
-    // Unsubscribe all subscriptions in ngOnDestroy
-    /*public ngOnDestroy(): void {
-        if (this.timerSubscription){
-            this.timerSubscription.unsubcribe();
-        }
-    }*/  
-
 }

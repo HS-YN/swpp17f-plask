@@ -38,12 +38,19 @@ export class MainComponent implements OnInit{
     selectedProvince: string = "";
     selectedCity: string = "";
 
+    serviceList: string[]; //List of service tags from Backend
+    questionServiceList: string[]; //List for visualizing current question service tags
+    serviceTag: string = ""; //User-input string
 
-    serviceList: string[]; // List of service tags from Backend
-    questionServiceList: string[]; // List for visualizing current question service tags
-    serviceTag: string = ''; // User-input string
-
-
+    //variables for searching
+    searchString: string = "";
+    searchCountry: string = "";
+    searchNation: string = "";
+    searchProvince: string = "";
+    searchCity: string = "";
+    searchCityNameList: string[];
+    searchProvinceList: Location[];
+    searchCityList: Location[]; //use this to find location code
 
     ngOnInit(): void{
         this.userService.getUser().then(user => {
@@ -220,6 +227,77 @@ export class MainComponent implements OnInit{
             this.questionServiceSelect(this.serviceTag);
             this.serviceTag = "";
         }
+    }
+    //Methods for searching, with tagging location
+    countrySearch(country: string): void {
+        this.searchCountry = country;
+        this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        this.searchCityNameList = [];
+        this.searchProvince= "";
+        this.searchCity = "";
+    }
+
+    searchProvinceRefresh(country_code: number): void {
+        this.locationService.getLocationList(country_code.toString())
+            .then(province => {
+                if(province.length <= 0)
+                    this.searchProvinceList = null;
+                else
+                    this.searchProvinceList = province;
+            })
+    }
+
+    provinceSearch(province: string): void {
+        this.searchProvince = province;
+        this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code, 
+            this.getLocationByName (this.searchProvinceList, province).loc_code);
+        this.searchCity = "";
+    }
+
+    searchCityRefresh(country_code: number, province_code: number): void {
+        //this.cityList = cityListData;
+        var address: string = country_code.toString() + '/' + province_code.toString();
+        this.locationService.getLocationList(address)
+            .then(city => {
+                if(city.length <= 0)
+                    this.searchCityList = null;
+                else
+                    this.searchCityList = city;
+                this.searchCityNameList = [];
+                for (var i = 0; i < this.searchCityList.length; i++)
+                    this.searchCityNameList.push(this.searchCityList[i].loc_name);
+            })
+    }
+    //method called by clicking search button
+    search():void {
+        let index:Number[] = [-1, -1, -1] // 0:country, 1:province, 2:city code num
+        if((this.searchNation == "")){
+            alert("Please select country tag!");
+            return;
+        }
+        if(this.searchString == ""){
+            alert("Please fill content before searching!");
+            return;
+        }
+        for(let ctry of this.countryList){
+           if(ctry.loc_name === this.searchNation) 
+               index[0] = ctry.loc_code;
+        }
+        if(this.searchProvince != "")
+            for(let prvc of this.searchProvinceList){
+                if(prvc.loc_name === this.searchProvince)
+                    index[1] = prvc.loc_code;
+            }
+        if(this.searchCity != "")
+            for(let cty of this.searchCityList){
+                if(cty.loc_name === this.searchCity)
+                    index[2] = cty.loc_code;
+            }
+
+         this.router.navigateByUrl('/settings',{skipLocationChange: true}).then(
+             () => this.router.navigate(['/main', {outlets:{'tab':[
+             'search',index[0],index[1],index[2],this.searchString]}}
+         ])); 
     }
 
     // Notification
