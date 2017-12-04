@@ -36,13 +36,17 @@ describe('SignInComponent', () => {
         expect(comp.goToSignUp).toThrow();
     })
 
-    it('should have as title Plask!', ()=> {
-        expect(comp.title).toEqual('Plask!');
-    });
+    it('should have as title Plask!,', async(() => {
+        fixture.whenStable().then(() => {
+            expect(comp.title).toEqual('Plask!');
+        })
+    }))
 
-    it('should have as subtitle Location-based live Q&A platform', () => {
+    it('should have as subtitle Location-based live Q&A platform', async(() => {
+        fixture.whenStable().then(() => {
         expect(comp.subtitle).toEqual('Location-based live Q&A platform');
-    });
+        })
+    }))
 
     it('should have user notificaiton frequency set to 1 as default', () => {
         expect(comp.user.notiFrequency).toEqual(1);

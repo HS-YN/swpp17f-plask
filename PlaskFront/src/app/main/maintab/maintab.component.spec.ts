@@ -1,4 +1,4 @@
-import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
@@ -34,37 +34,44 @@ describe('MainTabComponent', () => {
         expect(comp).toBeTruthy();
     });
 
-    it ('should trigger getQuestionList() when initiated', fakeAsync(() => {
+    it ('should trigger getQuestionList() when initiated', async(() => {
         fixture.detectChanges();
-        spyOn(comp, "getQuestionList");
+        let spy = spyOn(comp, "getQuestionList");
 
         comp.ngOnInit();
-        tick();
-        fixture.detectChanges();
-        expect(comp.getQuestionList()).toHaveBeenCalled();
+        
+        fixture.whenStable().then(() => {
+        expect(spy).toHaveBeenCalled();
 
         expect(comp.expand).toThrow();
-        expect(comp.answerClick).toThrow();
+        expect(comp.answerClick).toThrow();          
+        })
     }))
 
-    it('should not trigger expand() as there is no question', fakeAsync(() =>{
+    it('should not trigger expand() as there is no question', async(() =>{
         fixture.detectChanges();
-        spyOn(comp, 'expand');
+        let spy = spyOn(comp, 'expand');
         let divs = fixture.debugElement.queryAll(By.css('div'));
         let questionDiv = divs[3].nativeElement;
         let questionDivContent = questionDiv.textContent;
 
-        questionDiv.triggerEventHandler('click', null);
-        tick();
-        fixture.detectChanges();
-        expect(comp.expand(questionDivContent)).not.toHaveBeenCalled();
+        questionDiv.click();
+        
+        fixture.whenStable().then(() => {
+          expect(comp.expand(questionDivContent)).not.toHaveBeenCalled();          
+        })
+
+
     }))
+
 
     it ('should display "Answer" as the button title', async(() => {
         const btns = fixture.debugElement.queryAll(By.css('button'));
         const btn = btns[0].nativeElement;
 
-        expect(btn.classList.contains("Answer")).toBeTruthy();
+        fixture.whenStable().then(() => {
+            expect(btn.textContent).toEqual("Answer");
+        })
     }))
 
 })

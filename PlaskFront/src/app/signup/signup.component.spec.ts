@@ -116,11 +116,12 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message if adding the same location tag twice', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
         let windowSpy = spyOn(window, "alert");
 
         comp.selectedCountry = "Korea";
         comp.selectedProvince = "";
-        comp.selectedCity = "";
         comp.user.locations = "Korea;";
 
         comp.userLocationAdd();
@@ -192,6 +193,8 @@ describe('SignUpComponent', () => {
     }))
 
     it('should update selectedCity when it is selected', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
         comp.cityAutoComplete.query = "Gwanak";
         comp.citySelect();
         
@@ -260,6 +263,8 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add a service tag with semicolon', async(() => {
+        var svList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
         let windowSpy = spyOn(window, "alert");
         comp.newService ="cafe;";
         comp.userServiceAdd();

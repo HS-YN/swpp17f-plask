@@ -59,7 +59,7 @@ describe('LocationService (mockBackend)', () => {
         it('should get list of provinces or cities', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.getLocationList(locationData[0].loc_code.toString()).then(data => {
-                expect(data[0].loc_name).toBe('Busan');
+                expect(data[0].loc_name).toBe('Korea');
             });
         }));
 

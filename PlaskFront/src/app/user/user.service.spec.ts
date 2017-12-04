@@ -75,14 +75,14 @@ describe('UserService (mockBackend)', () => {
         it('can sign in', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.signIn(userData).then(status => {
-                expect(status).toBeNull();
+                expect(status).toEqual(200);
             });
         }));
 
         it('can sign up', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.signUp(fakeData).then(status => {
-                expect(status).toBeUndefined();
+                expect(status).toEqual(200);
             });
         }));
 
@@ -96,7 +96,7 @@ describe('UserService (mockBackend)', () => {
         it('can sign out', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.signOut().then(status => {
-                expect(status).toBeNull();
+                expect(status).toEqual(200);
             });
         }));
 
