@@ -28,7 +28,8 @@ class Answer(models.Model):
     question = models.ForeignKey(
         'Question',
         related_name='answers',
-        null=True
+        null=True,
+        on_delete = models.CASCADE
     )
     author = models.ForeignKey(
         UserInfo,
