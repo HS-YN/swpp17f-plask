@@ -5,6 +5,8 @@ import { By } from '@angular/platform-browser';
 
 import { SettingsComponent } from './settings.component';
 import { AppModule } from './../../app.module';
+import { AutoCompleteComponent } from '../../interface/autocomplete.component';
+import { Location } from '../../location/location';
 
 let comp: SettingsComponent;
 let fixture: ComponentFixture<SettingsComponent>;
@@ -133,11 +135,14 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message if adding the same location tag twice', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
+
         let windowSpy = spyOn(window, "alert");
 
         comp.selectedCountry = "Korea";
         comp.selectedProvince = "";
-        comp.selectedCity = "";
+        comp.cityAutoComplete.query = "";
         comp.user.locations = "Korea;";
 
         comp.userLocationAdd();
@@ -148,10 +153,13 @@ describe('SettingsComponent', () => {
     }));
 
     it('should properly add new location tag to the location tag list', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
+
         comp.user.locations = "USA;";
         comp.selectedCountry = "Korea";
         comp.selectedProvince ="Seoul";
-        comp.selectedCity = "Gwanak";
+        comp.cityAutoComplete.query = "Gwanak";
 
         comp.userLocationAdd();
 
@@ -188,6 +196,12 @@ describe('SettingsComponent', () => {
             expect(comp.userLocationList).toEqual(["Korea/Seoul/Gwanak"]);
         })
     }))
+
+    it('should properly get location by name', async(() => {
+        var locList: Location[] = [{loc_code: 213, loc_name: "Korea"}, {loc_code: 214, loc_name: "USA"}];
+        expect(comp.getLocationByName(locList, "Korea")).toEqual({loc_code: 213, loc_name: "Korea"});
+    }))
+
 
     it('should update selectedCountry when a country selected', async(() => {
         comp.countrySelect("Korea");
@@ -269,6 +283,17 @@ describe('SettingsComponent', () => {
         })
     }))
 
+    it('should properly add a service tag to the user.services', async(() => {
+        let spy = spyOn(comp, "userServiceRefresh");
+        comp.user.services = "music;";
+        comp.userServiceSelect("cafe");
+
+        fixture.whenStable().then(() => {
+            expect(comp.user.services).toEqual("music;cafe;");
+            expect(spy).toHaveBeenCalled();
+        })
+    }))
+
 
     it('should call userServiceRefresh() when userServiceDelete() is called', async(() => {
         let spy = spyOn(comp, "userServiceRefresh");
@@ -289,8 +314,10 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add an empty service tag', async(() => {
+        var svList: string[] = ["music", "cafe"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "";
         let windowSpy = spyOn(window, "alert");
-        comp.newService ="";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -299,8 +326,10 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add a service tag with semicolon', async(() => {
+        var svList: string[] = ["music", "cafe"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe;";
         let windowSpy = spyOn(window, "alert");
-        comp.newService ="cafe;";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -309,9 +338,11 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add a custom service tag which already exists in the (recommended) list', async(() =>{
+        var svList: string[] = ["music", "cafe"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe";
         let windowSpy = spyOn(window, "alert");
         comp.serviceList = ["Cafe", "music"];
-        comp.newService ="cafe";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -320,6 +351,9 @@ describe('SettingsComponent', () => {
     }))
 
     it('should call userServiceSelect() when Add is called', async(() => {
+        var svList: string[] = ["music", "cafe"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe";
         let spy = spyOn(comp, "userServiceSelect");
         comp.newService ="cafe";
         comp.userServiceAdd();
@@ -330,8 +364,10 @@ describe('SettingsComponent', () => {
     }));
 
     it('should add a service tag when userServiceAdd() is called', async(() => {
+        var svList: string[] = ["music", "cafe"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe";
         comp.user.services ="music;";
-        comp.newService = "cafe";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -340,7 +376,7 @@ describe('SettingsComponent', () => {
     }));
 
     // Related to adding blockedService
-    it('should make userBlockedServiceList empty if user.blockedServices is ""', async(() => {
+    it('should make userBlockedServiceList empty if user.blockedServices is ""', async(() => {   
         comp.user.blockedServices ="";
         comp.userBlockedServiceRefresh();
 
@@ -377,8 +413,10 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add an empty blocked service tag', async(() => {
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "";
         let windowSpy = spyOn(window, "alert");
-        comp.newBlockService ="";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -387,8 +425,10 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add a blocked service tag with semicolon', async(() => {
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe;";
         let windowSpy = spyOn(window, "alert");
-        comp.newBlockService ="cafe;";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -397,9 +437,11 @@ describe('SettingsComponent', () => {
     }));
 
     it('should send alert message when trying to add a blocked service tag which already exists in the selected service list', async(() =>{
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe";
         let windowSpy = spyOn(window, "alert");
         comp.userServiceList = ["cafe", "music"];
-        comp.newBlockService ="cafe";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -419,8 +461,10 @@ describe('SettingsComponent', () => {
     }))
 
     it('should add a blocked service tag when userBlockedServiceAdd() is called', async(() => {
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe";
         comp.user.blockedServices ="music;";
-        comp.newBlockService = "cafe";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -436,6 +480,11 @@ describe('SettingsComponent', () => {
         });
     }));
 
+    it('should properly show selected NotiFrequency', async(() => {
+        comp.user.notiFrequency = 10;
+        expect(comp.selectedFreq).toEqual(10);
+    }))
+
     // Related to Routing
     it('should be able to go back to Main Page', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
@@ -447,5 +496,11 @@ describe('SettingsComponent', () => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.goToSignin();
         expect(navigateSpy).toHaveBeenCalledWith(['/signin']);
+    }))
+
+    it('should be able to goBack to Sign', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        comp.goBack();
+        expect(navigateSpy).toHaveBeenCalledWith(['/signin']);       
     }))
 });

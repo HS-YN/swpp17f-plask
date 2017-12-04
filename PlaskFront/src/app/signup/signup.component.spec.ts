@@ -116,11 +116,12 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message if adding the same location tag twice', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
         let windowSpy = spyOn(window, "alert");
 
         comp.selectedCountry = "Korea";
         comp.selectedProvince = "";
-        comp.selectedCity = "";
         comp.user.locations = "Korea;";
 
         comp.userLocationAdd();
@@ -192,6 +193,8 @@ describe('SignUpComponent', () => {
     }))
 
     it('should update selectedCity when it is selected', async(() => {
+        var ctList: string[] = ["Gwanak", "Gangnam"];
+        comp.cityAutoComplete = new AutoCompleteComponent(fixture.elementRef, ctList);
         comp.cityAutoComplete.query = "Gwanak";
         comp.citySelect();
         
@@ -260,6 +263,8 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add a service tag with semicolon', async(() => {
+        var svList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
         let windowSpy = spyOn(window, "alert");
         comp.newService ="cafe;";
         comp.userServiceAdd();
@@ -340,8 +345,10 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add an empty blocked service tag', async(() => {
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "";
         let windowSpy = spyOn(window, "alert");
-        comp.newBlockService ="";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -350,8 +357,10 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add a blocked service tag with semicolon', async(() => {
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe;";
         let windowSpy = spyOn(window, "alert");
-        comp.newBlockService ="cafe;";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -360,9 +369,11 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add a blocked service tag which already exists in the selected service list', async(() =>{
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe";
         let windowSpy = spyOn(window, "alert");
         comp.userServiceList = ["cafe", "music"];
-        comp.newBlockService ="cafe";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -371,9 +382,11 @@ describe('SignUpComponent', () => {
     }))
 
     it('should send alert message when trying to add a blocked service tag which already exists in the blocked list', async(() =>{
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
+        comp.blockAutoComplete.query = "cafe";
         let windowSpy = spyOn(window, "alert");
         comp.userBlockedServiceList = ["cafe", "music"];
-        comp.newBlockService ="cafe";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -382,8 +395,10 @@ describe('SignUpComponent', () => {
     }))
 
     it('should add a blocked service tag when userBlockedServiceAdd() is called', async(() => {
-        comp.user.blockedServices ="music;";
+        var bsvList: string[] = ["music", "cafe"];
+        comp.blockAutoComplete = new AutoCompleteComponent(fixture.elementRef, bsvList);
         comp.blockAutoComplete.query = "cafe";
+        comp.user.blockedServices ="music;";
         comp.userBlockedServiceAdd();
 
         fixture.whenStable().then(() => {

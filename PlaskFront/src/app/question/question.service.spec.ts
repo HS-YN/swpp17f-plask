@@ -95,7 +95,7 @@ describe('QuestionService (mockBackend)', () => {
         it('can post Question', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.postQuestion(fakeData).then(status => {
-                expect(status).toBeUndefined();
+                expect(status).toEqual(200);
             });
         }));
 

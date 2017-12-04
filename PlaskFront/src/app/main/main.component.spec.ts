@@ -10,6 +10,7 @@ import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
 let comp: MainComponent;
 let fixture: ComponentFixture<MainComponent>;
+declare var Notification: any;
 
 describe('MainComponent', () => {
     beforeEach(async(() => {
@@ -39,6 +40,13 @@ describe('MainComponent', () => {
         expect(comp.questionServiceSelect).toThrow();
         expect(comp.questionServiceDelete).toThrow();
         expect(comp.questionServiceAdd).toThrow();
+        expect(comp.countrySearch).toThrow();
+        expect(comp.searchProvinceRefresh).toThrow();
+        expect(comp.provinceSearch).toThrow();
+        expect(comp.searchCityRefresh).toThrow();
+        expect(comp.search).toThrow();
+        expect(comp.notify).toThrow();
+        expect(comp.notifyWithPermission).toThrow();
 
     })
 
@@ -72,7 +80,7 @@ describe('MainComponent', () => {
         const serviceLabel = labels[1].nativeElement;
 
         expect(locationLabel.textContent).toEqual("Location:");
-        expect(serviceLabel.textContent).toEqual("Label"); // check again
+        expect(serviceLabel.textContent).toEqual("Location"); // check again
     }))
 
     it('should trigger goToSettings() when the Settings button is clicked', async(() =>{
@@ -172,6 +180,14 @@ describe('MainComponent', () => {
         });
     }));
 
+    it ('should properly get location by name', async(() => {
+        var locationList: [{loc_name: "Korea", loc_code: 213}, {loc_name: "USA", loc_code: 216}];
+        var result = comp.getLocationByName(locationList, "Korea");
+
+        fixture.whenStable().then(() => {
+            expect(result).toEqual({loc_name: "Korea", loc_code: 213});
+        })
+    }))
     it('should update selectedProvince when a province selected', async(() => {
         comp.provinceSelect("Seoul");
         
@@ -189,6 +205,7 @@ describe('MainComponent', () => {
         });
     }));
 
+    // Need to be fixed
     it('should refresh service list when serviceRefresh() is called', async(() => {
         comp.serviceRefresh();
         
@@ -225,6 +242,15 @@ describe('MainComponent', () => {
             expect(windowSpy).toHaveBeenCalledWith("Tag Already Added!");
         })
     }))
+
+    it('should call questionServiceRefresh() when questionServiceSelect() is called', async(() => {
+        let spy = spyOn(comp, "questionServiceRefresh");
+        comp.questionServiceSelect("string");
+        
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
 
     it('should create questionServiceList after questionServiceRefresh() is performed', async(() => {
         comp.question.services ="cafe;music;";
@@ -268,7 +294,9 @@ describe('MainComponent', () => {
 
     it('should send alert message when trying to add a service tag with semicolon', async(() => {
         let windowSpy = spyOn(window, "alert");
-        comp.serviceTag ="cafe;";
+        var servList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
+        comp.serviceAutoComplete.query = "cafe;";
         comp.questionServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -276,9 +304,24 @@ describe('MainComponent', () => {
         });
     }));
 
+    it('should send alert message when trying to add a service tag with over 100 characters', async(() => {
+        let windowSpy = spyOn(window, "alert");
+        var servList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
+        comp.serviceAutoComplete.query = "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij";
+        comp.questionServiceAdd();
+
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Tag length should be less than 100 characters.");
+        });
+    }));
+
+
     it('should call questionServiceSelect() when Add is called', async(() => {
         let spy = spyOn(comp, "questionServiceSelect");
-        comp.serviceTag = "cafe";
+        var servList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
+        comp.serviceAutoComplete.query = "cafe";
         comp.questionServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -288,12 +331,107 @@ describe('MainComponent', () => {
 
     it('should add a service tag when questionServiceAdd() is called', async(() => {
         comp.question.services ="music;";
-        comp.serviceTag = "cafe";
+        var servList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
+        comp.serviceAutoComplete.query = "cafe";
         comp.questionServiceAdd();
 
         fixture.whenStable().then(() => {
             expect(comp.question.services).toEqual("music;cafe;");
         });
     }));
+
+    it('should make searchProvinceList as null if "Nation" is selected in countrySearch', async(() => {
+        var cityList: string[] = ["Seoul", "Busan"];
+
+        comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+        comp.countrySearch('Nation');
+
+        fixture.whenStable().then(() => {
+            expect(comp.searchProvinceList).toBeNull();
+            expect(comp.searchCityNameList).toEqual([]);
+            expect(comp.searchProvince).toEqual("");
+            expect(comp.searchCity).toEqual("");
+        })
+    }));
+
+    it('should call searchProvinceRefresh if a country is selected in countrySearch', async(() => {
+        let spy = spyOn(comp, "searchProvinceRefresh");
+        var cityList: string[] = ["Seoul", "Busan"];
+
+        comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+        comp.countrySearch('Korea');
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should work even if "Province" is selected in provinceSearch()', async(() => {
+        var cityList: string[] = ["Seoul", "Busan"];
+
+        comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+        comp.provinceSearch('Province');
+
+        fixture.whenStable().then(() => {
+            expect(comp.searchCity).toEqual("");
+            expect(comp.searchCityNameList).toEqual([]);
+        })
+    }));
+
+    it('should call searchCityRefresh if a province is selected in provinceSearch', async(() => {
+        let spy = spyOn(comp, "searchCityRefresh");
+        var cityList: string[] = ["Seoul", "Busan"];
+
+        comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+        comp.provinceSearch('Seoul');
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+        });
+    }));
+
+    it('should alert if serachString is empty', async(() => {
+        let windowSpy = spyOn(window, "alert");
+        comp.searchString = "";
+
+        comp.search();
+
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Please fill content before searching!");
+        })
+    }))
+
+    it('should alert if autoComplete is invalid', async(() => {
+       let windowSpy = spyOn(window, "alert");
+       var cityList: string[] = ["Gwanak", "Gangnam"];
+       comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+       comp.searchCityAutoComplete.query = "Gwwannak";
+
+       comp.search();
+
+       fixture.whenStable().then(() => {
+           expect(windowSpy).toHaveBeenCalledWith("Invalid city name.");
+       })
+    }))
+
+    it('should ask for permission when permission is default', async(() => {    
+        Notification.permission = "default";
+        comp.notify("Plask!", "Hello!");
+
+        fixture.whenStable().then(() => {
+            expect(Notification.requestPermission()).toHaveBeenCalled();            
+        })
+    }))
+
+    it('should send notification when permission is granted', async(() => {
+        Notification.permission = "granted";
+        comp.notifyWithPermission("Plask!", "Hello!");
+
+        fixture.whenStable().then(() => {
+            expect(setTimeout).toHaveBeenCalled();
+        })
+    }))
+
 
 });
