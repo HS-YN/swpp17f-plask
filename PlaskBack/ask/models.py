@@ -8,8 +8,9 @@ class Question(models.Model):
     content = models.TextField()
     author = models.ForeignKey(
         UserInfo,
+        null=True,
         related_name='questions',
-        null=True
+        on_delete = models.CASCADE,
     )
     locations = models.ManyToManyField(
         Location,
@@ -31,6 +32,7 @@ class Answer(models.Model):
     )
     author = models.ForeignKey(
         UserInfo,
+        null=True,
         related_name='answers',
-        null=True
+        on_delete = models.CASCADE,
     )
