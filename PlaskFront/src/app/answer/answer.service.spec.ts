@@ -131,7 +131,7 @@ describe('AnswerService (mockBackend)', () => {
         it('shold receive proper status code when sending question', async(inject([], () => {
           backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
 
-          service.postAnswer(fakeAnswer.content, 1).then(res => { expect(res).toEqual(201)})
+          service.postAnswer(fakeAnswer.content, 1).then(res => { expect(res).toEqual(200)})
 
         })));
 
