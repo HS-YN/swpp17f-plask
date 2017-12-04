@@ -67,6 +67,14 @@ describe('SearchTabComponent', () => {
         expect(btn.classList.contains("Answer")).toBeTruthy();
     }))
 
+  it ('should work with getting question list after oninit', async(() => {
+          comp.ngOnInit();
+          fixture.whenStable().then(() => {
+              expect(comp.temp_questionList).toEqual([Question[0], Question[1], Question[2]]);
+          })
+  }))
+
+
 })
 
 

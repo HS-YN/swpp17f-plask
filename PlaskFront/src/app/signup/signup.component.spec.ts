@@ -253,8 +253,10 @@ describe('SignUpComponent', () => {
     }));
 
     it('should send alert message when trying to add an empty service tag', async(() => {
+        var svList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "";
         let windowSpy = spyOn(window, "alert");
-        comp.newService ="";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -265,8 +267,8 @@ describe('SignUpComponent', () => {
     it('should send alert message when trying to add a service tag with semicolon', async(() => {
         var svList: string[] = ["cafe", "music"];
         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe;"
         let windowSpy = spyOn(window, "alert");
-        comp.newService ="cafe;";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -286,8 +288,10 @@ describe('SignUpComponent', () => {
     }))
 
     it('should call userServiceSelect() when Add is called', async(() => {
+        var svList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe"
         let spy = spyOn(comp, "userServiceSelect");
-        comp.newService ="cafe";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {
@@ -296,8 +300,10 @@ describe('SignUpComponent', () => {
     }));
 
     it('should add a service tag when userServiceAdd() is called', async(() => {
+        var svList: string[] = ["cafe", "music"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, svList);
+        comp.serviceAutoComplete.query = "cafe"
         comp.user.services ="music;";
-        this.serviceAutoComplete.query = "cafe";
         comp.userServiceAdd();
 
         fixture.whenStable().then(() => {

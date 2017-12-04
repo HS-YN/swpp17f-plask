@@ -433,5 +433,19 @@ describe('MainComponent', () => {
         })
     }))
 
+    it('can navigate to SearchTab when the search button is clicked', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        let btns = fixture.debugElement.queryAll(By.css('button'));
+        let SearchTabButton = btns[3].nativeElement;
+
+       comp.searchCountry = "";
+       comp.searchString = "Hello";
+       SearchTabButton.click();
+       fixture.whenStable().then(() => {
+            expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myquestions/1/-1/-1/Hello']}}]);
+         });
+    }));
+
+
 
 });
