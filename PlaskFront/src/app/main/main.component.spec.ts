@@ -1,10 +1,12 @@
-import { TestBed, ComponentFixture, async, fakeAsync, tick } from '@angular/core/testing';
+import { TestBed, ComponentFixture, async  } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { DebugElement } from '@angular/core';
 import { By } from '@angular/platform-browser';
 
 import { MainComponent } from './main.component';
 import { AppModule } from '../app.module';
+
+import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
 let comp: MainComponent;
 let fixture: ComponentFixture<MainComponent>;
@@ -70,7 +72,7 @@ describe('MainComponent', () => {
         const serviceLabel = labels[1].nativeElement;
 
         expect(locationLabel.textContent).toEqual("Location:");
-        expect(serviceLabel.textContent).toEqual("Services:");
+        expect(serviceLabel.textContent).toEqual("Label"); // check again
     }))
 
     it('should trigger goToSettings() when the Settings button is clicked', async(() =>{
@@ -129,7 +131,7 @@ describe('MainComponent', () => {
         });
     }));
 
-    // Modified to aysnc from fakeAsync because fakeAsynce cannot handle XHRs
+    // Modified to aysnc from fakeAsync because fakeAsync cannot handle XHRs
     it ('should send alert message when trying send send empty quesiton', async(() => {
         let windowSpy = spyOn(window, "alert");
 
@@ -254,7 +256,9 @@ describe('MainComponent', () => {
 
     it('should send alert message when trying to add an empty service tag', async(() => {
         let windowSpy = spyOn(window, "alert");
-        comp.serviceTag ="";
+        var servList: string[] = ["temp", "string"];
+        comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
+        comp.serviceAutoComplete.query = "";
         comp.questionServiceAdd();
 
         fixture.whenStable().then(() => {
