@@ -22,7 +22,8 @@ class LocationL2(models.Model):
     parent = models.ForeignKey(
         'LocationL1',
         related_name='child',
-        null=True
+        null=True,
+        on_delete = models.CASCADE
     )
     persons = models.ManyToManyField(
         UserInfo,
@@ -40,7 +41,8 @@ class LocationL3(models.Model):
     parent = models.ForeignKey(
         'LocationL2',
         related_name='child',
-        null=True
+        null=True,
+        on_delete = models.CASCADE
     )
     persons = models.ManyToManyField(
         UserInfo,

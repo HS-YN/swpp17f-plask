@@ -14,7 +14,7 @@ import json, random
 def login_required(function=None, redirect_field_name=None):
     def _decorator(func):
         def _wrapped_view(request, *args, **kwargs):
-            if request.user.is_authenticated():
+            if request.user.is_authenticated:
                 return func(request, *args, **kwargs)
             else:
                 return HttpResponse(status=401)
@@ -208,7 +208,7 @@ def signout(request):
 
 def checksignedin(request):
     if request.method == 'GET':
-        if request.user.is_authenticated():
+        if request.user.is_authenticated:
             return JsonResponse('True', safe=False)
         else:
             return JsonResponse('False', safe=False)

@@ -17,6 +17,7 @@
             coverage run --branch --source='./(app_name)' manage.py test (app_name)
             coverage report
 
+
 ## Documents
 * [API url and Http Response](https://github.com/swsnu/swpp17-team6/wiki/API-url-and-HTTP-Response)
 * [Design and Planning](https://github.com/swsnu/swpp17-team6/wiki/Design-and-Planning)
