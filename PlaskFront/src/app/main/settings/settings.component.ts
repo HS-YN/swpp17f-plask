@@ -73,6 +73,14 @@ export class SettingsComponent implements OnInit{
             alert("Password is different.")
             return
         }
+        else if(this.user.locations == ""){
+            alert("You need to have at least one location tag!");
+            return;
+        }
+        else if (this.user.services == ""){
+            alert("You need to have at least one service tag!");
+            return;
+        }
         else if(this.newpassword != "") {
             this.user.password = this.newpassword;
             alert("Successfully changed password. Please sign in again.")
@@ -124,7 +132,15 @@ export class SettingsComponent implements OnInit{
             alert("Please select country!");
             return;
         }
-        this.selectedCity = this.cityAutoComplete.query;
+        // NOTE: cityAutoComplete does not exist if only country is selected           
+        if (this.cityAutoComplete != null){
+            this.selectedCity = this.cityAutoComplete.query;
+     
+            if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
+                alert("Invalid city name!");
+                return;
+            }
+        }        
         var newLocation: string = this.selectedCountry;
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -138,7 +154,10 @@ export class SettingsComponent implements OnInit{
         this.selectedCountry = "";
         this.selectedProvince = "";
         this.selectedCity = "";
-        delete this.cityAutoComplete;
+        // Delete only if cityAutoComplete exists
+        if(this.cityAutoComplete != null){
+            delete this.cityAutoComplete;
+        }
         this.userLocationRefresh();
         this.provinceList = null;
         this.cityList = null;
@@ -174,7 +193,9 @@ export class SettingsComponent implements OnInit{
         this.cityList = null;
         this.selectedProvince = "";
         this.selectedCity = "";
-        delete this.cityAutoComplete;
+        if(this.cityAutoComplete != null){
+            delete this.cityAutoComplete;
+        }
     }
 
     provinceRefresh(country_code: number): void {
