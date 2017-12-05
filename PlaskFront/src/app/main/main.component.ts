@@ -63,7 +63,7 @@ export class MainComponent implements OnInit{
             this.serviceRefresh();
             // Notification Method
             this.notify("Plask!", "Thank you! You can now receive notifications :)");
-            this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
+            //this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
         });
 
     }
