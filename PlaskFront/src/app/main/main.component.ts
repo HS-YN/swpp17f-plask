@@ -63,7 +63,7 @@ export class MainComponent implements OnInit{
             this.serviceRefresh();
             // Notification Method
             this.notify("Plask!", "Thank you! You can now receive notifications :)");
-            this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
+            //this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
         });
 
     }
@@ -95,18 +95,25 @@ export class MainComponent implements OnInit{
                 alert("Please select country!");
                 return;
             }
-            this.selectedCity = this.cityAutoComplete.query;
-            if(this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1) {
-                alert("Invalid city name.");
-                return;
+            // NOTE: cityAutoComplete does not exist if only country is selected           
+            if (this.cityAutoComplete != null){
+                this.selectedCity = this.cityAutoComplete.query;
+         
+                if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
+                    alert("Invalid city name!");
+                    return;
+                }
             }
             var newLocation: string = this.selectedCountry;
-            if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
-            if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
-
+            if(this.selectedProvince != ""){
+                newLocation = newLocation + '/' + this.selectedProvince;
+            }
+            if(this.selectedCity != ""){
+                newLocation = newLocation + '/' + this.selectedCity;
+            }
             // Notice that we do not apend, but replace (Question has a single location)
             this.question.locations = newLocation + ';';
-
+            console.log(this.question.locations);
             // Send Question to Backend
             let path = this.route.snapshot.url.join('/')
 
@@ -124,8 +131,11 @@ export class MainComponent implements OnInit{
             this.question.locations="";
             this.questionServiceRefresh();
             this.countryRefresh();
-            delete this.cityAutoComplete;
 
+            // Delete only if cityAutoComplete exists
+            if(this.cityAutoComplete != null){
+                delete this.cityAutoComplete;
+            }
             this.selectedCountry="";
             this.selectedProvince="";
             this.selectedCity= "";
@@ -154,14 +164,23 @@ export class MainComponent implements OnInit{
     }
 
     countrySelect(country: string): void {
-        this.selectedCountry = country;
+        // Guard against selecting dropdown list as option
+        if (country == 'Nation'){
+            this.selectedCountry = "";
+        }
+        else{
+            this.selectedCountry = country;
+        }
+
         if(country != 'Nation') {
             this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
         } else {
             this.provinceList = null;
         }
         this.cityNameList = [];
-        delete this.cityAutoComplete;
+        if (this.cityAutoComplete != null){
+            delete this.cityAutoComplete;
+        }
         this.selectedProvince= "";
         this.selectedCity = "";
     }
@@ -178,13 +197,22 @@ export class MainComponent implements OnInit{
     }
 
     provinceSelect(province: string): void {
-        this.selectedProvince = province;
+        // Allow a user to reset province
+        if (province == 'Province'){
+            this.selectedProvince = '';
+        }
+        else{
+            this.selectedProvince = province;
+        }
+        
         if(province != 'Province') {
             this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
                 this.getLocationByName (this.provinceList, province).loc_code);
         }
         this.selectedCity = "";
-        delete this.cityAutoComplete;
+        if (this.cityAutoComplete != null){
+            delete this.cityAutoComplete;
+        }
         this.cityNameList = [];
     }
 
@@ -263,14 +291,23 @@ export class MainComponent implements OnInit{
     }
     //Methods for searching, with tagging location
     countrySearch(country: string): void {
-        this.searchCountry = country;
+        // Guard against selecting dropdown list as option
+        if (country == "Nation"){
+            this.searchCountry = "";
+        }
+        else{
+            this.searchCountry = country;
+        }
+
         if(country != 'Nation') {
             this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
         } else {
             this.searchProvinceList = null;
         }
         this.searchCityNameList = [];
-        delete this.searchCityAutoComplete;
+        if (this.searchCityAutoComplete != null){
+            delete this.searchCityAutoComplete;
+        }
         this.searchProvince= "";
         this.searchCity = "";
     }
@@ -286,13 +323,21 @@ export class MainComponent implements OnInit{
     }
 
     provinceSearch(province: string): void {
-        this.searchProvince = province;
+        // Allow a user to reset province
+        if (province == 'Province'){
+            this.searchProvince = "";
+        }
+        else{
+            this.searchProvince = province;
+        }
         if(province != 'Province') {
             this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code,
                 this.getLocationByName (this.searchProvinceList, province).loc_code);
         }
         this.searchCity = "";
-        delete this.searchCityAutoComplete;
+        if(this.searchCityAutoComplete != null){
+            delete this.searchCityAutoComplete;
+        }
         this.searchCityNameList = [];
     }
 
@@ -322,11 +367,15 @@ export class MainComponent implements OnInit{
             alert("Please fill content before searching!");
             return;
         }
-        this.searchCity = this.searchCityAutoComplete.query;
-        if(this.searchCityAutoComplete.rawList.indexOf(this.searchCity) == -1) {
-            console.log(this.searchCity);
-            alert("Invalid city name.");
-            return;
+        // NOTE: searchCityAutoComplete does not exist if only country is selected
+        if(this.searchCityAutoComplete != null ){
+            this.searchCity = this.searchCityAutoComplete.query;            
+        
+            if((this.searchCity != "") && (this.searchCityAutoComplete.rawList.indexOf(this.searchCity) == -1)){
+                console.log(this.searchCity);
+                alert("Invalid city name!");
+                return;
+            }
         }
         for(let ctry of this.countryList){
            if(ctry.loc_name === this.searchNation)
