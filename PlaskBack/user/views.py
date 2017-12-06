@@ -115,14 +115,14 @@ def getLocationStr(has_loc):
 
         loc1 = LocationL1.objects.get(loc_code=loc_code1)
 
-        loc_name1 = loc1.name + '/'
+        loc_name1 = loc1.name
         if(loc_code2 > 0):
             loc2 = loc1.child.get(loc_code=loc_code2)
-            loc_name2 = loc2.name + '/'
+            loc_name2 = '/' + loc2.name
         else:
             loc_name2 = ""
         if(loc_code3 > 0):
-            loc_name3 = loc2.child.get(loc_code=loc_code3).name
+            loc_name3 = '/' + loc2.child.get(loc_code=loc_code3).name
         else:
             loc_name3 = ""
 
