@@ -58,7 +58,6 @@ export class MainTabComponent implements OnInit{
                 if(answers != null)
                     temp_answerList = answers;
                     this.questionList.push([q, true, temp_answerList]);
-                    console.log(this.questionList)});
         }
     };
 
