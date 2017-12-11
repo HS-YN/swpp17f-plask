@@ -80,7 +80,7 @@ class AskTestCase(TestCase):
         response = self.client.delete('/api/ask/question/related')
         self.assertEqual(response.status_code, 405)
 
-        response = self.client.get('/api/ask/select/1/1')
+        response = self.client.delete('/api/ask/select/1/1')
         self.assertEqual(response.status_code, 405)
 
     def test_question_answer(self):
@@ -252,18 +252,18 @@ class AskTestCase(TestCase):
         for answer in data:
             print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'] + ' / isMine:' + answer['isMine'])
 
-        response = self.client.put('/api/ask/select/1/1')
+        response = self.client.get('/api/ask/select/1/1')
         self.assertEqual(response.status_code, 400)
         response = self.client.get ('/api/user/signout')
         self.assertEqual(response.status_code, 204)
         response = self.client.post('/api/user/signin', json.dumps({'email': 'PlaskTest1@snu.ac.kr', 'password': '123123'}), content_type = 'application.json')
         self.assertEqual(response.status_code, 204)
 
-        response = self.client.put('/api/ask/select/1/1')
+        response = self.client.get('/api/ask/select/1/1')
         self.assertEqual(response.status_code, 400)
-        response = self.client.put('/api/ask/select/1/4')
+        response = self.client.get('/api/ask/select/1/4')
         self.assertEqual(response.status_code, 400)
-        response = self.client.put('/api/ask/select/1/3')
+        response = self.client.get('/api/ask/select/1/3')
         self.assertEqual(response.status_code, 204)
 
         response = self.client.get('/api/ask/question')

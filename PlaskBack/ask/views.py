@@ -281,7 +281,7 @@ def answer(request, question_id):
 
 @login_required
 def select (request, question_id, answer_id):
-    if request.method == 'PUT':
+    if request.method == 'GET':
         author = request.user.userinfo
         try:
             question = author.questions.get(id = question_id)
@@ -299,4 +299,4 @@ def select (request, question_id, answer_id):
             question.save()
             return HttpResponse (status = 204)
     else:
-        return HttpResponseNotAllowed(['PUT'])
+        return HttpResponseNotAllowed(['GET'])
