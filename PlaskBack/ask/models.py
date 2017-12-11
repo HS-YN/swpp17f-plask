@@ -3,6 +3,22 @@ from user.models import Location, UserInfo, Service
 from datetime import datetime
 
 
+class Answer(models.Model):
+    content = models.TextField()
+    time = models.TimeField()
+    question = models.ForeignKey(
+        'Question',
+        related_name='answers',
+        null=True,
+        on_delete = models.CASCADE
+    )
+    author = models.ForeignKey(
+        UserInfo,
+        null=True,
+        related_name='answers',
+        on_delete = models.CASCADE,
+    )
+
 class Question(models.Model):
     time = models.DateTimeField()
     content = models.TextField()
@@ -20,20 +36,10 @@ class Question(models.Model):
         Service,
         related_name='questions'
     )
-
-
-class Answer(models.Model):
-    content = models.TextField()
-    time = models.TimeField()
-    question = models.ForeignKey(
-        'Question',
-        related_name='answers',
+    selAnswer = models.OneToOneField(
+        Answer,
+        related_name='+',
         null=True,
-        on_delete = models.CASCADE
-    )
-    author = models.ForeignKey(
-        UserInfo,
-        null=True,
-        related_name='answers',
-        on_delete = models.CASCADE,
+        default=None,
+        on_delete=models.CASCADE
     )

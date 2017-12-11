@@ -80,6 +80,9 @@ class AskTestCase(TestCase):
         response = self.client.delete('/api/ask/question/related')
         self.assertEqual(response.status_code, 405)
 
+        response = self.client.get('/api/ask/select/1/1')
+        self.assertEqual(response.status_code, 405)
+
     def test_question_answer(self):
         content = 'q0 content'
         askQuestion (self, content, 'South%20Korea/Busan/Buk;', 'coffee;pizza;')
@@ -116,7 +119,7 @@ class AskTestCase(TestCase):
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/answer/1')
         for answer in data:
-            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'])
+            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'] + ' / isMine:' + answer['isMine'])
 
         response = self.client.delete('/api/ask/answer/1')
         self.assertEqual(response.status_code, 405)
@@ -237,3 +240,34 @@ class AskTestCase(TestCase):
         print ('DEBUG: /api/ask/question/related')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
+
+
+        response = self.client.post('/api/ask/answer/1', json.dumps({
+            'content': 'this'
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+        response = self.client.get('/api/ask/answer/1')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/answer/1')
+        for answer in data:
+            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'] + ' / isMine:' + answer['isMine'])
+
+        response = self.client.put('/api/ask/select/1/1')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.get ('/api/user/signout')
+        self.assertEqual(response.status_code, 204)
+        response = self.client.post('/api/user/signin', json.dumps({'email': 'PlaskTest1@snu.ac.kr', 'password': '123123'}), content_type = 'application.json')
+        self.assertEqual(response.status_code, 204)
+
+        response = self.client.put('/api/ask/select/1/1')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.put('/api/ask/select/1/4')
+        self.assertEqual(response.status_code, 400)
+        response = self.client.put('/api/ask/select/1/3')
+        self.assertEqual(response.status_code, 204)
+
+        response = self.client.get('/api/ask/question')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/question')
+        for question in data:
+            print ('id: ' + str(question['id']) +' / content: '+ question['content'] + ' / select_id: ' + str(question['select_id']))
