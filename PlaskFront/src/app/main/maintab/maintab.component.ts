@@ -45,34 +45,37 @@ export class MainTabComponent implements OnInit{
 
     getQuestionList():void {
         this.questionList = [];
-        this.questionService.getRecentQuestion().then(questions =>{
-            this.temp_questionList = questions;
-            this.getAnswerList();
+        this.questionService.getQuestion(1).then(questions =>{
+            for(let q of questions){
+                this.questionList.push([q, true, []]);
+            }
         });
     }
-
-    getAnswerList():void{
-        for(let q of this.temp_questionList){
-            var temp_answerList = [];
-            this.answerService.getAnswer(q.id).then(answers =>{
-                if(answers != null)
-                    temp_answerList = answers;
-                    this.questionList.push([q, true, temp_answerList]);
-        }
-    };
+    getAnswer(qid:number, qindex:number){
+        this.answerService.getAnswer(qid).then(answers => {
+            this.questionList[qindex][2] = answers;
+        });
+    }
 
     expand(question):void {
         // expand if hidden
         if(question[1]==true){
-
+            let qindex:number;
             // hide all other questions that are expanded
             for (let i =0; i< this.questionList.length; ++i){
                 if (this.questionList[i][1] == false){
                     this.questionList[i][1] =true;
-                }
+                } if(this.questionList[i][0].id == question[0].id){
+                    qindex=i;
+                } //get where the question located in list
             }
             this.answer = ""; //clear answer tab
             question[1] = false;
+
+            //get answers if it is not loaded
+            if(question[2].length == 0){ 
+                question[2] = this.getAnswer(question[0].id, qindex);
+            }
 //            this.inactive = false;
         }
         // collapse if opened
