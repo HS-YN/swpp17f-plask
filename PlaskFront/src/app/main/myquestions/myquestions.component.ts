@@ -30,7 +30,6 @@ export class MyQuestionsComponent implements OnInit{
     user: User = new User();
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
-    temp_questionList:Question[] = [];
 
     // Observable
 //    timerSubscription: any;
@@ -44,6 +43,7 @@ export class MyQuestionsComponent implements OnInit{
     }
 
     getQuestionList():void {
+        this.questionList = [];
         this.questionService.getQuestion(2).then(questions =>{
             for(let q of questions){
                  this.questionList.push([q, true, []]);

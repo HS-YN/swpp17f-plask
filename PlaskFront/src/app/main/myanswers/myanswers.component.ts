@@ -29,7 +29,6 @@ export class MyAnswersComponent implements OnInit{
     ){ }
 
     user: User = new User();
-    temp_questionList:Question[] = [];
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
 
@@ -44,6 +43,7 @@ export class MyAnswersComponent implements OnInit{
     }
 
     getQuestionList():void {
+        this.questionList = [];
         this.questionService.getQuestion(3).then(questions =>{
             for(let q of questions){
                  this.questionList.push([q, true, []]);
