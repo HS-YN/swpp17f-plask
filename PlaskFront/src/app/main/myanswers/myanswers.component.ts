@@ -44,6 +44,7 @@ export class MyAnswersComponent implements OnInit{
     }
 
     getQuestionList():void {
+        this.questionList = [];
         this.questionService.getQuestion(3).then(questions =>{
             for(let q of questions){
                  this.questionList.push([q, true, []]);
