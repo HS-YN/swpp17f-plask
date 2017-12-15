@@ -14,7 +14,9 @@
                 <span class="label label-info">Services</span> {{question[0].services}}
             </div>
             <div *ngFor="let answer of question[2]" (click)="expand(question)">
-                <div class=answer> [{{answer.author}}] : {{answer.content}}</div>
+                <div class=answer> [{{answer.author}}] : {{answer.content}}
+                <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id)">Choose</button>
+                </div>
             </div>
             <div class="input-group">
                 <input type="text" class="form-control" [(ngModel)]="answer" placeholder="Comment">

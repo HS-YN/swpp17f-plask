@@ -21,13 +21,19 @@ def question_to_dict(question):
     result['author'] = question.author.nickname
     result['locations'] = getLocationStr(question)
     result['services'] = getServiceStr(question)
+    if question.selAnswer is None:
+        result['select_id'] = -1
+    else: result['select_id'] = question.selAnswer.id
     return result
-def answer_to_dict(answer):
+def answer_to_dict(answer, author):
     result = {}
     result['id'] = answer.id
     result['content'] = answer.content
     result['time'] = str(answer.time)
     result['author'] = answer.author.nickname
+    if answer.author.id == author.id:
+        result['isMine'] = 'True'
+    else: result['isMine'] = 'False'
     return result
 
 def getQuestionByLocCode (loc_code_set):
@@ -75,12 +81,44 @@ def isMyQuestion (question, userinfo):
         if question.id == myQuestion.id:
             return True
     return False
+def isAnswered (question, userinfo):
+    ansUsers = list(question.ansUsers.all())
+    answered = list(userinfo.answered.all())
+    if len(ansUsers) < len(answered):
+        for ansUser in ansUsers:
+            if ansUser.id == userinfo.id:
+                return True
+        return False
+    else:
+        for question_ in answered:
+            if question.id == question_.id:
+                return True
+        return False
 def filterQuestion (questions, blocked, userinfo):
     result = []
     for question in questions:
-        if getServiceMatchPoint(question, blocked) == 0 and not isMyQuestion(question, userinfo):
+        if (getServiceMatchPoint(question, blocked) == 0 and
+            not isMyQuestion(question, userinfo) and
+            not isAnswered(question, userinfo)):
             result.append (question)
     return result
+
+def popSelectedAnswer (question, answers):
+    if question.selAnswer is None:
+        answer_id = -1
+    else:
+        answer_id = question.selAnswer.id
+    if answer_id == -1:
+        return None, answers
+    else:
+        select = None
+        left = []
+        for answer in answers:
+            if answer.id == answer_id:
+                select = answer
+            else:
+                left.append(answer)
+        return select, left
 
 
 def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
@@ -257,10 +295,14 @@ def answer(request, question_id):
         return HttpResponseNotFound()
 
     if request.method == 'GET':
-        answers = list(curr_question.answers.all())
+        author = curr_question.author
+        answers = list(curr_question.answers.order_by('time').all())
+        select, answers = popSelectedAnswer (curr_question, answers)
+        if select is not None:
+            answers.append (select)
         answers.reverse()
         return JsonResponse(
-            [answer_to_dict (answer) for answer in answers], safe=False)
+            [answer_to_dict (answer, author) for answer in answers], safe=False)
     elif request.method == 'POST':
         author = request.user.userinfo
         req_body = json.loads(request.body.decode())
@@ -271,3 +313,25 @@ def answer(request, question_id):
         return HttpResponse(status=204)
     else:
         return HttpResponseNotAllowed(['GET', 'POST'])
+
+@login_required
+def select (request, question_id, answer_id):
+    if request.method == 'GET':
+        author = request.user.userinfo
+        try:
+            question = author.questions.get(id = question_id)
+        except Question.DoesNotExist:
+            return HttpResponse (status = 400)
+        try:
+            answer = question.answers.get(id = answer_id)
+        except Answer.DoesNotExist:
+            return HttpResponse (status = 400)
+        # do not allow select my answer
+        if answer.author.id == author.id:
+            return HttpResponse (status = 400)
+        else:
+            question.selAnswer = answer
+            question.save()
+            return HttpResponse (status = 204)
+    else:
+        return HttpResponseNotAllowed(['GET'])

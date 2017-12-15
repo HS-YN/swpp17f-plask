@@ -16,6 +16,7 @@ export class QuestionService{
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
     private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
     private searchedQuestionUrl = '/api/ask/question/search';
+    private selectAnswerUrl = '/api/ask/select';
     private tokenUrl = '/api/user/token';
 
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -94,6 +95,13 @@ export class QuestionService{
                 search_string: searchString
             }), {headers: headers}).toPromise()
             .then(Response => Response.json() as Question)  // receive status code 201 if success,
+            .catch(this.handleError);
+    }
+
+    selectAnswer(qid: number, aid: number): Promise<number>{
+        const url = `${this.selectAnswerUrl}/${qid}/${aid}`;
+        return this.http.get(url).toPromise()
+            .then(res => res.status)  // receive status code 204 if success,
             .catch(this.handleError);
     }
 

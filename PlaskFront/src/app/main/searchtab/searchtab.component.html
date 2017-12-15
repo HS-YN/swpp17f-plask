@@ -5,7 +5,9 @@
             <div class=detail [hidden]="question[1]">{{question[0].locations}} | 
                 {{question[0].services}} | {{question[0].author}}  </div>
             <div *ngFor="let answer of question[2]" class="col-1-4">
-                <div class=answer [hidden]="question[1]"> [{{answer.author}}] : {{answer.content}}</div>
+                <div class=answer [hidden]="question[1]"> [{{answer.author}}] : {{answer.content}}
+                 <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id)">Choose</button>
+                </div>
             </div>
             <div>
                 <textarea [hidden]="question[1]" [(ngModel)]="answer" placeholder="answer"></textarea>
