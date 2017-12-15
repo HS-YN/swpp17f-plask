@@ -15,6 +15,7 @@
             </div>
             <div *ngFor="let answer of question[2]" (click)="expand(question)">
                 <div class=answer> [{{answer.author}}] : {{answer.content}}</div>
+                <button *ngIf="(question[0].select_id === -1) && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id)">Choose</button>
             </div>
             <div class="input-group">
                 <input type="text" class="form-control" [(ngModel)]="answer" placeholder="Comment">

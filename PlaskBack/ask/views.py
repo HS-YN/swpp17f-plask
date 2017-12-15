@@ -87,6 +87,23 @@ def filterQuestion (questions, blocked, userinfo):
         if getServiceMatchPoint(question, blocked) == 0 and not isMyQuestion(question, userinfo):
             result.append (question)
     return result
+def popSelectedAnswer (question, answers):
+    if question.selAnswer is None:
+        answer_id = -1
+    else:
+        answer_id = question.selAnswer.id
+    if answer_id == -1:
+        return None, answers
+    else:
+        select = None
+        left = []
+        for answer in answers:
+            if answer.id == answer_id:
+                select = answer
+            else:
+                left.append(answer)
+        return select, left
+
 
 
 def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
@@ -264,7 +281,9 @@ def answer(request, question_id):
 
     if request.method == 'GET':
         author = curr_question.author
-        answers = list(curr_question.answers.all())
+        answers = list(curr_question.answers.order_by('time').all())
+        select, answers = popSelectedAnswer (curr_question, answers)
+        answers.append (select)
         answers.reverse()
         return JsonResponse(
             [answer_to_dict (answer, author) for answer in answers], safe=False)

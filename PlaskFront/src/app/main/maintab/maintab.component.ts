@@ -105,6 +105,19 @@ export class MainTabComponent implements OnInit{
         }
     }
 
+    
+    chooseAnswer(qid, aid): void{
+        this.questionService.selectAnswer(qid, aid).then(Status=>{
+            if(Status != 204){
+                alert("Choice could not be sent, please try again");
+            } else {
+                alert("Answer successfully selected!");
+                this.questionList[qid][0].select_id = aid;
+            }
+        });
+    }
+
+
     // Unsubscribe all subscriptions in ngOnDestroy
     /*public ngOnDestroy(): void {
         if (this.timerSubscription){

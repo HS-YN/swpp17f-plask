@@ -28,7 +28,7 @@ export class MainComponent implements OnInit{
         private elementRef: ElementRef,
     ){ }
 
-    question:Question = {id:0, content:"", author:"", locations:"", services:""};
+    question:Question = {id:0, content:"", author:"", locations:"", services:"", select_id:-1};
 
     countryList: Location[];
     provinceList: Location[];
