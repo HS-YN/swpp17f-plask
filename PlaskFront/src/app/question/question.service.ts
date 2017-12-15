@@ -11,7 +11,7 @@ export class QuestionService{
 
 
     // list of Urls for API
-    private questionUrl = '/api/ask/question'; // receive user's question and POST question
+    private myQuestionUrl = '/api/ask/question'; // receive user's question and POST question
     private recentQuestionUrl = '/api/ask/question/recent'; // receive recent question
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
     private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
@@ -24,22 +24,44 @@ export class QuestionService{
 
     constructor(private http: Http) { }
 
+     /*
+      * Get questions and answers for tab
+      * 1: getRecent 2: getMyQ 3: getMyA
+     */
+    getQuestion(tab:number): Promise<Question[]>{
+        let url:string;
+        switch(tab){
+            case 1: {
+                url = this.recentQuestionUrl;
+                break;
+            } case 2: {
+                url = this.myQuestionUrl;
+                break;
+            } case 3: {
+                url = this.answeredQuestionUrl;
+                break;
+            }
+        }
+        return this.http.get(url)
+            .toPromise()
+            .then(Response => Response.json() as Question[])
+            .catch(this.handleError);
+    }
     // GET the question list of a user (list of questions asked by the user)
-    getQuestion(): Promise<Question[]>{
+   /* getMyQuestion(): Promise<Question[]>{
         return this.http.get(this.questionUrl)
             .toPromise()
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);
-
     }
-
+*/
     postQuestion(question: Question): Promise<number>{
         var headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post(this.questionUrl, JSON.stringify(question), {headers: headers}).toPromise()
+        return this.http.post(this.myQuestionUrl, JSON.stringify(question), {headers: headers}).toPromise()
             .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }
-
+/*
     getRecentQuestion(): Promise<Question[]>{
         return this.http.get(this.recentQuestionUrl)
             .toPromise()
@@ -61,7 +83,7 @@ export class QuestionService{
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);
     }
-
+*/
     getSearchedQuestion(searchString: string, locCode: string[]): Promise<Question[]>{
         console.log(searchString);
 
