@@ -81,12 +81,28 @@ def isMyQuestion (question, userinfo):
         if question.id == myQuestion.id:
             return True
     return False
+def isAnswered (question, userinfo):
+    ansUsers = list(question.ansUsers.all())
+    answered = list(userinfo.answered.all())
+    if len(ansUsers) < len(answered):
+        for ansUser in ansUsers:
+            if ansUser.id == userinfo.id:
+                return True
+        return False
+    else:
+        for question_ in answered:
+            if question.id == question_.id:
+                return True
+        return False
 def filterQuestion (questions, blocked, userinfo):
     result = []
     for question in questions:
-        if getServiceMatchPoint(question, blocked) == 0 and not isMyQuestion(question, userinfo):
+        if (getServiceMatchPoint(question, blocked) == 0 and
+            not isMyQuestion(question, userinfo) and
+            not isAnswered(question, userinfo)):
             result.append (question)
     return result
+
 def popSelectedAnswer (question, answers):
     if question.selAnswer is None:
         answer_id = -1
@@ -103,7 +119,6 @@ def popSelectedAnswer (question, answers):
             else:
                 left.append(answer)
         return select, left
-
 
 
 def getQuestion_by_loc_code(loc_code1, loc_code2, loc_code3):
@@ -283,7 +298,8 @@ def answer(request, question_id):
         author = curr_question.author
         answers = list(curr_question.answers.order_by('time').all())
         select, answers = popSelectedAnswer (curr_question, answers)
-        answers.append (select)
+        if select is not None:
+            answers.append (select)
         answers.reverse()
         return JsonResponse(
             [answer_to_dict (answer, author) for answer in answers], safe=False)

@@ -43,3 +43,7 @@ class Question(models.Model):
         default=None,
         on_delete=models.CASCADE
     )
+    ansUsers = models.ManyToManyField(
+        UserInfo,
+        related_name='answered',
+    )

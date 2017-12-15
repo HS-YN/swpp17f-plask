@@ -34,6 +34,7 @@ export class SearchTabComponent implements OnInit{
     temp_questionList:Question[] = [];
     searchString:string = "";
     locCode:string[] = [];
+    chooseAnswerEnable: boolean = false;
 
     ngOnInit(){
         console.log("here");
@@ -87,6 +88,7 @@ export class SearchTabComponent implements OnInit{
             }
             this.answer = ""; //clear answer tab
             question[1] = false;
+            this.chooseAnswerEnable = (question[0].author === this.user.username) && (question[0].select_id === -1);
         }
         // collapse if opened
         else{
@@ -111,4 +113,17 @@ export class SearchTabComponent implements OnInit{
             });
         }
     }
+
+    chooseAnswer(qid, aid): void{
+        this.questionService.selectAnswer(qid, aid).then(Status=>{
+            if(Status != 204){
+                alert("Choice could not be sent, please try again");
+            } else {
+                alert("Answer successfully selected!");
+                this.questionList[qid][0].select_id = aid;
+                this.chooseAnswerEnable = false;
+            }
+        });
+    }
+    
 }

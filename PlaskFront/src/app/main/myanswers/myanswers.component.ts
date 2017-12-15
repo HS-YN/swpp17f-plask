@@ -31,6 +31,7 @@ export class MyAnswersComponent implements OnInit{
     user: User = new User();
     questionList: [Question, boolean,Answer[]][];
     answer:string = "";
+    chooseAnswerEnable: boolean = false;
 
     // Observable
 //    timerSubscription: any;
@@ -72,6 +73,7 @@ export class MyAnswersComponent implements OnInit{
             }
             this.answer = ""; //clear answer tab            
             question[1] = false;
+            this.chooseAnswerEnable = (question[0].author === this.user.username) && (question[0].select_id === -1);
 //            this.inactive = false;
             //get answers if it is not loaded
             if(question[2].length == 0){
@@ -101,4 +103,17 @@ export class MyAnswersComponent implements OnInit{
             });
         }
     }
+
+    chooseAnswer(qid, aid): void{
+        this.questionService.selectAnswer(qid, aid).then(Status=>{
+            if(Status != 204){
+                alert("Choice could not be sent, please try again");
+            } else {
+                alert("Answer successfully selected!");
+                this.questionList[qid][0].select_id = aid;
+                this.chooseAnswerEnable = false;
+            }
+        });
+    }
+    
 }
