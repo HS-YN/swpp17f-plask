@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 
 from .models import Question, Answer
 from user.models import UserInfo
-from location.models import getLocationFromCSVFile
+from location.utils import getLocationFromCSVFile
 
 from datetime import datetime
 from django.contrib.auth import authenticate
@@ -68,9 +68,6 @@ class AskTestCase(TestCase):
         response = self.client.delete('/api/ask/question/answer')
         self.assertEqual(response.status_code, 405)
 
-        response = self.client.delete('/api/ask/question/recent')
-        self.assertEqual(response.status_code, 405)
-
         response = self.client.delete('/api/ask/question')
         self.assertEqual(response.status_code, 405)
 
@@ -100,12 +97,6 @@ class AskTestCase(TestCase):
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'])
 
-        response = self.client.get('/api/ask/question/recent')
-        data = json.loads(response.content.decode())
-        print ('DEBUG: /api/ask/question/recent')
-        for question in data:
-            print ('id: ' + str(question['id']) + ' / content: ' + question['content'])
-
         response = self.client.post('/api/ask/answer/1', json.dumps({
             'content': 'that'
         }), content_type='application/json')
@@ -119,7 +110,7 @@ class AskTestCase(TestCase):
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/answer/1')
         for answer in data:
-            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'] + ' / isMine:' + answer['isMine'])
+            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'])
 
         response = self.client.delete('/api/ask/answer/1')
         self.assertEqual(response.status_code, 405)
@@ -221,7 +212,7 @@ class AskTestCase(TestCase):
 
         response = self.client.get('/api/ask/question/related')
         data = json.loads(response.content.decode())
-        self.assertEqual(len(data), 0)
+        self.assertEqual(len(data), 8)
 
         response = self.client.get ('/api/user/signout')
         self.assertEqual(response.status_code, 204)
@@ -243,14 +234,18 @@ class AskTestCase(TestCase):
 
 
         response = self.client.post('/api/ask/answer/1', json.dumps({
-            'content': 'this'
+            'content': 'this1'
+        }), content_type='application/json')
+        self.assertEqual(response.status_code, 204)
+        response = self.client.post('/api/ask/answer/1', json.dumps({
+            'content': 'this2'
         }), content_type='application/json')
         self.assertEqual(response.status_code, 204)
         response = self.client.get('/api/ask/answer/1')
         data = json.loads(response.content.decode())
         print ('DEBUG: /api/ask/answer/1')
         for answer in data:
-            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'] + ' / isMine:' + answer['isMine'])
+            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'])
 
         response = self.client.get('/api/ask/select/1/1')
         self.assertEqual(response.status_code, 400)
@@ -261,7 +256,7 @@ class AskTestCase(TestCase):
 
         response = self.client.get('/api/ask/select/1/1')
         self.assertEqual(response.status_code, 400)
-        response = self.client.get('/api/ask/select/1/4')
+        response = self.client.get('/api/ask/select/1/5')
         self.assertEqual(response.status_code, 400)
         response = self.client.get('/api/ask/select/1/3')
         self.assertEqual(response.status_code, 204)
@@ -271,3 +266,9 @@ class AskTestCase(TestCase):
         print ('DEBUG: /api/ask/question')
         for question in data:
             print ('id: ' + str(question['id']) +' / content: '+ question['content'] + ' / select_id: ' + str(question['select_id']))
+
+        response = self.client.get('/api/ask/answer/1')
+        data = json.loads(response.content.decode())
+        print ('DEBUG: /api/ask/answer/1')
+        for answer in data:
+            print ('id: ' + str(answer['id']) + ' / content: ' + answer['content'])

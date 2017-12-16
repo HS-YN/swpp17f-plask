@@ -1,6 +1,7 @@
 from django.test import TestCase, Client
 from .models import UserInfo
-from location.models import getLocationFromCSVFile, LocationL1, LocationL2, LocationL3
+from location.models import LocationL1, LocationL2, LocationL3
+from location.utils import getLocationFromCSVFile
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 import json
