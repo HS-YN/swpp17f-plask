@@ -17,6 +17,7 @@
             <div *ngFor="let answer of question[2]; let i = index" (click)="expand(question)">
                 <div class=answer> [{{answer.author}}] : {{answer.content}}
                 <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id, i)">Choose</button>
+                <span *ngIf="answer.id == question[0].select_id" class="glyphicon glyphicon-ok"></span>
                 </div>
             </div>
             <div class="input-group">
