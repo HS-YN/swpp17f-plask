@@ -36,6 +36,8 @@ export class SearchTabComponent implements OnInit{
     locCode:string[] = [];
     chooseAnswerEnable: boolean = false;
 
+    socket: WebSocket;
+
     ngOnInit(){
         console.log("here");
         this.route.params.subscribe(params=>{
@@ -50,6 +52,10 @@ export class SearchTabComponent implements OnInit{
             })
         console.log(this.temp_questionList);
         this.userService.getUser().then(User => {this.user = User});
+
+        // Create a websocket to send responses
+        this.socket = new WebSocket("ws://localhost:8000/notification");
+
     }
 
     getSearchQuestionList(searchString: string, locCode: string[]):void {
@@ -96,6 +102,15 @@ export class SearchTabComponent implements OnInit{
         }
     }
 
+    // helper function to retrieve quesiton index from question id
+    findQuestion(id): number {
+        for (let i  = 0; i < this.questionList.length; ++i){
+            if(this.questionList[i][0].id === id){
+                return i;
+            }
+        }
+    }
+
     answerClick(id):void{
         if(this.answer=="")
             alert("Please type answer!");
@@ -105,10 +120,23 @@ export class SearchTabComponent implements OnInit{
                     alert("Question could not be sent, please try again");
                 }
                 else {
+
+                    // send notification to the receiver
+                    // only if the answer has not been chosen and the receiver is not the user him/herself
+                    var qindex = this.findQuestion(id);
+                    if ((this.questionList[qindex][0].select_id === -1) && (this.questionList[qindex][0].author != this.user.username)){
+                
+                        var msg = {
+                            type: "message",
+                            q_author: this.questionList[qindex][0].author,
+                            text: this.answer,
+                        }
+                        this.socket.send(JSON.stringify(msg));
+                    }
+
                     alert("Answer successfully posted!");
-                    window.location.reload();
                     this.answer = "";
-                    //this.getSearchQuestionList();
+                    this.getSearchQuestionList(this.searchString, this.locCode);
                 }
             });
         }
