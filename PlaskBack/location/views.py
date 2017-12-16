@@ -1,17 +1,10 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import HttpResponseNotFound, JsonResponse
-from django.forms.models import model_to_dict
-from .models import LocationL1, LocationL2, LocationL3
+
+from .models import LocationL1, LocationL2
+from .utils import loc_to_dict
+
 import json
-
-# MIGHT BE USED / do not check test
-# get location code by name
-
-def loc_to_dict (location):
-    result = {}
-    result['loc_name'] = location.name
-    result['loc_code'] = location.loc_code
-    return result
 
 def getCountries(request):
     if request.method == 'GET': 

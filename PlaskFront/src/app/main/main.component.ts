@@ -1,5 +1,5 @@
 //Import Basic Modules
-import { Component, OnInit, HostListener, ElementRef} from '@angular/core';
+import { Component, OnInit, HostListener, ElementRef, OnDestroy} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -18,7 +18,7 @@ declare var Notification: any;
     templateUrl: './main.component.html',
     styleUrls: [ './main.component.css'],
 })
-export class MainComponent implements OnInit{
+export class MainComponent implements OnInit, OnDestroy{
     constructor(
         private router: Router,
         private route: ActivatedRoute,
@@ -56,16 +56,34 @@ export class MainComponent implements OnInit{
     searchProvinceList: Location[];
     searchCityList: Location[]; //use this to find location code
 
+    //websocket
+    socket: WebSocket;
+
     ngOnInit(): void{
         this.userService.getUser().then(user => {
             this.question.author = user.username;
             this.countryRefresh();
             this.serviceRefresh();
-            // Notification Method
-            this.notify("Plask!", "Thank you! You can now receive notifications :)");
-            //this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
+
+            // Send welcome message :)
+            this.notify("Plask!", "Thank you! You can now receive notifications :)");            
+
+            // Connect to websocket
+            this.socket = new WebSocket("ws://localhost:8000/notification");
+            // Listen for messages
+            this.socket.addEventListener('message', this.receiveAndNotify);        
         });
 
+    }
+
+    receiveAndNotify (event) {
+        if (Notification.permission === "granted"){
+            var options = {
+                body: "Answer has arrived!\n" + event.data,
+            }
+        var notification = new Notification("Plask!", options);
+        setTimeout(notification.close.bind(notification), 5000); 
+        }
     }
 
     goToSettings(): void{
@@ -82,8 +100,6 @@ export class MainComponent implements OnInit{
         this.router.navigateByUrl("/main(tab:maintab;open=true)");
         //(['/main/maintab']);
     }
-
-
 
     sendQuestion(): void{
         if(this.question.content == ""){
@@ -436,7 +452,7 @@ export class MainComponent implements OnInit{
         }
     }
 
-    notifyWithPermission(title: string, body: string){
+    /*notifyWithPermission(title: string, body: string){
         // Check if the browser supports notification
         if (!("Notification" in window)){
             alert("This browser does not support notification :(");
@@ -453,7 +469,13 @@ export class MainComponent implements OnInit{
         // Do not send notification if permission is not granted
         else{
         }
-    }     
+    }*/
+
+    // Remove Event Listener upon OnDestroy cycle
+    ngOnDestroy(): void {
+        this.socket.removeEventListener('message', this.receiveAndNotify);
+    } 
+    
 
 }/* istanbul ignore next */
 
