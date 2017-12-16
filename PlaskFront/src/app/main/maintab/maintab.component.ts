@@ -34,6 +34,8 @@ export class MainTabComponent implements OnInit{
     temp_questionList:Question[] = [];
     chooseAnswerEnable: boolean = false;
 
+    socket: WebSocket;
+
     // Observable
 //    timerSubscription: any;
 //    inactive: boolean = true;
@@ -89,6 +91,15 @@ export class MainTabComponent implements OnInit{
         }
     }
 
+    // helper function to retrieve quesiton index from question id
+    findQuestion(id): number {
+        for (let i  = 0; i < this.questionList.length; ++i){
+            if(this.questionList[i][0].id === id){
+                return i;
+            }
+        }
+    }
+
     answerClick(id):void{
         if(this.answer=="")
             alert("Please type answer!");
@@ -98,8 +109,23 @@ export class MainTabComponent implements OnInit{
                     alert("Question could not be sent, please try again");
                 }
                 else {
+                    // send notification to the receiver
+                    // only if the answer has not been chosen and the receiver is not the user him/herself
+                    var qindex = this.findQuestion(id);
+                    if ((this.questionList[qindex][0].select_id === -1) && (this.questionList[qindex][0].author != this.user.username)){
+                        // TODO: FIX needed - Instead of creating a websocket, use the websocket from main
+                        this.socket = new WebSocket("ws://localhost:8000/notification");
+                        var msg = {
+                            type: "message",
+                            q_author: this.questionList[qindex][0].author,
+                            text: this.answer,
+                        }
+                        console.log("upto this point?");
+                        this.socket.send(JSON.stringify(msg));
+                    }
+
                     alert("Answer successfully posted!");
-                    //window.location.reload();
+
                     this.answer = "";
                     this.getQuestionList();
                 }

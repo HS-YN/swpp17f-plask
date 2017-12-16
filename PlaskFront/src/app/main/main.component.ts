@@ -56,6 +56,9 @@ export class MainComponent implements OnInit{
     searchProvinceList: Location[];
     searchCityList: Location[]; //use this to find location code
 
+    //websocket
+    socket: WebSocket;
+
     ngOnInit(): void{
         this.userService.getUser().then(user => {
             this.question.author = user.username;
@@ -64,6 +67,20 @@ export class MainComponent implements OnInit{
             // Notification Method
             this.notify("Plask!", "Thank you! You can now receive notifications :)");
             //this.notifyWithPermission("Plask!", "Welcome Back " + this.question.author);            
+
+            // Connect to websocket
+            this.socket = new WebSocket("ws://localhost:8000/notification");
+
+            // Listen for messages
+            this.socket.addEventListener('message', function (event) {
+                if (Notification.permission === "granted"){
+                    var options = {
+                        body: "Answer has arrived!\n" + event.data,
+                    }
+                var notification = new Notification("Plask!", options);
+                setTimeout(notification.close.bind(notification), 5000); 
+                }
+            });         
         });
 
     }
@@ -82,8 +99,6 @@ export class MainComponent implements OnInit{
         this.router.navigateByUrl("/main(tab:maintab;open=true)");
         //(['/main/maintab']);
     }
-
-
 
     sendQuestion(): void{
         if(this.question.content == ""){
@@ -454,6 +469,18 @@ export class MainComponent implements OnInit{
         else{
         }
     }     
+
+    // testing Websocket
+    // put username(nickanme, not email) of the receiver in q_author field
+    testWS(){
+        var msg = {
+            type: "message",
+            q_author: "testuser1",
+            text: "Hello testuser1",
+        }
+        this.socket.send(JSON.stringify(msg));
+
+    }
 
 }/* istanbul ignore next */
 
