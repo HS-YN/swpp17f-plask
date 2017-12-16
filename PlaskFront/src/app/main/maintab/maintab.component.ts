@@ -1,6 +1,5 @@
 //Import Basic Modules
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-//import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -36,14 +35,12 @@ export class MainTabComponent implements OnInit{
 
     socket: WebSocket;
 
-    // Observable
-//    timerSubscription: any;
-//    inactive: boolean = true;
-
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
-//        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
+
+        // Create a websocket to send responses
+        this.socket = new WebSocket("ws://localhost:8000/notification");
     }
 
     getQuestionList():void {
@@ -54,6 +51,7 @@ export class MainTabComponent implements OnInit{
             }
         });
     }
+    
     getAnswer(qid:number, qindex:number){
         this.answerService.getAnswer(qid).then(answers => {
             this.questionList[qindex][2] = answers;
@@ -80,14 +78,11 @@ export class MainTabComponent implements OnInit{
             if(question[2].length == 0){ 
                 question[2] = this.getAnswer(question[0].id, qindex);
             }
-//            this.inactive = false;
+
         }
         // collapse if opened
         else{
             question[1] = true;
-//            this.inactive = true;
-//            this.timerSubscription.unsubscribe();
-//            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
     }
 
@@ -113,14 +108,12 @@ export class MainTabComponent implements OnInit{
                     // only if the answer has not been chosen and the receiver is not the user him/herself
                     var qindex = this.findQuestion(id);
                     if ((this.questionList[qindex][0].select_id === -1) && (this.questionList[qindex][0].author != this.user.username)){
-                        // TODO: FIX needed - Instead of creating a websocket, use the websocket from main
-                        this.socket = new WebSocket("ws://localhost:8000/notification");
+                
                         var msg = {
                             type: "message",
                             q_author: this.questionList[qindex][0].author,
                             text: this.answer,
                         }
-                        console.log("upto this point?");
                         this.socket.send(JSON.stringify(msg));
                     }
 
@@ -145,13 +138,5 @@ export class MainTabComponent implements OnInit{
             }
         });
     }
-
-
-    // Unsubscribe all subscriptions in ngOnDestroy
-    /*public ngOnDestroy(): void {
-        if (this.timerSubscription){
-            this.timerSubscription.unsubcribe();
-        }
-    }*/  
 
 }
