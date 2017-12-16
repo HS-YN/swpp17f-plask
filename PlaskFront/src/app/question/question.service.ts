@@ -12,7 +12,6 @@ export class QuestionService{
 
     // list of Urls for API
     private myQuestionUrl = '/api/ask/question'; // receive user's question and POST question
-    private recentQuestionUrl = '/api/ask/question/recent'; // receive recent question
     private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
     private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
     private searchedQuestionUrl = '/api/ask/question/search';
@@ -32,7 +31,7 @@ export class QuestionService{
         let url:string;
         switch(tab){
             case 1: {
-                url = this.recentQuestionUrl;
+                url = this.relatedQuestionUrl;
                 break;
             } case 2: {
                 url = this.myQuestionUrl;
@@ -62,13 +61,6 @@ export class QuestionService{
             .catch(this.handleError);
     }
 /*
-    getRecentQuestion(): Promise<Question[]>{
-        return this.http.get(this.recentQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-
 
     getRelatedQuestion(): Promise<Question[]>{
         return this.http.get(this.relatedQuestionUrl)
