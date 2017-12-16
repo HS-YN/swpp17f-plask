@@ -1,6 +1,5 @@
 //Import Basic Modules
 import { Component, OnInit } from '@angular/core';
-//import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -32,15 +31,9 @@ export class MyQuestionsComponent implements OnInit{
     answer:string = "";
     chooseAnswerEnable: boolean = false;
 
-    // Observable
-//    timerSubscription: any;
-//    inactive: boolean = true;
-
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
-//        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
-
     }
 
     getQuestionList():void {
@@ -51,11 +44,13 @@ export class MyQuestionsComponent implements OnInit{
             }
         });
     }
+
     getAnswer(qid:number, qindex:number){
         this.answerService.getAnswer(qid).then(answers => {
              this.questionList[qindex][2] = answers;
         });
     }
+    
     expand(question):void {
         if(question[1]==true){
             let qindex:number;
@@ -72,7 +67,6 @@ export class MyQuestionsComponent implements OnInit{
             this.answer = ""; //clear answer tab
             question[1] = false;
             this.chooseAnswerEnable = (question[0].author === this.user.username) && (question[0].select_id === -1);
-//            this.inactive = false;
 
             //get answers if it is not loaded
             if(question[2].length == 0){
@@ -81,12 +75,10 @@ export class MyQuestionsComponent implements OnInit{
         }
         else{
             question[1] = true;
-//            this.inactive = true;
-//            this.timerSubscription.unsubscribe();
-//            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
         }
 
     }
+
     answerClick(id):void{
         if(this.answer=="")
             alert("Please type answer!");
@@ -95,9 +87,10 @@ export class MyQuestionsComponent implements OnInit{
                 if(Status != 204) {
                     alert("Answer could not be sent, please try again");
                 }
-                else {
+                else {                   
+
                     alert("Answer successfully posted!");
-                    //window.location.reload();
+
                     this.answer = "";
                     this.getQuestionList();
                 }

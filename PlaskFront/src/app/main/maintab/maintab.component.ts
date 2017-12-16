@@ -1,6 +1,5 @@
 //Import Basic Modules
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
-//import { Observable } from 'rxjs/Rx';
 import { Router } from '@angular/router';
 
 import { User } from '../../user/user';
@@ -34,14 +33,14 @@ export class MainTabComponent implements OnInit{
     temp_questionList:Question[] = [];
     chooseAnswerEnable: boolean = false;
 
-    // Observable
-//    timerSubscription: any;
-//    inactive: boolean = true;
+    socket: WebSocket;
 
     ngOnInit(){
         this.userService.getUser().then(User => {this.user = User});
         this.getQuestionList();
-//        this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());  
+
+        // Create a websocket to send responses
+        this.socket = new WebSocket("ws://localhost:8000/notification");
     }
 
     getQuestionList():void {
@@ -52,6 +51,7 @@ export class MainTabComponent implements OnInit{
             }
         });
     }
+    
     getAnswer(qid:number, qindex:number){
         this.answerService.getAnswer(qid).then(answers => {
             this.questionList[qindex][2] = answers;
@@ -78,14 +78,20 @@ export class MainTabComponent implements OnInit{
             if(question[2].length == 0){ 
                 question[2] = this.getAnswer(question[0].id, qindex);
             }
-//            this.inactive = false;
+
         }
         // collapse if opened
         else{
             question[1] = true;
-//            this.inactive = true;
-//            this.timerSubscription.unsubscribe();
-//            this.timerSubscription = Observable.interval(30000).takeWhile(() => this.inactive).subscribe(() => this.getQuestionList());
+        }
+    }
+
+    // helper function to retrieve quesiton index from question id
+    findQuestion(id): number {
+        for (let i  = 0; i < this.questionList.length; ++i){
+            if(this.questionList[i][0].id === id){
+                return i;
+            }
         }
     }
 
@@ -98,8 +104,21 @@ export class MainTabComponent implements OnInit{
                     alert("Question could not be sent, please try again");
                 }
                 else {
+                    // send notification to the receiver
+                    // only if the answer has not been chosen and the receiver is not the user him/herself
+                    var qindex = this.findQuestion(id);
+                    if ((this.questionList[qindex][0].select_id === -1) && (this.questionList[qindex][0].author != this.user.username)){
+                
+                        var msg = {
+                            type: "message",
+                            q_author: this.questionList[qindex][0].author,
+                            text: this.answer,
+                        }
+                        this.socket.send(JSON.stringify(msg));
+                    }
+
                     alert("Answer successfully posted!");
-                    //window.location.reload();
+
                     this.answer = "";
                     this.getQuestionList();
                 }
@@ -119,13 +138,5 @@ export class MainTabComponent implements OnInit{
             }
         });
     }
-
-
-    // Unsubscribe all subscriptions in ngOnDestroy
-    /*public ngOnDestroy(): void {
-        if (this.timerSubscription){
-            this.timerSubscription.unsubcribe();
-        }
-    }*/  
 
 }
