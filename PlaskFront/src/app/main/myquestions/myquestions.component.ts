@@ -98,13 +98,13 @@ export class MyQuestionsComponent implements OnInit{
         }
     }
 
-    chooseAnswer(qid, aid): void{
+    chooseAnswer(qid, aid, i): void{
         this.questionService.selectAnswer(qid, aid).then(Status=>{
             if(Status != 204){
                 alert("Choice could not be sent, please try again");
             } else {
                 alert("Answer successfully selected!");
-                this.questionList[qid][0].select_id = aid;
+                this.questionList[i][0].select_id = aid;
                 this.chooseAnswerEnable = false;
             }
         });
