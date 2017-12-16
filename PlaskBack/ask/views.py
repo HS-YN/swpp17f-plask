@@ -1,10 +1,8 @@
 from django.http import HttpResponse, HttpResponseNotAllowed
 from django.http import JsonResponse, HttpResponseNotFound
 
-from user.views import tokenWith, servParse, locParse, setService, setLocation
-from user.views import login_required
 from .models import Question, Answer
-
+from user.utils import Parse, SetInfo, login_required
 from .utils import question_to_dict, answer_to_dict, getQuestion_LocCode, Search, Related, getAnswerInOrder
 
 from datetime import datetime, timedelta, time
@@ -23,14 +21,14 @@ def question(request):
         author = request.user.userinfo
         req_body = json.loads(request.body.decode())
         content = req_body['content']
-        locations = locParse(req_body['locations'])
-        services = servParse(req_body['services'])
+        locations = Parse.locParse(req_body['locations'])
+        services = Parse.servParse(req_body['services'])
         new_question = Question(
             author=author, content=content, time=datetime.now())
         new_question.save()
-        setService(new_question, services)
+        SetInfo.setService(new_question, services)
         try :
-            setLocation(new_question, locations, Question)
+            SetInfo.setLocation(new_question, locations, Question)
         except Question.DoesNotExist:
             return HttpResponse(status=400)
         return HttpResponse(status=204)
@@ -79,7 +77,7 @@ def question_search(request):
             return HttpResponse (status = 400) # invalid location code input
 
         MAX_SEARCH_COUNT = 50
-        search_words = tokenWith(search_string.replace('%20', ' '), ' ')
+        search_words = Parse.tokenWith(search_string.replace('%20', ' '), ' ')
         result = []
         for question in questions:
             match_point = Search.getQuestionMatchPoint(question, search_words)

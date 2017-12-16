@@ -1,5 +1,5 @@
-from user.views import getLocationStr, getServiceStr
-from location.views import LocationL1, LocationL2, LocationL3
+from user.utils import Parse
+from location.models import LocationL1, LocationL2, LocationL3
 from .models import Question, Answer
 
 from datetime import datetime, timedelta, time
@@ -10,8 +10,8 @@ def question_to_dict(question):
     result['content'] = question.content
     result['time'] = str(question.time)
     result['author'] = question.author.nickname
-    result['locations'] = getLocationStr(question)
-    result['services'] = getServiceStr(question)
+    result['locations'] = Parse.getLocationStr(question)
+    result['services'] = Parse.getServiceStr(question)
     if question.selAnswer is None:
         result['select_id'] = -1
     else: result['select_id'] = question.selAnswer.id

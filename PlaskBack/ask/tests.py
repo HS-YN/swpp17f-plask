@@ -2,7 +2,7 @@ from django.test import TestCase, Client
 
 from .models import Question, Answer
 from user.models import UserInfo
-from location.models import getLocationFromCSVFile
+from location.utils import getLocationFromCSVFile
 
 from datetime import datetime
 from django.contrib.auth import authenticate
