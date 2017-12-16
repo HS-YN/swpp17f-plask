@@ -13,9 +13,9 @@
                 <span class="label label-info">Location</span> {{question[0].locations}} <br>
                 <span class="label label-info">Services</span> {{question[0].services}}
             </div>
-            <div *ngFor="let answer of question[2]" (click)="expand(question)">
+            <div *ngFor="let answer of question[2]; let i = index" (click)="expand(question)">
                 <div class=answer> [{{answer.author}}] : {{answer.content}}
-                <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id)">Choose</button>
+                <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id, i)">Choose</button>
                 </div>
             </div>
             <div class="input-group">
