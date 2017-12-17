@@ -9,6 +9,7 @@ export class Question{
     locations: string ='';
     services: string ='';
     select_id: number;
+    time: string='';
 
     //TODO: Determine if we need to add Question member
 
