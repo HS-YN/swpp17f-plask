@@ -7,6 +7,7 @@
         <div class="question-list-item" (click)="expand(question)">
             <h4> {{question[0].content}}</h4>
             <h5 id="author"> {{question[0].author}}</h5>
+            <h6 id="time"> {{question[3]}} </h6>
             <span *ngIf="question[0].select_id != -1"class="label label-primary">Answered</span>
         </div>
         <div class="question-list-item" [hidden]="question[1]">
