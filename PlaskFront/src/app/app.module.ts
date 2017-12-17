@@ -24,7 +24,6 @@ import { AnswerService } from './answer/answer.service';
 import { AuthService } from './authentication/auth.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
 import { TabService } from './main/tab.service';
-import { MainService } from './main/main.service';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -60,7 +59,6 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         AuthService,
         AuthGuardService,
         TabService,
-        MainService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
         SearchTabComponent,

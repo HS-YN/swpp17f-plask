@@ -38,12 +38,12 @@
         </div>
         <div>
             <label>Location:</label>
-            <select [(ngModel)]="searchCountry" name="sCountry" (ngModelChange)="countrySearch($event)">
+            <select [(ngModel)]="searchCountry" name="sCountry" (ngModelChange)="countrySelect($event, 'searchCountry', 'searchProvince', 'searchCity', 'searchProvinceList', 'searchCityAutoComplete')">
                 <option> Country </option>
                 <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
             </select>
 
-            <select *ngIf="provinceList.length>0" [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
+            <select [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSelect($event, 'searchCountry', 'searchProvince', 'searchCity', 'searchProvinceList', 'searchCityList', 'searchCityAutoComplete')">
                 <option> Province </option>
                 <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
             </select>
@@ -79,12 +79,12 @@
 
 
                 <label>Location:</label>
-                <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
+                <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event, 'askCountry', 'askProvince', 'askCity', 'provinceList', 'cityAutoComplete')">
                     <option> Country </option>
                     <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
                 </select>
 
-                <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
+                <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event, 'askCountry', 'askProvince', 'askCity', 'provinceList', 'cityList', 'cityAutoComplete')">
                     <option> Province </option>
                     <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
                 </select>
