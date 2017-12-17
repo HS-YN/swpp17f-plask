@@ -82,7 +82,7 @@ export class SearchTabComponent implements OnInit{
                 for(let q of questions){
                     this.questionList.push([q, true, []]);
                 }
-                alert("Search Complete!");
+                //alert("Search Complete!");
             }
         });
     }
@@ -140,7 +140,7 @@ export class SearchTabComponent implements OnInit{
                     // only if the answer has not been chosen and the receiver is not the user him/herself
                     var qindex = this.findQuestion(id);
                     if ((this.questionList[qindex][0].select_id === -1) && (this.questionList[qindex][0].author != this.user.username)){
-                
+
                         var msg = {
                             type: "message",
                             q_author: this.questionList[qindex][0].author,
@@ -168,5 +168,5 @@ export class SearchTabComponent implements OnInit{
             }
         });
     }
-    
+
 }

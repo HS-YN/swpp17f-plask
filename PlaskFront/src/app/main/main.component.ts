@@ -1,5 +1,5 @@
-//Import Basic Modules
-import { Component, OnInit, HostListener, ElementRef, OnDestroy} from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
+import { ElementRef, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { User } from '../user/user';
@@ -9,8 +9,10 @@ import { Location } from '../location/location';
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
+import { MainService } from './main.service';
 
 import { AutoCompleteComponent } from '../interface/autocomplete.component';
+
 declare var Notification: any;
 
 @Component({
@@ -18,45 +20,45 @@ declare var Notification: any;
     templateUrl: './main.component.html',
     styleUrls: [ './main.component.css'],
 })
+
 export class MainComponent implements OnInit, OnDestroy{
+
     constructor(
         private router: Router,
         private route: ActivatedRoute,
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
+        private mainService: MainService,
         private elementRef: ElementRef,
     ){ }
 
-    question:Question = {id:0, content:"", author:"", locations:"", services:"", select_id:-1};
+    question:Question = {id:0, content:"", author:"",
+        locations:"", services:"", select_id:-1};
 
     countryList: Location[];
-    provinceList: Location[];
+    provinceList: Location[] = [];
     cityList: Location[];
-    cityNameList: string[];
-    cityAutoComplete: AutoCompleteComponent;
-
-    selectedCountry: string = "";
-    selectedProvince: string = "";
-    selectedCity: string = "";
-
     serviceList: string[]; //List of service tags from Backend
-    serviceAutoComplete: AutoCompleteComponent;
-    questionServiceList: string[]; //List for visualizing current question service tags
-    serviceTag: string = ""; //User-input string
-
-    //variables for searching
-    searchString: string = "";
-    searchCountry: string = "";
-    searchNation: string = "";
-    searchProvince: string = "";
-    searchCity: string = "";
-    searchCityNameList: string[];
-    searchCityAutoComplete: AutoCompleteComponent;
     searchProvinceList: Location[];
     searchCityList: Location[]; //use this to find location code
 
-    //websocket
+    askCountry: string = "";
+    askProvince: string = "";
+    askCity: string = "";
+
+    questionServiceList: string[]; //List for current question service tags
+    serviceTag: string = ""; //User-input string
+
+    searchString: string = "";
+    searchCountry: string = "";
+    searchProvince: string = "";
+    searchCity: string = "";
+
+    cityAutoComplete: AutoCompleteComponent;
+    serviceAutoComplete: AutoCompleteComponent;
+    searchCityAutoComplete: AutoCompleteComponent;
+
     socket: WebSocket;
 
     ngOnInit(): void{
@@ -66,14 +68,12 @@ export class MainComponent implements OnInit, OnDestroy{
             this.serviceRefresh();
 
             // Send welcome message :)
-            this.notify("Plask!", "Thank you! You can now receive notifications :)");            
+            this.notify("Plask!", "Thank you! You can now receive notifications :)");
 
-            // Connect to websocket
+            // Connect to websocket & Listen for messages
             this.socket = new WebSocket("ws://localhost:8000/notification");
-            // Listen for messages
-            this.socket.addEventListener('message', this.receiveAndNotify);        
+            this.socket.addEventListener('message', this.receiveAndNotify);
         });
-
     }
 
     receiveAndNotify (event) {
@@ -82,7 +82,7 @@ export class MainComponent implements OnInit, OnDestroy{
                 body: "Answer has arrived!\n" + event.data,
             }
         var notification = new Notification("Plask!", options);
-        setTimeout(notification.close.bind(notification), 5000); 
+        setTimeout(notification.close.bind(notification), 5000);
         }
     }
 
@@ -94,8 +94,6 @@ export class MainComponent implements OnInit, OnDestroy{
         this.userService.signOut().then(() => this.router.navigate(['/signin']));
     }
 
-
-    //Route between tabs
     gotoMainTab(): void{
         this.router.navigateByUrl("/main(tab:maintab;open=true)");
         //(['/main/maintab']);
@@ -106,130 +104,118 @@ export class MainComponent implements OnInit, OnDestroy{
             alert("Question is Empty!");
         }
         else{
-            // first bind the location tags to the question
-            if(this.selectedCountry == ""){
+            if(this.askCountry == ""){
                 alert("Please select country!");
                 return;
             }
-            // NOTE: cityAutoComplete does not exist if only country is selected           
             if (this.cityAutoComplete != null){
-                this.selectedCity = this.cityAutoComplete.query;
-         
-                if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
+                this.askCity = this.cityAutoComplete.query;
+                if((this.askCity!="") &&
+                    (this.cityAutoComplete.rawList.indexOf(this.askCity)==-1)) {
                     alert("Invalid city name!");
                     return;
                 }
             }
-            var newLocation: string = this.selectedCountry;
-            if(this.selectedProvince != ""){
-                newLocation = newLocation + '/' + this.selectedProvince;
+
+            var newLocation: string = this.askCountry;
+            if(this.askProvince != ""){
+                newLocation = newLocation + '/' + this.askProvince;
+                if(this.askCity != ""){
+                    newLocation = newLocation + '/' + this.askCity;
+                }
             }
-            if(this.selectedCity != ""){
-                newLocation = newLocation + '/' + this.selectedCity;
-            }
-            // Notice that we do not apend, but replace (Question has a single location)
             this.question.locations = newLocation + ';';
-            console.log(this.question.locations);
-            // Send Question to Backend
+
             let path = this.route.snapshot.url.join('/')
 
             this.questionService.postQuestion(this.question)
             .then(Status => {
-                if(Status != 204) {alert("Question could not be sent, please try again");}
-                else {alert("Question successfully plasked!");}
+                if(Status != 204) {
+                    alert("Question could not be sent, please try again");
+                }
+                else {
+                    alert("Question successfully plasked!");
+                }
             }).then(() => this.router.navigateByUrl(
                 '/settings', {skipLocationChange: true})).then(
             () => this.router.navigate([path]));
 
-            // Reset the question bar
             this.question.content = "";
-            this.question.services ="";
-            this.question.locations="";
+            this.question.services = "";
+            this.question.locations = "";
             this.questionServiceRefresh();
             this.countryRefresh();
 
-            // Delete only if cityAutoComplete exists
             if(this.cityAutoComplete != null){
                 delete this.cityAutoComplete;
             }
-            this.selectedCountry="";
-            this.selectedProvince="";
-            this.selectedCity= "";
-            this.provinceList= null;
-            this.cityList= null;
-
+            this.askCountry = "";
+            this.askProvince = "";
+            this.askCity = "";
+            this.provinceList = null;
+            this.cityList = null;
         }
     }
-
-    // Methods Related to Location Tags of a Question
+/*
     getLocationByName (locList: Location[], name: string): Location {
-        for (var i = 0; locList.length > i; i++) {
-            if (name.localeCompare (locList[i].loc_name) === 0)
+        for (var i = 0; i < locList.length; i++) {
+            if (name.localeCompare(locList[i].loc_name) === 0)
                 return locList[i];
         }
         return null;
     }
-
+*/
     countryRefresh(): void {
         this.locationService.getCountryList().then(country => {
-                if(0 >= country.length)
+                if(country.length <= 0)
                     this.countryList = null;
                 else
                     this.countryList = country;
             })
-    }
+    }//Due to NgOnInit, this function cannot be detached from this component.
 
     countrySelect(country: string): void {
-        // Guard against selecting dropdown list as option
-        if (country == 'Nation'){
-            this.selectedCountry = "";
-        }
-        else{
-            this.selectedCountry = country;
-        }
-
-        if(country != 'Nation') {
-            this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
-        } else {
+        if (country == 'Country'){
+            this.askCountry = "";
             this.provinceList = null;
         }
-        this.cityNameList = [];
+        else{
+            this.askCountry = country;
+            this.provinceRefresh(this.mainService.getLocationByName (
+                this.countryList, country).loc_code, this.provinceList);
+            console.log(this.provinceList);
+        }
         if (this.cityAutoComplete != null){
             delete this.cityAutoComplete;
         }
-        this.selectedProvince= "";
-        this.selectedCity = "";
+        this.askProvince= "";
+        this.askCity = "";
     }
 
-    provinceRefresh(country_code: number): void {
-        //this.provinceList = provinceListData;
+    provinceRefresh(country_code: number, provinceList: Location[]): void {
         this.locationService.getLocationList(country_code.toString())
             .then(province => {
                 if(province.length <= 0)
-                    this.provinceList = null;
+                    provinceList = [];
                 else
-                    this.provinceList = province;
+                    provinceList = province;
             })
     }
 
     provinceSelect(province: string): void {
-        // Allow a user to reset province
         if (province == 'Province'){
-            this.selectedProvince = '';
+            this.askProvince = '';
+            this.askCity = "";
+            if (this.cityAutoComplete != null){
+                delete this.cityAutoComplete;
+            }
         }
         else{
-            this.selectedProvince = province;
+            this.askProvince = province;
+            this.askCity = "";
+            this.cityRefresh(this.mainService.getLocationByName (this.countryList, this.askCountry).loc_code,
+                this.mainService.getLocationByName (this.provinceList, province).loc_code);
         }
-        
-        if(province != 'Province') {
-            this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
-                this.getLocationByName (this.provinceList, province).loc_code);
-        }
-        this.selectedCity = "";
-        if (this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-        this.cityNameList = [];
     }
 
     cityRefresh(country_code: number, province_code: number): void {
@@ -240,10 +226,10 @@ export class MainComponent implements OnInit, OnDestroy{
                     this.cityList = null;
                 else {
                     this.cityList = city;
-                    this.cityNameList = [];
+                    var cityNameList = [];
                     for (var i = 0; i < this.cityList.length; i++)
-                        this.cityNameList.push(this.cityList[i].loc_name);
-                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, this.cityNameList);
+                        cityNameList.push(this.cityList[i].loc_name);
+                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cityNameList);
                 }
             })
     }
@@ -308,19 +294,18 @@ export class MainComponent implements OnInit, OnDestroy{
     //Methods for searching, with tagging location
     countrySearch(country: string): void {
         // Guard against selecting dropdown list as option
-        if (country == "Nation"){
+        if (country == "Country"){
             this.searchCountry = "";
         }
         else{
             this.searchCountry = country;
         }
 
-        if(country != 'Nation') {
-            this.searchProvinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
+        if(country != 'Country') {
+            this.provinceRefresh(this.mainService.getLocationByName (this.countryList, country).loc_code, this.searchProvinceList);
         } else {
             this.searchProvinceList = null;
         }
-        this.searchCityNameList = [];
         if (this.searchCityAutoComplete != null){
             delete this.searchCityAutoComplete;
         }
@@ -339,22 +324,19 @@ export class MainComponent implements OnInit, OnDestroy{
     }
 
     provinceSearch(province: string): void {
-        // Allow a user to reset province
-        if (province == 'Province'){
+        if (province == 'Province') {
             this.searchProvince = "";
+            this.searchCity = "";
+            if(this.searchCityAutoComplete != null){
+                delete this.searchCityAutoComplete;
+            }
         }
-        else{
+        else {
             this.searchProvince = province;
+            this.searchCity = "";
+            this.searchCityRefresh(this.mainService.getLocationByName (this.countryList, this.searchCountry).loc_code,
+                this.mainService.getLocationByName (this.searchProvinceList, province).loc_code);
         }
-        if(province != 'Province') {
-            this.searchCityRefresh(this.getLocationByName (this.countryList, this.searchCountry).loc_code,
-                this.getLocationByName (this.searchProvinceList, province).loc_code);
-        }
-        this.searchCity = "";
-        if(this.searchCityAutoComplete != null){
-            delete this.searchCityAutoComplete;
-        }
-        this.searchCityNameList = [];
     }
 
     searchCityRefresh(country_code: number, province_code: number): void {
@@ -365,17 +347,17 @@ export class MainComponent implements OnInit, OnDestroy{
                     this.searchCityList = null;
                 else {
                     this.searchCityList = city;
-                    this.searchCityNameList = [];
+                    var searchCityNameList = [];
                     for (var i = 0; i < this.searchCityList.length; i++)
-                        this.searchCityNameList.push(this.searchCityList[i].loc_name);
-                    this.searchCityAutoComplete = new AutoCompleteComponent(this.elementRef, this.searchCityNameList);
+                        searchCityNameList.push(this.searchCityList[i].loc_name);
+                    this.searchCityAutoComplete = new AutoCompleteComponent(this.elementRef, searchCityNameList);
                 }
             })
     }
     //method called by clicking search button
     search():void {
         let index:Number[] = [-1, -1, -1] // 0:country, 1:province, 2:city code num
-        if((this.searchNation == "")){
+        if((this.searchCountry == "")){
             alert("Please select country tag!");
             return;
         }
@@ -385,8 +367,8 @@ export class MainComponent implements OnInit, OnDestroy{
         }
         // NOTE: searchCityAutoComplete does not exist if only country is selected
         if(this.searchCityAutoComplete != null ){
-            this.searchCity = this.searchCityAutoComplete.query;            
-        
+            this.searchCity = this.searchCityAutoComplete.query;
+
             if((this.searchCity != "") && (this.searchCityAutoComplete.rawList.indexOf(this.searchCity) == -1)){
                 console.log(this.searchCity);
                 alert("Invalid city name!");
@@ -394,7 +376,7 @@ export class MainComponent implements OnInit, OnDestroy{
             }
         }
         for(let ctry of this.countryList){
-           if(ctry.loc_name === this.searchNation)
+           if(ctry.loc_name === this.searchCountry)
                index[0] = ctry.loc_code;
         }
         if(this.searchProvince != "")
@@ -464,7 +446,7 @@ export class MainComponent implements OnInit, OnDestroy{
                 body: body,
             }
             var notification = new Notification(title, options);
-            setTimeout(notification.close.bind(notification), 5000); 
+            setTimeout(notification.close.bind(notification), 5000);
         }
         // Do not send notification if permission is not granted
         else{
@@ -474,28 +456,7 @@ export class MainComponent implements OnInit, OnDestroy{
     // Remove Event Listener upon OnDestroy cycle
     ngOnDestroy(): void {
         this.socket.removeEventListener('message', this.receiveAndNotify);
-    } 
-    
+    }
+
 
 }/* istanbul ignore next */
-
-
-// Mock Data for checking service tag functionality
-const serviceListData = [
-    'Travel',
-    'Cafe',
-    'SNU',
-    'Pub',
-    'Coffee',
-    'Museum',
-    'Computer',
-    'SWPP',
-    'Computer',
-    'Karaoke',
-    'Restaurant',
-    'Pasta',
-    'Bookstore',
-    'Academy',
-    'Study',
-    'Gym',
-];

@@ -24,7 +24,7 @@
 
             <button class="btn pull-right" (click)="goSignOut()">
                 <span class="glyphicon glyphicon-log-out"></span>
-            </button>           
+            </button>
         </ul>
     </div>
     <form class="navbar-form" role="search">
@@ -38,12 +38,12 @@
         </div>
         <div>
             <label>Location:</label>
-            <select [(ngModel)]="searchNation" name="sCountry" (ngModelChange)="countrySearch($event)">
-                <option> Nation </option>
+            <select [(ngModel)]="searchCountry" name="sCountry" (ngModelChange)="countrySearch($event)">
+                <option> Country </option>
                 <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
             </select>
 
-            <select  [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
+            <select *ngIf="provinceList.length>0" [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
                 <option> Province </option>
                 <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
             </select>
@@ -80,7 +80,7 @@
 
                 <label>Location:</label>
                 <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
-                    <option> Nation </option>
+                    <option> Country </option>
                     <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
                 </select>
 
