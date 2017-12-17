@@ -28,7 +28,7 @@ export class MainTabComponent implements OnInit{
     { }
 
     user: User = new User();
-    questionList: [Question, boolean,Answer[]][];
+    questionList: [Question, boolean, Answer[], string][];
     answer:string = "";
     temp_questionList:Question[] = [];
     chooseAnswerEnable: boolean = false;
@@ -47,7 +47,9 @@ export class MainTabComponent implements OnInit{
         this.questionList = [];
         this.questionService.getQuestion(1).then(questions =>{
             for(let q of questions){
-                this.questionList.push([q, true, []]);
+                let str = q.time;
+                let splitted = str.split(".");
+                this.questionList.push([q, true, [], splitted[0]]);
             }
         });
     }

@@ -34,6 +34,11 @@ a {
     padding-right: 15px;
     
 }
+#time {
+    text-align:right;
+    color: gray;
+    padding-right: 15px;
+}
 .tag {
     text-align: right;
     color: black;

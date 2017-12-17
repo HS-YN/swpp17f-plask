@@ -28,7 +28,7 @@ export class MainComponent implements OnInit, OnDestroy{
         private elementRef: ElementRef,
     ){ }
 
-    question:Question = {id:0, content:"", author:"", locations:"", services:"", select_id:-1};
+    question:Question = {id:0, content:"", author:"", locations:"", services:"", select_id:-1, time:""};
 
     countryList: Location[];
     provinceList: Location[];
