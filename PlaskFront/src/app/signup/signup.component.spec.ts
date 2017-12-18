@@ -68,9 +68,67 @@ describe('SignUpComponent', () => {
         
     })
 
-    it('should properly update NotiFrequency')
+    it('should properly update NotiFrequency', async(() => {
+        comp.userNotiFrequencySelect(20);
 
-/*
+        fixture.whenStable().then(() => {
+            expect(comp.user.notiFrequency).toEqual(20);
+        });
+    }));
+
+    it('should not accecpt email with more than 100 characters', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.user.email = "thisisaemailwithmorethan100charactersthisisaemailwithmorethan100charactersthisisaemailwithmorethan100characters";
+        comp.SignUp();
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Invalid email address!");    
+        });
+    }));
+
+    it('should not allow signup with no location tag', async(() => {
+        let spy= spyOn(window, "alert");
+        comp.user.email = "test@email.com";
+        comp.user.password = "iluvswpp";
+        comp.passwordConfirmation = "iluvswpp";
+        comp.user.locations = "";
+        comp.SignUp();
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("You need to add at least one location!");
+        });
+    }));
+
+    it('should not allow signup with no service tag', async(() => {
+        let spy= spyOn(window, "alert");
+        comp.user.email = "test@email.com";
+        comp.user.password = "iluvswpp";
+        comp.passwordConfirmation = "iluvswpp";
+        comp.user.locations = "Korea;";
+        comp.user.services = "";
+        comp.SignUp();
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("You need to add at least one service");
+        });        
+    }));
+
+    it('shold successfully signup a user', async(() => {
+        let spy= spyOn(window, "alert");
+        let spy2 = spyOn(comp, "goBack");
+        comp.user.email = "test@email.com";
+        comp.user.password = "iluvswpp";
+        comp.passwordConfirmation = "iluvswpp";
+        comp.user.locations = "Korea;";
+        comp.user.services = "music;";
+        comp.SignUp();
+
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Successfully signed up! Please sign in.");
+            expect(spy2).toHaveBeenCalled();
+        });
+    }));
+
     it('can navigate to main', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.goToMain();
@@ -82,6 +140,18 @@ describe('SignUpComponent', () => {
         comp.goBack();
         expect(navigateSpy).toHaveBeenCalledWith(['/signin']);
     }));
+
+    it('should update notifrequency when onChange is called', async(() => {
+        comp.onChange(20);
+
+        fixture.whenStable().then(() => {
+            expect(comp.user.notiFrequency).toEqual(20);
+        })
+    }))
+
+/*    it('should properly refresh province list', async(() => {
+        comp.provinceRefresh()
+    }))
 
     it('should set userLocationList as null when user.locations is empty', async (() => {
         comp.user.locations = "";
@@ -426,10 +496,10 @@ describe('SignUpComponent', () => {
         fixture.whenStable().then(() => {
         expect(comp.user.notiFrequency).toEqual(3);            
         })
-    }))
+    }))*/
 
 
-});*/
+});
 
 
 export const fakeCountryList: Location[] = [ 
@@ -453,6 +523,10 @@ class FakeLocationService {
         return Promise.resolve<Location[]>(fakeCountryList);
     }
 
+    /*getLocationList(country_code: number, provinceList: string): Promise<Location[]> {
+        return 
+    }*/
+
    /* getUserList(location: string): Promise<string> {
         return Promise.resolve<string>(fakeLocationList[1]);
     }*/
@@ -472,6 +546,10 @@ class FakeUserService {
           }
       }
       return Promise.resolve<number>(403);
+  }
+
+  signUp(user: User): Promise<number> {
+      return Promise.resolve<number>(201); // assume success :)
   }
 
   getService(): Promise<string[]> {
