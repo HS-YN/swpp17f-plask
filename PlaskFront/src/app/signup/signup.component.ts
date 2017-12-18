@@ -56,7 +56,7 @@ export class SignUpComponent implements OnInit {
             if(status == 'True')    this.router.navigate(['/main']);
         })
         this.countryRefresh();
-        this.serviceRefresh();
+        this.serviceFetch();
         this.notiFrequencyList = [10, 20, 30, 60, 120]
         this.selectedFreq = this.notiFrequencyList[0];
     }
@@ -133,21 +133,11 @@ export class SignUpComponent implements OnInit {
 
     //Methods for Service Tags
 
-    //Update service tag visualization
-    userServiceRefresh(): void {
-        if(this.user.services == '') {
-            this.userServiceList = [];
-            return;
-        }
-        this.userServiceList = this.user.services
-            .substr(0, this.user.services.length-1).split(';');
-    }//DUplicate
-
-    serviceRefresh(): void {
+    serviceFetch(): void {
         this.userService.getService()
             .then(service => {
                 if(service.length <= 0)
-                    this.serviceList = null;
+                    this.serviceList = [];
                 else {
                     this.serviceList = service;
                     this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
@@ -157,8 +147,13 @@ export class SignUpComponent implements OnInit {
                 }
             })
     }
+    //'question' corresponds to user in serviceRefresh/Delete component
+    serviceRefresh: (question: string,
+        questionServiceList: string) => void = this.tagService.serviceRefresh;
 
-    //Select a Tag from the exisitng list of service tags
+    serviceDelete: (deleteService: string, question: string,
+        questionServiceList: string) => void = this.tagService.serviceDelete;
+
     userServiceSelect(service: string): void {
         var validity_check: string = service + ';';
         if (this.user.services.indexOf(validity_check) != -1){
@@ -170,14 +165,8 @@ export class SignUpComponent implements OnInit {
             return;
         }
         this.user.services = this.user.services + service + ';';
-        this.userServiceRefresh();
+        this.serviceRefresh("user", "userServiceList");
     }
-
-    userServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.services = this.user.services.replace(deleteService, '');
-        this.userServiceRefresh();
-    }//duplicate
 
     userServiceAdd(): void {
         this.newService = this.serviceAutoComplete.query;
@@ -200,14 +189,6 @@ export class SignUpComponent implements OnInit {
         }
     }
 
-
-    //Methods For Blocked Service Tags
-    userBlockedServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
-        this.userBlockedServiceRefresh();
-    }//duplicate
-
     userBlockedServiceAdd(): void {
         this.newBlockService = this.blockAutoComplete.query;
         if(this.newBlockService == ""){
@@ -227,28 +208,32 @@ export class SignUpComponent implements OnInit {
         }
         else{
             this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
-            this.userBlockedServiceRefresh();
+            this.blockServiceRefresh();
             this.newBlockService = "";
             this.blockAutoComplete.query = "";
         }
     }
-    userBlockedServiceRefresh(): void {
-        if(this.user.blockedServices == '') {
-            this.userBlockedServiceList = [];
-            return;
-        }
-        this.userBlockedServiceList = this.user.blockedServices
-        .substr(0, this.user.blockedServices.length-1).split(';');
-    }//dupliate
-    //Method for setting notification frequency
+
+    blockServiceRefresh(): void {
+        if(this.user.blockedServices == "")
+            this.userBlockedServiceList = null;
+        else
+            this.userBlockedServiceList = this.user.blockedServices
+                .substr(0, this.user.blockedServices.length-1).split(';');
+    }
+
+    blockServiceDelete(deleteService: string): void {
+        deleteService = deleteService + ';';
+        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
+        this.blockServiceRefresh();
+    }
+
     userNotiFrequencySelect(freq: number): void {
         this.user.notiFrequency = freq;
-        this.userBlockedServiceRefresh();
     }
 
     SignUp(): void {
-        var email_check = new RegExp('^[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff@]+@[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff\\.@]+\\.[a-z]{2,3}$')
-        if(this.user.email.length >= 100 || !email_check.test(this.user.email)) {
+        if(this.user.email.length >= 100) {
             alert("Invalid email address!");
         }
         else if(this.user.password == this.passwordConfirmation){

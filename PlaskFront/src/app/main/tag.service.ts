@@ -90,4 +90,19 @@ export class TagService {
                     this[provinceList], province).loc_code, cityList, cityAuto);
         }
     }
+
+    serviceRefresh(question: string, questionServiceList: string): void {
+        if(this[question].services == "")
+            this[questionServiceList] = null;
+        else
+            this[questionServiceList] = this[question].services
+                .substr(0, this[question].services.length-1).split(';');
+    }
+
+    serviceDelete(deleteService: string, question: string,
+        questionServiceList: string): void {
+        deleteService = deleteService + ';';
+        this[question].services = this[question].services.replace(deleteService, '');
+        this.serviceRefresh(question, questionServiceList);
+    }
 }

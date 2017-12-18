@@ -79,7 +79,7 @@
 
         <span *ngFor="let userService of userServiceList">
           <span class="label label-success">{{userService}}</span>
-          <button class="badge" (click)="userServiceDelete(userService); $event.stopPropagation()">
+          <button class="badge" (click)="serviceDelete(userService, 'user', 'userServiceList'); $event.stopPropagation()">
           x</button> &nbsp;
         </span>
         <br>
@@ -112,7 +112,7 @@
         <label> Blocked Services: </label>
         <span *ngFor="let userBlockedService of userBlockedServiceList">
             <span class="label label-success">{{userBlockedService}}</span>
-            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            <button class="badge" (click)="serviceDelete(userBlockedService, 'user', 'userBlockedServiceList'); $event.stopPropagation()">
             x</button> &nbsp;
         </span>
         <br>
