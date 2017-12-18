@@ -13,7 +13,8 @@ matrix:
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
-        - mysql -e 'CREATE DATABASE [blog]'
+        - mysql -e 'CREATE DATABASE blog'
+        - mysql -e 'USE blog'
         - cd PlaskBack
         - python3 manage.py makemigrations
         - python3 manage.py migrate
