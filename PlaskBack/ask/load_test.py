@@ -16,8 +16,21 @@ class UserAppTasks(TaskSet):
 		response = self.client.get('/api/ask/question')
 		data = json.loads(response.content.decode())
 		for question in data:
-			self.client.get('/api/ask/answer/' + str(question.id))
+			self.client.get('/api/ask/answer/' + str(question['id']))
 
+	@task
+	def question_related(self):
+		response = self.client.get('/api/ask/question/related')
+		data = json.loads(response.content.decode())
+		for question in data:
+			self.client.get('/api/ask/answer/' + str(question['id']))
+
+	@task
+	def question_answer(self):
+		response = self.client.get('/api/ask/question/answer')
+		data = json.loads(response.content.decode())
+		for question in data:
+			self.client.get('/api/ask/answer/' + str(question['id']))
 
 class WebsiteUesr(HttpLocust):
 	task_set = UserAppTasks
