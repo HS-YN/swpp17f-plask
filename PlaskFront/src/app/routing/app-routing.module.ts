@@ -7,6 +7,8 @@ import { SignInComponent } from '../signin/signin.component';
 import { MainComponent } from '../main/main.component';
 import { SignUpComponent } from '../signup/signup.component';
 import { SettingsComponent } from '../main/settings/settings.component';
+import { BlankComponent } from '../miscellaneous/blank.component';
+import { PageNotFoundComponent } from '../miscellaneous/pagenotfound.component';
 
 import { AuthGuardService as AuthGuard } from '../authentication/auth-guard.service';
 import { RedirectService as Redirect } from '../authentication/redirect.service';
@@ -18,7 +20,9 @@ const routes: Routes = [
     { path: 'signup', component: SignUpComponent, canActivate: [Redirect] },
     { path: 'main', component: MainComponent, canActivate: [AuthGuard]},
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard] },
-
+    { path: 'blank', component: BlankComponent },
+    { path: '404', component: PageNotFoundComponent},
+    { path: '**', redirectTo: '404'},
 
 ];
 

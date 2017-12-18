@@ -230,7 +230,7 @@ export class MainComponent implements OnInit, OnDestroy{
                     alert("Question successfully plasked!");
                 }
             }).then(() => this.router.navigateByUrl(
-                '/settings', {skipLocationChange: true})).then(
+                '/blank', {skipLocationChange: true})).then(
             () => this.router.navigate([path]));
             this.refreshNewQuestion();
         }
