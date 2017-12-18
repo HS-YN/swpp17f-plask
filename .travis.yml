@@ -25,7 +25,10 @@ matrix:
         - coverage run --branch --source="./ask" manage.py test ask
         - coverage run --branch --source="./location" manage.py test location
         - coverage run --branch --source="./user" manage.py test user
-      after_success: coveralls
+      after_success: 
+        - coveralls
+      after_script:
+        - cd ..
     
     - language: node_js
       node_js: 8.8
