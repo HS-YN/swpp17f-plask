@@ -12,7 +12,7 @@ import json
 class LocationTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        getLocationFromCSVFile('./location/korea.CSV')
+        getLocationFromCSVFile('./DB/korea.csv')
 
         client = Client(enforce_csrf_checks = True)
         response = client.get('/api/user/token')

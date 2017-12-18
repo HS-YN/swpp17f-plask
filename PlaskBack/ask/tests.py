@@ -23,7 +23,7 @@ def askQuestion(testbench, content, locations, services, code=204):
 class AskTestCase(TestCase):
     def setUp(self):
         self.client = Client()
-        getLocationFromCSVFile('./location/korea.CSV')
+        getLocationFromCSVFile('./DB/korea.csv')
 
         response = self.client.get('/api/ask/question')
         self.assertEqual(response.status_code, 401)
