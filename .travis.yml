@@ -11,7 +11,7 @@ matrix:
       env:
         - DJANGO=1.8 DB=mysql
       before_install:
-        - mysql -e 'CREATE DATABASE blog' -u root
+        - mysql -e 'CREATE DATABASE blog'
       install:
         - pip3 install mysqlclient
         - pip3 install django coverage coveralls
