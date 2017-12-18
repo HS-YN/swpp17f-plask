@@ -41,7 +41,6 @@ matrix:
         - npm install -g @angular/cli
       script:
         - ng test --code-coverage --watch false
-        - ng e2e
       after success:
         - cat ./coverage/lcov.info | ./node_modules/coveralls/bin/coveralls.js
       after_script:
