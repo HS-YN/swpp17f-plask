@@ -52,8 +52,7 @@ describe('AnswerService (mockBackend)', () => {
     describe('when instantiating question', () => {
         it('shoule have default values', () => {
             let answer: Answer = new Answer;
-            expect(answer.author).toBeNull();
-            expect(answer.author).toBeNull('');
+            expect(answer.author).toBeUndefined();
         })
     })
 
@@ -67,26 +66,11 @@ describe('AnswerService (mockBackend)', () => {
         beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
             backend = be;
             service = new AnswerService(http);
-            fakeAnswerList = makeAnswersData();
+            fakeAnswerList = AnswersData;
             fakeAnswer = answerData;
 
-            response = new Response(new ResponseOptions({status: 200}));
+            response = new Response(new ResponseOptions({status: 200, body: {data: fakeAnswerList}}));
         }));
-
-        it('should have expected fake answers (then)', async(inject([], () => {
-          backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-
-
-          let answer1: Answer[];
-          answer1 = fakeAnswerList.filter(x=> x.question_id === 1);
-
-          service.getAnswer(1)
-            .then(Answers => {
-              console.log(Answers);
-              expect(Answers.length).toBe(answer1.length,
-                'should have expected no. of heroes');
-            });
-        })));
 
         it('should be OK returning no quetions', async(inject([], () => {
            // make a mock empty response
@@ -104,27 +88,14 @@ describe('AnswerService (mockBackend)', () => {
         it('can get AnswerList', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.getAnswer(1).then(Answers => {
-                expect(Answers).toBeNull();
+                expect(Answers['data'].length).toBeGreaterThan(1);
             });
         }));
-
-        it('can get AnswerList of a given id', async(inject([], () => {
-          backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-
-          let answer1: Answer[];
-          answer1 = fakeAnswerList.filter(x=> x.question_id === 1);  
-
-          service.getAnswer(1)
-            .then(Answers => {
-              expect(Answers).toEqual(answer1);
-            });        
-
-        })));
 
         it('can post Answer', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
             service.postAnswer(fakeAnswer.content, 1).then(status => {
-                expect(status).toBeUndefined();
+                expect(status).toBe(200);
             });
         }));
 

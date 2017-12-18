@@ -49,4 +49,4 @@ export class AutoCompleteComponent {
             this.filteredList = [];
         }
     }
-}
+}/*istanbul ignore next*/
