@@ -13,7 +13,6 @@ matrix:
       before_install:
         - mysql -e 'CREATE DATABASE blog' -u root
       install:
-        - pip3 install pymysql
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
