@@ -36,6 +36,7 @@ matrix:
         - sh -e /etc/init.d/xvfb start
         - cd PlaskFront
       install:
+        - npm init
         - npm install
         - npm install coveralls
         - npm install -g @angular/cli
