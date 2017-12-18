@@ -1,5 +1,8 @@
 sudo: required
 
+services:
+	- mysql
+
 matrix:
   include:
     - language: python
@@ -7,19 +10,11 @@ matrix:
       cache:
         pip: true
       install:
-		- pip3 install apt-get install mysql-server
-		- plask
-		- plask
-		- service mysql start
-		- mysql -u root -p
-		- plask
-		- CREATE DATABASE blog;
-		- USE blog;
-		- quit;
 		- pip3 install pymysql
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
+		- mysql -e 'CREATE DATABASE [blog]'
         - cd PlaskBack
 		- python3 manage.py makemigrations
         - python3 manage.py migrate
