@@ -13,7 +13,15 @@ export class LocationService{
     private headers = new Headers({'Content-Type': 'application/json'});
 
     constructor(private http: Http) { }
-    
+
+    getLocationByName (locList: Location[], name: string): Location {
+        for (var i = 0; i < locList.length; i++) {
+            if (name.localeCompare(locList[i].loc_name) === 0)
+                return locList[i];
+        }
+        return null;
+    }
+
     getCountryList(): Promise<Location[]> {
         return this.http.get(this.countryUrl)
             .toPromise()

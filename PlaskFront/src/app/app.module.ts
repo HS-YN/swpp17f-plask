@@ -11,10 +11,6 @@ import { SignInComponent } from './signin/signin.component';
 import { SignUpComponent } from './signup/signup.component';
 import { MainComponent } from './main/main.component';
 import { SettingsComponent } from './main/settings/settings.component';
-import { MainTabComponent } from './main/maintab/maintab.component';
-import { MyQuestionsComponent } from './main/myquestions/myquestions.component';
-import { MyAnswersComponent } from './main/myanswers/myanswers.component';
-import { SearchTabComponent } from './main/searchtab/searchtab.component';
 
 //Import Service
 import { UserService } from './user/user.service';
@@ -23,7 +19,10 @@ import { QuestionService } from './question/question.service';
 import { AnswerService } from './answer/answer.service';
 import { AuthService } from './authentication/auth.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
+import { RedirectService } from './authentication/redirect.service';
+ //If performance is significantly degraded, this can be removed.
 import { TabService } from './main/tab.service';
+import { TagService } from './main/tag.service';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -39,10 +38,6 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         SignUpComponent,
         MainComponent,
         SettingsComponent,
-        MainTabComponent,
-        MyQuestionsComponent,
-        MyAnswersComponent,
-        SearchTabComponent,
     ],
     imports: [
         BrowserModule,
@@ -58,10 +53,11 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         AnswerService,
         AuthService,
         AuthGuardService,
+        RedirectService,
         TabService,
+        TagService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
-        SearchTabComponent,
     ],
     bootstrap: [AppComponent]
 })
