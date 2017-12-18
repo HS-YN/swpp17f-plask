@@ -8,13 +8,14 @@ matrix:
         pip: true
       services:
         - mysql
+      before_install:
+        - mysql -e 'CREATE DATABASE blog'
+        - mysql -e 'USE blog'        
       install:
         - pip3 install pymysql
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
-        - mysql -e 'CREATE DATABASE blog'
-        - mysql -e 'USE blog'
         - cd PlaskBack
         - python3 manage.py makemigrations
         - python3 manage.py migrate
