@@ -6,11 +6,20 @@ matrix:
       python: "3.6"
       cache:
         pip: true
+      services:
+        - mysql
+      env:
+        - DJANGO=1.8 DB=mysql
+      before_install:
+        - mysql -e 'CREATE DATABASE blog'
       install:
+        - pip3 install mysqlclient
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
+        - echo "USE mysql;\nUPDATE user SET password=PASSWORD('plask') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
         - cd PlaskBack
+        - python3 manage.py makemigrations
         - python3 manage.py migrate
       script:
         - coverage run --branch --source="./ask" manage.py test ask
