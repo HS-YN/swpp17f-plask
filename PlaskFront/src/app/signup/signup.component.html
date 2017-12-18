@@ -30,7 +30,7 @@
         <span *ngFor="let userLocation of userLocationList">
           <span class="label label-success">{{userLocation}}</span>
           <button class="badge"
-            (click)="userLocationDelete(userLocation); $event.stopPropagation()">
+            (click)="userLocationDelete(userLocation, 'user', 'userLocationList'); $event.stopPropagation()">
             x</button> &nbsp;
           </span>
         <br>

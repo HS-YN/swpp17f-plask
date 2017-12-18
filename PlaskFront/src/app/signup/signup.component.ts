@@ -101,7 +101,8 @@ export class SignUpComponent implements OnInit {
         questionServiceList: string) => void = this.tagService.serviceDelete;
 
     blockServiceRefresh: (question: string,
-        userBlockedServiceList: string) => void = this.tagService.blockServiceRefresh;
+        userBlockedServiceList: string) =>
+        void = this.tagService.blockServiceRefresh;
 
     blockServiceDelete: (deleteService: string, user: string,
         userBlockedServiceList: string) => void = this.tagService.blockServiceDelete;

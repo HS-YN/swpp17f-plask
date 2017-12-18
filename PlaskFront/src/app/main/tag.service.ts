@@ -92,34 +92,35 @@ export class TagService {
     }
 
     serviceRefresh(question: string, questionServiceList: string): void {
-        if(this[question].services == "")
-            this[questionServiceList] = null;
+        if(this[question].services.length <= 1)
+            this[questionServiceList] = [];
         else
             this[questionServiceList] = this[question].services
-                .substr(0, this[question].services.length-1).split(';');
+                .substr(1, this[question].services.length-2).split(';');
     }
 
     serviceDelete(deleteService: string, question: string,
         questionServiceList: string): void {
-        deleteService = deleteService + ';';
-        this[question].services = this[question].services.replace(deleteService, '');
+        deleteService = ';' + deleteService + ';';
+        this[question].services = this[question].services
+            .replace(deleteService, ';');
         this.serviceRefresh(question, questionServiceList);
     }
 
     userLocationRefresh(user: string, userLocationList: string): void {
-        if(this[user].locations == "") {
-            this[userLocationList] = null;
+        if(this[user].locations.length <= 1) {
+            this[userLocationList] = [];
         }
         else {
             this[userLocationList] = this[user].locations
-                .substr(0, this[user].locations.length-1).split(';');
+                .substr(1, this[user].locations.length-2).split(';');
         }
     }
 
     userLocationDelete(deleteLocation: string, user: string,
         userLocationList: string): void {
-        deleteLocation = deleteLocation + ';';
-        this[user].locations = this[user].locations.replace(deleteLocation, '');
+        deleteLocation = ';' + deleteLocation + ';';
+        this[user].locations = this[user].locations.replace(deleteLocation, ';');
         this.userLocationRefresh(user, userLocationList);
     }
 
@@ -145,7 +146,7 @@ export class TagService {
             if(this[selectedCity] != "")
                 newLocation = newLocation + '/' + this[selectedCity];
         }
-        if(this[user].locations.indexOf(newLocation+";") != -1) {
+        if(this[user].locations.indexOf(";"+newLocation+";") != -1) {
             alert("You've already selected " + newLocation + " !")
         }
         else {
@@ -179,28 +180,28 @@ export class TagService {
     }
 
     blockServiceRefresh(user: string, userBlockedServiceList: string): void {
-        if(this[user].blockedServices == "")
+        if(this[user].blockedServices.length <= 1)
             this[userBlockedServiceList] = [];
         else
             this[userBlockedServiceList] = this[user].blockedServices
-                .substr(0, this[user].blockedServices.length-1).split(';');
+                .substr(1, this[user].blockedServices.length-2).split(';');
     }
 
     blockServiceDelete(deleteService: string, user: string,
         userBlockedServiceList: string): void {
-        deleteService = deleteService + ';';
-        this[user].blockedServices = this[user].blockedServices.replace(deleteService, '');
+        deleteService = ';' + deleteService + ';';
+        this[user].blockedServices = this[user].blockedServices.replace(deleteService, ';');
         this.blockServiceRefresh(user, userBlockedServiceList);
     }
 
     userServiceSelect(service: string, user: string, userServiceList: string,
         userBlockedServiceList: string): void {
-        var validity_check: string = service + ';';
+        var validity_check: string = ';' + service + ';';
         if (this[user].services.indexOf(validity_check) != -1){
             alert("Tag Already Added!");
             return;
         }
-        else if (this[userBlockedServiceList].indexOf(service) != -1){
+        else if (this[userBlockedServiceList].indexOf(validity_check) != -1){
             alert("You cannot set same tags on Services and Blocked Services");
             return;
         }
@@ -219,7 +220,7 @@ export class TagService {
             alert("You cannot use SemiColon!");
         }
         else if (this[serviceList].indexOf(this[newService]) != -1){
-            alert("Tag already Exists!");
+            alert("Why don't you select from the list above?");
         }
         else if (this[newService].length >= 100) {
             alert("Tag length should be less than 100 characters.")

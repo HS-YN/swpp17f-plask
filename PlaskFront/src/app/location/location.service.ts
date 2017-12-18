@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Headers, Http, XSRFStrategy } from '@angular/http';
 
-import 'rxjs/add/operator/toPromise';
 import { Location } from './location';
+
+import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class LocationService{
-
-    //List of Urls for API
     private countryUrl = '/api/location/countries'
     private locationUrl = '/api/location';
     private headers = new Headers({'Content-Type': 'application/json'});
@@ -40,5 +39,4 @@ export class LocationService{
         console.error('An error occured', error);
         return Promise.reject(error.message);
     }
-
 }/* istanbul ignore next */

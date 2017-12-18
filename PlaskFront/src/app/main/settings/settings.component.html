@@ -107,7 +107,7 @@
         <label> Blocked Services: </label>
         <span *ngFor="let userBlockedService of userBlockedServiceList">
             <span class="label label-success">{{userBlockedService}}</span>
-            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            <button class="badge" (click)="blockServiceDelete(userBlockedService, 'user', 'userBlockedServiceList'); $event.stopPropagation()">
             x</button> &nbsp;
         </span>
         <br>

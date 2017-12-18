@@ -102,8 +102,8 @@ export class SettingsComponent implements OnInit{
     serviceDelete: (deleteService: string, question: string,
         questionServiceList: string) => void = this.tagService.serviceDelete;
 
-    blockServiceRefresh: (question: string,
-        userBlockedServiceList: string) => void = this.tagService.blockServiceRefresh;
+    blockServiceRefresh: (question: string, userBlockedServiceList: string) =>
+        void = this.tagService.blockServiceRefresh;
 
     userServiceSelect: (service: string, user: string, userServiceList: string,
         userBlockedServiceList: string) => void = this.tagService.userServiceSelect;
@@ -114,13 +114,12 @@ export class SettingsComponent implements OnInit{
 
     userBlockedServiceAdd: (newBlockService: string, user: string,
         userServiceList: string, userBlockedServiceList: string,
-        blockAutoComplete: string) => void = this.tagService.userBlockedServiceAdd;
+        blockAutoComplete: string) =>
+        void = this.tagService.userBlockedServiceAdd;
 
-    userBlockedServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
-        this.blockServiceRefresh("user", "userBlockedServiceList");
-    }
+    blockServiceDelete: (deleteService: string, user: string,
+        userBlockedServiceList: string) =>
+        void = this.tagService.blockServiceDelete;
 
     selectedFreqRefresh(){
         var x:number = this.notiFrequencyList.indexOf(this.user.notiFrequency);
