@@ -9,6 +9,7 @@ matrix:
       services:
         - mysql
       before_install:
+        - apt-get update
         - mysql -e 'CREATE DATABASE blog'
         - mysql -e 'USE blog'        
       install:
@@ -17,6 +18,7 @@ matrix:
         - pip3 install -U channels
       before_script:
         - cd PlaskBack
+        - python3 manage.py makemigrations
         - python3 manage.py migrate
       script:
         - coverage run --branch --source="./ask" manage.py test ask
