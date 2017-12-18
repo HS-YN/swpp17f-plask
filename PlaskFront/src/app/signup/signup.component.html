@@ -30,21 +30,21 @@
         <span *ngFor="let userLocation of userLocationList">
           <span class="label label-success">{{userLocation}}</span>
           <button class="badge"
-            (click)="userLocationDelete(userLocation); $event.stopPropagation()">
+            (click)="userLocationDelete(userLocation, 'user', 'userLocationList'); $event.stopPropagation()">
             x</button> &nbsp;
           </span>
         <br>
         <label> o My country is... </label>
         <span *ngFor="let country of countryList"
           [class.selected]="country.loc_name === selectedCountry"
-          (click)="countrySelect(country.loc_name)">
+          (click)="countrySelect(country.loc_name, 'selectedCountry', 'selectedProvince', 'selectedCity', 'provinceList', 'cityAutoComplete')">
           <button class="badge">{{country.loc_name}} </button> &nbsp;
         </span>
         <br>
         <label> o My province is... </label>
         <span *ngFor="let province of provinceList"
           [class.selected]="province.loc_name === selectedProvince"
-          (click)="provinceSelect(province.loc_name)">
+          (click)="provinceSelect(province.loc_name, 'selectedCountry', 'selectedProvince', 'selectedCity', 'provinceList', 'cityList', 'cityAutoComplete')">
           <button class="badge">{{province.loc_name}} </button> &nbsp;
         </span>
         <br>
@@ -61,17 +61,12 @@
               </li>
             </ul>
           </div>
-        </div><br><!--
-        <span *ngFor="let city of cityList"
-          [class.selected]="city.loc_name === selectedCity"
-          (click)="citySelect(city.loc_name)">
-          <button class="badge">{{city.loc_name}} </button> &nbsp;
-        </span>-->
+        </div><br>
         <br>
         <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
         <span *ngIf="selectedProvince!=''" class="label label-primary">{{selectedProvince}}</span>
         <span *ngIf="selectedCity!=''" class="label label-primary">{{selectedCity}}</span>
-        <button (click)="userLocationAdd()">Add!</button><br>
+        <button (click)="userLocationAdd('selectedCountry', 'selectedProvince', 'selectedCity', 'provinceList', 'cityList', 'userLocationList', 'cityAutoComplete', 'user')">Add!</button><br>
       </div>
 
       <div class="form-group">
@@ -79,14 +74,14 @@
 
         <span *ngFor="let userService of userServiceList">
           <span class="label label-success">{{userService}}</span>
-          <button class="badge" (click)="userServiceDelete(userService); $event.stopPropagation()">
+          <button class="badge" (click)="serviceDelete(userService, 'user', 'userServiceList'); $event.stopPropagation()">
           x</button> &nbsp;
         </span>
         <br>
 
         <label> Popular Services: </label>
         <span *ngFor= "let service of serviceList"
-          (click)="userServiceSelect(service)">
+          (click)="userServiceSelect(service, 'user', 'userServiceList', 'userBlockedServiceList')">
           <button class="badge"> {{service}} </button> &nbsp;
         </span><br>
 
@@ -104,7 +99,7 @@
             </ul>
           </div>
         </div>
-        <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
+        <button class="btn btn-default" (click)="userServiceAdd('newService', 'user', 'userServiceList', 'userBlockedServiceList', 'serviceAutoComplete', 'serviceList')"> Add! </button>
 
       </div>
 
@@ -112,7 +107,7 @@
         <label> Blocked Services: </label>
         <span *ngFor="let userBlockedService of userBlockedServiceList">
             <span class="label label-success">{{userBlockedService}}</span>
-            <button class="badge" (click)="userBlockedServiceDelete(userBlockedService); $event.stopPropagation()">
+            <button class="badge" (click)="blockServiceDelete(userBlockedService, 'user', 'userBlockedServiceList'); $event.stopPropagation()">
             x</button> &nbsp;
         </span>
         <br>
@@ -130,7 +125,7 @@
             </ul>
           </div>
         </div>
-        <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
+        <button class="btn btn-default" (click)="userBlockedServiceAdd('newBlockService', 'user', 'userServiceList', 'userBlockedServiceList', 'blockAutoComplete')"> Add! </button>
       </div>
 
       <label> Select notification frequency</label>

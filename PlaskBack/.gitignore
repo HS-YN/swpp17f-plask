@@ -1,7 +1,0 @@
-*.swp
-*.coverage
-*.sublime-workspace
-*.pyc
-htmlcov/
-__pycache__/
-.idea/

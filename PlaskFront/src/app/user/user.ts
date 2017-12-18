@@ -4,9 +4,9 @@ export class User{
     password: string;
     username: string;
     //Tags saved in Parsed Format
-    locations: string = "";
-    services: string = "";
-    blockedServices: string = "";
+    locations: string = ";";
+    services: string = ";";
+    blockedServices: string = ";";
 
     notiFrequency: number = 1;
 }

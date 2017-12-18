@@ -1,4 +1,3 @@
-//Import Basic Modules
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -9,7 +8,6 @@ import { UserService } from '../user/user.service';
 @Component({
     selector: 'signin',
     templateUrl: './signin.component.html',
-    //styleUrls: [ './signin.component.css']
 })
 export class SignInComponent implements OnInit {
 
@@ -18,15 +16,11 @@ export class SignInComponent implements OnInit {
         private userService: UserService,
     ){ }
 
+    ngOnInit() { }
+
     user = new User;
     title: string = "Plask!";
     subtitle: string = "Location-based live Q&A platform"
-
-    ngOnInit(){
-        this.userService.checkSignedIn().then(status => {
-            if(status == 'True')    this.router.navigate(['/main']); // route to main if already signed in
-        })
-    }
 
     SignIn(){
         this.userService.signIn(this.user).then(Status => {
@@ -41,5 +35,4 @@ export class SignInComponent implements OnInit {
     goToSignUp(){
         this.router.navigate(['/signup']);
     }
-
  } /* istanbul ignore next */

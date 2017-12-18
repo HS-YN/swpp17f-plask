@@ -1,4 +1,3 @@
-//Import Basic Modules
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,6 +6,7 @@ import { Location } from '../../location/location';
 
 import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
+import { TagService } from '../../main/tag.service';
 
 import { AutoCompleteComponent } from '../../interface/autocomplete.component';
 
@@ -21,65 +21,121 @@ export class SettingsComponent implements OnInit{
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private tagService: TagService,
         private elementRef: ElementRef,
-    ){ }
+    ) {}
 
     user: User = new User();
-    newpassword= ""; //string for new password
-    passwordConfirmation = ""; //string for password Matching
+    newpassword= "";
+    passwordConfirmation = "";
 
-    userLocationList: string[] = []; //List for visualizing current user location tags
-    countryList: Location[] = [];
-    provinceList: Location[] = [];
-    cityList: Location[] = [];
-    cityAutoComplete: AutoCompleteComponent;
+    countryList: Location[];
+    provinceList: Location[];
+    cityList: Location[];
+    serviceList: string[] = [];
+    notiFrequencyList: number[] = [];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
-
-
-    serviceList: string[] = []; //List of service tags from Backend
-    userServiceList: string[] = []; //List for visualizing current user service tags
-    newService: string = ''; //User-input string
-    serviceAutoComplete: AutoCompleteComponent;
-    userBlockedServiceList: string [] =[]; //List for visualizing current user blocked service tags
+    newService: string = '';
     newBlockService: string = '';
+    selectedFreq:number;
+    //visualization of list
+    userLocationList: string[];
+    userServiceList: string[] = [];
+    userBlockedServiceList: string[] = [];
+
+    cityAutoComplete: AutoCompleteComponent;
+    serviceAutoComplete: AutoCompleteComponent;
     blockAutoComplete: AutoCompleteComponent;
-    notiFrequencyList: number[] = []; // List of frequency selection
-    selectedFreq;
-
-
-
 
     ngOnInit(): void{
         this.notiFrequencyList = [10, 20, 30, 60, 120];
-
         this.userService.getUser().then(User => {
            this.user = User;
            this.countryRefresh();
-           this.serviceRefresh();
-           this.userLocationRefresh();
-           this.userBlockedServiceRefresh();
-           this.userServiceRefresh();
-           this.selectedFreqRefresh();});
-
+           this.serviceFetch("serviceList", "serviceAutoComplete",
+            "blockAutoComplete");
+           this.userLocationRefresh('user', 'userLocationList');
+           this.blockServiceRefresh('user', 'userBlockedServiceList');
+           this.serviceRefresh("user", "userServiceList");
+           this.selectedFreqRefresh();
+       });
     }
+    //Methods for Location Tags
+    countryRefresh: () => void = this.tagService.countryRefresh;
 
-    //TODO: Deal with Password Change
+    provinceRefresh: (country_code: number,
+        provinceList: string) => void = this.tagService.provinceRefresh;
+
+    cityRefresh: (c_code: number, p_code: number, cityList: string,
+        cityAuto: string) => void = this.tagService.cityRefresh;
+
+    countrySelect: (country: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string,
+        cityAuto: string) => void = this.tagService.countrySelect;
+
+    provinceSelect: (province: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string, cityList: string,
+        cityAuto: string) => void = this.tagService.provinceSelect;
+
+    userLocationRefresh: (user: string,
+        userLocationList: string) => void = this.tagService.userLocationRefresh;
+
+    userLocationDelete:(deleteLocation: string, user: string,
+        userLocationList: string) => void = this.tagService.userLocationDelete;
+
+    userLocationAdd: (selectedCountry: string, selectedProvince: string,
+        selectedCity: string, provinceList: string, cityList: string,
+        userLocationList: string, cityAutoComplete: string,
+        user: string) => void = this.tagService.userLocationAdd;
+
+    //Methods for Service Tags
+
+    serviceFetch: (serviceList: string, serviceAutoComplete: string,
+        blockAutoComplete: string) => void = this.tagService.serviceFetch;
+
+    serviceRefresh: (question: string,
+        questionServiceList: string) => void = this.tagService.serviceRefresh;
+
+    serviceDelete: (deleteService: string, question: string,
+        questionServiceList: string) => void = this.tagService.serviceDelete;
+
+    blockServiceRefresh: (question: string, userBlockedServiceList: string) =>
+        void = this.tagService.blockServiceRefresh;
+
+    userServiceSelect: (service: string, user: string, userServiceList: string,
+        userBlockedServiceList: string) => void = this.tagService.userServiceSelect;
+
+    userServiceAdd: (newService: string, user: string, userServiceList: string,
+        userBlockedServiceList: string, serviceAutoComplete: string,
+        serviceList: string) => void = this.tagService.userServiceAdd;
+
+    userBlockedServiceAdd: (newBlockService: string, user: string,
+        userServiceList: string, userBlockedServiceList: string,
+        blockAutoComplete: string) =>
+        void = this.tagService.userBlockedServiceAdd;
+
+    blockServiceDelete: (deleteService: string, user: string,
+        userBlockedServiceList: string) =>
+        void = this.tagService.blockServiceDelete;
+
+    selectedFreqRefresh(){
+        var x:number = this.notiFrequencyList.indexOf(this.user.notiFrequency);
+        if(x == -1)    x = 0;
+        this.selectedFreq = this.notiFrequencyList[x];
+    }
 
     SaveChanges(): void {
         if(this.newpassword != this.passwordConfirmation) {
             alert("Password is different.")
-            return
         }
         else if(this.user.locations == ""){
             alert("You need to have at least one location tag!");
-            return;
         }
         else if (this.user.services == ""){
             alert("You need to have at least one service tag!");
-            return;
         }
         else if(this.newpassword != "") {
             this.user.password = this.newpassword;
@@ -94,265 +150,6 @@ export class SettingsComponent implements OnInit{
         }
     }
 
-
-
-    //Validate Password Match
-/*    ValidatePassword(): boolean {
-        //change to new password
-        if (this.newpassword !=""){
-            if (this.newpassword == this.passwordConfirmation){
-                this.user.password = this.newpassword;
-                return true
-            }
-            else{
-                return false;
-            }
-        }
-        //No change in password
-        else{
-            return true;
-        }
-    }*/
-
-
-    //Methods for Location Tags
-
-    //Update location tag visualization
-    userLocationRefresh(): void {
-        if(this.user.locations == "") {
-            this.userLocationList = null;
-            return;
-        }
-        this.userLocationList = this.user.locations
-            .substr(0, this.user.locations.length-1).split(';');
-    }
-
-    userLocationAdd(): void {
-        if(this.selectedCountry == "") {
-            alert("Please select country!");
-            return;
-        }
-        // NOTE: cityAutoComplete does not exist if only country is selected           
-        if (this.cityAutoComplete != null){
-            this.selectedCity = this.cityAutoComplete.query;
-     
-            if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
-                alert("Invalid city name!");
-                return;
-            }
-        }        
-        var newLocation: string = this.selectedCountry;
-        if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
-        if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
-
-        if(this.user.locations.indexOf(newLocation+";") != -1) {
-            alert("You've already selected " + newLocation + " !")
-            return;
-        }
-
-        this.user.locations = this.user.locations + newLocation + ';';
-        this.selectedCountry = "";
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        // Delete only if cityAutoComplete exists
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-        this.userLocationRefresh();
-        this.provinceList = null;
-        this.cityList = null;
-    }
-
-    userLocationDelete(deleteLocation: string): void {
-        deleteLocation = deleteLocation + ';';
-        this.user.locations = this.user.locations.replace(deleteLocation, '');
-        this.userLocationRefresh();
-    }
-
-    getLocationByName (locList: Location[], name: string): Location {
-        for (var i = 0; locList.length > i; i++) {
-            if (name.localeCompare (locList[i].loc_name) === 0)
-                return locList[i];
-        }
-        return null;
-    }
-
-    countryRefresh(): void {
-        //this.countryList = countryListData;
-        this.locationService.getCountryList().then(country => {
-            if(country.length <= 0)
-                this.countryList = null;
-            else
-                this.countryList = country;
-        })
-    }
-
-    countrySelect(country: string): void {
-        this.selectedCountry = country;
-        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
-        this.cityList = null;
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-    }
-
-    provinceRefresh(country_code: number): void {
-        //this.provinceList = provinceListData;
-        this.locationService.getLocationList(country_code.toString())
-            .then(province => {
-                if(province.length <= 0)
-                    this.provinceList = null;
-                else
-                    this.provinceList = province;
-            })
-    }
-
-    provinceSelect(province: string): void {
-        this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
-            this.getLocationByName (this.provinceList, province).loc_code);
-        this.selectedCity = "";
-    }
-
-    cityRefresh(country_code: number, province_code: number): void {
-        //this.cityList = cityListData;
-        var address: string = country_code.toString() + '/' + province_code.toString();
-        this.locationService.getLocationList(address)
-            .then(city => {
-                if(city.length <= 0)
-                    this.cityList = null;
-                else {
-                    this.cityList = city;
-                    var cList = [];
-                    for (var i = 0; i < this.cityList.length; i++)
-                        cList.push(this.cityList[i].loc_name);
-                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cList);
-                }
-            })
-    }
-
-    citySelect(city: string): void {
-        this.selectedCity = this.cityAutoComplete.query;
-    }
-
-
-    //Methods for Service Tags
-
-    //Update service tag visualization
-    userServiceRefresh(): void {
-        if(this.user.services == '') {
-            this.userServiceList = [];
-            return;
-        }
-        this.userServiceList = this.user.services
-            .substr(0, this.user.services.length-1).split(';');
-    }
-
-    serviceRefresh(): void {
-        this.userService.getService()
-            .then(service => {
-                if(service.length <= 0)
-                    this.serviceList = null;
-                else {
-                    this.serviceList = service;
-                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    this.blockAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    if(service.length >= 10)
-                        this.serviceList = service.slice(0,10);
-                }
-            })
-    }
-
-    //Select a Tag from the exisitng list of service tags
-    userServiceSelect(service: string): void {
-        var validity_check: string = service + ';';
-        if (this.user.services.indexOf(validity_check) != -1){
-            alert("Tag Already Added!");
-            return;
-        }
-        this.user.services = this.user.services + service + ';';
-        this.userServiceRefresh();
-    }
-
-    userServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.services = this.user.services.replace(deleteService, '');
-        this.userServiceRefresh();
-    }
-
-    userServiceAdd(): void {
-        this.newService = this.serviceAutoComplete.query;
-        if(this.newService == ""){
-            alert("Tag is Empty!");
-        }
-        else if (this.newService.indexOf(";") != -1){
-            alert("You cannot use SemiColon!");
-        }
-        else if (this.serviceList.indexOf(this.newService) != -1){
-            alert("Tag already Exists!");
-        }
-        else if (this.newService.length >= 100) {
-            alert("Tag length should be less than 100 characters.")
-        }
-        else{
-            this.userServiceSelect(this.newService);
-            this.newService = "";
-            this.serviceAutoComplete.query = "";
-        }
-    }
-
-    //Codes for Blocked Services
-    userBlockedServiceAdd(): void {
-        this.newBlockService = this.blockAutoComplete.query;
-        if(this.newBlockService == ""){
-            alert("Tag is Empty!");
-        }
-        else if (this.newBlockService.indexOf(";") != -1){
-            alert("You cannot use SemiColon!");
-        }
-        else if (this.userServiceList.indexOf(this.newBlockService) != -1){
-            alert("You cannot set same tags on Services and Blocked Services");
-        }
-        else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
-            alert("Tag already Exists!");
-        }
-        else if (this.newBlockService.length >= 100) {
-            alert("Tag length should be less than 100 characters.")
-        }
-        else{
-            this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
-            this.userBlockedServiceRefresh();
-            this.newBlockService = "";
-            this.blockAutoComplete.query = "";
-        }
-    }
-    userBlockedServiceRefresh(): void {
-        if(this.user.blockedServices == '') {
-            this.userBlockedServiceList = [];
-            return;
-        }
-        this.userBlockedServiceList = this.user.blockedServices
-        .substr(0, this.user.blockedServices.length-1).split(';');
-    }
-    userBlockedServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
-        this.userBlockedServiceRefresh();
-    }
-
-    //Method for setting notification frequency
-    onChange(freq) {
-        this.user.notiFrequency = freq;
-    }
-    selectedFreqRefresh(){
-        var x:number = this.notiFrequencyList.indexOf(this.user.notiFrequency);
-        if(x == -1)
-            x = 0;
-        this.selectedFreq = this.notiFrequencyList[x];
-    }
-
     goToMain(){
         this.router.navigate(['/main']);
     }
@@ -364,16 +161,8 @@ export class SettingsComponent implements OnInit{
     goToSignin(){
         this.router.navigate(['/signin']);
     }
-
-
-
-
+    //Method for setting notification frequency
+    onChange(freq) {
+        this.user.notiFrequency = freq;
+    }
 } /* istanbul ignore next */
-
-// Mock Data for checking service tag functionality
-const serviceListData = [
-    'Travel',
-    'Cafe',
-    'SNU',
-    'Pub',
-]

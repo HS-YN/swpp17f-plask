@@ -5,17 +5,11 @@ import 'rxjs/add/operator/toPromise';
 
 import { Answer } from './answer';
 
-
 @Injectable()
 export class AnswerService{
-
-
-    // list of Urls for API
     private answerUrl= '/api/ask/answer/';
     private tokenUrl = '/api/user/token';
-
     private headers = new Headers({'Content-Type': 'application/json'});
-
 
     constructor(private http: Http) { }
 
@@ -35,12 +29,11 @@ export class AnswerService{
             .catch(this.handleError);
     }
 
-
     handleError(error: any): Promise<any>{
         console.error('An error occured', error);
         return Promise.reject(error.message);
     }
-
+/*
     getCookie(name) {
         let value = ";" + document.cookie;
         let parts = value.split(";" + name + "=");
@@ -48,5 +41,5 @@ export class AnswerService{
             return parts.pop().split(";").shift();
         }
     }
-
+*/
 }

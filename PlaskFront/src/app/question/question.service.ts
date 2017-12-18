@@ -5,26 +5,18 @@ import 'rxjs/add/operator/toPromise';
 
 import { Question } from './question';
 
-
 @Injectable()
 export class QuestionService{
-
-
-    // list of Urls for API
-    private myQuestionUrl = '/api/ask/question'; // receive user's question and POST question
-    private relatedQuestionUrl = '/api/ask/question/related'; // receive related question
-    private answeredQuestionUrl= '/api/ask/question/answer'; // receive user's answered question
+    private myQuestionUrl = '/api/ask/question';
+    private relatedQuestionUrl = '/api/ask/question/related';
+    private answeredQuestionUrl= '/api/ask/question/answer';
     private searchedQuestionUrl = '/api/ask/question/search';
     private selectAnswerUrl = '/api/ask/select';
     private tokenUrl = '/api/user/token';
-
     private headers = new Headers({'Content-Type': 'application/json'});
 
-
     constructor(private http: Http) { }
-
-     /*
-      * Get questions and answers for tab
+     /* Get questions and answers for tab
       * 1: getRecent 2: getMyQ 3: getMyA
      */
     getQuestion(tab:number): Promise<Question[]>{
@@ -46,39 +38,15 @@ export class QuestionService{
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);
     }
-    // GET the question list of a user (list of questions asked by the user)
-   /* getMyQuestion(): Promise<Question[]>{
-        return this.http.get(this.questionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-*/
+
     postQuestion(question: Question): Promise<number>{
         var headers = new Headers({'Content-Type': 'application/json'});
         return this.http.post(this.myQuestionUrl, JSON.stringify(question), {headers: headers}).toPromise()
             .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }
-/*
 
-    getRelatedQuestion(): Promise<Question[]>{
-        return this.http.get(this.relatedQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-
-    getAnsweredQuestion(): Promise<Question[]>{
-        return this.http.get(this.answeredQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-*/
     getSearchedQuestion(searchString: string, locCode: string[]): Promise<Question[]>{
-        console.log(searchString);
-
         var headers = new Headers({'Content-Type': 'application/json'});
         return this.http.post(this.searchedQuestionUrl, JSON.stringify({
                 loc_code1: locCode[0],
@@ -86,7 +54,7 @@ export class QuestionService{
                 loc_code3: locCode[2],
                 search_string: searchString
             }), {headers: headers}).toPromise()
-            .then(Response => Response.json() as Question)  // receive status code 201 if success,
+            .then(Response => Response.json() as Question)
             .catch(this.handleError);
     }
 
@@ -101,13 +69,12 @@ export class QuestionService{
         console.error('An error occured', error);
         return Promise.reject(error.message);
     }
-
+/*
     getCookie(name) {
         let value = ";" + document.cookie;
         let parts = value.split(";" + name + "=");
         if (parts.length ==2){
             return parts.pop().split(";").shift();
         }
-    }
-
+    }*/
 }

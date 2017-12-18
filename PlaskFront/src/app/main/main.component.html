@@ -8,13 +8,13 @@
         </div>
         <ul class="nav navbar-nav">
             <li class="activate">
-                <a [routerLink]="['/main',{outlets: {'tab':['maintab']}}]">Main Page</a>
+                <a (click)="getQuestionList(1)">Main Page</a>
             </li>
             <li>
-                <a [routerLink]="['/main',{outlets: {'tab':['myquestions']}}]">My Questions</a>
+                <a (click)="getQuestionList(2)">My Questions</a>
             </li>
             <li>
-                <a [routerLink]="['/main',{outlets: {'tab':['myanswers']}}]">My Answers</a>
+                <a (click)="getQuestionList(3)">My Answers</a>
             </li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
@@ -24,7 +24,7 @@
 
             <button class="btn pull-right" (click)="goSignOut()">
                 <span class="glyphicon glyphicon-log-out"></span>
-            </button>           
+            </button>
         </ul>
     </div>
     <form class="navbar-form" role="search">
@@ -38,12 +38,12 @@
         </div>
         <div>
             <label>Location:</label>
-            <select [(ngModel)]="searchNation" name="sCountry" (ngModelChange)="countrySearch($event)">
-                <option> Nation </option>
+            <select [(ngModel)]="searchCountry" name="sCountry" (ngModelChange)="countrySelect($event, 'searchCountry', 'searchProvince', 'searchCity', 'searchProvinceList', 'searchCityAutoComplete')">
+                <option> Country </option>
                 <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
             </select>
 
-            <select  [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSearch($event)">
+            <select [(ngModel)]="searchProvince" name="sProvince" (ngModelChange)="provinceSelect($event, 'searchCountry', 'searchProvince', 'searchCity', 'searchProvinceList', 'searchCityList', 'searchCityAutoComplete')">
                 <option> Province </option>
                 <option *ngFor= "let province of searchProvinceList"> {{province.loc_name}} </option>
             </select>
@@ -64,7 +64,38 @@
     </form>
 </nav>
 
-<router-outlet name="tab"></router-outlet>
+<div class="form-group">
+  <button class="btn btn-block" (click)="refresh()">
+  Refresh <span class=" glyphicon glyphicon-refresh"></span> </button>
+</div>
+<div class="question-container">
+    <a class="question-list" *ngFor="let question of questionList; let qid = index">
+        <div class="question-list-item" (click)="expand(question)">
+            <h4> {{question[0].content}}</h4>
+            <h5 id="author"> {{question[0].author}}</h5>
+            <h6 id="time"> {{question[3]}} </h6>
+            <span *ngIf="question[0].select_id != -1"class="label label-primary">Answered</span>
+        </div>
+        <div class="question-list-item" [hidden]="question[1]">
+            <div class="tag" (click)="expand(question)">
+                <span class="label label-info">Location</span> {{question[0].locations}} <br>
+                <span class="label label-info">Services</span> {{question[0].services}}
+            </div>
+            <div *ngFor="let answer of question[2]; let i = index" (click)="expand(question)">
+                <div class=answer> [{{answer.author}}] : {{answer.content}}
+                <button *ngIf="chooseAnswerEnable && !(answer.author === user.username)" type="button" (click)="chooseAnswer(question[0].id, answer.id, i)">Choose</button>
+                <span *ngIf="answer.id == question[0].select_id" class="glyphicon glyphicon-ok"></span>
+                </div>
+            </div>
+            <div class="input-group">
+                <input type="text" class="form-control" [(ngModel)]="answer" placeholder="Comment">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type ="button"(click)="answerClick(question[0].id)"> Comment </button>
+                </span>
+            </div>
+        </div>
+    </a>
+</div>
 
 <div class="dropdown">
     <button (click)="myFunction()" class="dropbtn"> Plask? <span class="caret"></span></button>
@@ -79,12 +110,12 @@
 
 
                 <label>Location:</label>
-                <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event)">
-                    <option> Nation </option>
+                <select [ngModel]="selectedDevice" (ngModelChange)="countrySelect($event, 'askCountry', 'askProvince', 'askCity', 'provinceList', 'cityAutoComplete')">
+                    <option> Country </option>
                     <option *ngFor="let country of countryList"> {{country.loc_name}} </option>
                 </select>
 
-                <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event)">
+                <select  [ngModel]="selectedDevice" (ngModelChange)="provinceSelect($event, 'askCountry', 'askProvince', 'askCity', 'provinceList', 'cityList', 'cityAutoComplete')">
                     <option> Province </option>
                     <option *ngFor= "let province of provinceList"> {{province.loc_name}} </option>
                 </select>
@@ -107,7 +138,7 @@
                 <span *ngFor="let questionService of questionServiceList">
                     <span class="label label-success">{{questionService}}</span>
                     <button class="badge"
-                        (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+                        (click)="serviceDelete(questionService, 'question', 'questionServiceList'); $event.stopPropagation()">
                         x</button> &nbsp;
                 </span>
                 <div class="container" *ngIf="serviceAutoComplete">
@@ -123,7 +154,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+                <button class="btn btn-default" (click)="serviceAdd('serviceTag', 'serviceAutoComplete', 'question', 'questionServiceList')"> Add! </button>
                 <div class="form-group">
                     <button class="btn btn-block" (click)="sendQuestion()">
                         <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
