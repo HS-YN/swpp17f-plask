@@ -46,36 +46,14 @@ export class QuestionService{
             .then(Response => Response.json() as Question[])
             .catch(this.handleError);
     }
-    // GET the question list of a user (list of questions asked by the user)
-   /* getMyQuestion(): Promise<Question[]>{
-        return this.http.get(this.questionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-*/
+
     postQuestion(question: Question): Promise<number>{
         var headers = new Headers({'Content-Type': 'application/json'});
         return this.http.post(this.myQuestionUrl, JSON.stringify(question), {headers: headers}).toPromise()
             .then(res => res.status)  // receive status code 201 if success,
             .catch(this.handleError);
     }
-/*
 
-    getRelatedQuestion(): Promise<Question[]>{
-        return this.http.get(this.relatedQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-
-    getAnsweredQuestion(): Promise<Question[]>{
-        return this.http.get(this.answeredQuestionUrl)
-            .toPromise()
-            .then(Response => Response.json() as Question[])
-            .catch(this.handleError);
-    }
-*/
     getSearchedQuestion(searchString: string, locCode: string[]): Promise<Question[]>{
         console.log(searchString);
 
