@@ -81,7 +81,7 @@
 
         <label> Popular Services: </label>
         <span *ngFor= "let service of serviceList"
-          (click)="userServiceSelect(service)">
+          (click)="userServiceSelect(service, 'user', 'userServiceList', 'userBlockedServiceList')">
           <button class="badge"> {{service}} </button> &nbsp;
         </span><br>
 
@@ -99,7 +99,7 @@
             </ul>
           </div>
         </div>
-        <button class="btn btn-default" (click)="userServiceAdd()"> Add! </button>
+        <button class="btn btn-default" (click)="userServiceAdd('newService', 'user', 'userServiceList', 'userBlockedServiceList', 'serviceAutoComplete', 'serviceList')"> Add! </button>
 
       </div>
 
@@ -107,7 +107,7 @@
         <label> Blocked Services: </label>
         <span *ngFor="let userBlockedService of userBlockedServiceList">
             <span class="label label-success">{{userBlockedService}}</span>
-            <button class="badge" (click)="blockServiceDelete(userBlockedService); $event.stopPropagation()">
+            <button class="badge" (click)="blockServiceDelete(userBlockedService, 'user', 'userBlockedServiceList'); $event.stopPropagation()">
             x</button> &nbsp;
         </span>
         <br>
@@ -125,7 +125,7 @@
             </ul>
           </div>
         </div>
-        <button class="btn btn-default" (click)="userBlockedServiceAdd()"> Add! </button>
+        <button class="btn btn-default" (click)="userBlockedServiceAdd('newBlockService', 'user', 'userServiceList', 'userBlockedServiceList', 'blockAutoComplete')"> Add! </button>
       </div>
 
       <label> Select notification frequency</label>

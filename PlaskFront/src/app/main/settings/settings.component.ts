@@ -58,7 +58,7 @@ export class SettingsComponent implements OnInit{
            this.serviceFetch("serviceList", "serviceAutoComplete",
             "blockAutoComplete");
            this.userLocationRefresh('user', 'userLocationList');
-           this.userBlockedServiceRefresh();
+           this.blockServiceRefresh('user', 'userBlockedServiceList');
            this.serviceRefresh("user", "userServiceList");
            this.selectedFreqRefresh();
        });
@@ -101,79 +101,25 @@ export class SettingsComponent implements OnInit{
 
     serviceDelete: (deleteService: string, question: string,
         questionServiceList: string) => void = this.tagService.serviceDelete;
-    //Select a Tag from the exisitng list of service tags
-    userServiceSelect(service: string): void {
-        var validity_check: string = service + ';';
-        if (this.user.services.indexOf(validity_check) != -1){
-            alert("Tag Already Added!");
-            return;
-        }
-        this.user.services = this.user.services + service + ';';
-        this.serviceRefresh("user", "userServiceList");
-    }
 
-    userServiceAdd(): void {
-        this.newService = this.serviceAutoComplete.query;
-        if(this.newService == ""){
-            alert("Tag is Empty!");
-        }
-        else if (this.newService.indexOf(";") != -1){
-            alert("You cannot use SemiColon!");
-        }
-        else if (this.serviceList.indexOf(this.newService) != -1){
-            alert("Tag already Exists!");
-        }
-        else if (this.newService.length >= 100) {
-            alert("Tag length should be less than 100 characters.")
-        }
-        else{
-            this.userServiceSelect(this.newService);
-            this.newService = "";
-            this.serviceAutoComplete.query = "";
-        }
-    }
+    blockServiceRefresh: (question: string,
+        userBlockedServiceList: string) => void = this.tagService.blockServiceRefresh;
 
-    //Codes for Blocked Services
-    userBlockedServiceAdd(): void {
-        this.newBlockService = this.blockAutoComplete.query;
-        if(this.newBlockService == ""){
-            alert("Tag is Empty!");
-        }
-        else if (this.newBlockService.indexOf(";") != -1){
-            alert("You cannot use SemiColon!");
-        }
-        else if (this.userServiceList.indexOf(this.newBlockService) != -1){
-            alert("You cannot set same tags on Services and Blocked Services");
-        }
-        else if (this.userBlockedServiceList.indexOf(this.newBlockService) != -1){
-            alert("Tag already Exists!");
-        }
-        else if (this.newBlockService.length >= 100) {
-            alert("Tag length should be less than 100 characters.")
-        }
-        else{
-            this.user.blockedServices = this.user.blockedServices + this.newBlockService + ';';
-            this.userBlockedServiceRefresh();
-            this.newBlockService = "";
-            this.blockAutoComplete.query = "";
-        }
-    }
-    userBlockedServiceRefresh(): void {
-        if(this.user.blockedServices == '') {
-            this.userBlockedServiceList = [];
-            return;
-        }
-        this.userBlockedServiceList = this.user.blockedServices
-        .substr(0, this.user.blockedServices.length-1).split(';');
-    }
+    userServiceSelect: (service: string, user: string, userServiceList: string,
+        userBlockedServiceList: string) => void = this.tagService.userServiceSelect;
+
+    userServiceAdd: (newService: string, user: string, userServiceList: string,
+        userBlockedServiceList: string, serviceAutoComplete: string,
+        serviceList: string) => void = this.tagService.userServiceAdd;
+
+    userBlockedServiceAdd: (newBlockService: string, user: string,
+        userServiceList: string, userBlockedServiceList: string,
+        blockAutoComplete: string) => void = this.tagService.userBlockedServiceAdd;
+
     userBlockedServiceDelete(deleteService: string): void {
         deleteService = deleteService + ';';
         this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
-        this.userBlockedServiceRefresh();
-    }
-    //Method for setting notification frequency
-    onChange(freq) {
-        this.user.notiFrequency = freq;
+        this.blockServiceRefresh("user", "userBlockedServiceList");
     }
 
     selectedFreqRefresh(){
@@ -215,5 +161,9 @@ export class SettingsComponent implements OnInit{
 
     goToSignin(){
         this.router.navigate(['/signin']);
+    }
+    //Method for setting notification frequency
+    onChange(freq) {
+        this.user.notiFrequency = freq;
     }
 } /* istanbul ignore next */

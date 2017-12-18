@@ -177,4 +177,85 @@ export class TagService {
                 }
             })
     }
+
+    blockServiceRefresh(user: string, userBlockedServiceList: string): void {
+        if(this[user].blockedServices == "")
+            this[userBlockedServiceList] = [];
+        else
+            this[userBlockedServiceList] = this[user].blockedServices
+                .substr(0, this[user].blockedServices.length-1).split(';');
+    }
+
+    blockServiceDelete(deleteService: string, user: string,
+        userBlockedServiceList: string): void {
+        deleteService = deleteService + ';';
+        this[user].blockedServices = this[user].blockedServices.replace(deleteService, '');
+        this.blockServiceRefresh(user, userBlockedServiceList);
+    }
+
+    userServiceSelect(service: string, user: string, userServiceList: string,
+        userBlockedServiceList: string): void {
+        var validity_check: string = service + ';';
+        if (this[user].services.indexOf(validity_check) != -1){
+            alert("Tag Already Added!");
+            return;
+        }
+        else if (this[userBlockedServiceList].indexOf(service) != -1){
+            alert("You cannot set same tags on Services and Blocked Services");
+            return;
+        }
+        this[user].services = this[user].services + service + ';';
+        this.serviceRefresh(user, userServiceList);
+    }
+
+    userServiceAdd(newService: string, user: string, userServiceList: string,
+        userBlockedServiceList: string, serviceAutoComplete: string,
+        serviceList: string): void {
+        this[newService] = this[serviceAutoComplete].query;
+        if(this[newService] == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this[newService].indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+        }
+        else if (this[serviceList].indexOf(this[newService]) != -1){
+            alert("Tag already Exists!");
+        }
+        else if (this[newService].length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
+        else{
+            this.userServiceSelect(this[newService], user, userServiceList,
+                userBlockedServiceList);
+            this[newService] = "";
+            this[serviceAutoComplete].query = "";
+        }
+    }
+
+    userBlockedServiceAdd(newBlockService: string, user: string,
+        userServiceList: string, userBlockedServiceList: string,
+        blockAutoComplete: string): void {
+        this[newBlockService] = this[blockAutoComplete].query;
+        if(this[newBlockService] == ""){
+            alert("Tag is Empty!");
+        }
+        else if (this[newBlockService].indexOf(";") != -1){
+            alert("You cannot use SemiColon!");
+        }
+        else if (this[userServiceList].indexOf(this[newBlockService]) != -1){
+            alert("You cannot set same tags on Services and Blocked Services");
+        }
+        else if (this[userBlockedServiceList].indexOf(this[newBlockService]) != -1){
+            alert("Tag already Exists!");
+        }
+        else if (this[newBlockService].length >= 100) {
+            alert("Tag length should be less than 100 characters.")
+        }
+        else{
+            this[user].blockedServices = this[user].blockedServices + this[newBlockService] + ';';
+            this.blockServiceRefresh(user, userBlockedServiceList);
+            this[newBlockService] = "";
+            this[blockAutoComplete].query = "";
+        }
+    }
 }

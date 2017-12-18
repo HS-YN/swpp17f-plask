@@ -140,20 +140,11 @@ export class MainComponent implements OnInit, OnDestroy{
             })
     }
 
-    serviceRefresh(question: string, questionServiceList: string): void {
-        if(this[question].services == "")
-            this[questionServiceList] = null;
-        else
-            this[questionServiceList] = this[question].services
-                .substr(0, this[question].services.length-1).split(';');
-    }
+    serviceRefresh: (question: string,
+        questionServiceList: string) => void = this.tagService.serviceRefresh;
 
-    serviceDelete(deleteService: string, question: string,
-        questionServiceList: string): void {
-        deleteService = deleteService + ';';
-        this[question].services = this[question].services.replace(deleteService, '');
-        this.serviceRefresh(question, questionServiceList);
-    }
+    serviceDelete: (deleteService: string, question: string,
+        questionServiceList: string) => void = this.tagService.serviceDelete;
 
     serviceAdd(serviceTag: string, serviceAutoComplete: string,
         question: string, questionServiceList: string): void {
