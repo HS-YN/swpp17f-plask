@@ -1,0 +1,2408 @@
+49,China,1,Anhui,1,Anqing
+49,China,1,Anhui,2,Huaining
+49,China,1,Anhui,3,Qianshan
+49,China,1,Anhui,4,Susong
+49,China,1,Anhui,5,Taihu
+49,China,1,Anhui,6,Tongcheng
+49,China,1,Anhui,7,Wangjiang
+49,China,1,Anhui,8,Yuexi
+49,China,1,Anhui,9,Zongyang
+49,China,1,Anhui,10,Bengbu
+49,China,1,Anhui,11,Guzhen
+49,China,1,Anhui,12,Huaiyuan
+49,China,1,Anhui,13,Wuhe
+49,China,1,Anhui,14,Boxian
+49,China,1,Anhui,15,Guoyang
+49,China,1,Anhui,16,Lixin
+49,China,1,Anhui,17,Mengcheng
+49,China,1,Anhui,18,Chao
+49,China,1,Anhui,19,Hanshan
+49,China,1,Anhui,20,He
+49,China,1,Anhui,21,Lujiang
+49,China,1,Anhui,22,Wuwei
+49,China,1,Anhui,23,Dongzhi
+49,China,1,Anhui,24,Guichi
+49,China,1,Anhui,25,Qingyang
+49,China,1,Anhui,26,Shitai
+49,China,1,Anhui,27,Chuxian
+49,China,1,Anhui,28,Dingyuan
+49,China,1,Anhui,29,Fengyang
+49,China,1,Anhui,30,Jiashan
+49,China,1,Anhui,31,Lai'an
+49,China,1,Anhui,32,Quanjiao
+49,China,1,Anhui,33,Tianchang
+49,China,1,Anhui,34,Funan
+49,China,1,Anhui,35,Fuyang
+49,China,1,Anhui,36,Jieshou
+49,China,1,Anhui,37,Linquan
+49,China,1,Anhui,38,Taihe
+49,China,1,Anhui,39,Yaohai
+49,China,1,Anhui,40,Changfeng
+49,China,1,Anhui,41,Feidong
+49,China,1,Anhui,42,Feixi
+49,China,1,Anhui,43,Hefei
+49,China,1,Anhui,44,Huaibei
+49,China,1,Anhui,45,Suixi
+49,China,1,Anhui,46,Fengtai
+49,China,1,Anhui,47,Huainan
+49,China,1,Anhui,48,Qimen
+49,China,1,Anhui,49,She
+49,China,1,Anhui,50,Taiping
+49,China,1,Anhui,51,Tunxi
+49,China,1,Anhui,52,Xiuning
+49,China,1,Anhui,53,Yi
+49,China,1,Anhui,54,Huoqiu
+49,China,1,Anhui,55,Huoshan
+49,China,1,Anhui,56,Jinzhai
+49,China,1,Anhui,57,Lu An
+49,China,1,Anhui,58,Shou
+49,China,1,Anhui,59,Shucheng
+49,China,1,Anhui,60,Dangtu
+49,China,1,Anhui,61,Maanshan
+49,China,1,Anhui,62,Dangshan
+49,China,1,Anhui,63,Lingbi
+49,China,1,Anhui,64,Si
+49,China,1,Anhui,65,Xiao
+49,China,1,Anhui,66,Yongqiao
+49,China,1,Anhui,67,Tongling
+49,China,1,Anhui,68,Fanchang
+49,China,1,Anhui,69,Nanling
+49,China,1,Anhui,70,Wuhu
+49,China,1,Anhui,71,Guangde
+49,China,1,Anhui,72,Jingde
+49,China,1,Anhui,73,Jing
+49,China,1,Anhui,74,Jixi
+49,China,1,Anhui,75,Langxi
+49,China,1,Anhui,76,Ningguo
+49,China,1,Anhui,77,Xuanzhou
+49,China,2,Beijing,78,Beijing
+49,China,2,Beijing,79,Changping
+49,China,2,Beijing,80,Daxing
+49,China,2,Beijing,81,Fangshan
+49,China,2,Beijing,82,Huairou
+49,China,2,Beijing,83,Mentougou
+49,China,2,Beijing,84,Miyun
+49,China,2,Beijing,85,Pinggu
+49,China,2,Beijing,86,Shunyi
+49,China,2,Beijing,87,Tongzhou
+49,China,2,Beijing,88,Yanqing
+49,China,3,Chongqing,89,Ba
+49,China,3,Chongqing,90,Bishan
+49,China,3,Chongqing,91,Changshou
+49,China,3,Chongqing,92,Chengkou
+49,China,3,Chongqing,93,Chongqing
+49,China,3,Chongqing,94,Dazu
+49,China,3,Chongqing,95,Dianjiang
+49,China,3,Chongqing,96,Fengdu
+49,China,3,Chongqing,97,Fengjie
+49,China,3,Chongqing,98,Fuling
+49,China,3,Chongqing,99,Hechuan
+49,China,3,Chongqing,100,Jiangbei
+49,China,3,Chongqing,101,Jiangjin
+49,China,3,Chongqing,102,Kai
+49,China,3,Chongqing,103,Liangping
+49,China,3,Chongqing,104,Nanchuan
+49,China,3,Chongqing,105,Pengshui
+49,China,3,Chongqing,106,Qianjiang
+49,China,3,Chongqing,107,Qijiang
+49,China,3,Chongqing,108,Rongchang
+49,China,3,Chongqing,109,Shizhu
+49,China,3,Chongqing,110,Tongliang
+49,China,3,Chongqing,111,Tongnan
+49,China,3,Chongqing,112,Wan
+49,China,3,Chongqing,113,Wulong
+49,China,3,Chongqing,114,Wushan
+49,China,3,Chongqing,115,Wuxi
+49,China,3,Chongqing,116,Xiushan
+49,China,3,Chongqing,117,Yongchuan
+49,China,3,Chongqing,118,Youyang
+49,China,3,Chongqing,119,Yunyang
+49,China,3,Chongqing,120,Zhong
+49,China,4,Fujian,121,Changle
+49,China,4,Fujian,122,Fuqing
+49,China,4,Fujian,123,Fuzhou
+49,China,4,Fujian,124,Lianjiang
+49,China,4,Fujian,125,Luoyuan
+49,China,4,Fujian,126,Minhou
+49,China,4,Fujian,127,Minqing
+49,China,4,Fujian,128,Yongtai
+49,China,4,Fujian,129,Changting
+49,China,4,Fujian,130,Liancheng
+49,China,4,Fujian,131,Luojiang
+49,China,4,Fujian,132,Shanghang
+49,China,4,Fujian,133,Wuping
+49,China,4,Fujian,134,Yongding
+49,China,4,Fujian,135,Zhangping
+49,China,4,Fujian,136,Chongan
+49,China,4,Fujian,137,Guangze
+49,China,4,Fujian,138,Jian'ou
+49,China,4,Fujian,139,Jianyang
+49,China,4,Fujian,140,Nanping
+49,China,4,Fujian,141,Pucheng
+49,China,4,Fujian,142,Shaowu
+49,China,4,Fujian,143,Shunchang
+49,China,4,Fujian,144,Songxi
+49,China,4,Fujian,145,Zhenghe
+49,China,4,Fujian,146,Fu'an
+49,China,4,Fujian,147,Fuding
+49,China,4,Fujian,148,Gutian
+49,China,4,Fujian,149,Jiaocheng
+49,China,4,Fujian,150,Pingnan
+49,China,4,Fujian,151,Shouning
+49,China,4,Fujian,152,Xiapu
+49,China,4,Fujian,153,Zherong
+49,China,4,Fujian,154,Zhouning
+49,China,4,Fujian,155,Putian County
+49,China,4,Fujian,156,Putian
+49,China,4,Fujian,157,Xianyou
+49,China,4,Fujian,158,Anxi
+49,China,4,Fujian,159,Dehua
+49,China,4,Fujian,160,Hui'an
+49,China,4,Fujian,161,Jinjiang
+49,China,4,Fujian,162,Nan'an
+49,China,4,Fujian,163,Sanyuan
+49,China,4,Fujian,164,Shishi
+49,China,4,Fujian,165,Yongchun
+49,China,4,Fujian,166,Datian
+49,China,4,Fujian,167,Jiangle
+49,China,4,Fujian,168,Jianning
+49,China,4,Fujian,169,Mingxi
+49,China,4,Fujian,170,Ninghua
+49,China,4,Fujian,171,Qingliu
+49,China,4,Fujian,172,Shanming
+49,China,4,Fujian,173,Sha
+49,China,4,Fujian,174,Taining
+49,China,4,Fujian,175,Yong'an
+49,China,4,Fujian,176,Youxi
+49,China,4,Fujian,177,Tong'an
+49,China,4,Fujian,178,Xiamen
+49,China,4,Fujian,179,Changtai
+49,China,4,Fujian,180,Dongshan
+49,China,4,Fujian,181,Hua'an
+49,China,4,Fujian,182,Longhai
+49,China,4,Fujian,183,Nanjing
+49,China,4,Fujian,184,Pinghe
+49,China,4,Fujian,185,Zhangpu
+49,China,4,Fujian,186,Zhangzhou
+49,China,4,Fujian,187,Zhao'an
+49,China,5,Gansu,188,Baiyin
+49,China,5,Gansu,189,Huining
+49,China,5,Gansu,190,Jingtai
+49,China,5,Gansu,191,Jingyuan
+49,China,5,Gansu,192,Pingchuan
+49,China,5,Gansu,193,Dingxi
+49,China,5,Gansu,194,Lintao
+49,China,5,Gansu,195,Longxi
+49,China,5,Gansu,196,Min
+49,China,5,Gansu,197,Tongwei
+49,China,5,Gansu,198,Weiyuan
+49,China,5,Gansu,199,Zhang
+49,China,5,Gansu,200,Jonê
+49,China,5,Gansu,201,Lintan
+49,China,5,Gansu,202,Luqu
+49,China,5,Gansu,203,Maqu
+49,China,5,Gansu,204,Têwo
+49,China,5,Gansu,205,Xiahe
+49,China,5,Gansu,206,Zhugqu
+49,China,5,Gansu,207,Jiayuguan
+49,China,5,Gansu,208,Jinchuan
+49,China,5,Gansu,209,Yongchang
+49,China,5,Gansu,210,Aksai Kazakh
+49,China,5,Gansu,211,Anxi
+49,China,5,Gansu,212,Dunhuang
+49,China,5,Gansu,213,Jinta
+49,China,5,Gansu,214,Subei Mongol
+49,China,5,Gansu,215,Suzhou
+49,China,5,Gansu,216,Yumen
+49,China,5,Gansu,217,Gaolan
+49,China,5,Gansu,218,Liangzhou
+49,China,5,Gansu,219,Yongdeng
+49,China,5,Gansu,220,Yuzhong
+49,China,5,Gansu,221,Dongxiang
+49,China,5,Gansu,222,Guanghe
+49,China,5,Gansu,223,Hezheng
+49,China,5,Gansu,224,"Jishishan Bonan, Dongxiang and Salar"
+49,China,5,Gansu,225,Kangle
+49,China,5,Gansu,226,Linxia Shi
+49,China,5,Gansu,227,Linxia
+49,China,5,Gansu,228,Yongjing
+49,China,5,Gansu,229,Cheng
+49,China,5,Gansu,230,Dangchang
+49,China,5,Gansu,231,Hui
+49,China,5,Gansu,232,Kang
+49,China,5,Gansu,233,Liangdang
+49,China,5,Gansu,234,Li
+49,China,5,Gansu,235,Wen
+49,China,5,Gansu,236,Wudu
+49,China,5,Gansu,237,Xihe
+49,China,5,Gansu,238,Chongxin
+49,China,5,Gansu,239,Huating
+49,China,5,Gansu,240,Jingchuan
+49,China,5,Gansu,241,Jingning
+49,China,5,Gansu,242,Lingtai
+49,China,5,Gansu,243,Pingliang
+49,China,5,Gansu,244,Zhuanglang
+49,China,5,Gansu,245,Hezheng
+49,China,5,Gansu,246,Huachi
+49,China,5,Gansu,247,Huan
+49,China,5,Gansu,248,Ning
+49,China,5,Gansu,249,Qingyang
+49,China,5,Gansu,250,Xifeng
+49,China,5,Gansu,251,Zhengning
+49,China,5,Gansu,252,Zhenyuan
+49,China,5,Gansu,253,Gangu
+49,China,5,Gansu,254,Qin'an
+49,China,5,Gansu,255,Qingcheng
+49,China,5,Gansu,256,Tianshui
+49,China,5,Gansu,257,Wushan
+49,China,5,Gansu,258,Zhangjiachuan Hui
+49,China,5,Gansu,259,Heshui
+49,China,5,Gansu,260,Minqin
+49,China,5,Gansu,261,Tianzhu Tibetan
+49,China,5,Gansu,262,Wuwei
+49,China,5,Gansu,263,Gaotai
+49,China,5,Gansu,264,Linze
+49,China,5,Gansu,265,Minle
+49,China,5,Gansu,266,Shandan
+49,China,5,Gansu,267,Sunan Yugur
+49,China,5,Gansu,268,Zhangye
+49,China,6,Guangdong,269,Chaonan
+49,China,6,Guangdong,270,Chaozhou
+49,China,6,Guangdong,271,Raoping
+49,China,6,Guangdong,272,Dongyuan
+49,China,6,Guangdong,273,Futian
+49,China,6,Guangdong,274,Gaoming
+49,China,6,Guangdong,275,Nanhai
+49,China,6,Guangdong,276,Sanshui
+49,China,6,Guangdong,277,Shunde
+49,China,6,Guangdong,278,Conghua
+49,China,6,Guangdong,279,Guangzhou
+49,China,6,Guangdong,280,Huaxian
+49,China,6,Guangdong,281,Nansha
+49,China,6,Guangdong,282,Panyu
+49,China,6,Guangdong,283,Zengcheng
+49,China,6,Guangdong,284,Dongyuan
+49,China,6,Guangdong,285,Heping
+49,China,6,Guangdong,286,Lianping
+49,China,6,Guangdong,287,Lungchuan
+49,China,6,Guangdong,288,Yuancheng
+49,China,6,Guangdong,289,Zijin
+49,China,6,Guangdong,290,Boluo
+49,China,6,Guangdong,291,Huidong
+49,China,6,Guangdong,292,Huiyang
+49,China,6,Guangdong,293,Huizhou
+49,China,6,Guangdong,294,Longmen
+49,China,6,Guangdong,295,Enping
+49,China,6,Guangdong,296,Heshan
+49,China,6,Guangdong,297,Jiangmen
+49,China,6,Guangdong,298,Kaiping
+49,China,6,Guangdong,299,Taishan
+49,China,6,Guangdong,300,Xinhui
+49,China,6,Guangdong,301,Huilai
+49,China,6,Guangdong,302,Jiedong
+49,China,6,Guangdong,303,Jiexi
+49,China,6,Guangdong,304,Puning
+49,China,6,Guangdong,305,Rongcheng
+49,China,6,Guangdong,306,Dianbai
+49,China,6,Guangdong,307,Gaozhou
+49,China,6,Guangdong,308,Huazhou
+49,China,6,Guangdong,309,Maoming
+49,China,6,Guangdong,310,Xinyi
+49,China,6,Guangdong,311,Dapu
+49,China,6,Guangdong,312,Fengshun
+49,China,6,Guangdong,313,Jiaoling
+49,China,6,Guangdong,314,Mei
+49,China,6,Guangdong,315,Meizhou
+49,China,6,Guangdong,316,Pingyuan
+49,China,6,Guangdong,317,Wuhua
+49,China,6,Guangdong,318,Xingning
+49,China,6,Guangdong,319,Fogang
+49,China,6,Guangdong,320,Liannan Yao
+49,China,6,Guangdong,321,Lianshan Zhuang and Yao
+49,China,6,Guangdong,322,Lianzhou
+49,China,6,Guangdong,323,Qingcheng
+49,China,6,Guangdong,324,Qingxin
+49,China,6,Guangdong,325,Yangshan
+49,China,6,Guangdong,326,Yingde
+49,China,6,Guangdong,327,Chaoyang
+49,China,6,Guangdong,328,Chenghai
+49,China,6,Guangdong,329,Shantou
+49,China,6,Guangdong,330,Haifeng
+49,China,6,Guangdong,331,Lufeng
+49,China,6,Guangdong,332,Luhe
+49,China,6,Guangdong,333,Shanwei
+49,China,6,Guangdong,334,Lechang
+49,China,6,Guangdong,335,Nanxiong
+49,China,6,Guangdong,336,Qujiang
+49,China,6,Guangdong,337,Renhua
+49,China,6,Guangdong,338,Ruyuan Yao
+49,China,6,Guangdong,339,Shaoguan
+49,China,6,Guangdong,340,Shixing
+49,China,6,Guangdong,341,Wengyuan
+49,China,6,Guangdong,342,Xinfeng
+49,China,6,Guangdong,343,Bao'an
+49,China,6,Guangdong,344,Shenzhen
+49,China,6,Guangdong,345,Yangchun
+49,China,6,Guangdong,346,Yangdong
+49,China,6,Guangdong,347,Yangjiang
+49,China,6,Guangdong,348,Yangxi
+49,China,6,Guangdong,349,Luoding
+49,China,6,Guangdong,350,Xinxing
+49,China,6,Guangdong,351,Yun'an
+49,China,6,Guangdong,352,Yunan
+49,China,6,Guangdong,353,Yuncheng
+49,China,6,Guangdong,354,Leizhou
+49,China,6,Guangdong,355,Lianjiang
+49,China,6,Guangdong,356,Suixi
+49,China,6,Guangdong,357,Wuchuan
+49,China,6,Guangdong,358,Xuwen
+49,China,6,Guangdong,359,Zhenjiang
+49,China,6,Guangdong,360,Deqing
+49,China,6,Guangdong,361,Fengkai
+49,China,6,Guangdong,362,Gaoyao
+49,China,6,Guangdong,363,Guangning
+49,China,6,Guangdong,364,Huaiji
+49,China,6,Guangdong,365,Sihui
+49,China,6,Guangdong,366,Zhaoqing
+49,China,6,Guangdong,367,Zhongshan
+49,China,6,Guangdong,368,Doumen
+49,China,6,Guangdong,369,Zhuhai
+49,China,7,Guangxi,370,Baise
+49,China,7,Guangxi,371,Debao
+49,China,7,Guangxi,372,Jingxi
+49,China,7,Guangxi,373,Leye
+49,China,7,Guangxi,374,Lingyun
+49,China,7,Guangxi,375,Longlin Various Nationalities
+49,China,7,Guangxi,376,Napo
+49,China,7,Guangxi,377,Pingguo
+49,China,7,Guangxi,378,Tiandong
+49,China,7,Guangxi,379,Tianlin
+49,China,7,Guangxi,380,Tianyang
+49,China,7,Guangxi,381,Xilin
+49,China,7,Guangxi,382,Beihai
+49,China,7,Guangxi,383,Hepu
+49,China,7,Guangxi,384,Changzhou
+49,China,7,Guangxi,385,Daxin
+49,China,7,Guangxi,386,Fusui
+49,China,7,Guangxi,387,Longzhou
+49,China,7,Guangxi,388,Ningming
+49,China,7,Guangxi,389,Pingxiang
+49,China,7,Guangxi,390,Tiandeng
+49,China,7,Guangxi,391,Fangcheng
+49,China,7,Guangxi,392,Shangsi
+49,China,7,Guangxi,393,Guiping
+49,China,7,Guangxi,394,Gui
+49,China,7,Guangxi,395,Pingnan
+49,China,7,Guangxi,396,Gongcheng Yao
+49,China,7,Guangxi,397,Guanyang
+49,China,7,Guangxi,398,Guilin
+49,China,7,Guangxi,399,Lingchuan
+49,China,7,Guangxi,400,Lingui
+49,China,7,Guangxi,401,Lipu
+49,China,7,Guangxi,402,Longsheng Various Nationalities
+49,China,7,Guangxi,403,Pingle
+49,China,7,Guangxi,404,Quanzhou
+49,China,7,Guangxi,405,Xing’an
+49,China,7,Guangxi,406,Yangshuo
+49,China,7,Guangxi,407,Yongfu
+49,China,7,Guangxi,408,Ziyuan
+49,China,7,Guangxi,409,Bama Yao
+49,China,7,Guangxi,410,Dahua Yao 	
+49,China,7,Guangxi,411,Donglan
+49,China,7,Guangxi,412,Du’an Yao
+49,China,7,Guangxi,413,Fengshan
+49,China,7,Guangxi,414,Hechi
+49,China,7,Guangxi,415,Huanjiang Maonan
+49,China,7,Guangxi,416,Luocheng Mulao
+49,China,7,Guangxi,417,Nandan
+49,China,7,Guangxi,418,Tian'e
+49,China,7,Guangxi,419,Yanshan
+49,China,7,Guangxi,420,Fuchuan Yao
+49,China,7,Guangxi,421,He
+49,China,7,Guangxi,422,Zhaoping
+49,China,7,Guangxi,423,Zhongshan
+49,China,7,Guangxi,424,Heshan
+49,China,7,Guangxi,425,Jinxiu Yao
+49,China,7,Guangxi,426,Laibin
+49,China,7,Guangxi,427,Wuxuan
+49,China,7,Guangxi,428,Xiangzhou
+49,China,7,Guangxi,429,Xincheng
+49,China,7,Guangxi,430,Liucheng
+49,China,7,Guangxi,431,Liujiang
+49,China,7,Guangxi,432,Liuzhou
+49,China,7,Guangxi,433,Luzhai
+49,China,7,Guangxi,434,Rong'an
+49,China,7,Guangxi,435,Rongshui Miao
+49,China,7,Guangxi,436,Sanjiang Dong
+49,China,7,Guangxi,437,Binyang
+49,China,7,Guangxi,438,Heng
+49,China,7,Guangxi,439,Long'an
+49,China,7,Guangxi,440,Mashan
+49,China,7,Guangxi,441,Nanning
+49,China,7,Guangxi,442,Shanglin
+49,China,7,Guangxi,443,Wuming
+49,China,7,Guangxi,444,Yongning
+49,China,7,Guangxi,445,Lingshan
+49,China,7,Guangxi,446,Pubei
+49,China,7,Guangxi,447,Qinzhou
+49,China,7,Guangxi,448,Cangwu
+49,China,7,Guangxi,449,Cenxi
+49,China,7,Guangxi,450,Mengshan
+49,China,7,Guangxi,451,Teng
+49,China,7,Guangxi,452,Wuzhou
+49,China,7,Guangxi,453,Beiliu
+49,China,7,Guangxi,454,Bobai
+49,China,7,Guangxi,455,Luchuan
+49,China,7,Guangxi,456,Rong
+49,China,7,Guangxi,457,Yufeng
+49,China,8,Guizhou,458,Anshun
+49,China,8,Guizhou,459,Guanling Buyei and Miao
+49,China,8,Guizhou,460,Pingba
+49,China,8,Guizhou,461,Puding
+49,China,8,Guizhou,462,Zhenning Buyei and Miao
+49,China,8,Guizhou,463,Ziyun Miao and Buyei
+49,China,8,Guizhou,464,Bijie
+49,China,8,Guizhou,465,Dafang
+49,China,8,Guizhou,466,Hezhang
+49,China,8,Guizhou,467,Jinsha
+49,China,8,Guizhou,468,Nayong
+49,China,8,Guizhou,469,Qianxi
+49,China,8,Guizhou,470,"Weining Yi, Hui and Miao"
+49,China,8,Guizhou,471,Zhijin
+49,China,8,Guizhou,472,Guiyang
+49,China,8,Guizhou,473,Kaiyang
+49,China,8,Guizhou,474,Qingzhen
+49,China,8,Guizhou,475,Xifeng
+49,China,8,Guizhou,476,Xiuwen
+49,China,8,Guizhou,477,Liuzhi
+49,China,8,Guizhou,478,Pan
+49,China,8,Guizhou,479,Shuicheng
+49,China,8,Guizhou,480,Zhongshan
+49,China,8,Guizhou,481,Cengong
+49,China,8,Guizhou,482,Congjiang
+49,China,8,Guizhou,483,Danzhai
+49,China,8,Guizhou,484,Huangping
+49,China,8,Guizhou,485,Jianhe
+49,China,8,Guizhou,486,Jinping
+49,China,8,Guizhou,487,Kaili
+49,China,8,Guizhou,488,Leishan
+49,China,8,Guizhou,489,Liping
+49,China,8,Guizhou,490,Majiang
+49,China,8,Guizhou,491,Rongjiang
+49,China,8,Guizhou,492,Sansui
+49,China,8,Guizhou,493,Shibing
+49,China,8,Guizhou,494,Taijiang
+49,China,8,Guizhou,495,Tianzhu
+49,China,8,Guizhou,496,Zhenyuan
+49,China,8,Guizhou,497,Changshun
+49,China,8,Guizhou,498,Dushan
+49,China,8,Guizhou,499,Duyun
+49,China,8,Guizhou,500,Fuquan
+49,China,8,Guizhou,501,Guiding
+49,China,8,Guizhou,502,Huaxi
+49,China,8,Guizhou,503,Libo
+49,China,8,Guizhou,504,Longli
+49,China,8,Guizhou,505,Luodian
+49,China,8,Guizhou,506,Pingtang
+49,China,8,Guizhou,507,Sandu Shui
+49,China,8,Guizhou,508,Weng'an
+49,China,8,Guizhou,509,Anlong
+49,China,8,Guizhou,510,Ceheng
+49,China,8,Guizhou,511,Pu'an
+49,China,8,Guizhou,512,Qinglong
+49,China,8,Guizhou,513,Wangmo
+49,China,8,Guizhou,514,Xingren
+49,China,8,Guizhou,515,Xingyi
+49,China,8,Guizhou,516,Zhenfeng
+49,China,8,Guizhou,517,Dejiang
+49,China,8,Guizhou,518,Jiangkou
+49,China,8,Guizhou,519,Shiqian
+49,China,8,Guizhou,520,Sinan
+49,China,8,Guizhou,521,Songtao Miao
+49,China,8,Guizhou,522,Tongren
+49,China,8,Guizhou,523,Wanshan Special
+49,China,8,Guizhou,524,Yanhe Tujia
+49,China,8,Guizhou,525,Yinjiang Tujia and Miao
+49,China,8,Guizhou,526,Yuping Dong
+49,China,8,Guizhou,527,Chishui
+49,China,8,Guizhou,528,Daozhen Gelao and Miao
+49,China,8,Guizhou,529,Fenggang
+49,China,8,Guizhou,530,Meitan
+49,China,8,Guizhou,531,Renhuai
+49,China,8,Guizhou,532,Suiyang
+49,China,8,Guizhou,533,Tongzi
+49,China,8,Guizhou,534,Wuchuan Gelao and Miao
+49,China,8,Guizhou,535,Xishui
+49,China,8,Guizhou,536,Yuqing
+49,China,8,Guizhou,537,Zheng'an
+49,China,8,Guizhou,538,Zunyi Shì
+49,China,8,Guizhou,539,Zunyi Xiàn
+49,China,9,Hainan,540,Haikou
+49,China,9,Hainan,541,Qiongshan
+49,China,9,Hainan,542,Baisha Li
+49,China,9,Hainan,543,Baoting Li
+49,China,9,Hainan,544,Changjiang Li
+49,China,9,Hainan,545,Chengmai
+49,China,9,Hainan,546,Danzhou
+49,China,9,Hainan,547,Ding An
+49,China,9,Hainan,548,Dongfang
+49,China,9,Hainan,549,Ledong Li
+49,China,9,Hainan,550,Lingao
+49,China,9,Hainan,551,Lingshui Li
+49,China,9,Hainan,552,Qionghai
+49,China,9,Hainan,553,Qiongzhong Li and Miao
+49,China,9,Hainan,554,Tunchang
+49,China,9,Hainan,555,Wanning
+49,China,9,Hainan,556,Wenchang
+49,China,9,Hainan,557,Sanya
+49,China,10,Hebei,558,Anguo
+49,China,10,Hebei,559,Anxin
+49,China,10,Hebei,560,Baoding
+49,China,10,Hebei,561,Boye
+49,China,10,Hebei,562,Ding
+49,China,10,Hebei,563,Dingxing
+49,China,10,Hebei,564,Fuping
+49,China,10,Hebei,565,Gaoyang
+49,China,10,Hebei,566,Laishui
+49,China,10,Hebei,567,Laiyuan
+49,China,10,Hebei,568,Li
+49,China,10,Hebei,569,Mancheng
+49,China,10,Hebei,570,Qing Yuan
+49,China,10,Hebei,571,Quyang
+49,China,10,Hebei,572,Rongcheng
+49,China,10,Hebei,573,Tang
+49,China,10,Hebei,574,Wangdu
+49,China,10,Hebei,575,Wan
+49,China,10,Hebei,576,Xincheng
+49,China,10,Hebei,577,Xiong
+49,China,10,Hebei,578,Xushui
+49,China,10,Hebei,579,Yi
+49,China,10,Hebei,580,Zhuo
+49,China,10,Hebei,581,Cang
+49,China,10,Hebei,582,Cangzhou
+49,China,10,Hebei,583,Dongguang
+49,China,10,Hebei,584,Haixing
+49,China,10,Hebei,585,Hejian
+49,China,10,Hebei,586,Huanghua
+49,China,10,Hebei,587,Jiaohe
+49,China,10,Hebei,588,Mengcun Hui
+49,China,10,Hebei,589,Nanpi
+49,China,10,Hebei,590,Qing
+49,China,10,Hebei,591,Renqiu
+49,China,10,Hebei,592,Suning
+49,China,10,Hebei,593,Wuqiao
+49,China,10,Hebei,594,Xian
+49,China,10,Hebei,595,Yanshan
+49,China,10,Hebei,596,Chengde Shì
+49,China,10,Hebei,597,Chengde Xiàn
+49,China,10,Hebei,598,Fengning Manchu
+49,China,10,Hebei,599,Kuancheng Manchu
+49,China,10,Hebei,600,Longhua
+49,China,10,Hebei,601,Luanping
+49,China,10,Hebei,602,Pingquan
+49,China,10,Hebei,603,Weichang Manchu and Mongol
+49,China,10,Hebei,604,Xinglong
+49,China,10,Hebei,605,Yingshouyingzikuang
+49,China,10,Hebei,606,Cheng'an
+49,China,10,Hebei,607,Ci
+49,China,10,Hebei,608,Daming
+49,China,10,Hebei,609,Feixiang
+49,China,10,Hebei,610,Fengfengkuang
+49,China,10,Hebei,611,Guangping
+49,China,10,Hebei,612,Guantao
+49,China,10,Hebei,613,Handan shì
+49,China,10,Hebei,614,Handan Xiàn
+49,China,10,Hebei,615,Jize
+49,China,10,Hebei,616,Linzhang
+49,China,10,Hebei,617,Qiu
+49,China,10,Hebei,618,Quzhou
+49,China,10,Hebei,619,She
+49,China,10,Hebei,620,Wei
+49,China,10,Hebei,621,Wu'an
+49,China,10,Hebei,622,Yongnian
+49,China,10,Hebei,623,Anping
+49,China,10,Hebei,624,Fucheng
+49,China,10,Hebei,625,Gucheng
+49,China,10,Hebei,626,Hengshui
+49,China,10,Hebei,627,Jing
+49,China,10,Hebei,628,Ji
+49,China,10,Hebei,629,Raoyang
+49,China,10,Hebei,630,Shen
+49,China,10,Hebei,631,Wuqiang
+49,China,10,Hebei,632,Wuyi
+49,China,10,Hebei,633,Zaoqiang
+49,China,10,Hebei,634,Ba
+49,China,10,Hebei,635,Dachang Hui
+49,China,10,Hebei,636,Daicheng
+49,China,10,Hebei,637,Gu'an
+49,China,10,Hebei,638,Longfang
+49,China,10,Hebei,639,Sanhe
+49,China,10,Hebei,640,Wen'an
+49,China,10,Hebei,641,Xianghe
+49,China,10,Hebei,642,Yongqing
+49,China,10,Hebei,643,Changli
+49,China,10,Hebei,644,Funing
+49,China,10,Hebei,645,Lulong
+49,China,10,Hebei,646,Qinglong
+49,China,10,Hebei,647,Qinhuangdao
+49,China,10,Hebei,648,Gaocheng
+49,China,10,Hebei,649,Gaoyi
+49,China,10,Hebei,650,Huelu
+49,China,10,Hebei,651,Jingjing
+49,China,10,Hebei,652,Ji
+49,China,10,Hebei,653,Lingshou
+49,China,10,Hebei,654,Luancheng
+49,China,10,Hebei,655,Pingshan
+49,China,10,Hebei,656,Shenze
+49,China,10,Hebei,657,Shijiazhuang
+49,China,10,Hebei,658,Shulu
+49,China,10,Hebei,659,Wuji
+49,China,10,Hebei,660,Xingtang
+49,China,10,Hebei,661,Xinle
+49,China,10,Hebei,662,Yuanshi
+49,China,10,Hebei,663,Zanhuang
+49,China,10,Hebei,664,Zhao
+49,China,10,Hebei,665,Zhengding
+49,China,10,Hebei,666,Fengnan
+49,China,10,Hebei,667,Fengrun
+49,China,10,Hebei,668,Leting
+49,China,10,Hebei,669,Luannan
+49,China,10,Hebei,670,Luan
+49,China,10,Hebei,671,Qian'an
+49,China,10,Hebei,672,Qianxi
+49,China,10,Hebei,673,Tanghai
+49,China,10,Hebei,674,Tangshan
+49,China,10,Hebei,675,Yutian
+49,China,10,Hebei,676,Zunhua
+49,China,10,Hebei,677,Baixiang
+49,China,10,Hebei,678,Guangzong
+49,China,10,Hebei,679,Julu
+49,China,10,Hebei,680,Lincheng
+49,China,10,Hebei,681,Linxi
+49,China,10,Hebei,682,Longyao
+49,China,10,Hebei,683,Nangong
+49,China,10,Hebei,684,Nanhe
+49,China,10,Hebei,685,Neiqiu
+49,China,10,Hebei,686,Ningjin
+49,China,10,Hebei,687,Pingxiang
+49,China,10,Hebei,688,Qinghe
+49,China,10,Hebei,689,Ren
+49,China,10,Hebei,690,Shahe
+49,China,10,Hebei,691,Wei
+49,China,10,Hebei,692,Xingtai shì
+49,China,10,Hebei,693,Xingtai Xiàn
+49,China,10,Hebei,694,Xinhe
+49,China,10,Hebei,695,Chicheng
+49,China,10,Hebei,696,Chongli
+49,China,10,Hebei,697,Guyuan
+49,China,10,Hebei,698,Huai'an
+49,China,10,Hebei,699,Huailai
+49,China,10,Hebei,700,Kangbao
+49,China,10,Hebei,701,Shangyi
+49,China,10,Hebei,702,Wanquan
+49,China,10,Hebei,703,Xuanhua
+49,China,10,Hebei,704,Yangyuan
+49,China,10,Hebei,705,Yu
+49,China,10,Hebei,706,Zhangbei
+49,China,10,Hebei,707,Zhangjiakou
+49,China,10,Hebei,708,Zhuolu
+49,China,11,Heilongjiang,709,Daqina
+49,China,11,Heilongjiang,710,Dorbod Mongol
+49,China,11,Heilongjiang,711,Lindian
+49,China,11,Heilongjiang,712,Zhaoyuan
+49,China,11,Heilongjiang,713,Zhaozhou
+49,China,11,Heilongjiang,714,Huma
+49,China,11,Heilongjiang,715,Huzhong
+49,China,11,Heilongjiang,716,Mohe
+49,China,11,Heilongjiang,717,Tahe
+49,China,11,Heilongjiang,718,Xinlin
+49,China,11,Heilongjiang,719,Acheng
+49,China,11,Heilongjiang,720,Bayan
+49,China,11,Heilongjiang,721,Bin
+49,China,11,Heilongjiang,722,Fangzheng
+49,China,11,Heilongjiang,723,Harbin
+49,China,11,Heilongjiang,724,Hulan
+49,China,11,Heilongjiang,725,Mulan
+49,China,11,Heilongjiang,726,Shangzhi
+49,China,11,Heilongjiang,727,Shuangcheng
+49,China,11,Heilongjiang,728,Tonghe
+49,China,11,Heilongjiang,729,Wuchang
+49,China,11,Heilongjiang,730,Yanshou
+49,China,11,Heilongjiang,731,Yilan
+49,China,11,Heilongjiang,732,Hegang shì
+49,China,11,Heilongjiang,733,Hegang
+49,China,11,Heilongjiang,734,Luobei
+49,China,11,Heilongjiang,735,Suibin
+49,China,11,Heilongjiang,736,Bei'an
+49,China,11,Heilongjiang,737,Dedu
+49,China,11,Heilongjiang,738,Heihe
+49,China,11,Heilongjiang,739,Nenjiang
+49,China,11,Heilongjiang,740,Sunwu
+49,China,11,Heilongjiang,741,Wudalianchi
+49,China,11,Heilongjiang,742,Xunke
+49,China,11,Heilongjiang,743,Fujin
+49,China,11,Heilongjiang,744,Fuyuan
+49,China,11,Heilongjiang,745,Huachuan
+49,China,11,Heilongjiang,746,Huanan
+49,China,11,Heilongjiang,747,Jiamusi
+49,China,11,Heilongjiang,748,Tangyuan
+49,China,11,Heilongjiang,749,Tongjiang
+49,China,11,Heilongjiang,750,Hulin
+49,China,11,Heilongjiang,751,Jidong
+49,China,11,Heilongjiang,752,Jixi
+49,China,11,Heilongjiang,753,Mishan
+49,China,11,Heilongjiang,754,Dongning
+49,China,11,Heilongjiang,755,Hailin
+49,China,11,Heilongjiang,756,Linkou
+49,China,11,Heilongjiang,757,Mudanjiang
+49,China,11,Heilongjiang,758,Muling
+49,China,11,Heilongjiang,759,Ning'an
+49,China,11,Heilongjiang,760,Suifenhe
+49,China,11,Heilongjiang,761,Baiquan
+49,China,11,Heilongjiang,762,Fuyu
+49,China,11,Heilongjiang,763,Gannan
+49,China,11,Heilongjiang,764,Kedong
+49,China,11,Heilongjiang,765,Keshan
+49,China,11,Heilongjiang,766,Longjiang
+49,China,11,Heilongjiang,767,Nehe
+49,China,11,Heilongjiang,768,Nianzishan
+49,China,11,Heilongjiang,769,Qiqihar
+49,China,11,Heilongjiang,770,Tailai
+49,China,11,Heilongjiang,771,Yi'an
+49,China,11,Heilongjiang,772,Boli
+49,China,11,Heilongjiang,773,Qitaihe
+49,China,11,Heilongjiang,774,Baoqing
+49,China,11,Heilongjiang,775,Jixian
+49,China,11,Heilongjiang,776,Raohe
+49,China,11,Heilongjiang,777,Shuangyashan
+49,China,11,Heilongjiang,778,Youyi
+49,China,11,Heilongjiang,779,Anda
+49,China,11,Heilongjiang,780,Hailun
+49,China,11,Heilongjiang,781,Lanxi
+49,China,11,Heilongjiang,782,Mingshui
+49,China,11,Heilongjiang,783,Qing'an
+49,China,11,Heilongjiang,784,Qinggang
+49,China,11,Heilongjiang,785,Suihua
+49,China,11,Heilongjiang,786,Suileng
+49,China,11,Heilongjiang,787,Wangkui
+49,China,11,Heilongjiang,788,Zhaodong
+49,China,11,Heilongjiang,789,Cuiluan
+49,China,11,Heilongjiang,790,Jiayin
+49,China,11,Heilongjiang,791,Tieli
+49,China,11,Heilongjiang,792,Wuyiling
+49,China,11,Heilongjiang,793,Yichun
+49,China,12,Henan,794,Anyang Shì
+49,China,12,Henan,795,Anyang Xiàn
+49,China,12,Henan,796,Hua
+49,China,12,Henan,797,Lin
+49,China,12,Henan,798,Neihuang
+49,China,12,Henan,799,Tangyin
+49,China,12,Henan,800,Hebi
+49,China,12,Henan,801,Qi
+49,China,12,Henan,802,Xun
+49,China,12,Henan,803,Bo'ai
+49,China,12,Henan,804,Jiaozuo
+49,China,12,Henan,805,Meng
+49,China,12,Henan,806,Qinyang
+49,China,12,Henan,807,Wen
+49,China,12,Henan,808,Wuzhi
+49,China,12,Henan,809,Xiuwu
+49,China,12,Henan,810,Jiyuan
+49,China,12,Henan,811,Kaifeng Xiàn
+49,China,12,Henan,812,Kaifeng
+49,China,12,Henan,813,Lankao
+49,China,12,Henan,814,Qi
+49,China,12,Henan,815,Tongxu
+49,China,12,Henan,816,Weishi
+49,China,12,Henan,817,Linying
+49,China,12,Henan,818,Luohe
+49,China,12,Henan,819,Wuyang
+49,China,12,Henan,820,Yancheng
+49,China,12,Henan,821,Luanchuan
+49,China,12,Henan,822,Luoning
+49,China,12,Henan,823,Luoyang
+49,China,12,Henan,824,Mengjin
+49,China,12,Henan,825,Ruyang
+49,China,12,Henan,826,Song
+49,China,12,Henan,827,Xin'an
+49,China,12,Henan,828,Yanshi
+49,China,12,Henan,829,Yichuan
+49,China,12,Henan,830,Yiyang
+49,China,12,Henan,831,Deng
+49,China,12,Henan,832,Fangcheng
+49,China,12,Henan,833,Nanyang Shì
+49,China,12,Henan,834,Nanyang Xiàn
+49,China,12,Henan,835,Nanzhao
+49,China,12,Henan,836,Neixiang
+49,China,12,Henan,837,Sheqi
+49,China,12,Henan,838,Tanghe
+49,China,12,Henan,839,Tongbai
+49,China,12,Henan,840,Xichuan
+49,China,12,Henan,841,Xinye
+49,China,12,Henan,842,Xixia
+49,China,12,Henan,843,Zhenping
+49,China,12,Henan,844,Baofeng
+49,China,12,Henan,845,Jia
+49,China,12,Henan,846,Linru
+49,China,12,Henan,847,Lushan
+49,China,12,Henan,848,Pingdingshan
+49,China,12,Henan,849,Wugang
+49,China,12,Henan,850,Ye
+49,China,12,Henan,851,Fanxian
+49,China,12,Henan,852,Nanle
+49,China,12,Henan,853,Puyang Shì
+49,China,12,Henan,854,Puyang Xiàn
+49,China,12,Henan,855,Qingfeng
+49,China,12,Henan,856,Taiqian
+49,China,12,Henan,857,Lingbao
+49,China,12,Henan,858,Lushi
+49,China,12,Henan,859,Mianchi
+49,China,12,Henan,860,Sanmenxia
+49,China,12,Henan,861,Shan
+49,China,12,Henan,862,Yima
+49,China,12,Henan,863,Minquan
+49,China,12,Henan,864,Ningling
+49,China,12,Henan,865,Shangqiu Shì
+49,China,12,Henan,866,Sui
+49,China,12,Henan,867,Suiyang
+49,China,12,Henan,868,Xiayi
+49,China,12,Henan,869,Yongcheng
+49,China,12,Henan,870,Yucheng
+49,China,12,Henan,871,Zhecheng
+49,China,12,Henan,872,Changyuan
+49,China,12,Henan,873,Fengqiu
+49,China,12,Henan,874,Houjia
+49,China,12,Henan,875,Huixian
+49,China,12,Henan,876,Ji
+49,China,12,Henan,877,Xinxiang Shì
+49,China,12,Henan,878,Xinxiang Xiàn
+49,China,12,Henan,879,Yanjin
+49,China,12,Henan,880,Yuanyang
+49,China,12,Henan,881,Guangshan
+49,China,12,Henan,882,Gushi
+49,China,12,Henan,883,Huaibin
+49,China,12,Henan,884,Huangchuan
+49,China,12,Henan,885,Luoshan
+49,China,12,Henan,886,Shancheng
+49,China,12,Henan,887,Xinxian
+49,China,12,Henan,888,Xinyang Shì
+49,China,12,Henan,889,Xinyang Xiàn
+49,China,12,Henan,890,Xi
+49,China,12,Henan,891,Changge
+49,China,12,Henan,892,Xiangcheng
+49,China,12,Henan,893,Xuchang Shì
+49,China,12,Henan,894,Xuchang Xiàn
+49,China,12,Henan,895,Yanling
+49,China,12,Henan,896,Yu
+49,China,12,Henan,897,Dengfeng
+49,China,12,Henan,898,Gong
+49,China,12,Henan,899,Mi
+49,China,12,Henan,900,Xingyang
+49,China,12,Henan,901,Xinzheng
+49,China,12,Henan,902,Zhengzhou
+49,China,12,Henan,903,Zhongmou
+49,China,12,Henan,904,Dancheng
+49,China,12,Henan,905,Fugou
+49,China,12,Henan,906,Huaiyang
+49,China,12,Henan,907,Luyi
+49,China,12,Henan,908,Shangshui
+49,China,12,Henan,909,Shenqiu
+49,China,12,Henan,910,Taikang
+49,China,12,Henan,911,Xiangcheng
+49,China,12,Henan,912,Xihua
+49,China,12,Henan,913,Zhoukou
+49,China,12,Henan,914,Biyang
+49,China,12,Henan,915,Pingyu
+49,China,12,Henan,916,Queshan
+49,China,12,Henan,917,Runan
+49,China,12,Henan,918,Shangcai
+49,China,12,Henan,919,Suiping
+49,China,12,Henan,920,Xincai
+49,China,12,Henan,921,Xiping
+49,China,12,Henan,922,Zhengyang
+49,China,12,Henan,923,Zhumadian
+49,China,13,Hubei,924,Badong
+49,China,13,Hubei,925,Enshi Tujia and Miao
+49,China,13,Hubei,926,Hefeng
+49,China,13,Hubei,927,Jianshi
+49,China,13,Hubei,928,Laifeng
+49,China,13,Hubei,929,Lichuan
+49,China,13,Hubei,930,Xianfeng
+49,China,13,Hubei,931,Xuan En
+49,China,13,Hubei,932,Echeng Qū
+49,China,13,Hubei,933,Echeng Shì
+49,China,13,Hubei,934,Guangji
+49,China,13,Hubei,935,Hong'an
+49,China,13,Hubei,936,Huanggang
+49,China,13,Hubei,937,Huangmei
+49,China,13,Hubei,938,Luotian
+49,China,13,Hubei,939,Macheng
+49,China,13,Hubei,940,Qichun
+49,China,13,Hubei,941,Xishui
+49,China,13,Hubei,942,Yingshan
+49,China,13,Hubei,943,Daye
+49,China,13,Hubei,944,Huangshi
+49,China,13,Hubei,945,Yangxin
+49,China,13,Hubei,946,Jingmen
+49,China,13,Hubei,947,Jingshan
+49,China,13,Hubei,948,Shayang
+49,China,13,Hubei,949,Zhongxiang
+49,China,13,Hubei,950,Gong'an
+49,China,13,Hubei,951,Honghu
+49,China,13,Hubei,952,Jiangling
+49,China,13,Hubei,953,Jianli
+49,China,13,Hubei,954,Jingzhou
+49,China,13,Hubei,955,Shashi
+49,China,13,Hubei,956,Shishou
+49,China,13,Hubei,957,Songzi
+49,China,13,Hubei,958,Qianjiang
+49,China,13,Hubei,959,Shennongjia
+49,China,13,Hubei,960,Fang
+49,China,13,Hubei,961,Junxian
+49,China,13,Hubei,962,Shiyan
+49,China,13,Hubei,963,Yun
+49,China,13,Hubei,964,Yunxi
+49,China,13,Hubei,965,Zhushan
+49,China,13,Hubei,966,Zhuxi
+49,China,13,Hubei,967,Suizhou
+49,China,13,Hubei,968,Yingshan
+49,China,13,Hubei,969,Tianmen
+49,China,13,Hubei,970,Hanyang
+49,China,13,Hubei,971,Huangpi
+49,China,13,Hubei,972,Wuchang
+49,China,13,Hubei,973,Wuhan
+49,China,13,Hubei,974,Xinzhou
+49,China,13,Hubei,975,Baokang
+49,China,13,Hubei,976,Gucheng
+49,China,13,Hubei,977,Laohekou
+49,China,13,Hubei,978,Nanzhang
+49,China,13,Hubei,979,Xiangfan
+49,China,13,Hubei,980,Xiangyang
+49,China,13,Hubei,981,Yicheng
+49,China,13,Hubei,982,Zaoyang
+49,China,13,Hubei,983,Chongyang
+49,China,13,Hubei,984,Jiayu
+49,China,13,Hubei,985,Puqi
+49,China,13,Hubei,986,Tongcheng
+49,China,13,Hubei,987,Tongshan
+49,China,13,Hubei,988,Xianning
+49,China,13,Hubei,989,Mianyang
+49,China,13,Hubei,990,Anlu
+49,China,13,Hubei,991,Dawu
+49,China,13,Hubei,992,Hanchuan
+49,China,13,Hubei,993,Xiaochang
+49,China,13,Hubei,994,Xiaogan
+49,China,13,Hubei,995,Yingcheng
+49,China,13,Hubei,996,Yunmeng
+49,China,13,Hubei,997,Changyang Tujia
+49,China,13,Hubei,998,Dangyang
+49,China,13,Hubei,999,Wufeng Tujia
+49,China,13,Hubei,1000,Xingshan
+49,China,13,Hubei,1001,Yichang
+49,China,13,Hubei,1002,Yidu
+49,China,13,Hubei,1003,Yiling
+49,China,13,Hubei,1004,Yuan'an
+49,China,13,Hubei,1005,Zhijiang
+49,China,13,Hubei,1006,Zigui
+49,China,14,Hunan,1007,Anxiang
+49,China,14,Hunan,1008,Dingcheng
+49,China,14,Hunan,1009,Hanshou
+49,China,14,Hunan,1010,Jinshi
+49,China,14,Hunan,1011,Linli
+49,China,14,Hunan,1012,Li
+49,China,14,Hunan,1013,Shimen
+49,China,14,Hunan,1014,Taoyuan
+49,China,14,Hunan,1015,Wuling
+49,China,14,Hunan,1016,Changsha Shì
+49,China,14,Hunan,1017,Changsha Xiàn
+49,China,14,Hunan,1018,Liuyang
+49,China,14,Hunan,1019,Ningxiang
+49,China,14,Hunan,1020,Wangcheng
+49,China,14,Hunan,1021,Anren
+49,China,14,Hunan,1022,Chen
+49,China,14,Hunan,1023,Chenzhou
+49,China,14,Hunan,1024,Guidong
+49,China,14,Hunan,1025,Guiyang
+49,China,14,Hunan,1026,Jiahe
+49,China,14,Hunan,1027,Linwu
+49,China,14,Hunan,1028,Rucheng
+49,China,14,Hunan,1029,Yizhang
+49,China,14,Hunan,1030,Yongxing
+49,China,14,Hunan,1031,Zixing
+49,China,14,Hunan,1032,Changning
+49,China,14,Hunan,1033,Hengdong
+49,China,14,Hunan,1034,Hengnan
+49,China,14,Hunan,1035,Hengshan
+49,China,14,Hunan,1036,Hengyang Shì
+49,China,14,Hunan,1037,Hengyang Xiàn
+49,China,14,Hunan,1038,Laiyang
+49,China,14,Hunan,1039,Qidong
+49,China,14,Hunan,1040,Chenxi
+49,China,14,Hunan,1041,Hóngjiāng Qū
+49,China,14,Hunan,1042,Hóngjiāng Shì
+49,China,14,Hunan,1043,Huaihua
+49,China,14,Hunan,1044,Huitong
+49,China,14,Hunan,1045,Jing
+49,China,14,Hunan,1046,Mayang Miao
+49,China,14,Hunan,1047,Tongdao Dong
+49,China,14,Hunan,1048,Xinhuang Dong Dongzu
+49,China,14,Hunan,1049,Xupu
+49,China,14,Hunan,1050,Yuanling
+49,China,14,Hunan,1051,Zhijiang Dong Dongzu
+49,China,14,Hunan,1052,Lengshuijang
+49,China,14,Hunan,1053,Lianyuan
+49,China,14,Hunan,1054,Loudi
+49,China,14,Hunan,1055,Shuangfeng
+49,China,14,Hunan,1056,Xinhua
+49,China,14,Hunan,1057,Chengbu Miao
+49,China,14,Hunan,1058,Daxiang
+49,China,14,Hunan,1059,Dongkou
+49,China,14,Hunan,1060,Longhui
+49,China,14,Hunan,1061,Shaodong
+49,China,14,Hunan,1062,Shaoyang Shì
+49,China,14,Hunan,1063,Shaoyang Xiàn
+49,China,14,Hunan,1064,Suining
+49,China,14,Hunan,1065,Wugang
+49,China,14,Hunan,1066,Xinning
+49,China,14,Hunan,1067,Xinshao
+49,China,14,Hunan,1068,Shaoshan
+49,China,14,Hunan,1069,Xiangtan Shì
+49,China,14,Hunan,1070,Xiangtan Xiàn
+49,China,14,Hunan,1071,Xiangxiang
+49,China,14,Hunan,1072,Baojing
+49,China,14,Hunan,1073,Fenghuang
+49,China,14,Hunan,1074,Guzhang
+49,China,14,Hunan,1075,Huayuan
+49,China,14,Hunan,1076,Jishou
+49,China,14,Hunan,1077,Longshan
+49,China,14,Hunan,1078,Luxi
+49,China,14,Hunan,1079,Yongshun
+49,China,14,Hunan,1080,Anhua
+49,China,14,Hunan,1081,Nan
+49,China,14,Hunan,1082,Taojiang
+49,China,14,Hunan,1083,Yiyang Shì
+49,China,14,Hunan,1084,Yiyang Xiàn
+49,China,14,Hunan,1085,Yuanjiang
+49,China,14,Hunan,1086,Dao
+49,China,14,Hunan,1087,Jianghua Yao
+49,China,14,Hunan,1088,Jiangyong
+49,China,14,Hunan,1089,Lanshan
+49,China,14,Hunan,1090,Lengshuitan
+49,China,14,Hunan,1091,Lingling
+49,China,14,Hunan,1092,Ningyuan
+49,China,14,Hunan,1093,Qiyang
+49,China,14,Hunan,1094,Shuangpai
+49,China,14,Hunan,1095,Xintian
+49,China,14,Hunan,1096,Huarong
+49,China,14,Hunan,1097,Linxiang
+49,China,14,Hunan,1098,Miluo
+49,China,14,Hunan,1099,Pingjiang
+49,China,14,Hunan,1100,Xiangyin
+49,China,14,Hunan,1101,Yueyang Qū
+49,China,14,Hunan,1102,Yueyang Xiàn
+49,China,14,Hunan,1103,Cili
+49,China,14,Hunan,1104,Dayong
+49,China,14,Hunan,1105,Sangzhi
+49,China,14,Hunan,1106,Chaling
+49,China,14,Hunan,1107,Liling
+49,China,14,Hunan,1108,Ling
+49,China,14,Hunan,1109,Youxian
+49,China,14,Hunan,1110,Zhuzhou Qū
+49,China,14,Hunan,1111,Zhuzhou Xiàn
+49,China,15,Jiangsu,1112,Changzhou
+49,China,15,Jiangsu,1113,Jintan
+49,China,15,Jiangsu,1114,Liyang
+49,China,15,Jiangsu,1115,Wujin
+49,China,15,Jiangsu,1116,Hongze
+49,China,15,Jiangsu,1117,Huaian
+49,China,15,Jiangsu,1118,Huaiyin
+49,China,15,Jiangsu,1119,Jinhu
+49,China,15,Jiangsu,1120,Lianshui
+49,China,15,Jiangsu,1121,Qingjiang
+49,China,15,Jiangsu,1122,Xuyi
+49,China,15,Jiangsu,1123,Donghai
+49,China,15,Jiangsu,1124,Ganyu
+49,China,15,Jiangsu,1125,Guannan
+49,China,15,Jiangsu,1126,Guanyun
+49,China,15,Jiangsu,1127,Lianyungang
+49,China,15,Jiangsu,1128,Gaochun
+49,China,15,Jiangsu,1129,Jiangning
+49,China,15,Jiangsu,1130,Jiangpu
+49,China,15,Jiangsu,1131,Lishui
+49,China,15,Jiangsu,1132,Luhe
+49,China,15,Jiangsu,1133,Nanjing
+49,China,15,Jiangsu,1134,Hai'an
+49,China,15,Jiangsu,1135,Haimen
+49,China,15,Jiangsu,1136,Nantong
+49,China,15,Jiangsu,1137,Qidong
+49,China,15,Jiangsu,1138,Rudong
+49,China,15,Jiangsu,1139,Rugao
+49,China,15,Jiangsu,1140,Tongzhou
+49,China,15,Jiangsu,1141,Shuyang
+49,China,15,Jiangsu,1142,Sihong
+49,China,15,Jiangsu,1143,Siyang
+49,China,15,Jiangsu,1144,Suqian
+49,China,15,Jiangsu,1145,Suyu
+49,China,15,Jiangsu,1146,Changshu
+49,China,15,Jiangsu,1147,Kunshan
+49,China,15,Jiangsu,1148,Shazhou
+49,China,15,Jiangsu,1149,Suzhou
+49,China,15,Jiangsu,1150,Taicang
+49,China,15,Jiangsu,1151,Wujiang
+49,China,15,Jiangsu,1152,Wuxian
+49,China,15,Jiangsu,1153,Jiangyan
+49,China,15,Jiangsu,1154,Jingjiang
+49,China,15,Jiangsu,1155,Taixing
+49,China,15,Jiangsu,1156,Taizhou
+49,China,15,Jiangsu,1157,Xinghua
+49,China,15,Jiangsu,1158,Jiangyin
+49,China,15,Jiangsu,1159,Wuxi New District
+49,China,15,Jiangsu,1160,Wuxi
+49,China,15,Jiangsu,1161,Xishan
+49,China,15,Jiangsu,1162,Yixing
+49,China,15,Jiangsu,1163,Feng
+49,China,15,Jiangsu,1164,Pei
+49,China,15,Jiangsu,1165,Pizhou
+49,China,15,Jiangsu,1166,Suining
+49,China,15,Jiangsu,1167,Tongshan
+49,China,15,Jiangsu,1168,Xinyi
+49,China,15,Jiangsu,1169,Xuzhou
+49,China,15,Jiangsu,1170,Binhai
+49,China,15,Jiangsu,1171,Dafeng
+49,China,15,Jiangsu,1172,Dongtai
+49,China,15,Jiangsu,1173,Funing
+49,China,15,Jiangsu,1174,Jianhu
+49,China,15,Jiangsu,1175,Sheyang
+49,China,15,Jiangsu,1176,Xiangshui
+49,China,15,Jiangsu,1177,Yandu
+49,China,15,Jiangsu,1178,Yiancheng
+49,China,15,Jiangsu,1179,Baoying
+49,China,15,Jiangsu,1180,Gaoyou
+49,China,15,Jiangsu,1181,Hanjiang
+49,China,15,Jiangsu,1182,Jiangdu
+49,China,15,Jiangsu,1183,Yangzhou
+49,China,15,Jiangsu,1184,Yizheng
+49,China,15,Jiangsu,1185,Dantu
+49,China,15,Jiangsu,1186,Danyang
+49,China,15,Jiangsu,1187,Jurong
+49,China,15,Jiangsu,1188,Yangzhong
+49,China,15,Jiangsu,1189,Zhenjiang
+49,China,16,Jiangxi,1190,Chongren
+49,China,16,Jiangxi,1191,Dongxiang
+49,China,16,Jiangxi,1192,Guangchang
+49,China,16,Jiangxi,1193,Jinxi
+49,China,16,Jiangxi,1194,Le'an
+49,China,16,Jiangxi,1195,Lichuan
+49,China,16,Jiangxi,1196,Linchuan
+49,China,16,Jiangxi,1197,Nancheng
+49,China,16,Jiangxi,1198,Nanfeng
+49,China,16,Jiangxi,1199,Yihuang
+49,China,16,Jiangxi,1200,Zixi
+49,China,16,Jiangxi,1201,Anyuan
+49,China,16,Jiangxi,1202,Chongyi
+49,China,16,Jiangxi,1203,Dayu
+49,China,16,Jiangxi,1204,Dingnan
+49,China,16,Jiangxi,1205,Gan
+49,China,16,Jiangxi,1206,Ganzhou
+49,China,16,Jiangxi,1207,Huichang
+49,China,16,Jiangxi,1208,Longnan
+49,China,16,Jiangxi,1209,Nankang
+49,China,16,Jiangxi,1210,Ningdu
+49,China,16,Jiangxi,1211,Quannan
+49,China,16,Jiangxi,1212,Ruijin
+49,China,16,Jiangxi,1213,Shangyou
+49,China,16,Jiangxi,1214,Shicheng
+49,China,16,Jiangxi,1215,Xinfeng
+49,China,16,Jiangxi,1216,Xingguo
+49,China,16,Jiangxi,1217,Xunwu
+49,China,16,Jiangxi,1218,Yudu
+49,China,16,Jiangxi,1219,Anfu
+49,China,16,Jiangxi,1220,Ji'an
+49,China,16,Jiangxi,1221,Ji An
+49,China,16,Jiangxi,1222,Jinggangshan
+49,China,16,Jiangxi,1223,Jishui
+49,China,16,Jiangxi,1224,Ninggang
+49,China,16,Jiangxi,1225,Suichuan
+49,China,16,Jiangxi,1226,Taihe
+49,China,16,Jiangxi,1227,Wan’an
+49,China,16,Jiangxi,1228,Xiajiang
+49,China,16,Jiangxi,1229,Xingan
+49,China,16,Jiangxi,1230,Yongfeng
+49,China,16,Jiangxi,1231,Yongxin
+49,China,16,Jiangxi,1232,Jingdezhen
+49,China,16,Jiangxi,1233,Leping
+49,China,16,Jiangxi,1234,De'an
+49,China,16,Jiangxi,1235,Duchang
+49,China,16,Jiangxi,1236,Hukou
+49,China,16,Jiangxi,1237,Jiujiang Qū
+49,China,16,Jiangxi,1238,Jiujiang Xiàn
+49,China,16,Jiangxi,1239,Pengze
+49,China,16,Jiangxi,1240,Ruichang
+49,China,16,Jiangxi,1241,Wuning
+49,China,16,Jiangxi,1242,Xingzi
+49,China,16,Jiangxi,1243,Xiushui
+49,China,16,Jiangxi,1244,Yongxiu
+49,China,16,Jiangxi,1245,Anyi
+49,China,16,Jiangxi,1246,Jinxian
+49,China,16,Jiangxi,1247,Nanchang Qū
+49,China,16,Jiangxi,1248,Nanchang Xiàn
+49,China,16,Jiangxi,1249,Xingan
+49,China,16,Jiangxi,1250,Xinjian
+49,China,16,Jiangxi,1251,Lianhua
+49,China,16,Jiangxi,1252,Pingxiang
+49,China,16,Jiangxi,1253,Boyang
+49,China,16,Jiangxi,1254,Dexing
+49,China,16,Jiangxi,1255,Guangfeng
+49,China,16,Jiangxi,1256,Hengfeng
+49,China,16,Jiangxi,1257,Qianshan
+49,China,16,Jiangxi,1258,Shangrao Shì
+49,China,16,Jiangxi,1259,Shangrao Xiàn
+49,China,16,Jiangxi,1260,Wannian
+49,China,16,Jiangxi,1261,Wuyuan
+49,China,16,Jiangxi,1262,Yiyang
+49,China,16,Jiangxi,1263,Yugan
+49,China,16,Jiangxi,1264,Yushan
+49,China,16,Jiangxi,1265,Fenyi
+49,China,16,Jiangxi,1266,Xinyu
+49,China,16,Jiangxi,1267,Fengcheng
+49,China,16,Jiangxi,1268,Fengxin
+49,China,16,Jiangxi,1269,Gao'an
+49,China,16,Jiangxi,1270,Jing'an
+49,China,16,Jiangxi,1271,Shanggao
+49,China,16,Jiangxi,1272,Tonggu
+49,China,16,Jiangxi,1273,Wanzai
+49,China,16,Jiangxi,1274,Yichun
+49,China,16,Jiangxi,1275,Yifeng
+49,China,16,Jiangxi,1276,Zhangshu
+49,China,16,Jiangxi,1277,Guixi
+49,China,16,Jiangxi,1278,Yingtan
+49,China,16,Jiangxi,1279,Yujiang
+49,China,17,Jilin,1280,Baicheng
+49,China,17,Jilin,1281,Da'an
+49,China,17,Jilin,1282,Taonan
+49,China,17,Jilin,1283,Tongyu
+49,China,17,Jilin,1284,Zhenlai
+49,China,17,Jilin,1285,Badaojiang
+49,China,17,Jilin,1286,Changbai Korean
+49,China,17,Jilin,1287,Fusong
+49,China,19,Nei Mongol,1428,Morin Dawa Daur
+49,China,19,Nei Mongol,1429,Oroqin
+49,China,19,Nei Mongol,1430,Xinbarag Left
+49,China,19,Nei Mongol,1431,Xinbarag Right
+49,China,19,Nei Mongol,1432,Xuguit Qi
+49,China,19,Nei Mongol,1433,Dalad
+49,China,19,Nei Mongol,1434,Dongsheng
+49,China,19,Nei Mongol,1435,Ejin Horo
+49,China,19,Nei Mongol,1436,Hanggin
+49,China,19,Nei Mongol,1437,Jungar
+49,China,19,Nei Mongol,1438,Otog Front
+49,China,19,Nei Mongol,1439,Otog
+49,China,19,Nei Mongol,1440,Uxin
+49,China,19,Nei Mongol,1441,Horqin Left Back
+49,China,19,Nei Mongol,1442,Horqin Left Middle
+49,China,19,Nei Mongol,1443,Huolin Gol
+49,China,19,Nei Mongol,1444,Hure
+49,China,19,Nei Mongol,1445,Jarud
+49,China,19,Nei Mongol,1446,Kailu
+49,China,19,Nei Mongol,1447,Naiman
+49,China,30,Yunnan,2234,Xiangyun
+49,China,30,Yunnan,2235,Yangbi Yi
+49,China,30,Yunnan,2236,Yongping
+49,China,30,Yunnan,2237,Yulong Naxi
+49,China,30,Yunnan,2238,Lianghe
+49,China,30,Yunnan,2239,Longchuan
+49,China,30,Yunnan,2240,Luxi
+49,China,30,Yunnan,2241,Ruili
+49,China,30,Yunnan,2242,Yingjiang
+49,China,30,Yunnan,2243,Gejiu
+49,China,30,Yunnan,2244,Hekou Yao
+49,China,30,Yunnan,2245,Honghe
+49,China,30,Yunnan,2246,Jianshui
+49,China,30,Yunnan,2247,"Jinping Miao, Yao and Dai"
+49,China,30,Yunnan,2248,Kaiyuan
+49,China,30,Yunnan,2249,Lüchun
+49,China,30,Yunnan,2250,Luxi
+49,China,30,Yunnan,2251,Mengzi
+49,China,26,Sichuan,1920,Huayun
+49,China,26,Sichuan,1921,Linshui
+49,China,26,Sichuan,1922,Wusheng
+49,China,26,Sichuan,1923,Yuechi
+49,China,26,Sichuan,1924,Cangxi
+49,China,26,Sichuan,1925,Chaotian
+49,China,26,Sichuan,1926,Jiange
+49,China,26,Sichuan,1927,Qingchuan
+49,China,26,Sichuan,1928,Shizhong
+49,China,26,Sichuan,1929,Wangcang
+49,China,26,Sichuan,1930,Yuanba
+49,China,26,Sichuan,1931,Ebian Yi
+49,China,26,Sichuan,1932,Emeishan
+49,China,26,Sichuan,1933,Jiajiang
+49,China,26,Sichuan,1934,Jinkouhe
+49,China,26,Sichuan,1935,Mabian Yi
+49,China,26,Sichuan,1936,Muchuan
+49,China,26,Sichuan,1937,Qianwei
+49,China,26,Sichuan,1938,Shawan
+49,China,26,Sichuan,1939,Shizhong
+49,China,26,Sichuan,1940,Wutongqiao
+49,China,30,Yunnan,2289,Mojiang Hani
+49,China,30,Yunnan,2290,Puer
+49,China,30,Yunnan,2291,Simao
+49,China,30,Yunnan,2292,Ximeng Va
+49,China,30,Yunnan,2293,"Zhenyuan Yi, Hani and Lahu"
+49,China,30,Yunnan,2294,Fuyuan
+49,China,30,Yunnan,2295,Huize
+49,China,30,Yunnan,2296,Luliang
+49,China,30,Yunnan,2297,Luoping
+49,China,30,Yunnan,2298,Malong
+49,China,30,Yunnan,2299,Shizong
+49,China,30,Yunnan,2300,Xuanwei
+49,China,30,Yunnan,2301,Zhanyi
+49,China,30,Yunnan,2302,Funing
+49,China,30,Yunnan,2303,Guangnan
+49,China,30,Yunnan,2304,Maguan
+49,China,30,Yunnan,2305,Malipo
+49,China,30,Yunnan,2306,Qiubei
+49,China,30,Yunnan,2307,Wenshan
+49,China,30,Yunnan,2308,Xichou
+49,China,17,Jilin,1288,Jiangyuan
+49,China,17,Jilin,1289,Jingyu
+49,China,17,Jilin,1290,Linjiang
+49,China,17,Jilin,1291,Changchun
+49,China,17,Jilin,1292,Dehui
+49,China,17,Jilin,1293,Jiutai
+49,China,17,Jilin,1294,Nong'an
+49,China,17,Jilin,1295,Shuangyang
+49,China,17,Jilin,1296,Yushu
+49,China,17,Jilin,1297,Huadian
+49,China,17,Jilin,1298,Jiaohe
+49,China,17,Jilin,1299,Jilin
+49,China,17,Jilin,1300,Panshi
+49,China,17,Jilin,1301,Shulan
+49,China,17,Jilin,1302,Yongji
+49,China,17,Jilin,1303,Dongfeng
+49,China,17,Jilin,1304,Dongliao
+49,China,17,Jilin,1305,Liaoyuan
+49,China,17,Jilin,1306,Huaide
+49,China,17,Jilin,1307,Lishu
+49,China,17,Jilin,1308,Shuangliao
+49,China,17,Jilin,1309,Siping
+49,China,17,Jilin,1310,Yitong Manchu
+49,China,17,Jilin,1311,Changling
+49,China,17,Jilin,1312,Fuyu
+49,China,17,Jilin,1313,Qian'an
+49,China,17,Jilin,1314,Qian Gorlos Mongol
+49,China,17,Jilin,1315,Dongchang
+49,China,17,Jilin,1316,Erdaojiang
+49,China,17,Jilin,1317,Huinan
+49,China,17,Jilin,1318,Ji'an
+49,China,17,Jilin,1319,Liuhe
+49,China,17,Jilin,1320,Meihekou
+49,China,17,Jilin,1321,Tonghua
+49,China,17,Jilin,1322,Antu
+49,China,17,Jilin,1323,Dunhua
+49,China,17,Jilin,1324,Helong
+49,China,17,Jilin,1325,Hunchun
+49,China,17,Jilin,1326,Longjing
+49,China,17,Jilin,1327,Tumen
+49,China,17,Jilin,1328,Wangqing
+49,China,17,Jilin,1329,Yanji
+49,China,18,Liaoning,1330,Anshan
+49,China,18,Liaoning,1331,Haicheng
+49,China,18,Liaoning,1332,Tai'an
+49,China,18,Liaoning,1333,Xiuyan Manchu
+49,China,18,Liaoning,1334,Benxi Manchu
+49,China,18,Liaoning,1335,Benxi
+49,China,18,Liaoning,1336,Huanren Manchu
+49,China,18,Liaoning,1337,Beipiao
+49,China,18,Liaoning,1338,Chaoyang Shì
+49,China,18,Liaoning,1339,Chaoyang Xiàn
+49,China,18,Liaoning,1340,Harqin Left Mongol
+49,China,18,Liaoning,1341,Jianping
+49,China,18,Liaoning,1342,Lingyuan
+49,China,18,Liaoning,1343,Changhai
+49,China,18,Liaoning,1344,Dalian
+49,China,18,Liaoning,1345,Jinzhou
+49,China,18,Liaoning,1346,Lushunkou
+49,China,18,Liaoning,1347,Wafangdian
+49,China,18,Liaoning,1348,Xinjin
+49,China,18,Liaoning,1349,Zhuanghe
+49,China,18,Liaoning,1350,Dadong
+49,China,18,Liaoning,1351,Donggang
+49,China,18,Liaoning,1352,Fengcheng
+49,China,18,Liaoning,1353,Kuandian Manchu
+49,China,18,Liaoning,1354,Fushun
+49,China,18,Liaoning,1355,Qingyuan Manchu
+49,China,18,Liaoning,1356,Shuncheng
+49,China,18,Liaoning,1357,Xinbin Manchu
+49,China,18,Liaoning,1358,Fuxin Mongol
+49,China,18,Liaoning,1359,Fuxin
+49,China,18,Liaoning,1360,Zhangwu
+49,China,18,Liaoning,1361,Jianchang
+49,China,18,Liaoning,1362,Jinxi
+49,China,18,Liaoning,1363,Suizhong
+49,China,18,Liaoning,1364,Xingcheng
+49,China,18,Liaoning,1365,Beizhen
+49,China,18,Liaoning,1366,Heishan
+49,China,18,Liaoning,1367,Jin
+49,China,18,Liaoning,1368,Jinzhou
+49,China,18,Liaoning,1369,Yi
+49,China,18,Liaoning,1370,Dengta
+49,China,18,Liaoning,1371,Liaoyang
+49,China,18,Liaoning,1372,Dawa
+49,China,18,Liaoning,1373,Panjin
+49,China,18,Liaoning,1374,Panshan
+49,China,18,Liaoning,1375,Faku
+49,China,18,Liaoning,1376,Kangping
+49,China,18,Liaoning,1377,Liaozhong
+49,China,18,Liaoning,1378,Shenyang Shì
+49,China,18,Liaoning,1379,Shenyang Xiàn
+49,China,18,Liaoning,1380,Xinmin
+49,China,18,Liaoning,1381,Changtu
+49,China,18,Liaoning,1382,Gai
+49,China,18,Liaoning,1383,Kaiyuan
+49,China,18,Liaoning,1384,Tiefa
+49,China,18,Liaoning,1385,Tieling Shì
+49,China,18,Liaoning,1386,Tieling Xiàn
+49,China,18,Liaoning,1387,Xifeng
+49,China,18,Liaoning,1388,Yingkou
+49,China,18,Liaoning,1389,Yinzhou
+49,China,19,Nei Mongol,1390,Alxa Left
+49,China,19,Nei Mongol,1391,Alxa Right
+49,China,19,Nei Mongol,1392,Ejin
+49,China,19,Nei Mongol,1393,Baotou
+49,China,19,Nei Mongol,1394,Darhan Muminggan Lia
+49,China,19,Nei Mongol,1395,Guyang
+49,China,19,Nei Mongol,1396,Dengkou
+49,China,19,Nei Mongol,1397,Haibowan
+49,China,19,Nei Mongol,1398,Linhe
+49,China,19,Nei Mongol,1399,Urad Back
+49,China,19,Nei Mongol,1400,Urad Front
+49,China,19,Nei Mongol,1401,Urad Middle
+49,China,19,Nei Mongol,1402,Wuyuan
+49,China,19,Nei Mongol,1403,Aohan
+49,China,19,Nei Mongol,1404,Ar Horqin
+49,China,19,Nei Mongol,1405,Bairin Left
+49,China,19,Nei Mongol,1406,Bairin Right
+49,China,19,Nei Mongol,1407,Chifeng
+49,China,19,Nei Mongol,1408,Harqin
+49,China,19,Nei Mongol,1409,Hexigten
+49,China,19,Nei Mongol,1410,Linxi
+49,China,19,Nei Mongol,1411,Ningcheng
+49,China,19,Nei Mongol,1412,Ongniud
+49,China,19,Nei Mongol,1413,Hohhot
+49,China,19,Nei Mongol,1414,Horinger
+49,China,19,Nei Mongol,1415,Qingshuihe
+49,China,19,Nei Mongol,1416,Togtoh
+49,China,19,Nei Mongol,1417,Tumd Left
+49,China,19,Nei Mongol,1418,Tumd Right
+49,China,19,Nei Mongol,1419,Wuchuan
+49,China,19,Nei Mongol,1420,Arun
+49,China,19,Nei Mongol,1421,Butha Qi
+49,China,19,Nei Mongol,1422,Chenbarag Qi
+49,China,19,Nei Mongol,1423,Ergun
+49,China,19,Nei Mongol,1424,Evenk
+49,China,19,Nei Mongol,1425,Genhe
+49,China,19,Nei Mongol,1426,Hailar
+49,China,19,Nei Mongol,1427,Manzhouli
+49,China,19,Nei Mongol,1448,Tongliao
+49,China,19,Nei Mongol,1449,Fengzhen
+49,China,19,Nei Mongol,1450,Huade
+49,China,19,Nei Mongol,1451,Jining
+49,China,19,Nei Mongol,1452,Liangcheng
+49,China,19,Nei Mongol,1453,Qahar Youyi Houqi
+49,China,19,Nei Mongol,1454,Qahar Youyi Qianqi
+49,China,19,Nei Mongol,1455,Qahar Youyi Zhongqi
+49,China,19,Nei Mongol,1456,Shangdu
+49,China,19,Nei Mongol,1457,Siziwang
+49,China,19,Nei Mongol,1458,Xinghe
+49,China,19,Nei Mongol,1459,Zhuozi
+49,China,19,Nei Mongol,1460,Wuhai
+49,China,19,Nei Mongol,1461,Abagnar Qi
+49,China,19,Nei Mongol,1462,Abag
+49,China,19,Nei Mongol,1463,Bordered Yellow
+49,China,19,Nei Mongol,1464,Dong Ujimqin
+49,China,19,Nei Mongol,1465,Duolun
+49,China,19,Nei Mongol,1466,Erenhot
+49,China,19,Nei Mongol,1467,Plain and Bordered White
+49,China,19,Nei Mongol,1468,Plain Blue
+49,China,19,Nei Mongol,1469,Sonid Left
+49,China,19,Nei Mongol,1470,Sonid Right
+49,China,19,Nei Mongol,1471,Taibus
+49,China,19,Nei Mongol,1472,West Ujimqin
+49,China,19,Nei Mongol,1473,Horqin Right Front
+49,China,19,Nei Mongol,1474,Horqin Right Middle
+49,China,19,Nei Mongol,1475,Jalaid
+49,China,19,Nei Mongol,1476,Tuquan
+49,China,19,Nei Mongol,1477,Ulan Hot
+49,China,20,Ningxia Hui,1478,Guyuan
+49,China,20,Ningxia Hui,1479,Jingyuan
+49,China,20,Ningxia Hui,1480,Longde
+49,China,20,Ningxia Hui,1481,Pengyang
+49,China,20,Ningxia Hui,1482,Xiji
+49,China,20,Ningxia Hui,1483,Huinong
+49,China,20,Ningxia Hui,1484,Pingluo
+49,China,20,Ningxia Hui,1485,Shizuishan Qū
+49,China,20,Ningxia Hui,1486,Shizuishan Shì
+49,China,20,Ningxia Hui,1487,Taole
+49,China,20,Ningxia Hui,1488,Qingtongxia
+49,China,20,Ningxia Hui,1489,Tongxin
+49,China,20,Ningxia Hui,1490,Wuzhong
+49,China,20,Ningxia Hui,1491,Yanchi
+49,China,20,Ningxia Hui,1492,Helan
+49,China,20,Ningxia Hui,1493,Lingwu
+49,China,20,Ningxia Hui,1494,Yinchuan
+49,China,20,Ningxia Hui,1495,Yongning
+49,China,20,Ningxia Hui,1496,Haiyuan
+49,China,20,Ningxia Hui,1497,Zhongning
+49,China,20,Ningxia Hui,1498,Zhongwei
+49,China,21,Qinghai,1499,Baima
+49,China,21,Qinghai,1500,Darlag
+49,China,21,Qinghai,1501,Gadê
+49,China,21,Qinghai,1502,Jigzhi
+49,China,21,Qinghai,1503,Madoi
+49,China,21,Qinghai,1504,Maqên
+49,China,21,Qinghai,1505,Chindu
+49,China,21,Qinghai,1506,Golmud
+49,China,21,Qinghai,1507,Nangqên
+49,China,21,Qinghai,1508,Qumarleb
+49,China,21,Qinghai,1509,Yushu
+49,China,21,Qinghai,1510,Zadoi
+49,China,21,Qinghai,1511,Zhidoi
+49,China,21,Qinghai,1512,Gangca
+49,China,21,Qinghai,1513,Haiyan
+49,China,21,Qinghai,1514,Menyuan Hui
+49,China,21,Qinghai,1515,Qilian
+49,China,21,Qinghai,1516,Hualong Hui
+49,China,21,Qinghai,1517,Huzhu Tu
+49,China,21,Qinghai,1518,Ledu
+49,China,21,Qinghai,1519,Minhe Hui and Tu
+49,China,21,Qinghai,1520,Ping'an
+49,China,21,Qinghai,1521,Xunhua Salar
+49,China,21,Qinghai,1522,Gonghe
+49,China,21,Qinghai,1523,Guide
+49,China,21,Qinghai,1524,Guinan
+49,China,21,Qinghai,1525,Tongde
+49,China,21,Qinghai,1526,Xinghai
+49,China,21,Qinghai,1527,Delingha
+49,China,21,Qinghai,1528,Dulan
+49,China,21,Qinghai,1529,Golmud
+49,China,21,Qinghai,1530,Lenghu
+49,China,21,Qinghai,1531,Tianjun
+49,China,21,Qinghai,1532,Wulan
+49,China,21,Qinghai,1533,Henan Mongol
+49,China,21,Qinghai,1534,Jainca
+49,China,21,Qinghai,1535,Tongren
+49,China,21,Qinghai,1536,Zêkog
+49,China,21,Qinghai,1537,Datong Hui and Tu
+49,China,21,Qinghai,1538,Huangyuan
+49,China,21,Qinghai,1539,Huangzhong
+49,China,21,Qinghai,1540,Xining
+49,China,22,Shaanxi,1541,Ankang
+49,China,22,Shaanxi,1542,Baihe
+49,China,22,Shaanxi,1543,Hanyin
+49,China,22,Shaanxi,1544,Langao
+49,China,22,Shaanxi,1545,Ningshan
+49,China,22,Shaanxi,1546,Pingli
+49,China,22,Shaanxi,1547,Shiquan
+49,China,22,Shaanxi,1548,Xunyang
+49,China,22,Shaanxi,1549,Zhenping
+49,China,22,Shaanxi,1550,Ziyang
+49,China,22,Shaanxi,1551,Baoji Qū
+49,China,22,Shaanxi,1552,Baoji Xiàn
+49,China,22,Shaanxi,1553,Feng
+49,China,22,Shaanxi,1554,Fengxiang
+49,China,22,Shaanxi,1555,Fufeng
+49,China,22,Shaanxi,1556,Linyou
+49,China,22,Shaanxi,1557,Long
+49,China,22,Shaanxi,1558,Mei
+49,China,22,Shaanxi,1559,Qianyang
+49,China,22,Shaanxi,1560,Qishan
+49,China,22,Shaanxi,1561,Taibai
+49,China,22,Shaanxi,1562,Chenggu
+49,China,22,Shaanxi,1563,Foping
+49,China,22,Shaanxi,1564,Hanzhong
+49,China,22,Shaanxi,1565,Liuba
+49,China,22,Shaanxi,1566,Lueyang
+49,China,22,Shaanxi,1567,Mian
+49,China,22,Shaanxi,1568,Nanzheng
+49,China,22,Shaanxi,1569,Ningqiang
+49,China,22,Shaanxi,1570,Xixiang
+49,China,22,Shaanxi,1571,Yang
+49,China,22,Shaanxi,1572,Zhenba
+49,China,22,Shaanxi,1573,Danfeng
+49,China,22,Shaanxi,1574,Luonan
+49,China,22,Shaanxi,1575,Shangnan
+49,China,22,Shaanxi,1576,Shang
+49,China,22,Shaanxi,1577,Shanyang
+49,China,22,Shaanxi,1578,Zhashui
+49,China,22,Shaanxi,1579,Zhen'an
+49,China,22,Shaanxi,1580,Tongchuan
+49,China,22,Shaanxi,1581,Yijun
+49,China,22,Shaanxi,1582,Baishui
+49,China,22,Shaanxi,1583,Chencang
+49,China,22,Shaanxi,1584,Dali
+49,China,22,Shaanxi,1585,Fuping
+49,China,22,Shaanxi,1586,Hancheng
+49,China,22,Shaanxi,1587,Heyang
+49,China,22,Shaanxi,1588,Hua
+49,China,22,Shaanxi,1589,Huayin
+49,China,22,Shaanxi,1590,Pucheng
+49,China,22,Shaanxi,1591,Tongguan
+49,China,22,Shaanxi,1592,Weinan
+49,China,22,Shaanxi,1593,Chang'an
+49,China,22,Shaanxi,1594,Gaoling
+49,China,22,Shaanxi,1595,Hu
+49,China,22,Shaanxi,1596,Lantian
+49,China,22,Shaanxi,1597,Lintong
+49,China,22,Shaanxi,1598,Xincheng
+49,China,22,Shaanxi,1599,Zhouzhi
+49,China,22,Shaanxi,1600,Bin
+49,China,22,Shaanxi,1601,Changwu
+49,China,22,Shaanxi,1602,Chunhua
+49,China,22,Shaanxi,1603,Jingyang
+49,China,22,Shaanxi,1604,Liquan
+49,China,22,Shaanxi,1605,Qian
+49,China,22,Shaanxi,1606,Sanyuan
+49,China,22,Shaanxi,1607,Wugong
+49,China,22,Shaanxi,1608,Xianyang
+49,China,22,Shaanxi,1609,Xingping
+49,China,22,Shaanxi,1610,Xunyi
+49,China,22,Shaanxi,1611,Yangling
+49,China,22,Shaanxi,1612,Yongshou
+49,China,22,Shaanxi,1613,Ansai
+49,China,22,Shaanxi,1614,Fu
+49,China,22,Shaanxi,1615,Ganquan
+49,China,22,Shaanxi,1616,Huangling
+49,China,22,Shaanxi,1617,Huanglong
+49,China,22,Shaanxi,1618,Luochuan
+49,China,22,Shaanxi,1619,Wuqi
+49,China,22,Shaanxi,1620,Yan An
+49,China,22,Shaanxi,1621,Yanchang
+49,China,22,Shaanxi,1622,Yanchuan
+49,China,22,Shaanxi,1623,Yichuan
+49,China,22,Shaanxi,1624,Zhidan
+49,China,22,Shaanxi,1625,Zichang
+49,China,22,Shaanxi,1626,Dingbian
+49,China,22,Shaanxi,1627,Fugu
+49,China,22,Shaanxi,1628,Hengshan
+49,China,22,Shaanxi,1629,Jia
+49,China,22,Shaanxi,1630,Jingbian
+49,China,22,Shaanxi,1631,Mizhi
+49,China,22,Shaanxi,1632,Qingjian
+49,China,22,Shaanxi,1633,Shenmu
+49,China,22,Shaanxi,1634,Suide
+49,China,22,Shaanxi,1635,Wubu
+49,China,22,Shaanxi,1636,Yulin
+49,China,22,Shaanxi,1637,Zizhou
+49,China,23,Shandong,1638,Binxian
+49,China,23,Shandong,1639,Boxing
+49,China,23,Shandong,1640,Huimin
+49,China,23,Shandong,1641,Wudi
+49,China,23,Shandong,1642,Yangxin
+49,China,23,Shandong,1643,Zhanhua
+49,China,23,Shandong,1644,Zouping
+49,China,23,Shandong,1645,Dezhou
+49,China,23,Shandong,1646,Leling
+49,China,23,Shandong,1647,Ling
+49,China,23,Shandong,1648,Linyi
+49,China,23,Shandong,1649,Ningjin
+49,China,23,Shandong,1650,Pingyuan
+49,China,23,Shandong,1651,Qihe
+49,China,23,Shandong,1652,Qingyun
+49,China,23,Shandong,1653,Wucheng
+49,China,23,Shandong,1654,Xiajin
+49,China,23,Shandong,1655,Yuncheng
+49,China,23,Shandong,1656,Dongying
+49,China,23,Shandong,1657,Guangrao
+49,China,23,Shandong,1658,Hekou
+49,China,23,Shandong,1659,Kenli
+49,China,23,Shandong,1660,Lijin
+49,China,23,Shandong,1661,Cao
+49,China,23,Shandong,1662,Chengwu
+49,China,23,Shandong,1663,Dingtao
+49,China,23,Shandong,1664,Dongming
+49,China,23,Shandong,1665,Heze
+49,China,23,Shandong,1666,Juancheng
+49,China,23,Shandong,1667,Juye
+49,China,23,Shandong,1668,Shan
+49,China,23,Shandong,1669,Yucheng
+49,China,23,Shandong,1670,Changqing
+49,China,23,Shandong,1671,Jinan
+49,China,23,Shandong,1672,Jiyang
+49,China,23,Shandong,1673,Pingyin
+49,China,23,Shandong,1674,Shanghe
+49,China,23,Shandong,1675,Zhangqiu
+49,China,23,Shandong,1676,Jiaxiang
+49,China,23,Shandong,1677,Jining
+49,China,23,Shandong,1678,Jinxiang
+49,China,23,Shandong,1679,Liangshan
+49,China,23,Shandong,1680,Qufu
+49,China,23,Shandong,1681,Sishui
+49,China,23,Shandong,1682,Weishan
+49,China,23,Shandong,1683,Wenshang
+49,China,23,Shandong,1684,Yanzhou
+49,China,23,Shandong,1685,Yutai
+49,China,23,Shandong,1686,Laiwu
+49,China,23,Shandong,1687,Chiping
+49,China,23,Shandong,1688,Dong'e
+49,China,23,Shandong,1689,Gaotang
+49,China,23,Shandong,1690,Guan
+49,China,23,Shandong,1691,Liaocheng
+49,China,23,Shandong,1692,Linqing
+49,China,23,Shandong,1693,Shenxian
+49,China,23,Shandong,1694,Yanggu
+49,China,23,Shandong,1695,Cangshan
+49,China,23,Shandong,1696,Feixian
+49,China,23,Shandong,1697,Junan
+49,China,23,Shandong,1698,Linshu
+49,China,23,Shandong,1699,Linyi
+49,China,23,Shandong,1700,Mengyin
+49,China,23,Shandong,1701,Pingyi
+49,China,23,Shandong,1702,Tancheng
+49,China,23,Shandong,1703,Yinan
+49,China,23,Shandong,1704,Yishui
+49,China,23,Shandong,1705,Huangdao
+49,China,23,Shandong,1706,Jiaonan
+49,China,23,Shandong,1707,Jiaoxian
+49,China,23,Shandong,1708,Jimo
+49,China,23,Shandong,1709,Laixi
+49,China,23,Shandong,1710,Laoshan
+49,China,23,Shandong,1711,Pingdu
+49,China,23,Shandong,1712,Juxian
+49,China,23,Shandong,1713,Rizhao
+49,China,23,Shandong,1714,Wulian
+49,China,23,Shandong,1715,Dongping
+49,China,23,Shandong,1716,Feicheng
+49,China,23,Shandong,1717,Ningyang
+49,China,23,Shandong,1718,Tai An
+49,China,23,Shandong,1719,Xinwen
+49,China,23,Shandong,1720,Anqiu
+49,China,23,Shandong,1721,Changle
+49,China,23,Shandong,1722,Changyi
+49,China,23,Shandong,1723,Gaomi
+49,China,23,Shandong,1724,Linqu
+49,China,23,Shandong,1725,Qingzhou
+49,China,23,Shandong,1726,Shouguang
+49,China,23,Shandong,1727,Weifang Shì
+49,China,23,Shandong,1728,Weifang Xiàn
+49,China,23,Shandong,1729,Zhucheng
+49,China,23,Shandong,1730,Rencheng
+49,China,23,Shandong,1731,Rushan
+49,China,23,Shandong,1732,Weihai
+49,China,23,Shandong,1733,Wendeng
+49,China,23,Shandong,1734,Changdao
+49,China,23,Shandong,1735,Fushan
+49,China,23,Shandong,1736,Haiyang
+49,China,23,Shandong,1737,Laiyang
+49,China,23,Shandong,1738,Laizhou
+49,China,23,Shandong,1739,Longkou
+49,China,23,Shandong,1740,Muping
+49,China,23,Shandong,1741,Penglai
+49,China,23,Shandong,1742,Qixia
+49,China,23,Shandong,1743,Yantai
+49,China,23,Shandong,1744,Zhaoyuan
+49,China,23,Shandong,1745,Teng
+49,China,23,Shandong,1746,Zhaozhuang
+49,China,23,Shandong,1747,Zouxian
+49,China,23,Shandong,1748,Gaoqing
+49,China,23,Shandong,1749,Huantai
+49,China,23,Shandong,1750,Yiyuan
+49,China,23,Shandong,1751,Zibo
+49,China,23,Shandong,1752,Zichuan
+49,China,24,Shanghai,1753,Baoshan
+49,China,24,Shanghai,1754,Chongming
+49,China,24,Shanghai,1755,Fengxian
+49,China,24,Shanghai,1756,Jiading
+49,China,24,Shanghai,1757,Jinshan
+49,China,24,Shanghai,1758,Minhang
+49,China,24,Shanghai,1759,Nanhui
+49,China,24,Shanghai,1760,Pudong
+49,China,24,Shanghai,1761,Qingpu
+49,China,24,Shanghai,1762,Shanghai
+49,China,24,Shanghai,1763,Shengsi
+49,China,24,Shanghai,1764,Songjiang
+49,China,25,Shanxi,1765,Changzhi Shì
+49,China,25,Shanxi,1766,Changzhi Xiàn
+49,China,25,Shanxi,1767,Huguan
+49,China,25,Shanxi,1768,Licheng
+49,China,25,Shanxi,1769,Lucheng
+49,China,25,Shanxi,1770,Pingshun
+49,China,25,Shanxi,1771,Qin
+49,China,25,Shanxi,1772,Qinyuan
+49,China,25,Shanxi,1773,Tunliu
+49,China,25,Shanxi,1774,Wuxiang
+49,China,25,Shanxi,1775,Xiangyuan
+49,China,25,Shanxi,1776,Zhangzi
+49,China,25,Shanxi,1777,Datong Shì
+49,China,25,Shanxi,1778,Datong Xiàn
+49,China,25,Shanxi,1779,Guangling
+49,China,25,Shanxi,1780,Hunyuan
+49,China,25,Shanxi,1781,Lingqiu
+49,China,25,Shanxi,1782,Tianzhen
+49,China,25,Shanxi,1783,Yanggao
+49,China,25,Shanxi,1784,Zuoyun
+49,China,25,Shanxi,1785,Gaoping
+49,China,25,Shanxi,1786,Jingcheng
+49,China,25,Shanxi,1787,Lingchuan
+49,China,25,Shanxi,1788,Qinshui
+49,China,25,Shanxi,1789,Yangcheng
+49,China,25,Shanxi,1790,Heshun
+49,China,25,Shanxi,1791,Jiexiu
+49,China,25,Shanxi,1792,Lingshi
+49,China,25,Shanxi,1793,Pingyao
+49,China,25,Shanxi,1794,Qi
+49,China,25,Shanxi,1795,Shouyang
+49,China,25,Shanxi,1796,Taigu
+49,China,25,Shanxi,1797,Xiyang
+49,China,25,Shanxi,1798,Yuci
+49,China,25,Shanxi,1799,Yushe
+49,China,25,Shanxi,1800,Zuoquan
+49,China,25,Shanxi,1801,Anze
+49,China,25,Shanxi,1802,Daning
+49,China,25,Shanxi,1803,Fenxi
+49,China,25,Shanxi,1804,Fushan
+49,China,25,Shanxi,1805,Gu
+49,China,25,Shanxi,1806,Hongtong
+49,China,25,Shanxi,1807,Houma
+49,China,25,Shanxi,1808,Huo
+49,China,25,Shanxi,1809,Ji
+49,China,25,Shanxi,1810,Linfen
+49,China,25,Shanxi,1811,Pu
+49,China,25,Shanxi,1812,Quwo
+49,China,25,Shanxi,1813,Xiangfen
+49,China,25,Shanxi,1814,Xiangning
+49,China,25,Shanxi,1815,Xi
+49,China,25,Shanxi,1816,Yicheng
+49,China,25,Shanxi,1817,Yonghe
+49,China,25,Shanxi,1818,Fangshan
+49,China,25,Shanxi,1819,Fenyang
+49,China,25,Shanxi,1820,Jiaocheng
+49,China,25,Shanxi,1821,Jiaokou
+49,China,25,Shanxi,1822,Lan
+49,China,25,Shanxi,1823,Lin
+49,China,25,Shanxi,1824,Lishi
+49,China,25,Shanxi,1825,Liulin
+49,China,25,Shanxi,1826,Shilou
+49,China,25,Shanxi,1827,Wenshui
+49,China,25,Shanxi,1828,Xiaoyi
+49,China,25,Shanxi,1829,Xing
+49,China,25,Shanxi,1830,Zhongyang
+49,China,25,Shanxi,1831,Huairen
+49,China,25,Shanxi,1832,Pinglu
+49,China,25,Shanxi,1833,Shanyin
+49,China,25,Shanxi,1834,Shuo
+49,China,25,Shanxi,1835,Ying
+49,China,25,Shanxi,1836,Youyu
+49,China,25,Shanxi,1837,Gujiao
+49,China,25,Shanxi,1838,Loufan
+49,China,25,Shanxi,1839,Qingxu
+49,China,25,Shanxi,1840,Taiyuan
+49,China,25,Shanxi,1841,Yangqu
+49,China,25,Shanxi,1842,Baode
+49,China,25,Shanxi,1843,Dai
+49,China,25,Shanxi,1844,Dingxiang
+49,China,25,Shanxi,1845,Fanshi
+49,China,25,Shanxi,1846,Hequ
+49,China,25,Shanxi,1847,Jingle
+49,China,25,Shanxi,1848,Kelan
+49,China,25,Shanxi,1849,Ningwu
+49,China,25,Shanxi,1850,Pianguan
+49,China,25,Shanxi,1851,Shenchi
+49,China,25,Shanxi,1852,Wutai
+49,China,25,Shanxi,1853,Wuzhai
+49,China,25,Shanxi,1854,Xinfu
+49,China,25,Shanxi,1855,Yuanping
+49,China,25,Shanxi,1856,Pingding
+49,China,25,Shanxi,1857,Yangquan
+49,China,25,Shanxi,1858,Yu
+49,China,25,Shanxi,1859,Hejin
+49,China,25,Shanxi,1860,Jiang
+49,China,25,Shanxi,1861,Jishan
+49,China,25,Shanxi,1862,Linyi
+49,China,25,Shanxi,1863,Pinglu
+49,China,25,Shanxi,1864,Ruicheng
+49,China,25,Shanxi,1865,Wanrong
+49,China,25,Shanxi,1866,Wenxi
+49,China,25,Shanxi,1867,Xia
+49,China,25,Shanxi,1868,Xinjiang
+49,China,25,Shanxi,1869,Yongji
+49,China,25,Shanxi,1870,Yuanqu
+49,China,25,Shanxi,1871,Yuncheng
+49,China,26,Sichuan,1872,Bazhong
+49,China,26,Sichuan,1873,Nanjiang
+49,China,26,Sichuan,1874,Pingchang
+49,China,26,Sichuan,1875,Tongjiang
+49,China,26,Sichuan,1876,Chengdu Qū
+49,China,26,Sichuan,1877,Chengdu Shì
+49,China,26,Sichuan,1878,Chongqing
+49,China,26,Sichuan,1879,Dayi
+49,China,26,Sichuan,1880,Jintang
+49,China,26,Sichuan,1881,Peng
+49,China,26,Sichuan,1882,Pi
+49,China,26,Sichuan,1883,Pujiang
+49,China,26,Sichuan,1884,Qionglai
+49,China,26,Sichuan,1885,Shuangliu
+49,China,26,Sichuan,1886,Wenjiang
+49,China,26,Sichuan,1887,Xindu
+49,China,26,Sichuan,1888,Xinjin
+49,China,26,Sichuan,1889,Da
+49,China,26,Sichuan,1890,Daxian
+49,China,26,Sichuan,1891,Dazhu
+49,China,26,Sichuan,1892,Kaijiang
+49,China,26,Sichuan,1893,Qu
+49,China,26,Sichuan,1894,Wanyuan
+49,China,26,Sichuan,1895,Xuanhan
+49,China,26,Sichuan,1896,Deyang
+49,China,26,Sichuan,1897,Guanghan
+49,China,26,Sichuan,1898,Mianzhu
+49,China,26,Sichuan,1899,Shifang
+49,China,26,Sichuan,1900,Zhongjiang
+49,China,26,Sichuan,1901,Baiyü
+49,China,26,Sichuan,1902,Batang
+49,China,26,Sichuan,1903,Dêgê
+49,China,26,Sichuan,1904,Dêrong
+49,China,26,Sichuan,1905,Danba
+49,China,26,Sichuan,1906,Daocheng
+49,China,26,Sichuan,1907,Dawu
+49,China,26,Sichuan,1908,Garzê
+49,China,26,Sichuan,1909,Jiulong
+49,China,26,Sichuan,1910,Kangding
+49,China,26,Sichuan,1911,Litang
+49,China,26,Sichuan,1912,Luding
+49,China,26,Sichuan,1913,Luhuo
+49,China,26,Sichuan,1914,Sêrtar
+49,China,26,Sichuan,1915,Sêrxü
+49,China,26,Sichuan,1916,Xiangcheng
+49,China,26,Sichuan,1917,Xinlong
+49,China,26,Sichuan,1918,Yajiang
+49,China,26,Sichuan,1919,Guang'an
+49,China,26,Sichuan,1941,Butuo
+49,China,26,Sichuan,1942,Dechang
+49,China,26,Sichuan,1943,Ganluo
+49,China,26,Sichuan,1944,Huidong
+49,China,26,Sichuan,1945,Huili
+49,China,26,Sichuan,1946,Jingyang
+49,China,26,Sichuan,1947,Leibo
+49,China,26,Sichuan,1948,Meigu
+49,China,26,Sichuan,1949,Mianning
+49,China,26,Sichuan,1950,Muli Tibetan
+49,China,26,Sichuan,1951,Ningnan
+49,China,26,Sichuan,1952,Puge
+49,China,26,Sichuan,1953,Xichang
+49,China,26,Sichuan,1954,Xide
+49,China,26,Sichuan,1955,Yanyuan
+49,China,26,Sichuan,1956,Yuexi
+49,China,26,Sichuan,1957,Zhaojue
+49,China,26,Sichuan,1958,Gulin
+49,China,26,Sichuan,1959,Hejiang
+49,China,26,Sichuan,1960,Lu
+49,China,26,Sichuan,1961,Luzhou
+49,China,26,Sichuan,1962,Nàxī
+49,China,26,Sichuan,1963,Xuyong
+49,China,26,Sichuan,1964,Danleng
+49,China,26,Sichuan,1965,Hongya
+49,China,26,Sichuan,1966,Jingyan
+49,China,26,Sichuan,1967,Meishan
+49,China,26,Sichuan,1968,Pengshan
+49,China,26,Sichuan,1969,Qingshen
+49,China,26,Sichuan,1970,Renshou
+49,China,26,Sichuan,1971,An
+49,China,26,Sichuan,1972,Beichuan Qiang
+49,China,26,Sichuan,1973,Jiangyou
+49,China,26,Sichuan,1974,Mianyang
+49,China,26,Sichuan,1975,Pingwu
+49,China,26,Sichuan,1976,Santai
+49,China,26,Sichuan,1977,Yanting
+49,China,26,Sichuan,1978,Zitong
+49,China,26,Sichuan,1979,Langzhong
+49,China,26,Sichuan,1980,Nanbu
+49,China,26,Sichuan,1981,Nanchong Shì
+49,China,26,Sichuan,1982,Nanchong Xiàn
+49,China,26,Sichuan,1983,Peng'an
+49,China,26,Sichuan,1984,Xichong
+49,China,26,Sichuan,1985,Yilong
+49,China,26,Sichuan,1986,Yingshan
+49,China,26,Sichuan,1987,Longchang
+49,China,26,Sichuan,1988,Zizhong
+49,China,26,Sichuan,1989,Dongxing
+49,China,26,Sichuan,1990,Shizhong
+49,China,26,Sichuan,1991,Weiyuan
+49,China,26,Sichuan,1992,Aba
+49,China,26,Sichuan,1993,Barkam
+49,China,26,Sichuan,1994,Guan
+49,China,26,Sichuan,1995,Heishui
+49,China,26,Sichuan,1996,Hongyuan
+49,China,26,Sichuan,1997,Jinchuan
+49,China,26,Sichuan,1998,Li
+49,China,26,Sichuan,1999,Mao
+49,China,26,Sichuan,2000,Nanping
+49,China,26,Sichuan,2001,Songpan
+49,China,26,Sichuan,2002,Wenchuan
+49,China,26,Sichuan,2003,Xiaojin
+49,China,26,Sichuan,2004,Zamtang
+49,China,26,Sichuan,2005,Zoigê
+49,China,26,Sichuan,2006,East
+49,China,26,Sichuan,2007,Miyi
+49,China,26,Sichuan,2008,Yanbian
+49,China,26,Sichuan,2009,Pengxi
+49,China,26,Sichuan,2010,Shehong
+49,China,26,Sichuan,2011,Suining
+49,China,26,Sichuan,2012,Baoxing
+49,China,26,Sichuan,2013,Hanyuan
+49,China,26,Sichuan,2014,Lushan
+49,China,26,Sichuan,2015,Mingshan
+49,China,26,Sichuan,2016,Shimian
+49,China,26,Sichuan,2017,Tianquan
+49,China,26,Sichuan,2018,Ya An
+49,China,26,Sichuan,2019,Yingjing
+49,China,26,Sichuan,2020,Changning
+49,China,26,Sichuan,2021,Gao
+49,China,26,Sichuan,2022,Gong
+49,China,26,Sichuan,2023,Jiang'an
+49,China,26,Sichuan,2024,Junlian
+49,China,26,Sichuan,2025,Nanxi
+49,China,26,Sichuan,2026,Pingshan
+49,China,26,Sichuan,2027,Xingwen
+49,China,26,Sichuan,2028,Yibin Shì
+49,China,26,Sichuan,2029,Yibin Xiàn
+49,China,26,Sichuan,2030,Fushun
+49,China,26,Sichuan,2031,Rong
+49,China,26,Sichuan,2032,Zigong
+49,China,26,Sichuan,2033,Anju
+49,China,26,Sichuan,2034,Jiangyang
+49,China,26,Sichuan,2035,Lezhi
+49,China,26,Sichuan,2036,Ziyang
+49,China,27,Tianjin,2037,Baodi
+49,China,27,Tianjin,2038,Beichen
+49,China,27,Tianjin,2039,Dagang
+49,China,27,Tianjin,2040,Dongli
+49,China,27,Tianjin,2041,Hangu
+49,China,27,Tianjin,2042,Jinghai
+49,China,27,Tianjin,2043,Ji
+49,China,27,Tianjin,2044,Ninghe
+49,China,27,Tianjin,2045,Tanggu
+49,China,27,Tianjin,2046,Tianjin
+49,China,27,Tianjin,2047,Wuqing
+49,China,27,Tianjin,2048,Xiqing
+49,China,28,Xinjiang Uygur,2049,Aksu
+49,China,28,Xinjiang Uygur,2050,Awat
+49,China,28,Xinjiang Uygur,2051,Baicheng
+49,China,28,Xinjiang Uygur,2052,Kalpin
+49,China,28,Xinjiang Uygur,2053,Kuqa
+49,China,28,Xinjiang Uygur,2054,Shayar
+49,China,28,Xinjiang Uygur,2055,Toksu
+49,China,28,Xinjiang Uygur,2056,Wensu
+49,China,28,Xinjiang Uygur,2057,Wushi
+49,China,28,Xinjiang Uygur,2058,Altay
+49,China,28,Xinjiang Uygur,2059,Burqin
+49,China,28,Xinjiang Uygur,2060,Fuhai
+49,China,28,Xinjiang Uygur,2061,Fuyun
+49,China,28,Xinjiang Uygur,2062,Habahe
+49,China,28,Xinjiang Uygur,2063,Jeminay
+49,China,28,Xinjiang Uygur,2064,Qinggil
+49,China,28,Xinjiang Uygur,2065,Ürümqi Shì
+49,China,28,Xinjiang Uygur,2066,Ürümqi Xiàn
+49,China,28,Xinjiang Uygur,2067,Bole
+49,China,28,Xinjiang Uygur,2068,Jinghe
+49,China,28,Xinjiang Uygur,2069,Wenquan
+49,China,28,Xinjiang Uygur,2070,Bohu
+49,China,28,Xinjiang Uygur,2071,Hejing
+49,China,28,Xinjiang Uygur,2072,Hoxud
+49,China,28,Xinjiang Uygur,2073,Korla
+49,China,28,Xinjiang Uygur,2074,Luntai
+49,China,28,Xinjiang Uygur,2075,Qiemo
+49,China,28,Xinjiang Uygur,2076,Ruoqiang
+49,China,28,Xinjiang Uygur,2077,Yanqi Hui
+49,China,28,Xinjiang Uygur,2078,Yuli
+49,China,28,Xinjiang Uygur,2079,Changji
+49,China,28,Xinjiang Uygur,2080,Fukang
+49,China,28,Xinjiang Uygur,2081,Hutubi
+49,China,28,Xinjiang Uygur,2082,Jimsar
+49,China,28,Xinjiang Uygur,2083,Manas
+49,China,28,Xinjiang Uygur,2084,Miquan
+49,China,28,Xinjiang Uygur,2085,Mori
+49,China,28,Xinjiang Uygur,2086,Qitai
+49,China,28,Xinjiang Uygur,2087,Barkol Kazakh
+49,China,28,Xinjiang Uygur,2088,Hami
+49,China,28,Xinjiang Uygur,2089,Yiwu
+49,China,28,Xinjiang Uygur,2090,Gongliu
+49,China,28,Xinjiang Uygur,2091,Huocheng
+49,China,28,Xinjiang Uygur,2092,Kuitun
+49,China,28,Xinjiang Uygur,2093,Nilka
+49,China,28,Xinjiang Uygur,2094,Qapqal Xibe
+49,China,28,Xinjiang Uygur,2095,Tekes
+49,China,28,Xinjiang Uygur,2096,Xinyuan
+49,China,28,Xinjiang Uygur,2097,Yining Shì
+49,China,28,Xinjiang Uygur,2098,Yining
+49,China,28,Xinjiang Uygur,2099,Zhaosu
+49,China,28,Xinjiang Uygur,2100,Dushanzi
+49,China,28,Xinjiang Uygur,2101,Karamay
+49,China,28,Xinjiang Uygur,2102,Bachu
+49,China,28,Xinjiang Uygur,2103,Jiashi
+49,China,28,Xinjiang Uygur,2104,Kashgar
+49,China,28,Xinjiang Uygur,2105,Makit
+49,China,28,Xinjiang Uygur,2106,Poskam
+49,China,28,Xinjiang Uygur,2107,Shufu
+49,China,28,Xinjiang Uygur,2108,Shule
+49,China,28,Xinjiang Uygur,2109,Taxkorgan Tajik
+49,China,28,Xinjiang Uygur,2110,Yecheng
+49,China,28,Xinjiang Uygur,2111,Yengisar
+49,China,28,Xinjiang Uygur,2112,Yopurga
+49,China,28,Xinjiang Uygur,2113,Zepu
+49,China,28,Xinjiang Uygur,2114,Khotan
+49,China,28,Xinjiang Uygur,2115,Lop
+49,China,28,Xinjiang Uygur,2116,Minfeng
+49,China,28,Xinjiang Uygur,2117,Moyu
+49,China,28,Xinjiang Uygur,2118,Pishan
+49,China,28,Xinjiang Uygur,2119,Qira
+49,China,28,Xinjiang Uygur,2120,Yutian
+49,China,28,Xinjiang Uygur,2121,Akqi
+49,China,28,Xinjiang Uygur,2122,Akto
+49,China,28,Xinjiang Uygur,2123,Artux
+49,China,28,Xinjiang Uygur,2124,Wuqia
+49,China,28,Xinjiang Uygur,2125,Shihezi
+49,China,28,Xinjiang Uygur,2126,Emin
+49,China,28,Xinjiang Uygur,2127,Hoboksar Mongol
+49,China,28,Xinjiang Uygur,2128,Shawan
+49,China,28,Xinjiang Uygur,2129,Tacheng
+49,China,28,Xinjiang Uygur,2130,Toli
+49,China,28,Xinjiang Uygur,2131,Usu
+49,China,28,Xinjiang Uygur,2132,Yumin
+49,China,28,Xinjiang Uygur,2133,Shanshan
+49,China,28,Xinjiang Uygur,2134,Toksun
+49,China,28,Xinjiang Uygur,2135,Turfan
+49,China,29,Xizang,2136,Banbar
+49,China,29,Xizang,2137,Baxoi
+49,China,29,Xizang,2138,Dêngqên
+49,China,29,Xizang,2139,Gonjo
+49,China,29,Xizang,2140,Jomdo
+49,China,29,Xizang,2141,Lhorong
+49,China,29,Xizang,2142,Markam
+49,China,29,Xizang,2143,Qamdo
+49,China,29,Xizang,2144,Riwoqê
+49,China,29,Xizang,2145,Zhag'yab
+49,China,29,Xizang,2146,Zogang
+49,China,29,Xizang,2147,Dagzê
+49,China,29,Xizang,2148,Damxung
+49,China,29,Xizang,2149,Doilungdêqên
+49,China,29,Xizang,2150,Lhünzhub
+49,China,29,Xizang,2151,Lhasa
+49,China,29,Xizang,2152,Maizhokunggar
+49,China,29,Xizang,2153,Nyêmo
+49,China,29,Xizang,2154,Qüxü
+49,China,29,Xizang,2155,Amdo
+49,China,29,Xizang,2156,Baqên
+49,China,29,Xizang,2157,Biru
+49,China,29,Xizang,2158,Lhari
+49,China,29,Xizang,2159,Nagchu
+49,China,29,Xizang,2160,Nyainrong
+49,China,29,Xizang,2161,Nyima
+49,China,29,Xizang,2162,Raingoin
+49,China,29,Xizang,2163,Sog
+49,China,29,Xizang,2164,Xainza
+49,China,29,Xizang,2165,Burang
+49,China,29,Xizang,2166,Coqên
+49,China,29,Xizang,2167,Gê'gyai
+49,China,29,Xizang,2168,Gêrzê
+49,China,29,Xizang,2169,Gar
+49,China,29,Xizang,2170,Rutog
+49,China,29,Xizang,2171,Zanda
+49,China,29,Xizang,2172,Bomi
+49,China,29,Xizang,2173,Gongbo'gyamda
+49,China,29,Xizang,2174,Mainling
+49,China,29,Xizang,2175,Nang
+49,China,29,Xizang,2176,Nyingchi
+49,China,29,Xizang,2177,Zayü
+49,China,29,Xizang,2178,Comai
+49,China,29,Xizang,2179,Cona
+49,China,29,Xizang,2180,Gonggar
+49,China,29,Xizang,2181,Gyaca
+49,China,29,Xizang,2182,Lhünzê
+49,China,29,Xizang,2183,Lhozhag
+49,China,29,Xizang,2184,Nêdong
+49,China,29,Xizang,2185,Nagarzê
+49,China,29,Xizang,2186,Qonggyai
+49,China,29,Xizang,2187,Qusum
+49,China,29,Xizang,2188,Sangri
+49,China,29,Xizang,2189,Zhanang
+49,China,29,Xizang,2190,Bainang
+49,China,29,Xizang,2191,Dinggyê
+49,China,29,Xizang,2192,Gamba
+49,China,29,Xizang,2193,Gyangzê
+49,China,29,Xizang,2194,Gyirong
+49,China,29,Xizang,2195,Kangmar
+49,China,29,Xizang,2196,Lhazê
+49,China,29,Xizang,2197,Namling
+49,China,29,Xizang,2198,Ngamring
+49,China,29,Xizang,2199,Nyalam
+49,China,29,Xizang,2200,Rinbung
+49,China,29,Xizang,2201,Sa'gya
+49,China,29,Xizang,2202,Saga
+49,China,29,Xizang,2203,Shigatse
+49,China,29,Xizang,2204,Tingri
+49,China,29,Xizang,2205,Xaitongmoin
+49,China,29,Xizang,2206,Yadong
+49,China,29,Xizang,2207,Zhongba
+49,China,30,Yunnan,2208,Baoshan
+49,China,30,Yunnan,2209,Changning
+49,China,30,Yunnan,2210,Longling
+49,China,30,Yunnan,2211,Shidian
+49,China,30,Yunnan,2212,Tengchong
+49,China,30,Yunnan,2213,Chuxiong
+49,China,30,Yunnan,2214,Dayao
+49,China,30,Yunnan,2215,Lufeng
+49,China,30,Yunnan,2216,Mouding
+49,China,30,Yunnan,2217,Nanhua
+49,China,30,Yunnan,2218,Shuangbai
+49,China,30,Yunnan,2219,Wuding
+49,China,30,Yunnan,2220,Yao'an
+49,China,30,Yunnan,2221,Yongren
+49,China,30,Yunnan,2222,Yuanmou
+49,China,30,Yunnan,2223,Dêqên
+49,China,30,Yunnan,2224,Weixin
+49,China,30,Yunnan,2225,Zhongdian
+49,China,30,Yunnan,2226,Binchuan
+49,China,30,Yunnan,2227,Dali
+49,China,30,Yunnan,2228,Eryuan
+49,China,30,Yunnan,2229,Heqing
+49,China,30,Yunnan,2230,Jianchuan
+49,China,30,Yunnan,2231,Midu
+49,China,30,Yunnan,2232,Nanjian Yi
+49,China,30,Yunnan,2233,Weishan Yi and Hui
+49,China,30,Yunnan,2252,Mile
+49,China,30,Yunnan,2253,Pingbian Miao
+49,China,30,Yunnan,2254,Shiping
+49,China,30,Yunnan,2255,Yuanyang
+49,China,30,Yunnan,2256,Anning
+49,China,30,Yunnan,2257,Chenggong
+49,China,30,Yunnan,2258,Dongchuan
+49,China,30,Yunnan,2259,Fumin
+49,China,30,Yunnan,2260,Jinning
+49,China,30,Yunnan,2261,Kunming
+49,China,30,Yunnan,2262,Lunan
+49,China,30,Yunnan,2263,Luquan Yi and Miao
+49,China,30,Yunnan,2264,Songming
+49,China,30,Yunnan,2265,Xishan
+49,China,30,Yunnan,2266,Xundian Hui and Yi
+49,China,30,Yunnan,2267,Yiliang
+49,China,30,Yunnan,2268,Huaping
+49,China,30,Yunnan,2269,Lijiang
+49,China,30,Yunnan,2270,Ninglang Yi
+49,China,30,Yunnan,2271,Yongsheng
+49,China,30,Yunnan,2272,Cangyuan Va
+49,China,30,Yunnan,2273,Fengqing
+49,China,30,Yunnan,2274,Gengma Dai and Va
+49,China,30,Yunnan,2275,Lincang
+49,China,30,Yunnan,2276,"Shuangjiang Lahu, Va, Blang and Dai"
+49,China,30,Yunnan,2277,Yongde
+49,China,30,Yunnan,2278,Yun
+49,China,30,Yunnan,2279,Zhenkang
+49,China,30,Yunnan,2280,Bijiang
+49,China,30,Yunnan,2281,Gongshan Derung and Nu
+49,China,30,Yunnan,2282,Lanping Bai and Pumi
+49,China,30,Yunnan,2283,Lushui
+49,China,30,Yunnan,2284,Jiangcheng Hani and Yi
+49,China,30,Yunnan,2285,Jingdong Yi
+49,China,30,Yunnan,2286,Jinggu Dai and Yi
+49,China,30,Yunnan,2287,Lancang Lahu
+49,China,30,Yunnan,2288,"Menglian Dai, Lahu and Va"
+49,China,30,Yunnan,2309,Yanshan
+49,China,30,Yunnan,2310,Jinghong
+49,China,30,Yunnan,2311,Menghai
+49,China,30,Yunnan,2312,Mengla
+49,China,30,Yunnan,2313,Chengjiang
+49,China,30,Yunnan,2314,Eshan Yi
+49,China,30,Yunnan,2315,Huaning
+49,China,30,Yunnan,2316,Jiangchuan
+49,China,30,Yunnan,2317,Tonghai
+49,China,30,Yunnan,2318,Xinping Yi and Dai
+49,China,30,Yunnan,2319,Yimen
+49,China,30,Yunnan,2320,"Yuanjiang Hani, Yi and Dai"
+49,China,30,Yunnan,2321,Yuxi
+49,China,30,Yunnan,2322,Daguan
+49,China,30,Yunnan,2323,Ludian
+49,China,30,Yunnan,2324,Qiaojia
+49,China,30,Yunnan,2325,Shuifu
+49,China,30,Yunnan,2326,Suijiang
+49,China,30,Yunnan,2327,Weixi Lisu
+49,China,30,Yunnan,2328,Yanjin
+49,China,30,Yunnan,2329,Yiliang
+49,China,30,Yunnan,2330,Yongshan
+49,China,30,Yunnan,2331,Zhaotong
+49,China,30,Yunnan,2332,Zhenxiong
+49,China,31,Zhejiang,2333,Chun'an
+49,China,31,Zhejiang,2334,Fuyang
+49,China,31,Zhejiang,2335,Hangzhou
+49,China,31,Zhejiang,2336,Jiande
+49,China,31,Zhejiang,2337,Lin'an
+49,China,31,Zhejiang,2338,Tonglu
+49,China,31,Zhejiang,2339,Xiaoshan
+49,China,31,Zhejiang,2340,Yuhang
+49,China,31,Zhejiang,2341,Anji
+49,China,31,Zhejiang,2342,Changxing
+49,China,31,Zhejiang,2343,Deqing
+49,China,31,Zhejiang,2344,Huzhou
+49,China,31,Zhejiang,2345,Haining
+49,China,31,Zhejiang,2346,Haiyan
+49,China,31,Zhejiang,2347,Jiashan
+49,China,31,Zhejiang,2348,Jiaxing
+49,China,31,Zhejiang,2349,Pinghu
+49,China,31,Zhejiang,2350,Tongxiang
+49,China,31,Zhejiang,2351,Xiuzhou
+49,China,31,Zhejiang,2352,Dongyang
+49,China,31,Zhejiang,2353,Jinhua Shì
+49,China,31,Zhejiang,2354,Jinhua Xiàn
+49,China,31,Zhejiang,2355,Lanxi
+49,China,31,Zhejiang,2356,Pan'an
+49,China,31,Zhejiang,2357,Pujiang
+49,China,31,Zhejiang,2358,Wuyi
+49,China,31,Zhejiang,2359,Yiwu
+49,China,31,Zhejiang,2360,Yongkang
+49,China,31,Zhejiang,2361,Jingning She
+49,China,31,Zhejiang,2362,Jinyun
+49,China,31,Zhejiang,2363,Lishui
+49,China,31,Zhejiang,2364,Longquan
+49,China,31,Zhejiang,2365,Qingtian
+49,China,31,Zhejiang,2366,Qingyuan
+49,China,31,Zhejiang,2367,Songyang
+49,China,31,Zhejiang,2368,Suichang
+49,China,31,Zhejiang,2369,Yunhe
+49,China,31,Zhejiang,2370,Cixi
+49,China,31,Zhejiang,2371,Fenghua
+49,China,31,Zhejiang,2372,Longwan
+49,China,31,Zhejiang,2373,Ninghai
+49,China,31,Zhejiang,2374,Xiangshan
+49,China,31,Zhejiang,2375,Xiuzhou
+49,China,31,Zhejiang,2376,Yuyao
+49,China,31,Zhejiang,2377,Zhenhai
+49,China,31,Zhejiang,2378,Changshan
+49,China,31,Zhejiang,2379,Jiangshan
+49,China,31,Zhejiang,2380,Kaihua
+49,China,31,Zhejiang,2381,Longyou
+49,China,31,Zhejiang,2382,Quzhou Shì
+49,China,31,Zhejiang,2383,Quzhou Xiàn
+49,China,31,Zhejiang,2384,Shangyu
+49,China,31,Zhejiang,2385,Shaoxing Xiàn
+49,China,31,Zhejiang,2386,Shaoxing
+49,China,31,Zhejiang,2387,Shengsi
+49,China,31,Zhejiang,2388,Xinchang
+49,China,31,Zhejiang,2389,Zhuji
+49,China,31,Zhejiang,2390,Huangyan
+49,China,31,Zhejiang,2391,Linhai
+49,China,31,Zhejiang,2392,Sanmen
+49,China,31,Zhejiang,2393,Tiantai
+49,China,31,Zhejiang,2394,Wenling
+49,China,31,Zhejiang,2395,Xianju
+49,China,31,Zhejiang,2396,Yuhuan
+49,China,31,Zhejiang,2397,Cangnan
+49,China,31,Zhejiang,2398,Ouhai
+49,China,31,Zhejiang,2399,Pingyang
+49,China,31,Zhejiang,2400,Ruian
+49,China,31,Zhejiang,2401,Taishun
+49,China,31,Zhejiang,2402,Wencheng
+49,China,31,Zhejiang,2403,Wenzhou
+49,China,31,Zhejiang,2404,Yongjia
+49,China,31,Zhejiang,2405,Yueqing
+49,China,31,Zhejiang,2406,Daishan
+49,China,31,Zhejiang,2407,Dinghai
+49,China,31,Zhejiang,2408,Putuo
