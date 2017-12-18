@@ -1,22 +1,21 @@
 sudo: required
 
-services:
-	- mysql
-
 matrix:
   include:
     - language: python
       python: "3.6"
       cache:
         pip: true
+      services:
+        - mysql
       install:
-		- pip3 install pymysql
+        - pip3 install pymysql
         - pip3 install django coverage coveralls
         - pip3 install -U channels
       before_script:
-		- mysql -e 'CREATE DATABASE [blog]'
+        - mysql -e 'CREATE DATABASE [blog]'
         - cd PlaskBack
-		- python3 manage.py makemigrations
+        - python3 manage.py makemigrations
         - python3 manage.py migrate
       script:
         - coverage run --branch --source="./ask" manage.py test ask
