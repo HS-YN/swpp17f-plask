@@ -10,10 +10,14 @@ class UserAppTasks(TaskSet):
 			json.dumps({'email': 'test1@google.com', 'password': 'test1'}),
 			headers={'X-CSRFToken': csrftoken},
 			cookies={'csrftoken': csrftoken})
-	
+
 	@task
-	def signup(self):
-		self.client.get('/api/user/services')
+	def question(self):
+		response = self.client.get('/api/ask/question')
+		data = json.loads(response.content.decode())
+		for question in data:
+			self.client.get('/api/ask/answer/' + str(question.id))
+
 
 class WebsiteUesr(HttpLocust):
 	task_set = UserAppTasks
