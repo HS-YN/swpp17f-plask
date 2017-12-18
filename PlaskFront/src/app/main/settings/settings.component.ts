@@ -22,39 +22,35 @@ export class SettingsComponent implements OnInit{
         private userService: UserService,
         private locationService: LocationService,
         private elementRef: ElementRef,
-    ){ }
+    ) {}
 
     user: User = new User();
-    newpassword= ""; //string for new password
-    passwordConfirmation = ""; //string for password Matching
+    newpassword= "";
+    passwordConfirmation = "";
 
-    userLocationList: string[] = []; //List for visualizing current user location tags
-    countryList: Location[] = [];
-    provinceList: Location[] = [];
-    cityList: Location[] = [];
-    cityAutoComplete: AutoCompleteComponent;
+    countryList: Location[];
+    provinceList: Location[];
+    cityList: Location[];
+    serviceList: string[] = [];
+    notiFrequencyList: number[] = [];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
-
-
-    serviceList: string[] = []; //List of service tags from Backend
-    userServiceList: string[] = []; //List for visualizing current user service tags
-    newService: string = ''; //User-input string
-    serviceAutoComplete: AutoCompleteComponent;
-    userBlockedServiceList: string [] =[]; //List for visualizing current user blocked service tags
+    newService: string = '';
     newBlockService: string = '';
+    selectedFreq:number;
+    //visualization of list
+    userLocationList: string[];
+    userServiceList: string[] = [];
+    userBlockedServiceList: string[] = [];
+
+    cityAutoComplete: AutoCompleteComponent;
+    serviceAutoComplete: AutoCompleteComponent;
     blockAutoComplete: AutoCompleteComponent;
-    notiFrequencyList: number[] = []; // List of frequency selection
-    selectedFreq;
-
-
-
 
     ngOnInit(): void{
         this.notiFrequencyList = [10, 20, 30, 60, 120];
-
         this.userService.getUser().then(User => {
            this.user = User;
            this.countryRefresh();
@@ -62,11 +58,9 @@ export class SettingsComponent implements OnInit{
            this.userLocationRefresh();
            this.userBlockedServiceRefresh();
            this.userServiceRefresh();
-           this.selectedFreqRefresh();});
-
+           this.selectedFreqRefresh();
+       });
     }
-
-    //TODO: Deal with Password Change
 
     SaveChanges(): void {
         if(this.newpassword != this.passwordConfirmation) {
@@ -94,27 +88,6 @@ export class SettingsComponent implements OnInit{
         }
     }
 
-
-
-    //Validate Password Match
-/*    ValidatePassword(): boolean {
-        //change to new password
-        if (this.newpassword !=""){
-            if (this.newpassword == this.passwordConfirmation){
-                this.user.password = this.newpassword;
-                return true
-            }
-            else{
-                return false;
-            }
-        }
-        //No change in password
-        else{
-            return true;
-        }
-    }*/
-
-
     //Methods for Location Tags
 
     //Update location tag visualization
@@ -132,15 +105,15 @@ export class SettingsComponent implements OnInit{
             alert("Please select country!");
             return;
         }
-        // NOTE: cityAutoComplete does not exist if only country is selected           
+        // NOTE: cityAutoComplete does not exist if only country is selected
         if (this.cityAutoComplete != null){
             this.selectedCity = this.cityAutoComplete.query;
-     
+
             if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
                 alert("Invalid city name!");
                 return;
             }
-        }        
+        }
         var newLocation: string = this.selectedCountry;
         if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
         if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
@@ -364,16 +337,4 @@ export class SettingsComponent implements OnInit{
     goToSignin(){
         this.router.navigate(['/signin']);
     }
-
-
-
-
 } /* istanbul ignore next */
-
-// Mock Data for checking service tag functionality
-const serviceListData = [
-    'Travel',
-    'Cafe',
-    'SNU',
-    'Pub',
-]

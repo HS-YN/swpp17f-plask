@@ -7,6 +7,7 @@ import { Location } from '../location/location';
 
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
+import { TagService } from '../main/tag.service';
 
 import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
@@ -15,39 +16,40 @@ import { AutoCompleteComponent } from '../interface/autocomplete.component';
     templateUrl: './signup.component.html',
     styleUrls: [ './signup.component.css']
 })
+
 export class SignUpComponent implements OnInit {
 
     constructor(
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private tagService: TagService,
         private elementRef: ElementRef,
-    ){ }
+    ) {}
 
     user = new User();
     passwordConfirmation = ''; //string for password Matching
 
-    userLocationList: string[]; //List for visualizing current user location tags
     countryList: Location[];
     provinceList: Location[];
     cityList: Location[];
-    cityAutoComplete: AutoCompleteComponent;
+    serviceList: string[] = [];
+    notiFrequencyList: number[] = [];
 
     selectedCountry: string = "";
     selectedProvince: string = "";
     selectedCity: string = "";
-
-
-    serviceList: string[] = []; //List of service tags from Backend
-    userServiceList: string[] = []; //List for visualizing current user service tags
-    newService: string = ''; //User-input string
-    serviceAutoComplete: AutoCompleteComponent;
-    userBlockedServiceList: string[] = []; //List for visualizing current user blocked service tags
+    newService: string = '';
     newBlockService: string = '';
-    blockAutoComplete: AutoCompleteComponent;
-    notiFrequencyList: number[] = []; //List of frequency selection
     selectedFreq:number;
+    //visualization of list
+    userLocationList: string[];
+    userServiceList: string[] = [];
+    userBlockedServiceList: string[] = [];
 
+    cityAutoComplete: AutoCompleteComponent;
+    serviceAutoComplete: AutoCompleteComponent;
+    blockAutoComplete: AutoCompleteComponent;
 
     ngOnInit(): void{
         this.userService.checkSignedIn().then(status => {
@@ -59,55 +61,31 @@ export class SignUpComponent implements OnInit {
         this.selectedFreq = this.notiFrequencyList[0];
     }
 
-    //Create a new User Account
-    SignUp(): void {
-        var email_check = new RegExp('^[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff@]+@[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff\\.@]+\\.[a-z]{2,3}$')
-        if(this.user.email.length >= 100 || !email_check.test(this.user.email)) {
-            alert("Invalid email address!");
-            return;
-        }
-        if(this.ValidatePassword()){
-            if (this.user.locations == ""){
-                alert("You need to add at least one location!");
-                return;
-            }
-            if(this.user.services == ""){
-                alert("You need to add at least one service");
-                return; 
-            }
-            this.userService.signUp(this.user)
-                .then(Status => {
-                    if(Status == 201) {
-                        alert("Successfully signed up! Please sign in.");
-                        this.goBack()
-                    }
-                }).catch((err) => {alert("You cannot signup with this information.");});
-        }
-        else{
-            alert ("Password is Different!")
-        }
-    }
-
-    //Validate Password Match
-    ValidatePassword(): boolean {
-        if (this.user.password == this.passwordConfirmation){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
-
     //Methods for Location Tags
+    countryRefresh: () => void = this.tagService.countryRefresh;
 
+    provinceRefresh: (country_code: number,
+        provinceList: string) => void = this.tagService.provinceRefresh;
+
+    cityRefresh: (c_code: number, p_code: number, cityList: string,
+        cityAuto: string) => void = this.tagService.cityRefresh;
+
+    countrySelect: (country: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string,
+        cityAuto: string) => void = this.tagService.countrySelect;
+
+    provinceSelect: (province: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string, cityList: string,
+        cityAuto: string) => void = this.tagService.provinceSelect;
     //Update location tag visualization
     userLocationRefresh(): void {
         if(this.user.locations == "") {
             this.userLocationList = null;
-            return;
         }
-        this.userLocationList = this.user.locations
-            .substr(0, this.user.locations.length-1).split(';');
+        else {
+            this.userLocationList = this.user.locations
+                .substr(0, this.user.locations.length-1).split(';');
+        }
     }
 
     userLocationAdd(): void {
@@ -115,35 +93,36 @@ export class SignUpComponent implements OnInit {
             alert("Please select country!");
             return;
         }
-        // NOTE: cityAutoComplete does not exist if only country is selected           
         if (this.cityAutoComplete != null){
             this.selectedCity = this.cityAutoComplete.query;
-     
-            if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
+            if((this.selectedCity!="") &&
+                (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
                 alert("Invalid city name!");
+                this.selectedCity = "";
                 return;
             }
         }
         var newLocation: string = this.selectedCountry;
-        if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
-        if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
-
+        if(this.selectedProvince != "") {
+            newLocation = newLocation + '/' + this.selectedProvince;
+            if(this.selectedCity != "")
+                newLocation = newLocation + '/' + this.selectedCity;
+        }
         if(this.user.locations.indexOf(newLocation+";") != -1) {
             alert("You've already selected " + newLocation + " !")
-            return;
         }
-
-        this.user.locations = this.user.locations + newLocation + ';';
-        this.selectedCountry = "";
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        // Delete only if cityAutoComplete exists
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
+        else {
+            this.user.locations = this.user.locations + newLocation + ';';
+            this.selectedCountry = "";
+            this.selectedProvince = "";
+            this.selectedCity = "";
+            if(this.cityAutoComplete != null){
+                delete this.cityAutoComplete;
+            }
+            this.userLocationRefresh();
+            this.provinceList = null;
+            this.cityList = null;
         }
-        this.userLocationRefresh();
-        this.provinceList = null;
-        this.cityList = null;
     }
 
     userLocationDelete(deleteLocation: string): void {
@@ -151,74 +130,6 @@ export class SignUpComponent implements OnInit {
         this.user.locations = this.user.locations.replace(deleteLocation, '');
         this.userLocationRefresh();
     }
-
-    getLocationByName (locList: Location[], name: string): Location {
-        for (var i = 0; locList.length > i; i++) {
-            if (name.localeCompare (locList[i].loc_name) === 0)
-                return locList[i];
-        }
-        return null;
-    }
-
-    countryRefresh(): void {
-        this.locationService.getCountryList().then(country => {
-                if(0 >= country.length)
-                    this.countryList = null;
-                else
-                    this.countryList = country;
-            })
-    }
-
-    countrySelect(country: string): void {
-        this.selectedCountry = country;
-        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
-        this.cityList = null;
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-    }
-
-    provinceRefresh(country_code: number): void {
-        //this.provinceList = provinceListData;
-        this.locationService.getLocationList(country_code.toString())
-            .then(province => {
-                if(province.length <= 0)
-                    this.provinceList = null;
-                else
-                    this.provinceList = province;
-            })
-    }
-
-    provinceSelect(province: string): void {
-        this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
-            this.getLocationByName (this.provinceList, province).loc_code);
-        this.selectedCity = "";
-    }
-
-    cityRefresh(country_code: number, province_code: number): void {
-        //this.cityList = cityListData;
-        var address: string = country_code.toString() + '/' + province_code.toString();
-        this.locationService.getLocationList(address)
-            .then(city => {
-                if(city.length <= 0)
-                    this.cityList = null;
-                else {
-                    this.cityList = city;
-                    var cList = [];
-                    for (var i = 0; i < this.cityList.length; i++)
-                        cList.push(this.cityList[i].loc_name);
-                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cList);
-                }
-            })
-    }
-
-    citySelect(): void {
-        this.selectedCity = this.cityAutoComplete.query;
-    }
-
 
     //Methods for Service Tags
 
@@ -230,7 +141,7 @@ export class SignUpComponent implements OnInit {
         }
         this.userServiceList = this.user.services
             .substr(0, this.user.services.length-1).split(';');
-    }
+    }//DUplicate
 
     serviceRefresh(): void {
         this.userService.getService()
@@ -266,7 +177,7 @@ export class SignUpComponent implements OnInit {
         deleteService = deleteService + ';';
         this.user.services = this.user.services.replace(deleteService, '');
         this.userServiceRefresh();
-    }
+    }//duplicate
 
     userServiceAdd(): void {
         this.newService = this.serviceAutoComplete.query;
@@ -295,7 +206,7 @@ export class SignUpComponent implements OnInit {
         deleteService = deleteService + ';';
         this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
         this.userBlockedServiceRefresh();
-    }
+    }//duplicate
 
     userBlockedServiceAdd(): void {
         this.newBlockService = this.blockAutoComplete.query;
@@ -328,12 +239,40 @@ export class SignUpComponent implements OnInit {
         }
         this.userBlockedServiceList = this.user.blockedServices
         .substr(0, this.user.blockedServices.length-1).split(';');
-    }
-
+    }//dupliate
     //Method for setting notification frequency
     userNotiFrequencySelect(freq: number): void {
         this.user.notiFrequency = freq;
         this.userBlockedServiceRefresh();
+    }
+
+    SignUp(): void {
+        var email_check = new RegExp('^[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff@]+@[^ \f\n\r\t\v\u00a0\u1680\u180e\u2000-\u200a\u2028\u2029\u202f\u205f\u3000\ufeff\\.@]+\\.[a-z]{2,3}$')
+        if(this.user.email.length >= 100 || !email_check.test(this.user.email)) {
+            alert("Invalid email address!");
+        }
+        else if(this.user.password == this.passwordConfirmation){
+            if (this.user.locations == ""){
+                alert("You need to add at least one location!");
+            }
+            else if(this.user.services == ""){
+                alert("You need to add at least one service");
+            }
+            else {
+                this.userService.signUp(this.user)
+                    .then(Status => {
+                        if(Status == 201) {
+                            alert("Successfully signed up! Please sign in.");
+                            this.goBack()
+                        }
+                    }).catch((err) => {
+                        alert("You cannot signup with this information.");
+                    });
+            }
+        }
+        else{
+            alert ("Password is Different!")
+        }
     }
 
 
@@ -345,50 +284,7 @@ export class SignUpComponent implements OnInit {
         this.router.navigate(['/signin']);
     }
 
-
     onChange(freq) {
         this.user.notiFrequency = freq;
     }
-/*
-    angular.module('ngrepeatSelect', [])
-    .controller('ExampleController', ['$scope', function($scope) {
-        $scope.data = {
-            model: null,
-            availableOptions: [
-                {id: '1', name: 'Option A'},
-                {id: '2', name: 'Option B'},
-                {id: '3', name: 'Option C'}
-            ]
-        };
-    }]);
-*/
 } /* istanbul ignore next */
-
-/*
-// Mock data for checking location tag functionality
-const countryListData = [
-    'South Korea',
-    'Japan',
-    'France',
-    'Russia'
-]
-
-const provinceListData = [
-    'Seoul',
-    'Busan',
-    'Gyeonggi-do'
-]
-
-const cityListData = [
-    'Gwanak',
-    'Gangseo',
-    'Gangnam'
-]
-*/
-// Mock Data for checking service tag functionality
-const serviceListData = [
-    'Travel',
-    'Cafe',
-    'SNU',
-    'Pub',
-]

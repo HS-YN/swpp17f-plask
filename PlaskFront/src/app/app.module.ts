@@ -23,7 +23,10 @@ import { QuestionService } from './question/question.service';
 import { AnswerService } from './answer/answer.service';
 import { AuthService } from './authentication/auth.service';
 import { AuthGuardService } from './authentication/auth-guard.service';
+import { RedirectService } from './authentication/redirect.service';
+ //If performance is significantly degraded, this can be removed.
 import { TabService } from './main/tab.service';
+import { TagService } from './main/tag.service';
 
 import { AppRoutingModule } from './routing/app-routing.module';
 
@@ -58,7 +61,9 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
         AnswerService,
         AuthService,
         AuthGuardService,
+        RedirectService,
         TabService,
+        TagService,
         { provide: APP_BASE_HREF, useValue: '/' },
         { provide: XSRFStrategy, useFactory: cookieStrategy},
         SearchTabComponent,

@@ -5,18 +5,18 @@ import { AuthService } from './auth.service';
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
-export class AuthGuardService implements CanActivate {
+export class RedirectService implements CanActivate {
 
     constructor(public authService: AuthService, public router: Router){}
 
     canActivate(): Promise<boolean> {
         return this.authService.isAuthenticated()
         .then(response => {
-            if(response == 'True'){
+            if(response == 'False'){
                 return true;
             }
             else{
-                this.router.navigate(['/signin']);
+                this.router.navigate(['/main']);
                 return false;
             }
         });

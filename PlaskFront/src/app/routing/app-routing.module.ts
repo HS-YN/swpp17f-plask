@@ -13,12 +13,13 @@ import { MyAnswersComponent } from '../main/myanswers/myanswers.component';
 import { SearchTabComponent } from '../main/searchtab/searchtab.component';
 
 import { AuthGuardService as AuthGuard } from '../authentication/auth-guard.service';
+import { RedirectService as Redirect } from '../authentication/redirect.service';
 
 //Routes between Components
 const routes: Routes = [
     { path: '', redirectTo: '/signin', pathMatch: 'full'},
-    { path: 'signin', component: SignInComponent },
-    { path: 'signup', component: SignUpComponent },
+    { path: 'signin', component: SignInComponent, canActivate: [Redirect] },
+    { path: 'signup', component: SignUpComponent, canActivate: [Redirect] },
     { path: 'main', component: MainComponent, canActivate: [AuthGuard], children: [
             { path: 'maintab', component: MainTabComponent, outlet:'tab'},
             { path: 'myquestions', component: MyQuestionsComponent, outlet:'tab'},

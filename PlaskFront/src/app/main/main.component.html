@@ -107,7 +107,7 @@
                 <span *ngFor="let questionService of questionServiceList">
                     <span class="label label-success">{{questionService}}</span>
                     <button class="badge"
-                        (click)="questionServiceDelete(questionService); $event.stopPropagation()">
+                        (click)="serviceDelete(questionService, 'question', 'questionServiceList'); $event.stopPropagation()">
                         x</button> &nbsp;
                 </span>
                 <div class="container" *ngIf="serviceAutoComplete">
@@ -123,7 +123,7 @@
                         </ul>
                     </div>
                 </div>
-                <button class="btn btn-default" (click)="questionServiceAdd()"> Add! </button>
+                <button class="btn btn-default" (click)="serviceAdd('serviceTag', 'serviceAutoComplete', 'question', 'questionServiceList')"> Add! </button>
                 <div class="form-group">
                     <button class="btn btn-block" (click)="sendQuestion()">
                         <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>

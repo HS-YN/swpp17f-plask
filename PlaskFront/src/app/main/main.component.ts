@@ -9,6 +9,7 @@ import { Location } from '../location/location';
 import { UserService } from '../user/user.service';
 import { LocationService } from '../location/location.service';
 import { QuestionService } from '../question/question.service';
+import { TagService } from './tag.service';
 
 import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
@@ -28,6 +29,7 @@ export class MainComponent implements OnInit, OnDestroy{
         private userService: UserService,
         private locationService: LocationService,
         private questionService: QuestionService,
+        private tagService: TagService,
         private elementRef: ElementRef,
     ){ }
 
@@ -63,7 +65,7 @@ export class MainComponent implements OnInit, OnDestroy{
         this.userService.getUser().then(user => {
             this.question.author = user.username;
             this.countryRefresh();
-            this.serviceRefresh();
+            this.serviceFetch();
             // Send welcome message :)
             this.notify("Plask!", "Thank you! You can now receive notifications :)");
             // Connect to websocket & Listen for messages
@@ -109,82 +111,23 @@ export class MainComponent implements OnInit, OnDestroy{
 
     // Location & Service Tags
 
-    countryRefresh(): void {
-        this.locationService.getCountryList().then(country => {
-                if(country.length <= 0)
-                    this.countryList = null;
-                else
-                    this.countryList = country;
-            })
-    }
+    countryRefresh: () => void = this.tagService.countryRefresh;
 
-    provinceRefresh(country_code: number, provinceList: string): void {
-        this.locationService.getLocationList(country_code.toString())
-            .then(province => {
-                if(province.length <= 0)
-                    this[provinceList] = null;
-                else
-                    this[provinceList] = province;
-            })
-    }
+    provinceRefresh: (country_code: number,
+        provinceList: string) => void = this.tagService.provinceRefresh;
 
-    countrySelect(country: string, askCountry: string, askProvince: string,
-        askCity: string, provinceList: string, cityAuto: string): void {
-        if (country == 'Country'){
-            this[askCountry] = "";
-            this[provinceList] = null;
-        }
-        else{
-            this[askCountry] = country;
-            this.provinceRefresh(this.locationService.getLocationByName (
-                this.countryList, country).loc_code, provinceList);
-        }
-        if (this[cityAuto] != null){
-            delete this[cityAuto];
-        }
-        this[askProvince]= "";
-        this[askCity] = "";
-    }
+    cityRefresh: (c_code: number, p_code: number, cityList: string,
+        cityAuto: string) => void = this.tagService.cityRefresh;
 
-    provinceSelect(province: string, askCountry: string, askProvince: string,
+    countrySelect: (country: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string,
+        cityAuto: string) => void = this.tagService.countrySelect;
+
+    provinceSelect: (province: string, askCountry: string, askProvince: string,
         askCity: string, provinceList: string, cityList: string,
-        cityAuto: string): void {
-        if (province == 'Province'){
-            this[askProvince] = '';
-            this[askCity] = "";
-            if (this[cityAuto] != null){
-                delete this[cityAuto];
-            }
-        }
-        else{
-            this[askProvince] = province;
-            this[askCity] = "";
-            this.cityRefresh(this.locationService.getLocationByName(
-                this.countryList, this[askCountry]).loc_code,
-                this.locationService.getLocationByName(
-                    this[provinceList], province).loc_code, cityList, cityAuto);
-        }
-    }
-
-    cityRefresh(c_code: number, p_code: number, cityList: string,
-        cityAuto: string): void {
-        var address: string = c_code.toString() + '/' + p_code.toString();
-        this.locationService.getLocationList(address)
-            .then(city => {
-                if(city.length <= 0)
-                    this[cityList] = null;
-                else {
-                    this[cityList] = city;
-                    var cityNameList = [];
-                    for (var i = 0; i < this[cityList].length; i++)
-                        cityNameList.push(this[cityList][i].loc_name);
-                    this[cityAuto] = new AutoCompleteComponent(
-                        this.elementRef, cityNameList);
-                }
-            })
-    }
+        cityAuto: string) => void = this.tagService.provinceSelect;
     //Update service tag visualization
-    serviceRefresh(): void {
+    serviceFetch(): void {
         this.userService.getService()
             .then(service => {
                 if(service.length <= 0)
@@ -197,46 +140,49 @@ export class MainComponent implements OnInit, OnDestroy{
             })
     }
 
-    questionServiceRefresh(): void {
-        if(this.question.services == "")
-            this.questionServiceList = null;
+    serviceRefresh(question: string, questionServiceList: string): void {
+        if(this[question].services == "")
+            this[questionServiceList] = null;
         else
-            this.questionServiceList = this.question.services
-                .substr(0, this.question.services.length-1).split(';');
+            this[questionServiceList] = this[question].services
+                .substr(0, this[question].services.length-1).split(';');
     }
 
-    questionServiceDelete(deleteService: string): void {
+    serviceDelete(deleteService: string, question: string,
+        questionServiceList: string): void {
         deleteService = deleteService + ';';
-        this.question.services = this.question.services.replace(deleteService, '');
-        this.questionServiceRefresh();
+        this[question].services = this[question].services.replace(deleteService, '');
+        this.serviceRefresh(question, questionServiceList);
     }
 
-    questionServiceAdd(): void {
-        this.serviceTag = this.serviceAutoComplete.query;
-        if(this.serviceTag == ""){
+    serviceAdd(serviceTag: string, serviceAutoComplete: string,
+        question: string, questionServiceList: string): void {
+        this[serviceTag] = this[serviceAutoComplete].query;
+        if(this[serviceTag] == ""){
             alert("Tag is Empty!");
         }
-        else if (this.serviceTag.indexOf(";") != -1){
+        else if (this[serviceTag].indexOf(";") != -1){
             alert("You cannot use SemiColon!");
         }
-        else if (this.serviceTag.length >= 100) {
+        else if (this[serviceTag].length >= 100) {
             alert("Tag length should be less than 100 characters.")
         }
         else{
-            this.questionServiceSelect(this.serviceTag);
-            this.serviceTag = "";
-            this.serviceAutoComplete.query = "";
+            this.serviceSelect(this[serviceTag], question, questionServiceList);
+            this[serviceTag] = "";
+            this[serviceAutoComplete].query = "";
         }
     }
     //Subroutine of questionServiceAdd: actual append happens here
-    questionServiceSelect(service: string): void {
+    serviceSelect(service: string, question: string,
+        questionServiceList: string): void {
         var validity_check: string = service + ';';
-        if (this.question.services.indexOf(validity_check) != -1){
+        if (this[question].services.indexOf(validity_check) != -1){
             alert("Tag Already Added!");
         }
         else {
-            this.question.services = this.question.services + service + ';';
-            this.questionServiceRefresh();
+            this[question].services = this[question].services + service + ';';
+            this.serviceRefresh(question, questionServiceList);
         }
     }
 
@@ -285,7 +231,7 @@ export class MainComponent implements OnInit, OnDestroy{
             this.question.content = "";
             this.question.services = "";
             this.question.locations = "";
-            this.questionServiceRefresh();
+            this.serviceRefresh("question", "questionServiceList");
             this.countryRefresh();
             if(this.cityAutoComplete != null){
                 delete this.cityAutoComplete;
