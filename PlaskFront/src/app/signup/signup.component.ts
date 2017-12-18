@@ -51,9 +51,6 @@ export class SignUpComponent implements OnInit {
     blockAutoComplete: AutoCompleteComponent;
 
     ngOnInit(): void{
-        this.userService.checkSignedIn().then(status => {
-            if(status == 'True')    this.router.navigate(['/main']);
-        })
         this.countryRefresh();
         this.serviceFetch("serviceList", "serviceAutoComplete",
             "blockAutoComplete");

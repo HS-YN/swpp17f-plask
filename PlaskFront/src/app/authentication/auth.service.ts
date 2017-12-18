@@ -15,4 +15,4 @@ export class AuthService {
     isAuthenticated(): Promise<string>{
         return this.http.get(this.checkSignedInUrl).toPromise().then(response =>response.json() as string);
     }
-}
+}/*istanbul ignore next*/

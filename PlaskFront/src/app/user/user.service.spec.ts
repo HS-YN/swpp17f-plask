@@ -17,6 +17,8 @@ const userData = { email: 'c@c.c', password: '56', username: 'Temp',
     locations: 'Japa;', services: 'Travel;Music;', blockedServices: '',
     notiFrequency: 5} as User;
 
+const serviceData = ["drink", "smoke", "life"];
+
 describe('UserService (mockBackend)', () => {
       beforeEach( async(() => {
         TestBed.configureTestingModule({
@@ -45,9 +47,9 @@ describe('UserService (mockBackend)', () => {
     describe('when instantiating user', () => {
         it('shoule have default values', () => {
             let user: User = new User;
-            expect(user.locations).toBe('');
-            expect(user.blockedServices).toBe('');
-            expect(user.services).toBe('');
+            expect(user.locations).toBe(';');
+            expect(user.blockedServices).toBe(';');
+            expect(user.services).toBe(';');
             expect(user.notiFrequency).toBe(1);
         })
     })
@@ -100,8 +102,37 @@ describe('UserService (mockBackend)', () => {
             });
         }));
 
+        it('can check if signed in', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.checkSignedIn().then(str => {
+                expect(str).not.toEqual("");
+            });
+        }));
+
         it('can handle error', async(() => {
             expect(service.handleError).toThrow();
         }))
+    });
+
+    describe('when modifying service', () => {
+        let backend: MockBackend;
+        let service: UserService;
+        let fakeData: string;
+        let response: Response;
+
+        beforeEach(inject([Http, XHRBackend], (http: Http, be: MockBackend) => {
+            backend = be;
+            service = new UserService(http);
+            fakeData = "temp";
+            response = new Response(new ResponseOptions({status: 200, body: {data: serviceData}}));
+        }));
+
+        it('should get required services', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.getService().then(services => {
+                expect(services).not.toBeNull();
+            });
+        }));
+
     });
 })

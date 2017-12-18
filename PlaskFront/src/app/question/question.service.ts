@@ -77,4 +77,4 @@ export class QuestionService{
             return parts.pop().split(";").shift();
         }
     }*/
-}
+}/*istanbul ignore next*/
