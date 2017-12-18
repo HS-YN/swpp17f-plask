@@ -21,4 +21,4 @@ export class RedirectService implements CanActivate {
             }
         });
     }
-}
+}/*istanbul ignore next*/

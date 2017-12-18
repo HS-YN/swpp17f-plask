@@ -63,6 +63,12 @@ describe('LocationService (mockBackend)', () => {
             });
         }));
 
+        it('should get location by name', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            expect(service.getLocationByName(locationData, "Korea")["loc_code"]).toBe(213);
+            expect(service.getLocationByName(locationData, "kore")).toBeNull();
+        }));
+
         it('can handle error', async(() => {
             expect(service.handleError).toThrow();
         }))

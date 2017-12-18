@@ -45,8 +45,8 @@ describe('QuestionService (mockBackend)', () => {
             let question: Question = new Question;
             expect(question.content).toBe('');
             expect(question.author).toBe('');
-            expect(question.locations).toBe('');
-            expect(question.services).toBe('');
+            expect(question.locations).toBe(';');
+            expect(question.services).toBe(';');
         })
     })
 
@@ -60,34 +60,27 @@ describe('QuestionService (mockBackend)', () => {
             backend = be;
             service = new QuestionService(http);
             fakeData = questionData;
-            response = new Response(new ResponseOptions({status: 200}));
+            response = new Response(new ResponseOptions({status: 200, body: {data: questionListData}}));
         }));
 
-        it('can get QuestionList', async(() => {
+        it('can get Related Question List', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-            service.getQuestion().then(Questions => {
-                expect(Questions).toBeNull();
+            service.getQuestion(1).then(Questions => {
+                expect(Questions['data'].length).toBeLessThan(10);
             });
         }));
 
-        it('can get Recent QuestionList', async(() => {
+        it('can get My Question List', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-            service.getRecentQuestion().then(Questions => {
-                expect(Questions).toBeNull();
+            service.getQuestion(2).then(Questions => {
+                expect(Questions['data'].length).toBeLessThan(10);
             });
         }));
 
-        it('can get RelatedQuestionList', async(() => {
+        it('can get Answered Question List', async(() => {
             backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-            service.getRelatedQuestion().then(Questions => {
-                expect(Questions).toBeNull();
-            });
-        }));
-
-        it('can get AnsweredQuestionList', async(() => {
-            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
-            service.getAnsweredQuestion().then(Questions => {
-                expect(Questions).toBeNull();
+            service.getQuestion(3).then(Questions => {
+                expect(Questions['data'].length).toBeLessThan(10);
             });
         }));
 
@@ -99,6 +92,19 @@ describe('QuestionService (mockBackend)', () => {
             });
         }));
 
+        it('can search specific questions', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.getSearchedQuestion("A", ["B"]).then(status => {
+                expect(status).not.toBeUndefined();
+            });
+        }));
+
+        it('can select best answer for Question', async(() => {
+            backend.connections.subscribe((c: MockConnection) => c.mockRespond(response));
+            service.selectAnswer(1, 2).then(status => {
+                expect(status).toEqual(200);
+            });
+        }));
 
         it('can handle error', async(() => {
             expect(service.handleError).toThrow();

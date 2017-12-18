@@ -29,7 +29,7 @@ describe('SignInComponent', () => {
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SignInComponent);
             comp = fixture.componentInstance;
-            
+
             fixture.detectChanges();
             fixture.whenStable().then(() => {
                 fixture.detectChanges();
@@ -68,17 +68,6 @@ describe('SignInComponent', () => {
 
         fixture.whenStable().then(() => {
             expect(spy).toHaveBeenCalled();
-        });
-    }));
-
-    it('should not login a improper user', async(() => {
-        let spy = spyOn(window, "alert");
-        comp.user.email = 'wrong@email.com';
-        comp.user.password = 'wrongpassword';
-        comp.SignIn();
-
-        fixture.whenStable().then(() => {
-            expect(spy).toHaveBeenCalledWith("Signin failed. Please try again!");
         });
     }));
 
