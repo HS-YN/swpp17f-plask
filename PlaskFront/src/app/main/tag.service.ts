@@ -105,4 +105,76 @@ export class TagService {
         this[question].services = this[question].services.replace(deleteService, '');
         this.serviceRefresh(question, questionServiceList);
     }
+
+    userLocationRefresh(user: string, userLocationList: string): void {
+        if(this[user].locations == "") {
+            this[userLocationList] = null;
+        }
+        else {
+            this[userLocationList] = this[user].locations
+                .substr(0, this[user].locations.length-1).split(';');
+        }
+    }
+
+    userLocationDelete(deleteLocation: string, user: string,
+        userLocationList: string): void {
+        deleteLocation = deleteLocation + ';';
+        this[user].locations = this[user].locations.replace(deleteLocation, '');
+        this.userLocationRefresh(user, userLocationList);
+    }
+
+    userLocationAdd(selectedCountry: string, selectedProvince: string,
+        selectedCity: string, provinceList: string, cityList: string,
+        userLocationList: string, cityAutoComplete: string, user: string): void {
+        if(this[selectedCountry] == "") {
+            alert("Please select country!");
+            return;
+        }
+        if (this[cityAutoComplete] != null){
+            this[selectedCity] = this[cityAutoComplete].query;
+            if((this[selectedCity] != "") &&
+                (this[cityAutoComplete].rawList.indexOf(this[selectedCity]) == -1)) {
+                alert("Invalid city name!");
+                this[selectedCity] = "";
+                return;
+            }
+        }
+        var newLocation: string = this[selectedCountry];
+        if(this[selectedProvince] != "") {
+            newLocation = newLocation + '/' + this[selectedProvince];
+            if(this[selectedCity] != "")
+                newLocation = newLocation + '/' + this[selectedCity];
+        }
+        if(this[user].locations.indexOf(newLocation+";") != -1) {
+            alert("You've already selected " + newLocation + " !")
+        }
+        else {
+            this[user].locations = this[user].locations + newLocation + ';';
+            this[selectedCountry] = "";
+            this[selectedProvince] = "";
+            this[selectedCity] = "";
+            if(this[cityAutoComplete] != null){
+                delete this[cityAutoComplete];
+            }
+            this.userLocationRefresh(user, userLocationList);
+            this[provinceList] = null;
+            this[cityList] = null;
+        }
+    }
+
+    serviceFetch(serviceList: string, serviceAutoComplete: string,
+        blockAutoComplete: string): void {
+        this.userService.getService()
+            .then(service => {
+                if(service.length <= 0)
+                    this[serviceList] = [];
+                else {
+                    this[serviceList] = service;
+                    this[serviceAutoComplete] = new AutoCompleteComponent(this["elementRef"], this[serviceList]);
+                    this[blockAutoComplete] = new AutoCompleteComponent(this["elementRef"], this[serviceList]);
+                    if(service.length >= 10)
+                        this[serviceList] = service.slice(0,10);
+                }
+            })
+    }
 }

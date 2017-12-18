@@ -61,17 +61,12 @@
               </li>
             </ul>
           </div>
-        </div><br><!--
-        <span *ngFor="let city of cityList"
-          [class.selected]="city.loc_name === selectedCity"
-          (click)="citySelect(city.loc_name)">
-          <button class="badge">{{city.loc_name}} </button> &nbsp;
-        </span>-->
+        </div><br>
         <br>
         <span *ngIf="selectedCountry!=''" class="label label-primary">{{selectedCountry}}</span>
         <span *ngIf="selectedProvince!=''" class="label label-primary">{{selectedProvince}}</span>
         <span *ngIf="selectedCity!=''" class="label label-primary">{{selectedCity}}</span>
-        <button (click)="userLocationAdd()">Add!</button><br>
+        <button (click)="userLocationAdd('selectedCountry', 'selectedProvince', 'selectedCity', 'provinceList', 'cityList', 'userLocationList', 'cityAutoComplete', 'user')">Add!</button><br>
       </div>
 
       <div class="form-group">
@@ -112,7 +107,7 @@
         <label> Blocked Services: </label>
         <span *ngFor="let userBlockedService of userBlockedServiceList">
             <span class="label label-success">{{userBlockedService}}</span>
-            <button class="badge" (click)="serviceDelete(userBlockedService, 'user', 'userBlockedServiceList'); $event.stopPropagation()">
+            <button class="badge" (click)="blockServiceDelete(userBlockedService); $event.stopPropagation()">
             x</button> &nbsp;
         </span>
         <br>

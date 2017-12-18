@@ -1,4 +1,3 @@
-//Import Basic Modules
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -7,6 +6,7 @@ import { Location } from '../../location/location';
 
 import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
+import { TagService } from '../../main/tag.service';
 
 import { AutoCompleteComponent } from '../../interface/autocomplete.component';
 
@@ -21,6 +21,7 @@ export class SettingsComponent implements OnInit{
         private router: Router,
         private userService: UserService,
         private locationService: LocationService,
+        private tagService: TagService,
         private elementRef: ElementRef,
     ) {}
 
@@ -54,190 +55,52 @@ export class SettingsComponent implements OnInit{
         this.userService.getUser().then(User => {
            this.user = User;
            this.countryRefresh();
-           this.serviceRefresh();
-           this.userLocationRefresh();
+           this.serviceFetch("serviceList", "serviceAutoComplete",
+            "blockAutoComplete");
+           this.userLocationRefresh('user', 'userLocationList');
            this.userBlockedServiceRefresh();
-           this.userServiceRefresh();
+           this.serviceRefresh("user", "userServiceList");
            this.selectedFreqRefresh();
        });
     }
-
-    SaveChanges(): void {
-        if(this.newpassword != this.passwordConfirmation) {
-            alert("Password is different.")
-            return
-        }
-        else if(this.user.locations == ""){
-            alert("You need to have at least one location tag!");
-            return;
-        }
-        else if (this.user.services == ""){
-            alert("You need to have at least one service tag!");
-            return;
-        }
-        else if(this.newpassword != "") {
-            this.user.password = this.newpassword;
-            alert("Successfully changed password. Please sign in again.")
-            this.userService.update(this.user)
-                .then(() => this.goToSignin());
-        }
-        else {
-            alert("Successfully modified!")
-            this.userService.update(this.user)
-            .then(() => this.goToMain());
-        }
-    }
-
     //Methods for Location Tags
+    countryRefresh: () => void = this.tagService.countryRefresh;
 
-    //Update location tag visualization
-    userLocationRefresh(): void {
-        if(this.user.locations == "") {
-            this.userLocationList = null;
-            return;
-        }
-        this.userLocationList = this.user.locations
-            .substr(0, this.user.locations.length-1).split(';');
-    }
+    provinceRefresh: (country_code: number,
+        provinceList: string) => void = this.tagService.provinceRefresh;
 
-    userLocationAdd(): void {
-        if(this.selectedCountry == "") {
-            alert("Please select country!");
-            return;
-        }
-        // NOTE: cityAutoComplete does not exist if only country is selected
-        if (this.cityAutoComplete != null){
-            this.selectedCity = this.cityAutoComplete.query;
+    cityRefresh: (c_code: number, p_code: number, cityList: string,
+        cityAuto: string) => void = this.tagService.cityRefresh;
 
-            if((this.selectedCity!="") && (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
-                alert("Invalid city name!");
-                return;
-            }
-        }
-        var newLocation: string = this.selectedCountry;
-        if(this.selectedProvince != "")    newLocation = newLocation + '/' + this.selectedProvince;
-        if(this.selectedCity != "")    newLocation = newLocation + '/' + this.selectedCity;
+    countrySelect: (country: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string,
+        cityAuto: string) => void = this.tagService.countrySelect;
 
-        if(this.user.locations.indexOf(newLocation+";") != -1) {
-            alert("You've already selected " + newLocation + " !")
-            return;
-        }
+    provinceSelect: (province: string, askCountry: string, askProvince: string,
+        askCity: string, provinceList: string, cityList: string,
+        cityAuto: string) => void = this.tagService.provinceSelect;
 
-        this.user.locations = this.user.locations + newLocation + ';';
-        this.selectedCountry = "";
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        // Delete only if cityAutoComplete exists
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-        this.userLocationRefresh();
-        this.provinceList = null;
-        this.cityList = null;
-    }
+    userLocationRefresh: (user: string,
+        userLocationList: string) => void = this.tagService.userLocationRefresh;
 
-    userLocationDelete(deleteLocation: string): void {
-        deleteLocation = deleteLocation + ';';
-        this.user.locations = this.user.locations.replace(deleteLocation, '');
-        this.userLocationRefresh();
-    }
+    userLocationDelete:(deleteLocation: string, user: string,
+        userLocationList: string) => void = this.tagService.userLocationDelete;
 
-    getLocationByName (locList: Location[], name: string): Location {
-        for (var i = 0; locList.length > i; i++) {
-            if (name.localeCompare (locList[i].loc_name) === 0)
-                return locList[i];
-        }
-        return null;
-    }
-
-    countryRefresh(): void {
-        //this.countryList = countryListData;
-        this.locationService.getCountryList().then(country => {
-            if(country.length <= 0)
-                this.countryList = null;
-            else
-                this.countryList = country;
-        })
-    }
-
-    countrySelect(country: string): void {
-        this.selectedCountry = country;
-        this.provinceRefresh(this.getLocationByName (this.countryList, country).loc_code);
-        this.cityList = null;
-        this.selectedProvince = "";
-        this.selectedCity = "";
-        if(this.cityAutoComplete != null){
-            delete this.cityAutoComplete;
-        }
-    }
-
-    provinceRefresh(country_code: number): void {
-        //this.provinceList = provinceListData;
-        this.locationService.getLocationList(country_code.toString())
-            .then(province => {
-                if(province.length <= 0)
-                    this.provinceList = null;
-                else
-                    this.provinceList = province;
-            })
-    }
-
-    provinceSelect(province: string): void {
-        this.selectedProvince = province;
-        this.cityRefresh(this.getLocationByName (this.countryList, this.selectedCountry).loc_code,
-            this.getLocationByName (this.provinceList, province).loc_code);
-        this.selectedCity = "";
-    }
-
-    cityRefresh(country_code: number, province_code: number): void {
-        //this.cityList = cityListData;
-        var address: string = country_code.toString() + '/' + province_code.toString();
-        this.locationService.getLocationList(address)
-            .then(city => {
-                if(city.length <= 0)
-                    this.cityList = null;
-                else {
-                    this.cityList = city;
-                    var cList = [];
-                    for (var i = 0; i < this.cityList.length; i++)
-                        cList.push(this.cityList[i].loc_name);
-                    this.cityAutoComplete = new AutoCompleteComponent(this.elementRef, cList);
-                }
-            })
-    }
-
-    citySelect(city: string): void {
-        this.selectedCity = this.cityAutoComplete.query;
-    }
-
+    userLocationAdd: (selectedCountry: string, selectedProvince: string,
+        selectedCity: string, provinceList: string, cityList: string,
+        userLocationList: string, cityAutoComplete: string,
+        user: string) => void = this.tagService.userLocationAdd;
 
     //Methods for Service Tags
 
-    //Update service tag visualization
-    userServiceRefresh(): void {
-        if(this.user.services == '') {
-            this.userServiceList = [];
-            return;
-        }
-        this.userServiceList = this.user.services
-            .substr(0, this.user.services.length-1).split(';');
-    }
+    serviceFetch: (serviceList: string, serviceAutoComplete: string,
+        blockAutoComplete: string) => void = this.tagService.serviceFetch;
 
-    serviceRefresh(): void {
-        this.userService.getService()
-            .then(service => {
-                if(service.length <= 0)
-                    this.serviceList = null;
-                else {
-                    this.serviceList = service;
-                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    this.blockAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    if(service.length >= 10)
-                        this.serviceList = service.slice(0,10);
-                }
-            })
-    }
+    serviceRefresh: (question: string,
+        questionServiceList: string) => void = this.tagService.serviceRefresh;
 
+    serviceDelete: (deleteService: string, question: string,
+        questionServiceList: string) => void = this.tagService.serviceDelete;
     //Select a Tag from the exisitng list of service tags
     userServiceSelect(service: string): void {
         var validity_check: string = service + ';';
@@ -246,13 +109,7 @@ export class SettingsComponent implements OnInit{
             return;
         }
         this.user.services = this.user.services + service + ';';
-        this.userServiceRefresh();
-    }
-
-    userServiceDelete(deleteService: string): void {
-        deleteService = deleteService + ';';
-        this.user.services = this.user.services.replace(deleteService, '');
-        this.userServiceRefresh();
+        this.serviceRefresh("user", "userServiceList");
     }
 
     userServiceAdd(): void {
@@ -314,16 +171,38 @@ export class SettingsComponent implements OnInit{
         this.user.blockedServices = this.user.blockedServices.replace(deleteService, '');
         this.userBlockedServiceRefresh();
     }
-
     //Method for setting notification frequency
     onChange(freq) {
         this.user.notiFrequency = freq;
     }
+
     selectedFreqRefresh(){
         var x:number = this.notiFrequencyList.indexOf(this.user.notiFrequency);
-        if(x == -1)
-            x = 0;
+        if(x == -1)    x = 0;
         this.selectedFreq = this.notiFrequencyList[x];
+    }
+
+    SaveChanges(): void {
+        if(this.newpassword != this.passwordConfirmation) {
+            alert("Password is different.")
+        }
+        else if(this.user.locations == ""){
+            alert("You need to have at least one location tag!");
+        }
+        else if (this.user.services == ""){
+            alert("You need to have at least one service tag!");
+        }
+        else if(this.newpassword != "") {
+            this.user.password = this.newpassword;
+            alert("Successfully changed password. Please sign in again.")
+            this.userService.update(this.user)
+                .then(() => this.goToSignin());
+        }
+        else {
+            alert("Successfully modified!")
+            this.userService.update(this.user)
+            .then(() => this.goToMain());
+        }
     }
 
     goToMain(){

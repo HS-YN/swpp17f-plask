@@ -1,4 +1,3 @@
-//Import Basic Modules
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -56,7 +55,8 @@ export class SignUpComponent implements OnInit {
             if(status == 'True')    this.router.navigate(['/main']);
         })
         this.countryRefresh();
-        this.serviceFetch();
+        this.serviceFetch("serviceList", "serviceAutoComplete",
+            "blockAutoComplete");
         this.notiFrequencyList = [10, 20, 30, 60, 120]
         this.selectedFreq = this.notiFrequencyList[0];
     }
@@ -77,76 +77,22 @@ export class SignUpComponent implements OnInit {
     provinceSelect: (province: string, askCountry: string, askProvince: string,
         askCity: string, provinceList: string, cityList: string,
         cityAuto: string) => void = this.tagService.provinceSelect;
-    //Update location tag visualization
-    userLocationRefresh(): void {
-        if(this.user.locations == "") {
-            this.userLocationList = null;
-        }
-        else {
-            this.userLocationList = this.user.locations
-                .substr(0, this.user.locations.length-1).split(';');
-        }
-    }
 
-    userLocationAdd(): void {
-        if(this.selectedCountry == "") {
-            alert("Please select country!");
-            return;
-        }
-        if (this.cityAutoComplete != null){
-            this.selectedCity = this.cityAutoComplete.query;
-            if((this.selectedCity!="") &&
-                (this.cityAutoComplete.rawList.indexOf(this.selectedCity) == -1)) {
-                alert("Invalid city name!");
-                this.selectedCity = "";
-                return;
-            }
-        }
-        var newLocation: string = this.selectedCountry;
-        if(this.selectedProvince != "") {
-            newLocation = newLocation + '/' + this.selectedProvince;
-            if(this.selectedCity != "")
-                newLocation = newLocation + '/' + this.selectedCity;
-        }
-        if(this.user.locations.indexOf(newLocation+";") != -1) {
-            alert("You've already selected " + newLocation + " !")
-        }
-        else {
-            this.user.locations = this.user.locations + newLocation + ';';
-            this.selectedCountry = "";
-            this.selectedProvince = "";
-            this.selectedCity = "";
-            if(this.cityAutoComplete != null){
-                delete this.cityAutoComplete;
-            }
-            this.userLocationRefresh();
-            this.provinceList = null;
-            this.cityList = null;
-        }
-    }
+    userLocationRefresh: (user: string,
+        userLocationList: string) => void = this.tagService.userLocationRefresh;
 
-    userLocationDelete(deleteLocation: string): void {
-        deleteLocation = deleteLocation + ';';
-        this.user.locations = this.user.locations.replace(deleteLocation, '');
-        this.userLocationRefresh();
-    }
+    userLocationDelete:(deleteLocation: string, user: string,
+        userLocationList: string) => void = this.tagService.userLocationDelete;
+
+    userLocationAdd: (selectedCountry: string, selectedProvince: string,
+        selectedCity: string, provinceList: string, cityList: string,
+        userLocationList: string, cityAutoComplete: string,
+        user: string) => void = this.tagService.userLocationAdd;
 
     //Methods for Service Tags
 
-    serviceFetch(): void {
-        this.userService.getService()
-            .then(service => {
-                if(service.length <= 0)
-                    this.serviceList = [];
-                else {
-                    this.serviceList = service;
-                    this.serviceAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    this.blockAutoComplete = new AutoCompleteComponent(this.elementRef, this.serviceList);
-                    if(service.length >= 10)
-                        this.serviceList = service.slice(0,10);
-                }
-            })
-    }
+    serviceFetch: (serviceList: string, serviceAutoComplete: string,
+        blockAutoComplete: string) => void = this.tagService.serviceFetch;
     //'question' corresponds to user in serviceRefresh/Delete component
     serviceRefresh: (question: string,
         questionServiceList: string) => void = this.tagService.serviceRefresh;
@@ -216,7 +162,7 @@ export class SignUpComponent implements OnInit {
 
     blockServiceRefresh(): void {
         if(this.user.blockedServices == "")
-            this.userBlockedServiceList = null;
+            this.userBlockedServiceList = [];
         else
             this.userBlockedServiceList = this.user.blockedServices
                 .substr(0, this.user.blockedServices.length-1).split(';');
@@ -259,7 +205,6 @@ export class SignUpComponent implements OnInit {
             alert ("Password is Different!")
         }
     }
-
 
     goToMain(){
         this.router.navigate(['/main']);
