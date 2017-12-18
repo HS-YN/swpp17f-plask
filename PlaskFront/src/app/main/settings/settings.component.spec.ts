@@ -8,7 +8,7 @@ import { SettingsComponent } from './settings.component';
 import { UserService } from '../../user/user.service';
 import { LocationService } from '../../location/location.service';
 
-import { User } from '../../user/user'; 
+import { User } from '../../user/user';
 import { Location } from '../../location/location';
 
 let comp: SettingsComponent;
@@ -18,17 +18,17 @@ describe('SettingsComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [ AppModule, RouterTestingModule.withRoutes([]) ],
-        }).overrideModule(AppModule, { 
-            remove: { 
-                providers: [ 
-                    UserService, LocationService 
-                ] 
+        }).overrideModule(AppModule, {
+            remove: {
+                providers: [
+                    UserService, LocationService
+                ]
             },
-            add: { 
-                providers: [ 
-                    { provide: LocationService, useClass: FakeLocationService }, 
+            add: {
+                providers: [
+                    { provide: LocationService, useClass: FakeLocationService },
                     { provide: UserService, useClass: FakeUserService }
-                ] 
+                ]
             }
         }).compileComponents().then(() => {
             fixture = TestBed.createComponent(SettingsComponent);
@@ -52,7 +52,7 @@ describe('SettingsComponent', () => {
         expect(comp.passwordConfirmation).toEqual('');
         expect(comp.selectedCountry).toEqual('');
         expect(comp.selectedProvince).toEqual('');
-        expect(comp.selectedCity).toEqual('');        
+        expect(comp.selectedCity).toEqual('');
         expect(comp.newService).toEqual('');
         expect(comp.newBlockService).toEqual('');
         expect(comp.notiFrequencyList).toEqual([10, 20, 30, 60, 120]);
@@ -106,7 +106,7 @@ describe('SettingsComponent', () => {
         fixture.whenStable().then(() => {
             expect(spy).toHaveBeenCalledWith("Successfully changed password. Please sign in again.");
             expect(spy2).toHaveBeenCalled();
-        });  
+        });
     }));
 
     it('should save changes without password update', async(() => {
@@ -121,7 +121,7 @@ describe('SettingsComponent', () => {
         fixture.whenStable().then(() => {
             expect(spy).toHaveBeenCalledWith("Successfully modified!");
             expect(spy2).toHaveBeenCalled();
-        });  
+        });
     }));
 
     // Related to Routing
@@ -140,7 +140,7 @@ describe('SettingsComponent', () => {
     it('should be able to goBack to Sign', async(() => {
         let navigateSpy = spyOn((<any>comp).router, 'navigate');
         comp.goBack();
-        expect(navigateSpy).toHaveBeenCalledWith(['/signin']);       
+        expect(navigateSpy).toHaveBeenCalledWith(['/signin']);
     }))
 
     it('should properly update notiFrequency', async(() => {
@@ -154,14 +154,14 @@ describe('SettingsComponent', () => {
 });
 
 
-export const fakeCountryList: Location[] = [ 
+export const fakeCountryList: Location[] = [
     { loc_name: 'Korea', loc_code: 1 },
     { loc_name: 'Canada', loc_code: 2 },
     { loc_name: 'USA', loc_code: 3 },
 ];
-export const fakeProvinceList: Location[] = [ 
+export const fakeProvinceList: Location[] = [
     { loc_name: 'Seoul', loc_code: 4 },
-    { loc_name: 'Jeju', loc_code: 5 }, 
+    { loc_name: 'Jeju', loc_code: 5 },
     { loc_name: 'Daegu', loc_code: 6 },
 ];
 export const fakeCityList: Location[] = [
@@ -177,13 +177,13 @@ class FakeLocationService {
 
     getLocationList(location: string): Promise<Location[]> {
         if(location == "1" || location =="2" || location =="3"){
-            return Promise.resolve<Location[]>(fakeProvinceList);            
+            return Promise.resolve<Location[]>(fakeProvinceList);
         }
         else{
             return Promise.resolve<Location[]>(fakeCityList);
         }
 
-    }    
+    }
 }
 
 export const fakeUsers: User[] = [
@@ -214,7 +214,7 @@ class FakeUserService {
       return Promise.resolve<string[]>(fakeServices);
   }
 
-  updateUser(user: User): Promise<User> {
+  update(user: User): Promise<User> {
       return Promise.resolve<User>(user);
   }
 }
