@@ -86,6 +86,7 @@ export class MainComponent implements OnInit, OnDestroy{
         });
         this.getQuestionList(1);
         this.tabNum = 1;
+        document.getElementById("footer").style.height = "80px"; //set footer height
     }
 
     ngOnDestroy(): void {
@@ -305,15 +306,31 @@ export class MainComponent implements OnInit, OnDestroy{
     }
     //Open Plask Question Dropdown when clicked
     myFunction():void {
-            document.getElementById("myDropdown").classList.toggle("show");
+        //close if question is expanded
+        for (let i =0; i< this.questionList.length; ++i){
+            if (this.questionList[i][1] == false){
+                this.questionList[i][1] = true;
+                break;
+            }
+        }
+        document.getElementById("myDropdown").classList.toggle("show");
+        document.getElementById("footer").style.height = "390px";
+        document.getElementById("dropbtn").style.display = "None";
     }
     //Close when somewhere else is clicked
     @HostListener('document:click', ['$event'])
     onClick(event) {
         var target = event.target;
         if (!target.closest(".dropdown") && !target.closest(".container") && !target.closest(".suggestions")) {
-            document.getElementById("myDropdown").classList.toggle("show", false);
+            this.closeAsk();
         }
+    }
+
+    //Close when close button is clicked
+    closeAsk(): void{
+        document.getElementById("myDropdown").classList.toggle("show", false);
+        document.getElementById("footer").style.height = "80px";
+        document.getElementById("dropbtn").style.display = "initial";
     }
 
     goToSettings(): void{
@@ -322,11 +339,6 @@ export class MainComponent implements OnInit, OnDestroy{
 
     goSignOut(): void{
         this.userService.signOut().then(() => this.router.navigate(['/signin']));
-    }
-
-    gotoMainTab(): void{
-        this.router.navigateByUrl("/main(tab:maintab;open=true)");
-        //(['/main/maintab']);
     }
 
     /*

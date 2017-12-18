@@ -1,3 +1,7 @@
+<html>
+<body>
+<div id="wrapper">
+<div id="header">
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
@@ -63,13 +67,15 @@
         </div>
     </form>
 </nav>
+</div>
 
+<div id="content">
 <div class="form-group">
   <button class="btn btn-block" (click)="refresh()">
   Refresh <span class=" glyphicon glyphicon-refresh"></span> </button>
 </div>
-<div class="question-container">
     <a class="question-list" *ngFor="let question of questionList; let qid = index">
+
         <div class="question-list-item" (click)="expand(question)">
             <h4> {{question[0].content}}</h4>
             <h5 id="author"> {{question[0].author}}</h5>
@@ -97,8 +103,8 @@
     </a>
 </div>
 
+<div id="footer">
 <div class="dropdown">
-    <button (click)="myFunction()" class="dropbtn"> Plask? <span class="caret"></span></button>
     <div id="myDropdown" class="dropdown-content" role="menu">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -158,8 +164,17 @@
                 <div class="form-group">
                     <button class="btn btn-block" (click)="sendQuestion()">
                         <span class="glyphicon glyphicon-share-alt"></span> Plask! </button>
+                    <button class="btn btn-block" (click)="closeAsk()">
+                        <span class="glyphicon glyphicon-remove"></span> Close </button>
                 </div>
             </div>
         </div>
     </div>
+    <div>
+    <button (click)="myFunction()" class="dropbtn" id="dropbtn"> Plask? <span class="caret"></span></button>
+    </div>
 </div>
+</div>
+</div>
+</body>
+</html>
