@@ -1,451 +1,349 @@
-// import { TestBed, ComponentFixture, async  } from '@angular/core/testing';
-// import { RouterTestingModule } from '@angular/router/testing';
-// import { DebugElement } from '@angular/core';
-// import { By } from '@angular/platform-browser';
+import { TestBed, ComponentFixture, async  } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { DebugElement } from '@angular/core';
+import { By } from '@angular/platform-browser';
 
-// import { MainComponent } from './main.component';
-// import { AppModule } from '../app.module';
+import { AppModule } from '../app.module';
+import { MainComponent } from './main.component';
+import { UserService } from '../user/user.service';
+import { LocationService } from '../location/location.service';
+import { QuestionService } from '../question/question.service';
+import { AnswerService } from '../answer/answer.service';
 
-// import { AutoCompleteComponent } from '../interface/autocomplete.component';
+import { User } from '../user/user'; 
+import { Location } from '../location/location';
+import { Question } from  '../question/question';
+import { Answer } from '../answer/answer';
 
-// let comp: MainComponent;
-// let fixture: ComponentFixture<MainComponent>;
-// declare var Notification: any;
+import { AutoCompleteComponent } from '../interface/autocomplete.component';
 
-// describe('MainComponent', () => {
-//     beforeEach(async(() => {
-//         TestBed.configureTestingModule({
-//             imports: [ AppModule, RouterTestingModule.withRoutes([]) ],
-//         }).compileComponents().then(() => {
-//           fixture = TestBed.createComponent(MainComponent);
-//           comp = fixture.componentInstance;
-//         });
-//     }));
 
-//     it('can be instantiated', () => {
-//         expect(comp).not.toBeNull();
-//         expect(comp).toBeTruthy();
-//     });
+let comp: MainComponent;
+let fixture: ComponentFixture<MainComponent>;
+declare var Notification: any;
 
-//     it('can get function', () => {
-//         expect(comp.gotoMainTab).toThrow();
-//         expect(comp.sendQuestion).toThrow();
-//         expect(comp.countryRefresh).toThrow();
-//         expect(comp.countrySelect).toThrow();
-//         expect(comp.provinceRefresh).toThrow();
-//         expect(comp.provinceSelect).toThrow();
-//         expect(comp.cityRefresh).toThrow();
-//         expect(comp.serviceRefresh).toThrow();
-//         expect(comp.questionServiceRefresh).toThrow();
-//         expect(comp.questionServiceSelect).toThrow();
-//         expect(comp.questionServiceDelete).toThrow();
-//         expect(comp.questionServiceAdd).toThrow();
-//         expect(comp.countrySearch).toThrow();
-//         expect(comp.searchProvinceRefresh).toThrow();
-//         expect(comp.provinceSearch).toThrow();
-//         expect(comp.searchCityRefresh).toThrow();
-//         expect(comp.search).toThrow();
-//         expect(comp.notify).toThrow();
-//         expect(comp.notifyWithPermission).toThrow();
+describe('MainComponent', () => {
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [ AppModule, RouterTestingModule.withRoutes([]) ],
+        }).overrideModule(AppModule, { 
+            remove: { 
+                providers: [ 
+                    UserService, LocationService, QuestionService,
+                ] 
+            },
+            add: { 
+                providers: [ 
+                    { provide: LocationService, useClass: FakeLocationService }, 
+                    { provide: UserService, useClass: FakeUserService },
+                    { provide: QuestionService, useClass: FakeQuestionService},
+                ] 
+            }
+        }).compileComponents().then(() => {
+            fixture = TestBed.createComponent(MainComponent);
+            comp = fixture.componentInstance;
 
-//     })
+            fixture.detectChanges();
 
-//     it('can be initiated', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         comp.ngOnInit();
-//         expect(navigateSpy).not.toHaveBeenCalledWith(['/signin']);
-//     }))
+            fixture.whenStable().then(() => {
+                fixture.detectChanges();
+            });
+        });
+    }));
 
-//     it('can navigate to settings', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         comp.goToSettings();
-//         expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
-//     }))
+    it('can be instantiated', () => {
+        expect(comp).not.toBeNull();
+        expect(comp).toBeTruthy();
+    });
 
-//     it('can navigate to signout', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         expect(comp.goSignOut).toThrow();
-//     }))
+    it('can properly initialize data', async(() => {
+        fixture.whenStable().then(() => {
+            expect(comp.tabNum).toEqual(1);
+            expect(comp.questionList[0][0]).toEqual(fakeRelatedQuestions[0]);
+            expect(comp.user).toEqual(fakeUsers[1]);
+        });
+    }));
 
-//     it('can navigate to maintab', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigateByUrl');
-//         comp.gotoMainTab();
-//         expect(navigateSpy).toHaveBeenCalledWith("/main(tab:maintab;open=true)");
+    it('should ask for permission when permission is default', async(() => {    
+        Notification.permission = "default";
+        comp.notify("Plask!", "Hello!");
 
-//     }))
+        fixture.whenStable().then(() => {
+            expect(Notification.requestPermission()).toHaveBeenCalled();            
+        })
+    }))
 
-//     it ('should display correct labels for input', async(() => {
-//         const labels = fixture.debugElement.queryAll(By.css('label'));
-//         const locationLabel = labels[0].nativeElement;
-//         const serviceLabel = labels[1].nativeElement;
+    it('should alert if service is empty', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.serviceAutoComplete.query = "";
+        comp.serviceAdd("serviceTag", "serviceAutoComplete", "question", "questionServiceList");
 
-//         expect(locationLabel.textContent).toEqual("Location:");
-//         expect(serviceLabel.textContent).toEqual("Location"); // check again
-//     }))
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Tag is Empty!");
+        })
+    }))
 
-//     it('should trigger goToSettings() when the Settings button is clicked', async(() =>{
-//         spyOn(comp, 'goToSettings');
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let settingsButton = btns[0].nativeElement;
+    it('should alert if service incldues a semicolon', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.serviceAutoComplete.query = ";";
+        comp.serviceAdd("serviceTag", "serviceAutoComplete", "question", "questionServiceList");
 
-//         settingsButton.click();
-//         fixture.whenStable().then(() => {
-//             expect(comp.goToSettings).toHaveBeenCalled();
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("You cannot use SemiColon!");
+        })
+    }))
 
-//     it('should trigger gosignOut() when the SignOut button is clicked', async(() => {
-//         spyOn(comp, 'goSignOut'); //method attached to the click.
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let signOutButton = btns[1].nativeElement;
+    it('should alert if service length >= 100', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.serviceAutoComplete.query = "qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopa";
+        comp.serviceAdd("serviceTag", "serviceAutoComplete", "question", "questionServiceList");
 
-//         signOutButton.click();
-//         fixture.whenStable().then(() => {
-//             expect(comp.goSignOut).toHaveBeenCalled();            
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Tag length should be less than 100 characters.");
+        })
+    }))    
 
-//     // TODO: Need to change the test to properly test routerLink, not router.navigate
-//     it('should navigate to MainTab when the tab is clicked', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let mainTabButton = btns[2].nativeElement;
+    it('should properly add service tag', async(() => {
+        let spy = spyOn(comp, "serviceSelect");
+        comp.question.services = "cafe;";
+        comp.serviceAutoComplete.query = "music";
+        comp.serviceAdd("serviceTag", "serviceAutoComplete", "question", "questionServiceList");
 
-//         mainTabButton.click();
-//         fixture.whenStable().then(() => {
-//             expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['maintab']}}]);
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalled();
+            expect(comp.serviceTag).toEqual("");
+            expect(comp.serviceAutoComplete.query).toEqual("");
+        });       
+    }));
 
-//     it('should navigate to MyQuestionsTab when the tab is clicked', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let myQuestionsTabButton = btns[3].nativeElement;
+    it('should alert if trying to add already added tag', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.question.services = "Music;";
+        comp.serviceSelect("Music", "question", "questionServiceList");
 
-//         myQuestionsTabButton.click();
-//         fixture.whenStable().then(()=> {
-//             expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myquestions']}}]);    
-//         });        
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Tag Already Added!");
+        });
+    }));
 
-//     it('can navigate to MyAnswersTab when the tab is clicked', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let myAnswersTabButton = btns[4].nativeElement;
+    it ('should send alert message when trying send send empty quesiton', async(() => {
+        let windowSpy = spyOn(window, "alert");
 
-//         myAnswersTabButton.click();
-//         fixture.whenStable().then(() => {
-//             expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myanswers']}}]);    
-//         });
-//     }));
-
-//     // Modified to aysnc from fakeAsync because fakeAsync cannot handle XHRs
-//     it ('should send alert message when trying send send empty quesiton', async(() => {
-//         let windowSpy = spyOn(window, "alert");
-
-//         comp.question.content = "";
-//         comp.sendQuestion();
+        comp.question.content = "";
+        comp.sendQuestion();
  
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Question is Empty!");
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Question is Empty!");
+        });
+    }));
 
-//     it('should send alert message if Question does not have a selected country', async(() => {
-//         let windowSpy = spyOn(window, "alert");
+    it('should send alert message if Question does not have a selected country', async(() => {
+        let windowSpy = spyOn(window, "alert");
 
-//         comp.question.content = "test";
-//         comp.selectedCountry = "";
-//         comp.sendQuestion();
+        comp.question.content = "test";
+        comp.askCountry = "";
+        comp.sendQuestion();
         
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Please select country!");
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(windowSpy).toHaveBeenCalledWith("Please select country!");
+        });
+    }));
 
-//     it('should update selectedCountry when a country selected', async(() => {
-//         comp.countrySelect("Korea");
-        
-//         fixture.whenStable().then(() => {
-//             expect(comp.selectedCountry).toEqual("Korea");
-//         });
-//     }));
+    it('should alert if autoComplete is invalid', async(() => {
+       let windowSpy = spyOn(window, "alert");
+       var cityList: string[] = ["Gwanak", "Gangnam"];
+       comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
+       comp.searchCityAutoComplete.query = "Gwanafaefasfeak";
 
-//     it('should call provinceRefesh when a countrySelect() is called', async(() => {
-//         let spy = spyOn(comp, "provinceRefresh");
-//         comp.countrySelect("Korea");
+       comp.sendQuestion();
 
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
+       fixture.whenStable().then(() => {
+           expect(windowSpy).toHaveBeenCalledWith("Invalid city name.");
+       })
+    }))
 
-//     it ('should properly get location by name', async(() => {
-//         var locationList: [{loc_name: "Korea", loc_code: 213}, {loc_name: "USA", loc_code: 216}];
-//         var result = comp.getLocationByName(locationList, "Korea");
+    it('should properly send question', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.question.content = "Hello there!";
+        comp.question.locations = "USA;";
+        comp.askCountry = "Korea";
+        comp.askProvince = "";
+        comp.askCity = "";
 
-//         fixture.whenStable().then(() => {
-//             expect(result).toEqual({loc_name: "Korea", loc_code: 213});
-//         })
-//     }))
-//     it('should update selectedProvince when a province selected', async(() => {
-//         comp.provinceSelect("Seoul");
-        
-//         fixture.whenStable().then(() => {
-//             expect(comp.selectedProvince).toEqual("Seoul");    
-//         });
-//     }));
+        comp.sendQuestion();   
 
-//     it('should call cityRefresh when a provinceSelect() is called', async(() => {
-//         let spy = spyOn(comp, "cityRefresh");
-//         comp.provinceSelect("Seoul");
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Question successfully plasked!");
+        });
+    }));
 
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
+    it('should properly send question w/ Province', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.question.content = "Hello there!";
+        comp.question.locations = "USA;";
+        comp.askCountry = "Korea";
+        comp.askProvince = "Seoul";
+        comp.askCity = "";
 
-//     // Need to be fixed
-//     it('should refresh service list when serviceRefresh() is called', async(() => {
-//         comp.serviceRefresh();
-        
-//         fixture.whenStable().then(() => {
-//             expect(comp.serviceList).not.toBeNull();
-//         });
-//     }));
+        comp.sendQuestion();   
 
-//     it('should make questionServiceList null if question.services is ""', async(() => {
-//         comp.question.services ="";
-//         comp.questionServiceRefresh();
-//         fixture.whenStable().then(() => {
-//             expect(comp.questionServiceList).toBeNull();
-//         })
-//     }))
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Question successfully plasked!");
+        });
+    }));
 
-//     it('should create questionServiceList after questionServiceRefresh() is performed', async(() => {
-//         comp.question.services ="cafe;music;";
+    it('should properly send question w/ City', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.question.content = "Hello there!";
+        comp.question.locations = "USA;";
+        comp.askCountry = "Korea";
+        comp.askProvince = "Seoul";
+        comp.askCity = "Gwanak";
 
-//         comp.questionServiceRefresh();
+        comp.sendQuestion();   
 
-//         fixture.whenStable().then(() => {
-//             expect(comp.questionServiceList).toEqual(["cafe", "music"]);
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Question successfully plasked!");
+        });
+    }));
 
-//     it('should send alert message when trying to add an exsiting service tag', async(() => {
-//         let windowSpy = spyOn(window, "alert");
+    it('can properly send question w/ City', async(() => {
+        let spy = spyOn(window, "alert");
+        comp.question.content = "";
+        comp.question.locations = "USA;";
+        comp.askCountry = "Korea";
+        comp.askProvince = "Seoul";
+        comp.askCity = "Gwanak";
 
-//         comp.question.services="cafe;";
-//         comp.questionServiceSelect("cafe");
+        comp.sendQuestion();   
 
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Tag Already Added!");
-//         })
-//     }))
-
-//     it('should call questionServiceRefresh() when questionServiceSelect() is called', async(() => {
-//         let spy = spyOn(comp, "questionServiceRefresh");
-//         comp.questionServiceSelect("string");
-        
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
-
-//     it('should create questionServiceList after questionServiceRefresh() is performed', async(() => {
-//         comp.question.services ="cafe;music;";
-
-//         comp.questionServiceRefresh();
-
-//         fixture.whenStable().then(() => {
-//             expect(comp.questionServiceList).toEqual(["cafe", "music"]);
-//         });
-//     }))
-
-//     it('should call questionServiceRefresh() when questionServiceDelete() is called', async(() => {
-//         let spy = spyOn(comp, "questionServiceRefresh");
-//         comp.questionServiceDelete("string");
-        
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
-
-//     it('should delete a service tag when questionServiceDelete() is called', async(() => {
-//         comp.question.services="cafe;music;";
-//         comp.questionServiceDelete("cafe");
-
-//         fixture.whenStable().then(() => {
-//             expect(comp.question.services).toEqual("music;");
-//         })
-//     }))
-
-//     it('should send alert message when trying to add an empty service tag', async(() => {
-//         let windowSpy = spyOn(window, "alert");
-//         var servList: string[] = ["temp", "string"];
-//         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
-//         comp.serviceAutoComplete.query = "";
-//         comp.questionServiceAdd();
-
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Tag is Empty!");
-//         });
-//     }));
-
-//     it('should send alert message when trying to add a service tag with semicolon', async(() => {
-//         let windowSpy = spyOn(window, "alert");
-//         var servList: string[] = ["cafe", "music"];
-//         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
-//         comp.serviceAutoComplete.query = "cafe;";
-//         comp.questionServiceAdd();
-
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("You cannot use SemiColon!");
-//         });
-//     }));
-
-//     it('should send alert message when trying to add a service tag with over 100 characters', async(() => {
-//         let windowSpy = spyOn(window, "alert");
-//         var servList: string[] = ["cafe", "music"];
-//         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
-//         comp.serviceAutoComplete.query = "abcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghijabcdefghij";
-//         comp.questionServiceAdd();
-
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Tag length should be less than 100 characters.");
-//         });
-//     }));
+        fixture.whenStable().then(() => {
+            expect(spy).toHaveBeenCalledWith("Question could not be sent, please try again");
+        });
+    }));
 
 
-//     it('should call questionServiceSelect() when Add is called', async(() => {
-//         let spy = spyOn(comp, "questionServiceSelect");
-//         var servList: string[] = ["cafe", "music"];
-//         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
-//         comp.serviceAutoComplete.query = "cafe";
-//         comp.questionServiceAdd();
+    it('can navigate to settings', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        comp.goToSettings();
+        expect(navigateSpy).toHaveBeenCalledWith(['/settings']);
+    }))
 
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
+    it('can navigate to signout', async(() => {
+        let navigateSpy = spyOn((<any>comp).router, 'navigate');
+        expect(comp.goSignOut).toThrow();
+    }))
 
-//     it('should add a service tag when questionServiceAdd() is called', async(() => {
-//         comp.question.services ="music;";
-//         var servList: string[] = ["cafe", "music"];
-//         comp.serviceAutoComplete = new AutoCompleteComponent(fixture.elementRef, servList);
-//         comp.serviceAutoComplete.query = "cafe";
-//         comp.questionServiceAdd();
+});
 
-//         fixture.whenStable().then(() => {
-//             expect(comp.question.services).toEqual("music;cafe;");
-//         });
-//     }));
+export const fakeCountryList: Location[] = [ 
+    { loc_name: 'Korea', loc_code: 1 },
+    { loc_name: 'Canada', loc_code: 2 },
+    { loc_name: 'USA', loc_code: 3 },
+];
+export const fakeProvinceList: Location[] = [ 
+    { loc_name: 'Seoul', loc_code: 4 },
+    { loc_name: 'Jeju', loc_code: 5 }, 
+    { loc_name: 'Daegu', loc_code: 6 },
+];
+export const fakeCityList: Location[] = [
+    { loc_name: 'Gangnam', loc_code: 7 },
+    { loc_name: 'Gwanak', loc_code: 8 },
+    { loc_name: 'Seocho', loc_code: 9 }
+];
 
-//     it('should make searchProvinceList as null if "Nation" is selected in countrySearch', async(() => {
-//         var cityList: string[] = ["Seoul", "Busan"];
+class FakeLocationService {
+    getCountryList(): Promise<Location[]> {
+        return Promise.resolve<Location[]>(fakeCountryList);
+    }
 
-//         comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
-//         comp.countrySearch('Nation');
+    getLocationList(location: string): Promise<Location[]> {
+        if(location == "1" || location =="2" || location =="3"){
+            return Promise.resolve<Location[]>(fakeProvinceList);            
+        }
+        else{
+            return Promise.resolve<Location[]>(fakeCityList);
+        }
 
-//         fixture.whenStable().then(() => {
-//             expect(comp.searchProvinceList).toBeNull();
-//             expect(comp.searchCityNameList).toEqual([]);
-//             expect(comp.searchProvince).toEqual("");
-//             expect(comp.searchCity).toEqual("");
-//         })
-//     }));
+    }    
+}
 
-//     it('should call searchProvinceRefresh if a country is selected in countrySearch', async(() => {
-//         let spy = spyOn(comp, "searchProvinceRefresh");
-//         var cityList: string[] = ["Seoul", "Busan"];
+export const fakeUsers: User[] = [
+    {email: 'swpp@gmail.com', password: 'iluvswpp', username: 'swpplover', locations: 'Korea/Seoul/Gwanak;', services: 'SNU;Cafe;', blockedServices: ';', notiFrequency: 10},
+    {email: 'test1@gmail.com', password: 'test1', username: 'testuser1', locations: 'Korea/Seoul;', services: 'Music;Guitar;', blockedServices: ';', notiFrequency: 10},
+];
+export const fakeServices: string[] = ['Music', 'Cafe', 'SWPP', 'SNU'];
 
-//         comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
-//         comp.countrySearch('Korea');
+class FakeUserService {
+  signIn(user: User): Promise<number>{
+      for(let i = 0; i < fakeUsers.length; ++i){
+          if ((user.email == fakeUsers[i].email) && (user.password == fakeUsers[i].password)){
+              return Promise.resolve<number>(204);
+          }
+      }
+      return Promise.resolve<number>(403);
+  }
 
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
+  signUp(user: User): Promise<number> {
+      return Promise.resolve<number>(201); // assume success :)
+  }
 
-//     it('should work even if "Province" is selected in provinceSearch()', async(() => {
-//         var cityList: string[] = ["Seoul", "Busan"];
+  getUser(): Promise<User> {
+      return Promise.resolve<User>(fakeUsers[1]);
+  }
 
-//         comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
-//         comp.provinceSearch('Province');
+  getService(): Promise<string[]> {
+      return Promise.resolve<string[]>(fakeServices);
+  }
 
-//         fixture.whenStable().then(() => {
-//             expect(comp.searchCity).toEqual("");
-//             expect(comp.searchCityNameList).toEqual([]);
-//         })
-//     }));
+  updateUser(user: User): Promise<User> {
+      return Promise.resolve<User>(user);
+  }
+}
 
-//     it('should call searchCityRefresh if a province is selected in provinceSearch', async(() => {
-//         let spy = spyOn(comp, "searchCityRefresh");
-//         var cityList: string[] = ["Seoul", "Busan"];
-
-//         comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
-//         comp.provinceSearch('Seoul');
-
-//         fixture.whenStable().then(() => {
-//             expect(spy).toHaveBeenCalled();
-//         });
-//     }));
-
-//     it('should alert if serachString is empty', async(() => {
-//         let windowSpy = spyOn(window, "alert");
-//         comp.searchString = "";
-
-//         comp.search();
-
-//         fixture.whenStable().then(() => {
-//             expect(windowSpy).toHaveBeenCalledWith("Please fill content before searching!");
-//         })
-//     }))
-
-//     it('should alert if autoComplete is invalid', async(() => {
-//        let windowSpy = spyOn(window, "alert");
-//        var cityList: string[] = ["Gwanak", "Gangnam"];
-//        comp.searchCityAutoComplete = new AutoCompleteComponent(fixture.elementRef, cityList);
-//        comp.searchCityAutoComplete.query = "Gwwannak";
-
-//        comp.search();
-
-//        fixture.whenStable().then(() => {
-//            expect(windowSpy).toHaveBeenCalledWith("Invalid city name.");
-//        })
-//     }))
-
-//     it('should ask for permission when permission is default', async(() => {    
-//         Notification.permission = "default";
-//         comp.notify("Plask!", "Hello!");
-
-//         fixture.whenStable().then(() => {
-//             expect(Notification.requestPermission()).toHaveBeenCalled();            
-//         })
-//     }))
-
-//     it('should send notification when permission is granted', async(() => {
-//         Notification.permission = "granted";
-//         comp.notifyWithPermission("Plask!", "Hello!");
-
-//         fixture.whenStable().then(() => {
-//             expect(setTimeout).toHaveBeenCalled();
-//         })
-//     }))
-
-//     it('can navigate to SearchTab when the search button is clicked', async(() => {
-//         let navigateSpy = spyOn((<any>comp).router, 'navigate');
-//         let btns = fixture.debugElement.queryAll(By.css('button'));
-//         let SearchTabButton = btns[3].nativeElement;
-
-//        comp.searchCountry = "";
-//        comp.searchString = "Hello";
-//        SearchTabButton.click();
-//        fixture.whenStable().then(() => {
-//             expect(navigateSpy).toHaveBeenCalledWith(['/main',{outlets: {'tab':['myquestions/1/-1/-1/Hello']}}]);
-//          });
-//     }));
+export const fakeRelatedQuestions: Question[] = [
+    {id: 1, content: "Hello there!", author: "swpplover", locations: "Korea/Seoul;", services: "SNU;Welcome;", select_id: -1, time: "2017.12.18"},
+    {id: 2, content: "Is there a BurgerKing in Nakseongdae?", author: "testuser1", locations: "Korea/Seoul/Gwanak;", services: "Burger;Food;", select_id: -1, time: "2017.12.18"},
+];
+export const fakeMyQuestions: Question[] = [
+    {id: 3, content: "Can I print near building 83?", author: "testuser1", locations: "Korea/Seoul/Gwanak;", services: "SNU;Printer;", select_id: -1, time: "2017.12.18"},
+    {id: 2, content: "Is there a BurgerKing in Nakseongdae?", author: "testuser1", locations: "Korea/Seoul/Gwanak;", services: "Burger;Food;", select_id: -1, time: "2017.12.18"},
+];
+export const fakeAnsweredQuestions: Question[] = [
+    {id: 1, content: "Hello there!", author: "swpplover", locations: "Korea/Seoul;", services: "SNU;Welcome;", select_id: -1, time: "2017.12.18"},
+    {id: 4, content: "Is there an empty cafe in Gangnam right now?", author: "testuser10", locations: "Korea/Seoul/Gangnam;", services: "Cafe;", select_id: -1, time: "2017.12.18"},
+];
+export const fakeSearchedQuestions: Question[] = [
+    {id: 1, content: "Hello there!", author: "swpplover", locations: "Korea/Seoul;", services: "SNU;Welcome;", select_id: -1, time: "2017.12.18"},
+    {id: 5, content: "Hello Hello!!", author: "testuser5", locations: "Korea/Seoul/Gangnam;", services: "Cafe;", select_id: -1, time: "2017.12.18"},
+];
 
 
+class FakeQuestionService {
 
-// });
+    getQuestion(tab: number): Promise<Question[]> {
+        switch(tab){
+            case 1: {
+                return Promise.resolve<Question[]>(fakeRelatedQuestions);
+            } case 2: {
+                return Promise.resolve<Question[]>(fakeMyQuestions);
+            } case 3: {
+                return Promise.resolve<Question[]>(fakeAnsweredQuestions);
+            }
+        }
+    }
+
+    getSearchedQuestion(searchString: string, loc_code: string[]){
+        return Promise.resolve<Question[]>(fakeSearchedQuestions);
+    }
+
+    postQuestion(question: Question): Promise<number> {
+        if (question.content == ""){
+            return Promise.resolve<number>(403);
+        }
+        else{
+            return Promise.resolve<number>(204);            
+        }
+    }
+
+}

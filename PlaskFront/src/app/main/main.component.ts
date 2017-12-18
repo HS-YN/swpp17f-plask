@@ -324,11 +324,6 @@ export class MainComponent implements OnInit, OnDestroy{
         this.userService.signOut().then(() => this.router.navigate(['/signin']));
     }
 
-    gotoMainTab(): void{
-        this.router.navigateByUrl("/main(tab:maintab;open=true)");
-        //(['/main/maintab']);
-    }
-
     /*
      * Codes for question list display
      */
