@@ -8,10 +8,10 @@ matrix:
         pip: true
       services:
         - mysql
+      env:
+        - DJANGO=1.8 DB=mysql
       before_install:
-        - apt-get update
-        - mysql -e 'CREATE DATABASE blog'
-        - mysql -e 'USE blog'        
+        - mysql -e 'CREATE DATABASE blog' -u root
       install:
         - pip3 install pymysql
         - pip3 install django coverage coveralls
