@@ -20,6 +20,7 @@ matrix:
         - cd PlaskBack
         - python3 manage.py makemigrations
         - python3 manage.py migrate
+        - echo "USE mysql;\nUPDATE user SET password=PASSWORD('plask') WHERE user='root';\nFLUSH PRIVILEGES;\n" | mysql -u root
       script:
         - coverage run --branch --source="./ask" manage.py test ask
         - coverage run --branch --source="./location" manage.py test location
